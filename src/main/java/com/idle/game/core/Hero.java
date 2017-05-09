@@ -416,8 +416,8 @@ public class Hero extends BaseObject {
     }
 
     public void setCurrentHp(Integer currentHp) {
-        if (currentHp > getCurrentHp()) {
-            currentHp = getCurrentHp();
+        if (currentHp > getHp()) {
+            currentHp = getHp();
         }
         this.currentHp = currentHp;
     }
