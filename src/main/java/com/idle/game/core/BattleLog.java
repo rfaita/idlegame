@@ -14,6 +14,15 @@ public class BattleLog extends BaseObject {
     private BattlePositionedHero heroOrigin;
     private BattleEvent battleEvent;
     private List<BattlePositionedHero> heroesTarget;
+    private Buff buffDone;
+
+    public Buff getBuffDone() {
+        return buffDone;
+    }
+
+    public void setBuffDone(Buff buffDone) {
+        this.buffDone = buffDone;
+    }
 
     public Integer getTurn() {
         return turn;
@@ -70,9 +79,17 @@ public class BattleLog extends BaseObject {
         this.sysTime = System.currentTimeMillis();
     }
 
+    public BattleLog(Integer turn, BattlePositionedHero heroOrigin, BattleEvent battleEvent, Buff buffDone) {
+        this.turn = turn;
+        this.heroOrigin = heroOrigin;
+        this.battleEvent = battleEvent;
+        this.buffDone = buffDone;
+        this.sysTime = System.currentTimeMillis();
+    }
+
     @Override
     public String toString() {
-        return "BL{" + "st=" + sysTime + ", turn=" + turn + ", ho=" + heroOrigin + ", be=" + battleEvent + ", hst=" + heroesTarget + '}';
+        return "BL{" + "st=" + sysTime + ", turn=" + turn + ", ho=" + heroOrigin + ", be=" + battleEvent + ", t=" + (heroesTarget != null ? heroesTarget : buffDone) + '}';
     }
 
 }

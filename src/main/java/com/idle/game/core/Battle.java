@@ -3,6 +3,7 @@ package com.idle.game.core;
 import com.idle.game.core.exception.ValidationException;
 import com.idle.game.core.util.DiceUtil;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -89,7 +90,7 @@ public class Battle extends BaseObject {
         LOG.log(Level.FINEST, "[battle] END");
         LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
         LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
-        
+
         getBattleLog().forEach((BattleLog t) -> {
             LOG.log(Level.FINEST, "[battleLog] {0}", t);
         });
@@ -108,13 +109,18 @@ public class Battle extends BaseObject {
         LOG.log(Level.FINEST, "[turnActionRated] {0}", turnActionRated);
         LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
 
+        LOG.log(Level.FINEST, "[buffs] INIT");
+        computeBuffs(turnActionRated);
+        LOG.log(Level.FINEST, "[buffs] END");
+        LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
+
         LOG.log(Level.FINEST, "[actions] INIT");
 
         for (int i = 0; i < turnActionRated.size(); i++) {
             LOG.log(Level.FINEST, "[action] INIT {0}", turnActionRated.get(i));
             doAction(turnActionRated.get(i));
             if (i < turnActionRated.size() - 1) {
-                if (calculateFloatActionChance(turnActionRated.get(i), turnActionRated.get(i + 1))) {
+                if (calculateDoubleActionChance(turnActionRated.get(i), turnActionRated.get(i + 1))) {
                     LOG.log(Level.FINEST, "[event=DOUBLE_ACTION]");
                     doAction(turnActionRated.get(i));
                 }
@@ -204,10 +210,10 @@ public class Battle extends BaseObject {
                 Integer skillDamagePercentage = ss.getMainEffect().getEffectDamagePercentage();
                 Integer currentDmg = aHero.getCurrentMeleeDmg() > 0 ? aHero.getCurrentMeleeDmg() : aHero.getCurrentRangedDmg();
 
-                Float dmgModifier = 1.0f;
+                Double dmgModifier = 1.0d;
 
                 if (DiceUtil.random(100) <= aHero.getCurrentCritChance()) {
-                    dmgModifier += aHero.getCurrentCritDamage() / 100f;
+                    dmgModifier += aHero.getCurrentCritDamage() / 100d;
                     ret.setType(BattleEventType.CRITICAL);
                     LOG.log(Level.FINEST, "[event=CRITICAL, value={0}] CRITICAL, MODIFIER {0}", dmgModifier);
                 }
@@ -241,9 +247,9 @@ public class Battle extends BaseObject {
 
     }
 
-    private BattleEvent doDamage(BattleEvent ret, Integer currentDmg, Float dmgModifier, DamageType damageType, Hero tHero) {
+    private BattleEvent doDamage(BattleEvent ret, Integer currentDmg, Integer dmgModifier, DamageType damageType, Hero tHero) {
 
-        ret.setValue(-(int) ((currentDmg * dmgModifier)
+        ret.setValue(-(int) ((currentDmg * dmgModifier / 100d)
                 * (damageType.equals(DamageType.PHYSICAL) ? getDmgAmorReduction(tHero) : getDmgMagicResistReduction(tHero))));
         ret.setDamageType(damageType);
 
@@ -272,7 +278,7 @@ public class Battle extends BaseObject {
             ss.getSecundaryEffects().forEach((sse) -> {
                 switch (sse.getSkillEffectType()) {
                     case HEAL:
-                        doSpecialActionHeal(dmg, sse, aPositionedHero, lastTargetPositionedHero);
+                        doSpecialActionHeal(dmg, sse, aPositionedHero);
                         break;
                     case DMG:
                         doSpecialActionDmg(dmg, sse, aPositionedHero, lastTargetPositionedHero);
@@ -283,31 +289,26 @@ public class Battle extends BaseObject {
         }
     }
 
-    private void doSpecialActionHeal(Integer dmg, SkillEffect sse, BattlePositionedHero aPositionedHero, List<BattlePositionedHero> lastTargetPositionedHero) {
+    private void doSpecialActionHeal(Integer dmg, SkillEffect sse, BattlePositionedHero aPositionedHero) {
 
         BattleEvent ret = new BattleEvent(BattleEventType.HEAL);
 
         ret.setValue(-(int) ((dmg * sse.getEffectDamagePercentage() / 100f * sse.getEffectChance() / 100f)));
         ret.setDamageType(DamageType.MAGIC);
 
-        final List<BattlePositionedHero> targets;
-        if (sse.getTargetType().equals(TargetType.LAST_ONE)) {
-            targets = lastTargetPositionedHero;
-        } else {
-            targets = getSkillEffectTarget(sse.getTargetType(), aPositionedHero.getBattleTeamType());
-        }
+        final List<BattlePositionedHero> targets = getSkillEffectTarget(sse.getTargetType(), aPositionedHero.getBattleTeamType());
 
+        List<BattlePositionedHero> targetsLog = new ArrayList<>();
         targets.forEach((t) -> {
-            if (t.getHero().getCurrentHp() < t.getHero().getHp()) {
-                t.getHero().setCurrentHp(t.getHero().getCurrentHp() + ret.getValue());
-                LOG.log(Level.FINEST, "[event=HEAL, value={0}] HEAL {0} TO HERO {1}", new Object[]{ret.getValue(), t});
-            } else {
-                LOG.log(Level.FINEST, "[event=HEAL, value={0}] HEAL {0} TO HERO {1}", new Object[]{0, t});
-
+            t.getHero().setCurrentHp(t.getHero().getCurrentHp() + ret.getValue());
+            LOG.log(Level.FINEST, "[event=HEAL, value={0}] HEAL {0} TO HERO {1}", new Object[]{ret.getValue(), t});
+            if (sse.getEffectTurnDuration() > 0) {
+                t.getHero().addBuff(new Buff(sse.getEffectTurnDuration(), ret.getValue(), EffectType.HEAL));
             }
+            targetsLog.add(t.duplicate());
         });
 
-        this.addBattleLog(new BattleLog(this.turn, aPositionedHero.duplicate(), ret, targets));
+        this.addBattleLog(new BattleLog(this.turn, aPositionedHero.duplicate(), ret, targetsLog));
 
     }
 
@@ -327,8 +328,8 @@ public class Battle extends BaseObject {
         }
 
         targets.forEach((t) -> {
-            doDamage(ret, ret.getValue(), 1f, DamageType.MAGIC, t.getHero());
-            this.addBattleLog(new BattleLog(this.turn, aPositionedHero.duplicate(), ret, targets));
+            doDamage(ret, ret.getValue(), 100, DamageType.MAGIC, t.getHero());
+            this.addBattleLog(new BattleLog(this.turn, aPositionedHero.duplicate(), ret, t.duplicate()));
         });
 
     }
@@ -382,15 +383,15 @@ public class Battle extends BaseObject {
             Hero aHero = aPositionedHero.getHero();
             Hero tHero = tPositionedHero.getHero();
 
-            if (DiceUtil.random(100) > tHero.getCurrentDodgeChance()) {
+            if (tHero.getCurrentDodgeChance() == 0 || DiceUtil.random(100) > tHero.getCurrentDodgeChance()) {
 
                 DamageType damageType = aHero.getCurrentMeleeDmg() > 0 ? aHero.getDmgTypeMelee() : aHero.getDmgTypeRanged();
                 Integer currentDmg = aHero.getCurrentMeleeDmg() > 0 ? aHero.getCurrentMeleeDmg() : aHero.getCurrentRangedDmg();
 
-                Float dmgModifier = 1.0f;
+                Integer dmgModifier = 100;
 
-                if (DiceUtil.random(100) <= aHero.getCurrentCritChance()) {
-                    dmgModifier += aHero.getCurrentCritDamage() / 100f;
+                if (aHero.getCurrentCritChance() > 0 && DiceUtil.random(100) <= aHero.getCurrentCritChance()) {
+                    dmgModifier += aHero.getCurrentCritDamage();
                     ret.setType(BattleEventType.CRITICAL);
                     LOG.log(Level.FINEST, "[event=CRITICAL, value={0}] CRITICAL, MODIFIER {0}", dmgModifier);
                 }
@@ -450,19 +451,25 @@ public class Battle extends BaseObject {
         return pTarget;
     }
 
-    private Float getLoadedSkillPercentage(Hero h) {
-        return (1f - (100f / (100f + h.getCurrentSpeed()))) * 100;
+    private Double getLoadedSkillPercentage(Hero h) {
+        Double ret = (1d - (100d / (100d + h.getCurrentSpeed()))) * 100;
+
+        if (ret > 100d) {
+            return 100d;
+        } else {
+            return ret;
+        }
     }
 
-    private Float getDmgMagicResistReduction(Hero h) {
-        return 100f / (100f + h.getCurrentMagicResist());
+    private Double getDmgMagicResistReduction(Hero h) {
+        return 100d / (100d + h.getCurrentMagicResist());
     }
 
-    private Float getDmgAmorReduction(Hero h) {
-        return 100f / (100f + h.getCurrentArmor());
+    private Double getDmgAmorReduction(Hero h) {
+        return 100d / (100d + h.getCurrentArmor());
     }
 
-    private Boolean calculateFloatActionChance(BattlePositionedHero heroFaster, BattlePositionedHero nextHeroFaster) {
+    private Boolean calculateDoubleActionChance(BattlePositionedHero heroFaster, BattlePositionedHero nextHeroFaster) {
         return (DiceUtil.random(100) < ((heroFaster.getHero().getCurrentSpeed() / nextHeroFaster.getHero().getCurrentSpeed()) - 1) * 25);
     }
 
@@ -575,7 +582,12 @@ public class Battle extends BaseObject {
         return this.battlePositionedHeroes.stream().filter((BattlePositionedHero t) -> {
             return t.getHero().getCurrentHp() > 0;
         }).sorted((BattlePositionedHero t, BattlePositionedHero t1) -> {
-            return t1.getHero().getCurrentSpeed() - t.getHero().getCurrentSpeed();
+            if (t1.getHero().getCurrentSpeed() - t.getHero().getCurrentSpeed() != 0) {
+                return t1.getHero().getCurrentSpeed() - t.getHero().getCurrentSpeed();
+            } else {
+                //Velocidade empatada attack team tem vantagem
+                return t1.getBattleTeamType().equals(BattleTeamType.ATTACK) ? 1 : -1;
+            }
         }).collect(Collectors.toList());
 
     }
@@ -584,6 +596,38 @@ public class Battle extends BaseObject {
         this.battlePositionedHeroes.forEach((h) -> {
             h.getHero().prepareToBattle();
         });
+    }
+
+    private void computeBuffs(List<BattlePositionedHero> battlePositionedHeroes) {
+
+        battlePositionedHeroes.forEach((battlePositionedHero) -> {
+            Iterator<Buff> it = battlePositionedHero.getHero().getCurrentBuffs().iterator();
+
+            while (it.hasNext()) {
+                Buff buff = it.next();
+                BattleEvent ret = new BattleEvent();
+                switch (buff.getEffectType()) {
+                    case HEAL:
+                        battlePositionedHero.getHero().setCurrentHp(battlePositionedHero.getHero().getCurrentHp() + buff.getValue());
+                        ret.setType(BattleEventType.HEAL);
+                        ret.setValue(buff.getValue());
+                        ret.setDamageType(DamageType.MAGIC);
+                        ret.setBuffType(BuffType.BUFF);
+                        break;
+                }
+                buff.setCurrentTurn(buff.getCurrentTurn() + 1);
+                this.addBattleLog(new BattleLog(this.turn, battlePositionedHero.duplicate(), ret, battlePositionedHero.duplicate()));
+                if (buff.getCurrentTurn() >= buff.getTurnDuration()) {
+                    it.remove();
+                    BattleEvent beBuffDone = new BattleEvent();
+                    beBuffDone.setType(BattleEventType.BUFF_DONE);
+                    this.addBattleLog(new BattleLog(this.turn, battlePositionedHero.duplicate(), beBuffDone, buff));
+                }
+
+            }
+
+        });
+
     }
 
 }

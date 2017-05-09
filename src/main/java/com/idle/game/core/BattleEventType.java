@@ -6,6 +6,6 @@ package com.idle.game.core;
  */
 public enum BattleEventType {
 
-    START, END, DMG, DODGE, CRITICAL, SPECIAL, HEAL
+    START, END, DMG, DODGE, CRITICAL, SPECIAL, HEAL, BUFF_DONE
 
 }

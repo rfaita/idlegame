@@ -6,7 +6,7 @@ package com.idle.game.core;
  */
 public class SkillEffect extends BaseObject {
 
-    private SkillEffectType skillEffectType;
+    private EffectType skillEffectType;
     private TargetType targetType;
     //Habilidade pode errar?
     private Boolean canBeDodge = Boolean.FALSE;
@@ -15,14 +15,14 @@ public class SkillEffect extends BaseObject {
     //Percentual do efeito ocorrer;
     private Integer effectChance;
     //Numero de turnos que o efeito persiste
-    private Integer effectTurnNumber;
+    private Integer effectTurnDuration;
     private DamageType damageType;
 
-    public SkillEffectType getSkillEffectType() {
+    public EffectType getSkillEffectType() {
         return skillEffectType;
     }
 
-    public void setSkillEffectType(SkillEffectType skillEffectType) {
+    public void setSkillEffectType(EffectType skillEffectType) {
         this.skillEffectType = skillEffectType;
     }
 
@@ -58,12 +58,12 @@ public class SkillEffect extends BaseObject {
         this.effectChance = effectChance;
     }
 
-    public Integer getEffectTurnNumber() {
-        return effectTurnNumber;
+    public Integer getEffectTurnDuration() {
+        return effectTurnDuration;
     }
 
-    public void setEffectTurnNumber(Integer effectTurnNumber) {
-        this.effectTurnNumber = effectTurnNumber;
+    public void setEffectTurnDuration(Integer effectTurnNumber) {
+        this.effectTurnDuration = effectTurnNumber;
     }
 
     public DamageType getDamageType() {
@@ -74,19 +74,19 @@ public class SkillEffect extends BaseObject {
         this.damageType = damageType;
     }
 
-    public SkillEffect(SkillEffectType skillEffectType, TargetType targetType, Integer effectDamagePercentage, DamageType damageType) {
+    public SkillEffect(EffectType skillEffectType, TargetType targetType, Integer effectDamagePercentage, DamageType damageType) {
         this.skillEffectType = skillEffectType;
         this.targetType = targetType;
         this.effectDamagePercentage = effectDamagePercentage;
         this.damageType = damageType;
     }
 
-    public SkillEffect(SkillEffectType skillEffectType, TargetType targetType, Integer effectDamagePercentage, Integer effectChance, Integer effectTurnNumber, DamageType damageType) {
+    public SkillEffect(EffectType skillEffectType, TargetType targetType, Integer effectDamagePercentage, Integer effectChance, Integer effectTurnNumber, DamageType damageType) {
         this.skillEffectType = skillEffectType;
         this.targetType = targetType;
         this.effectDamagePercentage = effectDamagePercentage;
         this.effectChance = effectChance;
-        this.effectTurnNumber = effectTurnNumber;
+        this.effectTurnDuration = effectTurnNumber;
         this.damageType = damageType;
     }
 
@@ -95,7 +95,7 @@ public class SkillEffect extends BaseObject {
 
     @Override
     public String toString() {
-        return "SSE{" + "type=" + skillEffectType + ", tt=" + targetType + ", d?=" + canBeDodge + ", edp=" + effectDamagePercentage + ", ec=" + effectChance + ", etn=" + effectTurnNumber + ", dt=" + damageType + '}';
+        return "SSE{" + "type=" + skillEffectType + ", tt=" + targetType + ", d?=" + canBeDodge + ", edp=" + effectDamagePercentage + ", ec=" + effectChance + ", etd=" + effectTurnDuration + ", dt=" + damageType + '}';
     }
     
     

@@ -6,6 +6,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -58,6 +60,8 @@ public class Hero extends BaseObject {
     private Integer currentDodgeChance;
     private Integer currentBlockChance;
     private Integer currentHp;
+
+    private List<Buff> currentBuffs;
 
     private Integer skillPercentage;
 
@@ -412,6 +416,9 @@ public class Hero extends BaseObject {
     }
 
     public void setCurrentHp(Integer currentHp) {
+        if (currentHp > getCurrentHp()) {
+            currentHp = getCurrentHp();
+        }
         this.currentHp = currentHp;
     }
 
@@ -419,7 +426,22 @@ public class Hero extends BaseObject {
         return skillPercentage;
     }
 
+    public List<Buff> getCurrentBuffs() {
+        return currentBuffs;
+    }
+
+    public void setCurrentBuffs(List<Buff> currentBuffs) {
+        this.currentBuffs = currentBuffs;
+    }
+
+    public void addBuff(Buff buff) {
+        this.currentBuffs.add(buff);
+    }
+
     public void setSkillPercentage(Integer skillPercentage) {
+        if (skillPercentage > 100) {
+            skillPercentage = 100;
+        }
         this.skillPercentage = skillPercentage;
     }
 
@@ -484,6 +506,7 @@ public class Hero extends BaseObject {
         this.setCurrentRangedDmg(this.getRangedDmg());
         this.setCurrentSpeed(this.getSpeed());
         this.setSkillPercentage(0);
+        this.setCurrentBuffs(new ArrayList<>());
     }
 
     private void calcAtributtes() {
@@ -541,7 +564,7 @@ public class Hero extends BaseObject {
 
     @Override
     public String toString() {
-        return "H{" + "id=" + this.uuid + "currHp=" + this.currentHp + ",ss%=" + this.skillPercentage + ",type=" + this.heroType + '}';
+        return "H{" + "id=" + this.uuid.toString().substring(0, 7) + ",currHp=" + this.currentHp + ",ss%=" + this.skillPercentage + ",type=" + this.heroType + '}';
     }
 
     @Override

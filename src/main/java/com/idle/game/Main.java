@@ -11,7 +11,7 @@ import com.idle.game.core.Player;
 import com.idle.game.core.PositionedHero;
 import com.idle.game.core.Skill;
 import com.idle.game.core.SkillEffect;
-import com.idle.game.core.SkillEffectType;
+import com.idle.game.core.EffectType;
 import com.idle.game.core.TargetType;
 import java.util.UUID;
 
@@ -24,16 +24,16 @@ public class Main {
     public static void main(String args[]) throws Exception {
 
         Skill healSkill = new Skill();
-        healSkill.setMainEffect(new SkillEffect(SkillEffectType.DMG, TargetType.BACK_LINE, 120, DamageType.MAGIC));
-        healSkill.addSecundaryEffects(new SkillEffect(SkillEffectType.HEAL, TargetType.FRONT_LINE, 80, 100, 0, DamageType.MAGIC));
+        healSkill.setMainEffect(new SkillEffect(EffectType.DMG, TargetType.BACK_LINE, 120, DamageType.MAGIC));
+        healSkill.addSecundaryEffects(new SkillEffect(EffectType.HEAL, TargetType.FRONT_LINE, 80, 100, 0, DamageType.MAGIC));
 
         HeroType type = new HeroType();
         type.setAtittudeType(AtittudeType.HEALER);
         type.setSpecialSkill(healSkill);
 
         Skill dmgSkill = new Skill();
-        dmgSkill.setMainEffect(new SkillEffect(SkillEffectType.DMG, TargetType.MORE_LIFE, 120, DamageType.PHYSICAL));
-        dmgSkill.addSecundaryEffects(new SkillEffect(SkillEffectType.DMG, TargetType.LAST_ONE, 80, 100, 0, DamageType.PHYSICAL));
+        dmgSkill.setMainEffect(new SkillEffect(EffectType.DMG, TargetType.MORE_LIFE, 120, DamageType.PHYSICAL));
+        dmgSkill.addSecundaryEffects(new SkillEffect(EffectType.DMG, TargetType.LAST_ONE, 80, 100, 0, DamageType.PHYSICAL));
 
         HeroType type2 = new HeroType();
         type2.setAtittudeType(AtittudeType.HUNTER);
