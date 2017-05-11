@@ -6,16 +6,25 @@ package com.idle.game.core;
  */
 public class BattleEvent extends BaseObject {
 
-    private BattleEventType type;
+    private ActionType type;
+    private SubActionType subType;
     private Integer value;
     private DamageType damageType;
     private BuffType buffType;
 
-    public BattleEventType getType() {
+    public SubActionType getSubType() {
+        return subType;
+    }
+
+    public void setSubType(SubActionType subType) {
+        this.subType = subType;
+    }
+
+    public ActionType getType() {
         return type;
     }
 
-    public void setType(BattleEventType type) {
+    public void setType(ActionType type) {
         this.type = type;
     }
 
@@ -46,17 +55,17 @@ public class BattleEvent extends BaseObject {
     public BattleEvent() {
     }
 
-    public BattleEvent(BattleEventType type) {
+    public BattleEvent(ActionType type) {
         this.type = type;
     }
 
-    public BattleEvent(BattleEventType type, Integer value, DamageType damageType) {
+    public BattleEvent(ActionType type, Integer value, DamageType damageType) {
         this.type = type;
         this.value = value;
         this.damageType = damageType;
     }
 
-    public BattleEvent(BattleEventType type, Integer value, DamageType damageType, BuffType buffType) {
+    public BattleEvent(ActionType type, Integer value, DamageType damageType, BuffType buffType) {
         this.type = type;
         this.value = value;
         this.damageType = damageType;
@@ -65,7 +74,7 @@ public class BattleEvent extends BaseObject {
 
     @Override
     public String toString() {
-        return "BE{" + "type=" + type + ", value=" + value + ", dt=" + damageType + ", bt=" + buffType + '}';
+        return "BE{" + "t=" + type + ", st=" + subType + ", value=" + value + ", dt=" + damageType + ", bt=" + buffType + '}';
     }
 
 }

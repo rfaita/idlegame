@@ -9,9 +9,9 @@ import com.idle.game.core.Hero;
 import com.idle.game.core.HeroType;
 import com.idle.game.core.Player;
 import com.idle.game.core.PositionedHero;
-import com.idle.game.core.Skill;
-import com.idle.game.core.SkillEffect;
-import com.idle.game.core.EffectType;
+import com.idle.game.core.Action;
+import com.idle.game.core.ActionEffect;
+import com.idle.game.core.ActionType;
 import com.idle.game.core.TargetType;
 import java.util.UUID;
 
@@ -23,21 +23,12 @@ public class Main {
 
     public static void main(String args[]) throws Exception {
 
-        Skill healSkill = new Skill();
-        healSkill.setMainEffect(new SkillEffect(EffectType.DMG, TargetType.BACK_LINE, 120, DamageType.MAGIC));
-        healSkill.addSecundaryEffects(new SkillEffect(EffectType.HEAL, TargetType.FRONT_LINE, 80, 100, 0, DamageType.MAGIC));
-
         HeroType type = new HeroType();
         type.setAtittudeType(AtittudeType.HEALER);
-        type.setSpecialSkill(healSkill);
 
-        Skill dmgSkill = new Skill();
-        dmgSkill.setMainEffect(new SkillEffect(EffectType.DMG, TargetType.MORE_LIFE, 120, DamageType.PHYSICAL));
-        dmgSkill.addSecundaryEffects(new SkillEffect(EffectType.DMG, TargetType.LAST_ONE, 80, 100, 0, DamageType.PHYSICAL));
 
         HeroType type2 = new HeroType();
         type2.setAtittudeType(AtittudeType.HUNTER);
-        type2.setSpecialSkill(dmgSkill);
 
         Hero h1 = new Hero(UUID.randomUUID(), type, 1, 100, DamageType.PHYSICAL, 100, DamageType.PHYSICAL, 100, 100, 1, 10, 10, 50, 10, 11, 400);
         Hero h2 = new Hero(UUID.randomUUID(), type, 2, 100, DamageType.PHYSICAL, 100, DamageType.PHYSICAL, 100, 10, 2, 10, 10, 50, 10, 11, 400);

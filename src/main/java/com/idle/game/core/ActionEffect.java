@@ -4,26 +4,35 @@ package com.idle.game.core;
  *
  * @author rafael
  */
-public class SkillEffect extends BaseObject {
+public class ActionEffect extends BaseObject {
 
-    private EffectType skillEffectType;
+    private ActionType actionType;
     private TargetType targetType;
     //Habilidade pode errar?
     private Boolean canBeDodge = Boolean.FALSE;
     //Percentual do dano que sera utilizado no efeito caso o mesmo necessite
-    private Integer effectDamagePercentage;
+    private Integer actionPercentage;
     //Percentual do efeito ocorrer;
-    private Integer effectChance;
+    private Integer actionChance;
     //Numero de turnos que o efeito persiste
-    private Integer effectTurnDuration;
+    private Integer actionDuration;
     private DamageType damageType;
+    private Boolean actionOverSameTeam;
 
-    public EffectType getSkillEffectType() {
-        return skillEffectType;
+    public Boolean getActionOverSameTeam() {
+        return actionOverSameTeam;
     }
 
-    public void setSkillEffectType(EffectType skillEffectType) {
-        this.skillEffectType = skillEffectType;
+    public void setActionOverSameTeam(Boolean actionOverSameTeam) {
+        this.actionOverSameTeam = actionOverSameTeam;
+    }
+
+    public ActionType getActionType() {
+        return actionType;
+    }
+
+    public void setActionType(ActionType at) {
+        this.actionType = at;
     }
 
     public TargetType getTargetType() {
@@ -42,28 +51,28 @@ public class SkillEffect extends BaseObject {
         this.canBeDodge = canBeDodge;
     }
 
-    public Integer getEffectDamagePercentage() {
-        return effectDamagePercentage;
+    public Integer getActionPercentage() {
+        return actionPercentage;
     }
 
-    public void setEffectDamagePercentage(Integer effectDamagePercentage) {
-        this.effectDamagePercentage = effectDamagePercentage;
+    public void setActionPercentage(Integer ap) {
+        this.actionPercentage = ap;
     }
 
-    public Integer getEffectChance() {
-        return effectChance;
+    public Integer getActionChance() {
+        return actionChance;
     }
 
-    public void setEffectChance(Integer effectChance) {
-        this.effectChance = effectChance;
+    public void setActionChance(Integer ac) {
+        this.actionChance = ac;
     }
 
-    public Integer getEffectTurnDuration() {
-        return effectTurnDuration;
+    public Integer getActionDuration() {
+        return actionDuration;
     }
 
-    public void setEffectTurnDuration(Integer effectTurnNumber) {
-        this.effectTurnDuration = effectTurnNumber;
+    public void setActionDuration(Integer ac) {
+        this.actionDuration = ac;
     }
 
     public DamageType getDamageType() {
@@ -74,30 +83,25 @@ public class SkillEffect extends BaseObject {
         this.damageType = damageType;
     }
 
-    public SkillEffect(EffectType skillEffectType, TargetType targetType, Integer effectDamagePercentage, DamageType damageType) {
-        this.skillEffectType = skillEffectType;
+    public ActionEffect(ActionType actionType, TargetType targetType,
+            Integer actionPercentage, Integer actionChance,
+            Integer actionDuration, DamageType damageType, Boolean actionOverSameTeam) {
+        this.actionType = actionType;
         this.targetType = targetType;
-        this.effectDamagePercentage = effectDamagePercentage;
+        this.actionPercentage = actionPercentage;
+        this.actionChance = actionChance;
+        this.actionDuration = actionDuration;
         this.damageType = damageType;
+        this.actionOverSameTeam = actionOverSameTeam;
     }
 
-    public SkillEffect(EffectType skillEffectType, TargetType targetType, Integer effectDamagePercentage, Integer effectChance, Integer effectTurnNumber, DamageType damageType) {
-        this.skillEffectType = skillEffectType;
-        this.targetType = targetType;
-        this.effectDamagePercentage = effectDamagePercentage;
-        this.effectChance = effectChance;
-        this.effectTurnDuration = effectTurnNumber;
-        this.damageType = damageType;
-    }
-
-    public SkillEffect() {
+    public ActionEffect() {
     }
 
     @Override
     public String toString() {
-        return "SSE{" + "type=" + skillEffectType + ", tt=" + targetType + ", d?=" + canBeDodge + ", edp=" + effectDamagePercentage + ", ec=" + effectChance + ", etd=" + effectTurnDuration + ", dt=" + damageType + '}';
+        return "SSE{" + "t=" + actionType + ", tt=" + targetType + ", d?=" + canBeDodge
+                + ", ap=" + actionPercentage + ", ac=" + actionChance + ", ad=" + actionDuration + ", dt=" + damageType + ", aost=" + actionOverSameTeam + '}';
     }
-    
-    
 
 }

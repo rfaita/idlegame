@@ -83,7 +83,7 @@ public class Battle extends BaseObject {
 
     public Player doBattle() {
         LOG.log(Level.FINEST, "[battle] INIT");
-        this.addBattleLog(new BattleLog(this.turn, new BattleEvent(BattleEventType.START)));
+        this.addBattleLog(new BattleLog(this.turn, new BattleEvent(ActionType.BATTLE_START)));
         this.prepareToBattle();
         doTurn();
 
@@ -157,7 +157,7 @@ public class Battle extends BaseObject {
             LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
             LOG.log(Level.FINEST, "[event=WINNER] WINNER: {0} on turn: {1}", new Object[]{this.winner, this.turn});
             LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
-            this.addBattleLog(new BattleLog(this.turn, new BattleEvent(BattleEventType.END)));
+            this.addBattleLog(new BattleLog(this.turn, new BattleEvent(ActionType.BATTLE_END)));
         }
 
     }
@@ -178,163 +178,157 @@ public class Battle extends BaseObject {
             return;
         }
 
-        if (aPositionedHero.getHero().getSkillPercentage() >= 100) {
-            doSpecialAction(aPositionedHero);
-        } else {
-            LOG.log(Level.FINEST, "[event=NORMAL_ATTACK]");
-            doNormalAttack(aPositionedHero);
-        }
-
-    }
-
-    private void doSpecialAction(BattlePositionedHero aPositionedHero) {
-
-        BattleEvent ret = new BattleEvent(BattleEventType.SPECIAL);
-
         Hero aHero = aPositionedHero.getHero();
 
-        Skill ss = aHero.getHeroType().getSpecialSkill();
+        Action action = aHero.getHeroType().getDefaultAction();
 
-        List<BattlePositionedHero> targets = getSkillEffectTarget(ss.getMainEffect().getTargetType(),
-                aPositionedHero.getBattleTeamType().equals(BattleTeamType.ATTACK) ? BattleTeamType.DEFENSE : BattleTeamType.ATTACK);
+        ActionEffect mainAction = action.getMainAction();
 
-        LOG.log(Level.FINEST, "[event=SS] {0}", ss);
+        List<BattlePositionedHero> targets = getTargets(
+                mainAction.getTargetType() == null ? aHero.getHeroType().getAtittudeType().getTargetType() : mainAction.getTargetType(),
+                mainAction.getActionOverSameTeam() ? aPositionedHero.getBattleTeamType() : aPositionedHero.getBattleTeamType().getOpposite());
+
+        LOG.log(Level.FINEST, "[event=ACTION] {0}", action);
 
         targets.forEach((tPositionedHero) -> {
 
             Hero tHero = tPositionedHero.getHero();
 
-            if (!ss.getMainEffect().getCanBeDodge() || DiceUtil.random(100) > tHero.getCurrentDodgeChance()) {
+            BattleEvent ret = new BattleEvent(mainAction.getActionType());
 
-                DamageType skillDamageType = ss.getMainEffect().getDamageType();
-                Integer skillDamagePercentage = ss.getMainEffect().getEffectDamagePercentage();
-                Integer currentDmg = aHero.getCurrentMeleeDmg() > 0 ? aHero.getCurrentMeleeDmg() : aHero.getCurrentRangedDmg();
+            if (!mainAction.getCanBeDodge()
+                    || tHero.getCurrentDodgeChance() == 0 || DiceUtil.random(100) > tHero.getCurrentDodgeChance()) {
 
-                Double dmgModifier = 1.0d;
-
-                if (DiceUtil.random(100) <= aHero.getCurrentCritChance()) {
-                    dmgModifier += aHero.getCurrentCritDamage() / 100d;
-                    ret.setType(BattleEventType.CRITICAL);
-                    LOG.log(Level.FINEST, "[event=CRITICAL, value={0}] CRITICAL, MODIFIER {0}", dmgModifier);
-                }
-
-                aHero.setSkillPercentage(0);
-                //Ganha 25% da Skill Percentage por ataque sofrido
-                tHero.setSkillPercentage((int) (tHero.getSkillPercentage() + (getLoadedSkillPercentage(tHero) * 0.25)));
-
-                ret.setValue(-(int) ((currentDmg * dmgModifier * skillDamagePercentage / 100f)
-                        * (skillDamageType.equals(DamageType.PHYSICAL) ? getDmgAmorReduction(tHero) : getDmgMagicResistReduction(tHero))));
-                ret.setDamageType(skillDamageType);
-
-                Integer newHp = tHero.getCurrentHp() + ret.getValue();
-                if (newHp < 0) {
-                    tHero.setCurrentHp(0);
-                    LOG.log(Level.FINEST, "[event=DMG_TO_DIE, value={0}] DMG {0} TO HERO, HE DIE {1}", new Object[]{ret.getValue(), tHero});
-                } else {
-                    tHero.setCurrentHp(newHp);
-                    LOG.log(Level.FINEST, "[event=DMG, value={0}] DMG {0} TO HERO {1}", new Object[]{ret.getValue(), tHero});
+                switch (mainAction.getActionType()) {
+                    case DMG:
+                        doDamage(ret, aHero, mainAction, tHero);
+                        break;
+                    case HEAL:
+                        doHeal(ret, aHero, mainAction, tHero);
+                        break;
                 }
 
             } else {
-                aHero.setSkillPercentage(0);
-                ret.setType(BattleEventType.DODGE);
+                ret.setSubType(SubActionType.DODGE);
+                LOG.log(Level.FINEST, "[event=DODGE] DODGE");
             }
 
             this.addBattleLog(new BattleLog(this.turn, aPositionedHero.duplicate(), ret, tPositionedHero.duplicate()));
         });
 
-        doSpecialActionSecundary(ret.getValue(), aPositionedHero, targets);
+//        doSecundaryActions(ret.getValue(), aPositionedHero, targets);
 
     }
 
-    private BattleEvent doDamage(BattleEvent ret, Integer currentDmg, Integer dmgModifier, DamageType damageType, Hero tHero) {
+    private Double calculateModifier(BattleEvent ret, Hero aHero) {
+        Double dmgModifier = 1.0d;
 
-        ret.setValue(-(int) ((currentDmg * dmgModifier / 100d)
-                * (damageType.equals(DamageType.PHYSICAL) ? getDmgAmorReduction(tHero) : getDmgMagicResistReduction(tHero))));
-        ret.setDamageType(damageType);
+        if (aHero.getCurrentCritChance() > 0
+                && DiceUtil.random(100) <= aHero.getCurrentCritChance()) {
+            dmgModifier += aHero.getCurrentCritDamage() / 100d;
+            ret.setSubType(SubActionType.CRITICAL);
+            LOG.log(Level.FINEST, "[event=CRITICAL, value={0}] CRITICAL, MODIFIER {0}", dmgModifier);
+        }
+
+        return dmgModifier;
+    }
+
+    private void doDamage(BattleEvent ret, Hero aHero, ActionEffect ae, Hero tHero) {
+
+        ret.setValue(-(int) ((aHero.getCurrentDmg() * calculateModifier(ret, aHero) * ae.getActionPercentage() / 100f)
+                * (ae.getDamageType().equals(DamageType.PHYSICAL) ? getDmgAmorReduction(tHero) : getDmgMagicResistReduction(tHero))));
+        ret.setDamageType(ae.getDamageType());
 
         Integer newHp = tHero.getCurrentHp() + ret.getValue();
         if (newHp < 0) {
             tHero.setCurrentHp(0);
+            ret.setSubType(SubActionType.DEATH);
             LOG.log(Level.FINEST, "[event=DMG_TO_DIE, value={0}] DMG {0} TO HERO, HE DIE {1}", new Object[]{ret.getValue(), tHero});
         } else {
             tHero.setCurrentHp(newHp);
             LOG.log(Level.FINEST, "[event=DMG, value={0}] DMG {0} TO HERO {1}", new Object[]{ret.getValue(), tHero});
         }
 
-        return ret;
+    }
+
+    private void doHeal(BattleEvent ret, Hero aHero, ActionEffect ae, Hero tHero) {
+
+        ret.setValue((int) ((aHero.getCurrentDmg() * ae.getActionPercentage() / 100f)));
+        ret.setDamageType(ae.getDamageType());
+
+        tHero.setCurrentHp(tHero.getCurrentHp() + ret.getValue());
+        LOG.log(Level.FINEST, "[event=HEAL, value={0}] HEAL {0} TO HERO {1}", new Object[]{ret.getValue(), tHero});
 
     }
 
-    private void doSpecialActionSecundary(Integer dmg, BattlePositionedHero aPositionedHero, List<BattlePositionedHero> lastTargetPositionedHero) {
+//    private void doSecundaryActions(Integer dmg, BattlePositionedHero aPositionedHero, List<BattlePositionedHero> lastTargetPositionedHero) {
+//
+//        LOG.log(Level.FINEST, "[event=SECUNDARY_EFFECTS]");
+//
+//        Hero aHero = aPositionedHero.getHero();
+//
+//        Action ss = aHero.getHeroType().getDefaultAction();
+//
+//        if (!ss.getSecundaryActions().isEmpty()) {
+//            ss.getSecundaryActions().forEach((sse) -> {
+//                switch (sse.getActionType()) {
+//                    case HEAL:
+//                        doSpecialActionHeal(dmg, sse, aPositionedHero);
+//                        break;
+//                    case DMG:
+//                        doSpecialActionDmg(dmg, sse, aPositionedHero, lastTargetPositionedHero);
+//                        break;
+//                }
+//
+//            });
+//        }
+//    }
 
-        LOG.log(Level.FINEST, "[event=SECUNDARY_EFFECTS]");
-
-        Hero aHero = aPositionedHero.getHero();
-
-        Skill ss = aHero.getHeroType().getSpecialSkill();
-
-        if (!ss.getSecundaryEffects().isEmpty()) {
-            ss.getSecundaryEffects().forEach((sse) -> {
-                switch (sse.getSkillEffectType()) {
-                    case HEAL:
-                        doSpecialActionHeal(dmg, sse, aPositionedHero);
-                        break;
-                    case DMG:
-                        doSpecialActionDmg(dmg, sse, aPositionedHero, lastTargetPositionedHero);
-                        break;
-                }
-
-            });
-        }
-    }
-
-    private void doSpecialActionHeal(Integer dmg, SkillEffect sse, BattlePositionedHero aPositionedHero) {
-
-        BattleEvent ret = new BattleEvent(BattleEventType.HEAL);
-
-        ret.setValue(-(int) ((dmg * sse.getEffectDamagePercentage() / 100f * sse.getEffectChance() / 100f)));
-        ret.setDamageType(DamageType.MAGIC);
-
-        final List<BattlePositionedHero> targets = getSkillEffectTarget(sse.getTargetType(), aPositionedHero.getBattleTeamType());
-
-        List<BattlePositionedHero> targetsLog = new ArrayList<>();
-        targets.forEach((t) -> {
-            t.getHero().setCurrentHp(t.getHero().getCurrentHp() + ret.getValue());
-            LOG.log(Level.FINEST, "[event=HEAL, value={0}] HEAL {0} TO HERO {1}", new Object[]{ret.getValue(), t});
-            if (sse.getEffectTurnDuration() > 0) {
-                t.getHero().addBuff(new Buff(sse.getEffectTurnDuration(), ret.getValue(), EffectType.HEAL));
-            }
-            targetsLog.add(t.duplicate());
-        });
-
-        this.addBattleLog(new BattleLog(this.turn, aPositionedHero.duplicate(), ret, targetsLog));
-
-    }
-
-    private void doSpecialActionDmg(Integer dmg, SkillEffect sse, BattlePositionedHero aPositionedHero, List<BattlePositionedHero> lastTargetPositionedHero) {
-
-        BattleEvent ret = new BattleEvent(BattleEventType.DMG);
-
-        ret.setValue(-(int) ((dmg * sse.getEffectDamagePercentage() / 100f * sse.getEffectChance() / 100f)));
-        ret.setDamageType(sse.getDamageType());
-
-        final List<BattlePositionedHero> targets;
-        if (sse.getTargetType().equals(TargetType.LAST_ONE)) {
-            targets = lastTargetPositionedHero;
-        } else {
-            targets = getSkillEffectTarget(sse.getTargetType(),
-                    aPositionedHero.getBattleTeamType().equals(BattleTeamType.ATTACK) ? BattleTeamType.DEFENSE : BattleTeamType.ATTACK);
-        }
-
-        targets.forEach((t) -> {
-            doDamage(ret, ret.getValue(), 100, DamageType.MAGIC, t.getHero());
-            this.addBattleLog(new BattleLog(this.turn, aPositionedHero.duplicate(), ret, t.duplicate()));
-        });
-
-    }
-
-    private List<BattlePositionedHero> getSkillEffectTarget(TargetType targetType, BattleTeamType battleTeamTypeTarget) {
+//    private void doSpecialActionHeal(Integer dmg, ActionEffect sse, BattlePositionedHero aPositionedHero) {
+//
+//        BattleEvent ret = new BattleEvent(BattleEventType.HEAL);
+//
+//        ret.setValue(-(int) ((dmg * sse.getActionPercentage() / 100f * sse.getActionChance() / 100f)));
+//        ret.setDamageType(DamageType.MAGIC);
+//
+//        final List<BattlePositionedHero> targets = getTargets(sse.getTargetType(), aPositionedHero.getBattleTeamType());
+//
+//        List<BattlePositionedHero> targetsLog = new ArrayList<>();
+//        targets.forEach((t) -> {
+//            t.getHero().setCurrentHp(t.getHero().getCurrentHp() + ret.getValue());
+//            LOG.log(Level.FINEST, "[event=HEAL, value={0}] HEAL {0} TO HERO {1}", new Object[]{ret.getValue(), t});
+//            if (sse.getActionDuration() > 0) {
+//                t.getHero().addBuff(new Buff(sse.getActionDuration(), ret.getValue(), ActionType.HEAL));
+//            }
+//            targetsLog.add(t.duplicate());
+//        });
+//
+//        this.addBattleLog(new BattleLog(this.turn, aPositionedHero.duplicate(), ret, targetsLog));
+//
+//    }
+//
+//    private void doSpecialActionDmg(Integer dmg, ActionEffect sse, BattlePositionedHero aPositionedHero, List<BattlePositionedHero> lastTargetPositionedHero) {
+//
+//        BattleEvent ret = new BattleEvent(BattleEventType.DMG);
+//
+//        ret.setValue(-(int) ((dmg * sse.getActionPercentage() / 100f * sse.getActionChance() / 100f)));
+//        ret.setDamageType(sse.getDamageType());
+//
+//        final List<BattlePositionedHero> targets;
+//        if (sse.getTargetType().equals(TargetType.LAST_ONE)) {
+//            targets = lastTargetPositionedHero;
+//        } else {
+//            targets = getTargets(sse.getTargetType(),
+//                    aPositionedHero.getBattleTeamType().equals(BattleTeamType.ATTACK) ? BattleTeamType.DEFENSE : BattleTeamType.ATTACK);
+//        }
+//
+//        targets.forEach((t) -> {
+//            doDamage(ret, ret.getValue(), 100, DamageType.MAGIC, t.getHero());
+//            this.addBattleLog(new BattleLog(this.turn, aPositionedHero.duplicate(), ret, t.duplicate()));
+//        });
+//
+//    }
+    private List<BattlePositionedHero> getTargets(TargetType targetType, BattleTeamType battleTeamTypeTarget) {
 
         List<BattlePositionedHero> targets = new ArrayList<>();
         switch (targetType) {
@@ -371,94 +365,6 @@ public class Battle extends BaseObject {
         LOG.log(Level.FINEST, "[target] {0}", targets);
 
         return targets;
-    }
-
-    private void doNormalAttack(BattlePositionedHero aPositionedHero) {
-
-        BattleEvent ret = new BattleEvent(BattleEventType.DMG);
-
-        BattlePositionedHero tPositionedHero = getNormalAttackTarget(aPositionedHero);
-
-        if (tPositionedHero != null) {
-            Hero aHero = aPositionedHero.getHero();
-            Hero tHero = tPositionedHero.getHero();
-
-            if (tHero.getCurrentDodgeChance() == 0 || DiceUtil.random(100) > tHero.getCurrentDodgeChance()) {
-
-                DamageType damageType = aHero.getCurrentMeleeDmg() > 0 ? aHero.getDmgTypeMelee() : aHero.getDmgTypeRanged();
-                Integer currentDmg = aHero.getCurrentMeleeDmg() > 0 ? aHero.getCurrentMeleeDmg() : aHero.getCurrentRangedDmg();
-
-                Integer dmgModifier = 100;
-
-                if (aHero.getCurrentCritChance() > 0 && DiceUtil.random(100) <= aHero.getCurrentCritChance()) {
-                    dmgModifier += aHero.getCurrentCritDamage();
-                    ret.setType(BattleEventType.CRITICAL);
-                    LOG.log(Level.FINEST, "[event=CRITICAL, value={0}] CRITICAL, MODIFIER {0}", dmgModifier);
-                }
-
-                aHero.setSkillPercentage((int) (aHero.getSkillPercentage() + getLoadedSkillPercentage(aHero)));
-                //Ganha 25% da Skill Percentage por ataque sofrido
-                tHero.setSkillPercentage((int) (tHero.getSkillPercentage() + (getLoadedSkillPercentage(tHero) * 0.25)));
-
-                doDamage(ret, currentDmg, dmgModifier, damageType, tHero);
-
-            } else {
-                ret.setType(BattleEventType.DODGE);
-            }
-
-            this.addBattleLog(new BattleLog(this.turn, aPositionedHero.duplicate(), ret, tPositionedHero.duplicate()));
-        }
-
-    }
-
-    private BattlePositionedHero getNormalAttackTarget(BattlePositionedHero pAction) {
-
-        BattleTeamType battleTeamTypeTarget = pAction.getBattleTeamType().equals(BattleTeamType.ATTACK) ? BattleTeamType.DEFENSE : BattleTeamType.ATTACK;
-
-        BattlePositionedHero pTarget = null;
-        switch (pAction.getHero().getHeroType().getAtittudeType()) {
-            case AGGRESSIVE:
-                pTarget = getHeroLessLifePerc(battleTeamTypeTarget);
-                break;
-            case HUNTER:
-                pTarget = getHeroLessLife(battleTeamTypeTarget);
-                break;
-            case SUPPORT:
-                pTarget = getRandomHero(battleTeamTypeTarget);
-                break;
-            case CONTROL:
-                pTarget = getRandomHero(battleTeamTypeTarget);
-                break;
-            case HEALER:
-                pTarget = getRandomHero(battleTeamTypeTarget);
-                break;
-            case DEFENSIVE:
-                pTarget = getRandomHero(battleTeamTypeTarget);
-                break;
-            case STRATEGIST:
-                pTarget = getRandomHero(battleTeamTypeTarget);
-                break;
-            case SPLITTER:
-                pTarget = getRandomHero(battleTeamTypeTarget);
-                break;
-            default:
-                pTarget = getRandomHero(battleTeamTypeTarget);
-                break;
-        }
-
-        LOG.log(Level.FINEST, "[target] {0}", pTarget);
-
-        return pTarget;
-    }
-
-    private Double getLoadedSkillPercentage(Hero h) {
-        Double ret = (1d - (100d / (100d + h.getCurrentSpeed()))) * 100;
-
-        if (ret > 100d) {
-            return 100d;
-        } else {
-            return ret;
-        }
     }
 
     private Double getDmgMagicResistReduction(Hero h) {
@@ -609,7 +515,7 @@ public class Battle extends BaseObject {
                 switch (buff.getEffectType()) {
                     case HEAL:
                         battlePositionedHero.getHero().setCurrentHp(battlePositionedHero.getHero().getCurrentHp() + buff.getValue());
-                        ret.setType(BattleEventType.HEAL);
+                        ret.setType(ActionType.HEAL);
                         ret.setValue(buff.getValue());
                         ret.setDamageType(DamageType.MAGIC);
                         ret.setBuffType(BuffType.BUFF);
@@ -620,7 +526,7 @@ public class Battle extends BaseObject {
                 if (buff.getCurrentTurn() >= buff.getTurnDuration()) {
                     it.remove();
                     BattleEvent beBuffDone = new BattleEvent();
-                    beBuffDone.setType(BattleEventType.BUFF_DONE);
+                    beBuffDone.setType(ActionType.BUFF_DONE);
                     this.addBattleLog(new BattleLog(this.turn, battlePositionedHero.duplicate(), beBuffDone, buff));
                 }
 

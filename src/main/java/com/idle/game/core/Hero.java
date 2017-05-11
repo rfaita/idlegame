@@ -63,8 +63,6 @@ public class Hero extends BaseObject {
 
     private List<Buff> currentBuffs;
 
-    private Integer skillPercentage;
-
     private Item chest;
     private Item weapon;
     private Item boot;
@@ -422,8 +420,8 @@ public class Hero extends BaseObject {
         this.currentHp = currentHp;
     }
 
-    public Integer getSkillPercentage() {
-        return skillPercentage;
+    public Integer getCurrentDmg() {
+        return this.getCurrentMeleeDmg() > 0 ? this.getCurrentMeleeDmg() : this.getCurrentRangedDmg();
     }
 
     public List<Buff> getCurrentBuffs() {
@@ -436,13 +434,6 @@ public class Hero extends BaseObject {
 
     public void addBuff(Buff buff) {
         this.currentBuffs.add(buff);
-    }
-
-    public void setSkillPercentage(Integer skillPercentage) {
-        if (skillPercentage > 100) {
-            skillPercentage = 100;
-        }
-        this.skillPercentage = skillPercentage;
     }
 
     public void setBoot(Item i) throws Exception {
@@ -505,7 +496,6 @@ public class Hero extends BaseObject {
         this.setCurrentMeleeDmg(this.getMeleeDmg());
         this.setCurrentRangedDmg(this.getRangedDmg());
         this.setCurrentSpeed(this.getSpeed());
-        this.setSkillPercentage(0);
         this.setCurrentBuffs(new ArrayList<>());
     }
 
@@ -564,7 +554,7 @@ public class Hero extends BaseObject {
 
     @Override
     public String toString() {
-        return "H{" + "id=" + this.uuid.toString().substring(0, 7) + ",currHp=" + this.currentHp + ",ss%=" + this.skillPercentage + ",type=" + this.heroType + '}';
+        return "H{" + "id=" + this.uuid.toString().substring(0, 7) + ",currHp=" + this.currentHp + ",type=" + this.heroType + '}';
     }
 
     @Override

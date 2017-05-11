@@ -4,8 +4,8 @@ package com.idle.game.core;
  *
  * @author rafael
  */
-public enum EffectType {
+public enum ActionType {
 
-    DMG, HEAL, FROZEN, STUN, SILENCE, REVIVE
+    BATTLE_START, BATTLE_END, DMG, HEAL, REVIVE, BUFF_DONE
 
 }

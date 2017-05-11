@@ -9,14 +9,14 @@ public class HeroType extends BaseObject {
     private String name;
     private Integer stars;
     private AtittudeType atittudeType;
-    private Skill specialSkill;
+    private Action defaultAction;
 
-    public Skill getSpecialSkill() {
-        return specialSkill;
+    public Action getDefaultAction() {
+        return defaultAction;
     }
 
-    public void setSpecialSkill(Skill specialSkill) {
-        this.specialSkill = specialSkill;
+    public void setDefaultAction(Action a) {
+        this.defaultAction = a;
     }
 
     public String getName() {

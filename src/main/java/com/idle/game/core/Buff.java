@@ -12,7 +12,7 @@ public class Buff extends BaseObject {
     private Integer turnDuration;
     private Integer currentTurn;
     private Integer value;
-    private EffectType effectType;
+    private ActionType effectType;
 
     public Integer getTurnDuration() {
         return turnDuration;
@@ -38,18 +38,18 @@ public class Buff extends BaseObject {
         this.value = value;
     }
 
-    public EffectType getEffectType() {
+    public ActionType getEffectType() {
         return effectType;
     }
 
-    public void setEffectType(EffectType effectType) {
+    public void setEffectType(ActionType effectType) {
         this.effectType = effectType;
     }
 
     public Buff() {
     }
 
-    public Buff(Integer turnDuration, Integer value, EffectType effectType) {
+    public Buff(Integer turnDuration, Integer value, ActionType effectType) {
         this.uuid = UUID.randomUUID();
         this.turnDuration = turnDuration;
         this.value = value;
@@ -57,7 +57,7 @@ public class Buff extends BaseObject {
         this.currentTurn = 0;
     }
 
-    public Buff(Integer turnDuration, Integer currentTurn, Integer value, EffectType effectType) {
+    public Buff(Integer turnDuration, Integer currentTurn, Integer value, ActionType effectType) {
         this.uuid = UUID.randomUUID();
         this.turnDuration = turnDuration;
         this.currentTurn = currentTurn;

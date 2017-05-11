@@ -7,39 +7,39 @@ import java.util.List;
  *
  * @author rafael
  */
-public class Skill extends BaseObject {
+public class Action extends BaseObject {
     
-    private SkillEffect mainEffect;
+    private ActionEffect mainAction;
     
-    private List<SkillEffect> secundaryEffects = new ArrayList<>();
+    private List<ActionEffect> secundaryActions = new ArrayList<>();
     
-    public Skill() {
+    public Action() {
     }
     
-    public Skill(SkillEffect mainEffect, List<SkillEffect> secundaryEffects) {
-        this.mainEffect = mainEffect;
-        this.secundaryEffects = secundaryEffects;
+    public Action(ActionEffect ma, List<ActionEffect> se) {
+        this.mainAction = ma;
+        this.secundaryActions = se;
     }
     
-    public SkillEffect getMainEffect() {
-        return mainEffect;
+    public ActionEffect getMainAction() {
+        return mainAction;
     }
     
-    public void setMainEffect(SkillEffect mainEffect) {
-        this.mainEffect = mainEffect;
+    public void setMainAction(ActionEffect ma) {
+        this.mainAction = ma;
     }
     
-    public List<SkillEffect> getSecundaryEffects() {
-        return secundaryEffects;
+    public List<ActionEffect> getSecundaryActions() {
+        return secundaryActions;
     }
     
-    public void addSecundaryEffects(SkillEffect secundaryEffect) {
-        this.secundaryEffects.add(secundaryEffect);
+    public void addSecundaryActions(ActionEffect se) {
+        this.secundaryActions.add(se);
     }
 
     @Override
     public String toString() {
-        return "SS{" + "me=" + mainEffect + ", ses=" + secundaryEffects + '}';
+        return "SS{" + "ma=" + mainAction + ", sas=" + secundaryActions + '}';
     }
     
     

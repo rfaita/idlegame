@@ -6,6 +6,10 @@ package com.idle.game.core;
  */
 public enum BattleTeamType {
 
-    ATTACK, DEFENSE
+    ATTACK, DEFENSE;
+
+    public BattleTeamType getOpposite() {
+        return (this.equals(ATTACK) ? DEFENSE : ATTACK);
+    }
 
 }

@@ -11,9 +11,9 @@ import com.idle.game.core.ItemQuality;
 import com.idle.game.core.ItemType;
 import com.idle.game.core.Player;
 import com.idle.game.core.PositionedHero;
-import com.idle.game.core.Skill;
-import com.idle.game.core.SkillEffect;
-import com.idle.game.core.EffectType;
+import com.idle.game.core.Action;
+import com.idle.game.core.ActionEffect;
+import com.idle.game.core.ActionType;
 import com.idle.game.core.TargetType;
 import java.util.UUID;
 
@@ -159,18 +159,15 @@ public class TestHelper {
         return new Item("", ItemQuality.NORMAL, ItemType.BOOT, 0, 0, 10, 10, 0, 0, 0, 0, 0, 0, 50);
     }
 
-    public static Skill createBasicHealSpell() {
-        Skill healSkill = new Skill();
-        healSkill.setMainEffect(new SkillEffect(EffectType.DMG, TargetType.MORE_LIFE, 100, DamageType.MAGIC));
-        healSkill.addSecundaryEffects(new SkillEffect(EffectType.HEAL, TargetType.LESS_LIFE, 100, 100, 0, DamageType.MAGIC));
+    public static Action createBasicHealSpell() {
+        Action healSkill = new Action();
+        healSkill.setMainAction(new ActionEffect(ActionType.HEAL, TargetType.LESS_LIFE, 100, 0, 0, DamageType.MAGIC, Boolean.TRUE));
 
         return healSkill;
     }
 
-    public static Skill createHealSpellWithBuff() {
-        Skill healSkill = new Skill();
-        healSkill.setMainEffect(new SkillEffect(EffectType.DMG, TargetType.MORE_LIFE, 100, DamageType.MAGIC));
-        healSkill.addSecundaryEffects(new SkillEffect(EffectType.HEAL, TargetType.LESS_LIFE, 100, 100, 3, DamageType.MAGIC));
+    public static Action createHealSpellWithBuff() {
+        Action healSkill = new Action();
 
         return healSkill;
     }
