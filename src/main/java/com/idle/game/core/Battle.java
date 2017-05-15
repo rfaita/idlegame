@@ -229,7 +229,7 @@ public class Battle extends BaseObject {
 
     }
 
-    private Double calculateModifier(BattleEvent ret, Hero aHero) {
+    private Double criticalDamage(BattleEvent ret, Hero aHero) {
         Double dmgModifier = 1.0d;
 
         if (aHero.getCurrentCritChance() > 0
@@ -244,8 +244,9 @@ public class Battle extends BaseObject {
 
     private void doDamage(BattleEvent ret, Hero aHero, ActionEffect ae, Hero tHero) {
 
-        ret.setValue(-(int) ((aHero.getCurrentDmg() * calculateModifier(ret, aHero) * ae.getActionPercentage() / 100f)
-                * (ae.getDamageType().equals(DamageType.PHYSICAL) ? getDmgAmorReduction(tHero) : getDmgMagicResistReduction(tHero))));
+        Double dmgReduction = 1 - (ae.getDamageType().equals(DamageType.PHYSICAL) ? getDmgAmorReduction(tHero) : getDmgMagicResistReduction(tHero));
+        
+        ret.setValue(-(int) ((aHero.getCurrentDmg() * criticalDamage(ret, aHero) * ae.getActionPercentage() / 100f) * dmgReduction));
         ret.setDamageType(ae.getDamageType());
 
         Integer newHp = tHero.getCurrentHp() + ret.getValue();
