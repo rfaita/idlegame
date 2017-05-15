@@ -6,6 +6,6 @@ package com.idle.game.core;
  */
 public enum SubActionType {
 
-    DEATH, DODGE, CRITICAL, FROZEN, STUN, SILENCE
+    DEATH, DODGE, CRITICAL
 
 }

@@ -12,7 +12,16 @@ public class Buff extends BaseObject {
     private Integer turnDuration;
     private Integer currentTurn;
     private Integer value;
+    private DamageType damageType;
     private ActionType effectType;
+
+    public DamageType getDamageType() {
+        return damageType;
+    }
+
+    public void setDamageType(DamageType damageType) {
+        this.damageType = damageType;
+    }
 
     public Integer getTurnDuration() {
         return turnDuration;
@@ -49,21 +58,13 @@ public class Buff extends BaseObject {
     public Buff() {
     }
 
-    public Buff(Integer turnDuration, Integer value, ActionType effectType) {
+    public Buff(Integer turnDuration, Integer value, ActionType effectType, DamageType damageType) {
         this.uuid = UUID.randomUUID();
         this.turnDuration = turnDuration;
         this.value = value;
         this.effectType = effectType;
         this.currentTurn = 0;
-    }
-
-    public Buff(Integer turnDuration, Integer currentTurn, Integer value, ActionType effectType) {
-        this.uuid = UUID.randomUUID();
-        this.turnDuration = turnDuration;
-        this.currentTurn = currentTurn;
-        this.value = value;
-        this.effectType = effectType;
-        this.currentTurn = 0;
+        this.damageType = damageType;
     }
 
     @Override
@@ -93,7 +94,7 @@ public class Buff extends BaseObject {
 
     @Override
     public String toString() {
-        return "B{" + "td=" + turnDuration + ", ct=" + currentTurn + ", v=" + value + ", et=" + effectType + '}';
+        return "B{" + "td=" + turnDuration + ", ct=" + currentTurn + ", v=" + value + ", et=" + effectType + ", dt=" + damageType + '}';
     }
 
 }

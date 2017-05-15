@@ -24,7 +24,9 @@ import java.util.UUID;
 public class TestHelper {
 
     public static HeroType createBasicHeroType(AtittudeType a) {
-        return new HeroType(a);
+        HeroType ret = new HeroType(a);
+        ret.setDefaultAction(createBasicDmgAction());
+        return ret;
     }
 
     public static Hero createBasicMeleePhysicalNoCritNoDodgeNoBlock10000HpHero(HeroType type) {
@@ -159,15 +161,24 @@ public class TestHelper {
         return new Item("", ItemQuality.NORMAL, ItemType.BOOT, 0, 0, 10, 10, 0, 0, 0, 0, 0, 0, 50);
     }
 
+    public static Action createBasicDmgAction() {
+        Action healSkill = new Action();
+        healSkill.setMainActionEffect(new ActionEffect(ActionType.DMG, TargetType.LESS_LIFE, 100, 0, 0, DamageType.PHYSICAL, Boolean.FALSE));
+
+        return healSkill;
+    }
+
     public static Action createBasicHealSpell() {
         Action healSkill = new Action();
-        healSkill.setMainAction(new ActionEffect(ActionType.HEAL, TargetType.LESS_LIFE, 100, 0, 0, DamageType.MAGIC, Boolean.TRUE));
+        healSkill.setMainActionEffect(new ActionEffect(ActionType.HEAL, TargetType.LESS_LIFE, 100, 0, 0, DamageType.MAGIC, Boolean.TRUE));
 
         return healSkill;
     }
 
     public static Action createHealSpellWithBuff() {
         Action healSkill = new Action();
+        healSkill.setMainActionEffect(new ActionEffect(ActionType.HEAL, TargetType.LESS_LIFE, 100, 0, 0, DamageType.MAGIC, Boolean.TRUE));
+        healSkill.addSecundaryActionsEffects(new ActionEffect(ActionType.HEAL, TargetType.LESS_LIFE, 25, 0, 3, DamageType.MAGIC, Boolean.TRUE));
 
         return healSkill;
     }

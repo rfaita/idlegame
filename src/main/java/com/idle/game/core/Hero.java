@@ -60,6 +60,7 @@ public class Hero extends BaseObject {
     private Integer currentDodgeChance;
     private Integer currentBlockChance;
     private Integer currentHp;
+    private Boolean canDoAction;
 
     private List<Buff> currentBuffs;
 
@@ -373,6 +374,14 @@ public class Hero extends BaseObject {
         return currentLuck;
     }
 
+    public Boolean getCanDoAction() {
+        return canDoAction;
+    }
+
+    public void setCanDoAction(Boolean canDoAction) {
+        this.canDoAction = canDoAction;
+    }
+
     public void setCurrentLuck(Integer currentLuck) {
         this.currentLuck = currentLuck;
     }
@@ -413,17 +422,6 @@ public class Hero extends BaseObject {
         return currentHp;
     }
 
-    public void setCurrentHp(Integer currentHp) {
-        if (currentHp > getHp()) {
-            currentHp = getHp();
-        }
-        this.currentHp = currentHp;
-    }
-
-    public Integer getCurrentDmg() {
-        return this.getCurrentMeleeDmg() > 0 ? this.getCurrentMeleeDmg() : this.getCurrentRangedDmg();
-    }
-
     public List<Buff> getCurrentBuffs() {
         return currentBuffs;
     }
@@ -434,6 +432,24 @@ public class Hero extends BaseObject {
 
     public void addBuff(Buff buff) {
         this.currentBuffs.add(buff);
+    }
+
+    public void setCurrentHp(Integer currentHp) {
+        if (currentHp > getHp()) {
+            currentHp = getHp();
+        }
+        if (currentHp < 0) {
+            currentHp = 0;
+        }
+        this.currentHp = currentHp;
+    }
+
+    public DamageType getDmgType() {
+        return this.getDmgTypeMelee() != null ? this.getDmgTypeMelee() : this.getDmgTypeRanged();
+    }
+
+    public Integer getCurrentDmg() {
+        return this.getCurrentMeleeDmg() > 0 ? this.getCurrentMeleeDmg() : this.getCurrentRangedDmg();
     }
 
     public void setBoot(Item i) throws Exception {
@@ -485,18 +501,23 @@ public class Hero extends BaseObject {
     }
 
     public void prepareToBattle() {
+        this.prepareToComputeBuffs();
+        this.setCurrentHp(this.getHp());
+        this.setCurrentBuffs(new ArrayList<>());
+    }
+
+    public void prepareToComputeBuffs() {
         this.setCurrentArmor(this.getArmor());
         this.setCurrentBlockChance(this.getBlockChance());
         this.setCurrentCritChance(this.getCritChance());
         this.setCurrentCritDamage(this.getCritDamage());
         this.setCurrentDodgeChance(this.getDodgeChance());
-        this.setCurrentHp(this.getHp());
         this.setCurrentLuck(this.getLuck());
         this.setCurrentMagicResist(this.getMagicResist());
         this.setCurrentMeleeDmg(this.getMeleeDmg());
         this.setCurrentRangedDmg(this.getRangedDmg());
         this.setCurrentSpeed(this.getSpeed());
-        this.setCurrentBuffs(new ArrayList<>());
+        this.setCanDoAction(Boolean.TRUE);
     }
 
     private void calcAtributtes() {
@@ -576,10 +597,7 @@ public class Hero extends BaseObject {
             return false;
         }
         final Hero other = (Hero) obj;
-        if (!Objects.equals(this.uuid, other.uuid)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.uuid, other.uuid);
     }
 
 }

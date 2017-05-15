@@ -9,37 +9,37 @@ import java.util.List;
  */
 public class Action extends BaseObject {
     
-    private ActionEffect mainAction;
+    private ActionEffect mainActionEffect;
     
-    private List<ActionEffect> secundaryActions = new ArrayList<>();
+    private List<ActionEffect> secundaryActionsEffects = new ArrayList<>();
     
     public Action() {
     }
     
     public Action(ActionEffect ma, List<ActionEffect> se) {
-        this.mainAction = ma;
-        this.secundaryActions = se;
+        this.mainActionEffect = ma;
+        this.secundaryActionsEffects = se;
     }
     
-    public ActionEffect getMainAction() {
-        return mainAction;
+    public ActionEffect getMainActionEffect() {
+        return mainActionEffect;
     }
     
-    public void setMainAction(ActionEffect ma) {
-        this.mainAction = ma;
+    public void setMainActionEffect(ActionEffect ma) {
+        this.mainActionEffect = ma;
     }
     
-    public List<ActionEffect> getSecundaryActions() {
-        return secundaryActions;
+    public List<ActionEffect> getSecundaryActionsEffects() {
+        return secundaryActionsEffects;
     }
     
-    public void addSecundaryActions(ActionEffect se) {
-        this.secundaryActions.add(se);
+    public void addSecundaryActionsEffects(ActionEffect se) {
+        this.secundaryActionsEffects.add(se);
     }
 
     @Override
     public String toString() {
-        return "SS{" + "ma=" + mainAction + ", sas=" + secundaryActions + '}';
+        return "SS{" + "ma=" + mainActionEffect + ", sas=" + secundaryActionsEffects + '}';
     }
     
     

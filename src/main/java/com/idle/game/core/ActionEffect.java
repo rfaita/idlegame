@@ -9,7 +9,7 @@ public class ActionEffect extends BaseObject {
     private ActionType actionType;
     private TargetType targetType;
     //Habilidade pode errar?
-    private Boolean canBeDodge = Boolean.FALSE;
+    private Boolean canBeDodge = Boolean.TRUE;
     //Percentual do dano que sera utilizado no efeito caso o mesmo necessite
     private Integer actionPercentage;
     //Percentual do efeito ocorrer;
@@ -81,6 +81,10 @@ public class ActionEffect extends BaseObject {
 
     public void setDamageType(DamageType damageType) {
         this.damageType = damageType;
+    }
+
+    public ActionEffect(ActionType actionType, Integer actionPercentage, DamageType damageType) {
+        this(actionType, null, actionPercentage, null, null, damageType, null);
     }
 
     public ActionEffect(ActionType actionType, TargetType targetType,
