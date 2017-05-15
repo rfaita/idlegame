@@ -84,7 +84,7 @@ public class ActionEffect extends BaseObject {
     }
 
     public ActionEffect(ActionType actionType, Integer actionPercentage, DamageType damageType) {
-        this(actionType, null, actionPercentage, null, null, damageType, null);
+        this(actionType, null, actionPercentage, null, null, damageType, Boolean.FALSE);
     }
 
     public ActionEffect(ActionType actionType, TargetType targetType,

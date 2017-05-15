@@ -1,5 +1,8 @@
 package com.idle.game;
 
+import com.idle.game.core.Action;
+import com.idle.game.core.ActionEffect;
+import com.idle.game.core.ActionType;
 import com.idle.game.core.AtittudeType;
 import com.idle.game.core.Battle;
 import com.idle.game.core.BattlePositionType;
@@ -20,11 +23,12 @@ public class Main {
     public static void main(String args[]) throws Exception {
 
         HeroType type = new HeroType();
-        type.setAtittudeType(AtittudeType.HEALER);
-
+        type.setAtittudeType(AtittudeType.AGGRESSIVE);
+        type.setDefaultAction(new Action(new ActionEffect(ActionType.DMG, 50, DamageType.MAGIC), null));
 
         HeroType type2 = new HeroType();
-        type2.setAtittudeType(AtittudeType.HUNTER);
+        type2.setAtittudeType(AtittudeType.AGGRESSIVE);
+        type2.setDefaultAction(new Action(new ActionEffect(ActionType.DMG, 50, DamageType.PHYSICAL), null));
 
         Hero h1 = new Hero(UUID.randomUUID(), type, 1, 100, DamageType.PHYSICAL, 100, DamageType.PHYSICAL, 100, 100, 1, 10, 10, 50, 10, 11, 400);
         Hero h2 = new Hero(UUID.randomUUID(), type, 2, 100, DamageType.PHYSICAL, 100, DamageType.PHYSICAL, 100, 10, 2, 10, 10, 50, 10, 11, 400);
@@ -36,10 +40,10 @@ public class Main {
         Formation fAttack = new Formation();
         fAttack.addPositionedHero(new PositionedHero(BattlePositionType.FRONT_TOP, h1));
         fAttack.addPositionedHero(new PositionedHero(BattlePositionType.FRONT_BOTTOM, h2));
-        fAttack.addPositionedHero(new PositionedHero(BattlePositionType.BACK_0, h3));
-        fAttack.addPositionedHero(new PositionedHero(BattlePositionType.BACK_1, h4));
-        fAttack.addPositionedHero(new PositionedHero(BattlePositionType.BACK_2, h5));
-        fAttack.addPositionedHero(new PositionedHero(BattlePositionType.BACK_3, h6));
+        fAttack.addPositionedHero(new PositionedHero(BattlePositionType.FRONT_MIDDLE, h3));
+        fAttack.addPositionedHero(new PositionedHero(BattlePositionType.BACK_TOP, h4));
+        fAttack.addPositionedHero(new PositionedHero(BattlePositionType.BACK_MIDDLE, h5));
+        fAttack.addPositionedHero(new PositionedHero(BattlePositionType.BACK_BOTTOM, h6));
 
         Hero h7 = new Hero(UUID.randomUUID(), type, 7, 100, DamageType.MAGIC, 100, DamageType.PHYSICAL, 120, 101, 4, 10, 10, 50, 10, 11, 400);
         Hero h8 = new Hero(UUID.randomUUID(), type, 8, 100, DamageType.PHYSICAL, 100, DamageType.PHYSICAL, 134, 130, 5, 10, 10, 50, 10, 11, 400);
@@ -51,10 +55,10 @@ public class Main {
         Formation fDef = new Formation();
         fDef.addPositionedHero(new PositionedHero(BattlePositionType.FRONT_TOP, h7));
         fDef.addPositionedHero(new PositionedHero(BattlePositionType.FRONT_BOTTOM, h8));
-        fDef.addPositionedHero(new PositionedHero(BattlePositionType.BACK_0, h9));
-        fDef.addPositionedHero(new PositionedHero(BattlePositionType.BACK_1, h10));
-        fDef.addPositionedHero(new PositionedHero(BattlePositionType.BACK_2, h11));
-        fDef.addPositionedHero(new PositionedHero(BattlePositionType.BACK_3, h12));
+        fDef.addPositionedHero(new PositionedHero(BattlePositionType.FRONT_MIDDLE, h9));
+        fDef.addPositionedHero(new PositionedHero(BattlePositionType.BACK_TOP, h10));
+        fDef.addPositionedHero(new PositionedHero(BattlePositionType.BACK_MIDDLE, h11));
+        fDef.addPositionedHero(new PositionedHero(BattlePositionType.BACK_BOTTOM, h12));
 
         Player pAttack = new Player(UUID.randomUUID(), "test1");
         pAttack.setAttackFormation(fAttack);

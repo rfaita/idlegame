@@ -6,6 +6,6 @@ package com.idle.game.core;
  */
 public enum BattlePositionType {
 
-    FRONT_TOP, FRONT_BOTTOM, BACK_0, BACK_1, BACK_2, BACK_3
+    FRONT_TOP, FRONT_MIDDLE, FRONT_BOTTOM, BACK_TOP, BACK_MIDDLE, BACK_BOTTOM
 
 }

@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
  */
 public class Formation extends BaseObject {
 
+    private Integer size = 0;
     private final List<PositionedHero> heroes = new ArrayList<>(IdleConstants.MAX_SIZE_BACK_LINE + IdleConstants.MAX_SIZE_FRONT_LINE);
 
     public Formation() {
@@ -23,9 +24,13 @@ public class Formation extends BaseObject {
     }
 
     public void addPositionedHero(PositionedHero hero) throws Exception {
+        if (this.size + hero.getHero().getHeroType().getSize() > IdleConstants.MAX_SIZE_BACK_LINE + IdleConstants.MAX_SIZE_FRONT_LINE) {
+            throw new ValidationException("can.not.add.hero.maximum.size.reached");
+        }
         if (heroes.stream().filter((ph) -> (ph.getBattlePosition().equals(hero.getBattlePosition()))).count() > 0) {
             throw new ValidationException("can.not.add.hero.to.this.position");
         }
+        this.size += hero.getHero().getHeroType().getSize();
         this.heroes.add(hero);
     }
 
@@ -34,6 +39,7 @@ public class Formation extends BaseObject {
                 (ph) -> (ph.getBattlePosition().equals(p))
         ).findFirst();
         if (ret.isPresent()) {
+            this.size -= ret.get().getHero().getHeroType().getSize();
             this.heroes.remove(ret.get());
         }
     }
@@ -42,6 +48,7 @@ public class Formation extends BaseObject {
         return heroes.stream().filter((ph) -> {
             System.out.println(ph);
             return ph.getBattlePosition().equals(BattlePositionType.FRONT_BOTTOM)
+                    || ph.getBattlePosition().equals(BattlePositionType.FRONT_MIDDLE)
                     || ph.getBattlePosition().equals(BattlePositionType.FRONT_TOP);
         }
         ).collect(Collectors.toList());
@@ -50,10 +57,9 @@ public class Formation extends BaseObject {
 
     public List<PositionedHero> getFrontLinePositionedHeroes() {
         return heroes.stream().filter((ph) -> {
-            return (ph.getBattlePosition().equals(BattlePositionType.BACK_0)
-                    || ph.getBattlePosition().equals(BattlePositionType.BACK_1)
-                    || ph.getBattlePosition().equals(BattlePositionType.BACK_2)
-                    || ph.getBattlePosition().equals(BattlePositionType.BACK_3));
+            return (ph.getBattlePosition().equals(BattlePositionType.BACK_BOTTOM)
+                    || ph.getBattlePosition().equals(BattlePositionType.BACK_MIDDLE)
+                    || ph.getBattlePosition().equals(BattlePositionType.BACK_TOP));
         }).collect(Collectors.toList());
     }
 

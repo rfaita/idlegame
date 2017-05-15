@@ -116,17 +116,19 @@ public class Battle extends BaseObject {
 
         LOG.log(Level.FINEST, "[actions] INIT");
 
-        for (int i = 0; i < turnActionRated.size(); i++) {
-            LOG.log(Level.FINEST, "[action] INIT {0}", turnActionRated.get(i));
-            doAction(turnActionRated.get(i));
-            if (i < turnActionRated.size() - 1) {
-                if (calculateDoubleActionChance(turnActionRated.get(i), turnActionRated.get(i + 1))) {
-                    LOG.log(Level.FINEST, "[event=DOUBLE_ACTION]");
-                    doAction(turnActionRated.get(i));
+        if (this.winner == null) {
+            for (int i = 0; i < turnActionRated.size(); i++) {
+                LOG.log(Level.FINEST, "[action] INIT {0}", turnActionRated.get(i));
+                doAction(turnActionRated.get(i));
+                if (i < turnActionRated.size() - 1) {
+                    if (calculateDoubleActionChance(turnActionRated.get(i), turnActionRated.get(i + 1))) {
+                        LOG.log(Level.FINEST, "[event=DOUBLE_ACTION]");
+                        doAction(turnActionRated.get(i));
+                    }
                 }
+                LOG.log(Level.FINEST, "[action] END");
+                LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
             }
-            LOG.log(Level.FINEST, "[action] END");
-            LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
         }
         LOG.log(Level.FINEST, "[actions] END");
         LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
@@ -195,33 +197,35 @@ public class Battle extends BaseObject {
 
         LOG.log(Level.FINEST, "[event=ACTION] {0}", action);
 
-        targets.forEach((tPositionedHero) -> {
+        if (targets != null) {
+            targets.forEach((tPositionedHero) -> {
 
-            Hero tHero = tPositionedHero.getHero();
+                Hero tHero = tPositionedHero.getHero();
 
-            BattleEvent ret = new BattleEvent(actionMainEffect.getActionType());
+                BattleEvent ret = new BattleEvent(actionMainEffect.getActionType());
 
-            if (!actionMainEffect.getCanBeDodge()
-                    || tHero.getCurrentDodgeChance() == 0 || DiceUtil.random(100) > tHero.getCurrentDodgeChance()) {
+                if (!actionMainEffect.getCanBeDodge()
+                        || tHero.getCurrentDodgeChance() == 0 || DiceUtil.random(100) > tHero.getCurrentDodgeChance()) {
 
-                switch (actionMainEffect.getActionType()) {
-                    case DMG:
-                        doDamage(ret, aHero, actionMainEffect, tHero);
-                        break;
-                    case HEAL:
-                        doHeal(ret, aHero, actionMainEffect, tHero);
-                        break;
+                    switch (actionMainEffect.getActionType()) {
+                        case DMG:
+                            doDamage(ret, aHero, actionMainEffect, tHero);
+                            break;
+                        case HEAL:
+                            doHeal(ret, aHero, actionMainEffect, tHero);
+                            break;
+                    }
+
+                    calculateBuff(aHero, action, tHero);
+
+                } else {
+                    ret.setSubType(SubActionType.DODGE);
+                    LOG.log(Level.FINEST, "[event=DODGE] DODGE");
                 }
 
-                calculateBuff(aHero, action, tHero);
-
-            } else {
-                ret.setSubType(SubActionType.DODGE);
-                LOG.log(Level.FINEST, "[event=DODGE] DODGE");
-            }
-
-            this.addBattleLog(new BattleLog(this.turn, aPositionedHero.duplicate(), ret, tPositionedHero.duplicate()));
-        });
+                this.addBattleLog(new BattleLog(this.turn, aPositionedHero.duplicate(), ret, tPositionedHero.duplicate()));
+            });
+        }
 
     }
 
@@ -268,24 +272,27 @@ public class Battle extends BaseObject {
 
     private void calculateBuff(Hero aHero, Action a, Hero tHero) {
 
-        a.getSecundaryActionsEffects().forEach((sae) -> {
+        if (a.getSecundaryActionsEffects() != null) {
+            a.getSecundaryActionsEffects().forEach((sae) -> {
 
-            if (sae.getActionChance() == null
-                    || sae.getActionChance() == 0
-                    || DiceUtil.random(100) <= sae.getActionChance()) {
+                if (sae.getActionChance() == null
+                        || sae.getActionChance() == 0
+                        || DiceUtil.random(100) <= sae.getActionChance()) {
 
-                tHero.addBuff(new Buff(sae.getActionDuration(),
-                        (int) (aHero.getCurrentDmg() * sae.getActionPercentage() / 100d),
-                        sae.getActionType(), sae.getDamageType()));
-            }
+                    tHero.addBuff(new Buff(sae.getActionDuration(),
+                            (int) (aHero.getCurrentDmg() * sae.getActionPercentage() / 100d),
+                            sae.getActionType(), sae.getDamageType()));
+                }
 
-        });
+            });
+        }
 
     }
 
     private List<BattlePositionedHero> getTargets(TargetType targetType, BattleTeamType battleTeamTypeTarget) {
 
         List<BattlePositionedHero> targets = new ArrayList<>();
+        BattlePositionedHero t = null;
         switch (targetType) {
             case BACK_LINE:
                 targets.addAll(getBackLinePositionedHeroes(battleTeamTypeTarget));
@@ -300,20 +307,35 @@ public class Battle extends BaseObject {
                 targets.addAll(getFrontLinePositionedHeroes(battleTeamTypeTarget));
                 break;
             case LESS_LIFE:
-                targets.add(getHeroLessLife(battleTeamTypeTarget));
+                t = getHeroLessLife(battleTeamTypeTarget);
+                if (t != null) {
+                    targets.add(t);
+                }
                 break;
             case LESS_PERC_LIFE:
-                targets.add(getHeroLessLifePerc(battleTeamTypeTarget));
+                t = getHeroLessLifePerc(battleTeamTypeTarget);
+                if (t != null) {
+                    targets.add(t);
+                }
                 break;
             case MORE_LIFE:
-                targets.add(getHeroMoreLife(battleTeamTypeTarget));
+                t = getHeroMoreLife(battleTeamTypeTarget);
+                if (t != null) {
+                    targets.add(t);
+                }
                 break;
             case MORE_PERC_LIFE:
-                targets.add(getHeroMoreLifePerc(battleTeamTypeTarget));
+                t = getHeroMoreLifePerc(battleTeamTypeTarget);
+                if (t != null) {
+                    targets.add(t);
+                }
                 break;
             case RANDOM:
             default:
-                targets.add(getRandomHero(battleTeamTypeTarget));
+                t = getRandomHero(battleTeamTypeTarget);
+                if (t != null) {
+                    targets.add(t);
+                }
                 break;
         }
 
@@ -411,18 +433,17 @@ public class Battle extends BaseObject {
     private List<BattlePositionedHero> getBackLinePositionedHeroes(BattleTeamType battleTeamType) {
         return this.getHeroesByBattleTeamTypeCanDoAction(battleTeamType).filter((ph) -> {
             return ph.getBattlePosition().equals(BattlePositionType.FRONT_BOTTOM)
+                    || ph.getBattlePosition().equals(BattlePositionType.FRONT_MIDDLE)
                     || ph.getBattlePosition().equals(BattlePositionType.FRONT_TOP);
-        }
-        ).collect(Collectors.toList());
+        }).collect(Collectors.toList());
 
     }
 
     private List<BattlePositionedHero> getFrontLinePositionedHeroes(BattleTeamType battleTeamType) {
         return this.getHeroesByBattleTeamTypeCanDoAction(battleTeamType).filter((ph) -> {
-            return (ph.getBattlePosition().equals(BattlePositionType.BACK_0)
-                    || ph.getBattlePosition().equals(BattlePositionType.BACK_1)
-                    || ph.getBattlePosition().equals(BattlePositionType.BACK_2)
-                    || ph.getBattlePosition().equals(BattlePositionType.BACK_3));
+            return (ph.getBattlePosition().equals(BattlePositionType.BACK_BOTTOM)
+                    || ph.getBattlePosition().equals(BattlePositionType.BACK_MIDDLE)
+                    || ph.getBattlePosition().equals(BattlePositionType.BACK_TOP));
         }).collect(Collectors.toList());
     }
 
@@ -461,7 +482,14 @@ public class Battle extends BaseObject {
 
     private void computeBuffs(List<BattlePositionedHero> battlePositionedHeroes) {
 
-        battlePositionedHeroes.forEach((battlePositionedHero) -> {
+        for (int i = battlePositionedHeroes.size() - 1; i >= 0; i--) {
+
+            BattlePositionedHero battlePositionedHero = this.battlePositionedHeroes.get(i);
+
+            if ((this.winner = this.verifyWinner()) != null) {
+                return;
+            }
+
             battlePositionedHero.getHero().prepareToComputeBuffs();
 
             Iterator<Buff> it = battlePositionedHero.getHero().getCurrentBuffs().iterator();
@@ -501,7 +529,7 @@ public class Battle extends BaseObject {
 
             }
 
-        });
+        }
 
     }
 

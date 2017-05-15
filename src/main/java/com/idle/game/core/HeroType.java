@@ -8,6 +8,7 @@ public class HeroType extends BaseObject {
 
     private String name;
     private Integer stars;
+    private Integer size = 1;
     private AtittudeType atittudeType;
     private Action defaultAction;
 
@@ -41,6 +42,14 @@ public class HeroType extends BaseObject {
 
     public void setAtittudeType(AtittudeType atittudeType) {
         this.atittudeType = atittudeType;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
     }
 
     public HeroType() {
