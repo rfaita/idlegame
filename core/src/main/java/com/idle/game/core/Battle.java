@@ -22,27 +22,29 @@ public class Battle extends BaseObject {
 
     private final List<BattleLog> battleLog;
     private Integer turn = 1;
-    private final Player attackPlayer;
-    private final Player defensePlayer;
+    private final Formation attackFormation;
+    private final Formation defenseFormation;
     private final List<BattlePositionedHero> battlePositionedHeroes;
-    private Player winner;
+    private Formation winner;
 
-    public Battle(Player attackPlayer, Player defensePlayer) throws Exception {
-        if (attackPlayer.getAttackFormation() == null) {
-            throw new ValidationException("player.do.not.have.attack.formation");
+    public Battle(Formation a, Formation d) throws Exception {
+        if (a == null) {
+            throw new ValidationException("not.have.attack.formation");
         }
-        if (defensePlayer.getDefenseFormation() == null) {
-            throw new ValidationException("player.do.not.have.defense.formation");
+        if (d == null) {
+            throw new ValidationException("not.have.defense.formation");
         }
-        this.attackPlayer = attackPlayer;
-        this.defensePlayer = defensePlayer;
+        this.attackFormation = a;
+        this.attackFormation.setFormationType(FormationType.ATTACK);
+        this.defenseFormation = d;
+        this.defenseFormation.setFormationType(FormationType.DEFENSE);
 
         this.battlePositionedHeroes = new ArrayList<>();
 
-        this.attackPlayer.getAttackFormation().getPositionedHeroes().forEach((t) -> {
+        this.attackFormation.getPositionedHeroes().forEach((t) -> {
             this.battlePositionedHeroes.add(new BattlePositionedHero(BattleTeamType.ATTACK, t.getBattlePosition(), t.getHero()));
         });
-        this.defensePlayer.getDefenseFormation().getPositionedHeroes().forEach((t) -> {
+        this.defenseFormation.getPositionedHeroes().forEach((t) -> {
             this.battlePositionedHeroes.add(new BattlePositionedHero(BattleTeamType.DEFENSE, t.getBattlePosition(), t.getHero()));
         });
 
@@ -50,27 +52,19 @@ public class Battle extends BaseObject {
     }
 
     public Formation getAttackFormation() {
-        return attackPlayer.getAttackFormation();
+        return this.attackFormation;
     }
 
     public Formation getDefenseFormation() {
-        return defensePlayer.getDefenseFormation();
+        return this.defenseFormation;
     }
 
-    public Player getWinner() {
+    public Formation getWinner() {
         return winner;
     }
 
     public Integer getTurn() {
         return turn;
-    }
-
-    public Player getAttackPlayer() {
-        return attackPlayer;
-    }
-
-    public Player getDefensePlayer() {
-        return defensePlayer;
     }
 
     private void addBattleLog(BattleLog bl) {
@@ -81,7 +75,7 @@ public class Battle extends BaseObject {
         return battleLog;
     }
 
-    public Player doBattle() {
+    public Formation doBattle() {
         LOG.log(Level.FINEST, "[battle] INIT");
         this.addBattleLog(new BattleLog(this.turn, new BattleEvent(ActionType.BATTLE_START)));
         this.prepareToBattle();
@@ -148,7 +142,7 @@ public class Battle extends BaseObject {
                 this.turn++;
                 doTurn();
             } else {
-                this.winner = this.defensePlayer;
+                this.winner = this.defenseFormation;
                 lastTurn = Boolean.TRUE;
             }
         } else {
@@ -164,11 +158,11 @@ public class Battle extends BaseObject {
 
     }
 
-    private Player verifyWinner() {
+    private Formation verifyWinner() {
         if (getHeroesByBattleTeamTypeCanDoAction(BattleTeamType.ATTACK).count() <= 0) {
-            return defensePlayer;
+            return defenseFormation;
         } else if (getHeroesByBattleTeamTypeCanDoAction(BattleTeamType.DEFENSE).count() <= 0) {
-            return attackPlayer;
+            return attackFormation;
         }
         return null;
     }
@@ -245,7 +239,7 @@ public class Battle extends BaseObject {
     private void doDamage(BattleEvent ret, Hero aHero, ActionEffect ae, Hero tHero) {
 
         Double dmgReduction = 1 - (ae.getDamageType().equals(DamageType.PHYSICAL) ? getDmgAmorReduction(tHero) : getDmgMagicResistReduction(tHero));
-        
+
         ret.setValue(-(int) ((aHero.getCurrentDmg() * criticalDamage(ret, aHero) * ae.getActionPercentage() / 100f) * dmgReduction));
         ret.setDamageType(ae.getDamageType());
 

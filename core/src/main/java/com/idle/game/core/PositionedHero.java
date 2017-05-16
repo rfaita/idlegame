@@ -1,12 +1,13 @@
 package com.idle.game.core;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author rafael
  */
-public class PositionedHero extends BaseObject {
+public class PositionedHero implements Serializable {
 
     private BattlePositionType battlePosition;
     private Hero hero;

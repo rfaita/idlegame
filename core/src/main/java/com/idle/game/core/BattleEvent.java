@@ -1,10 +1,12 @@
 package com.idle.game.core;
 
+import java.io.Serializable;
+
 /**
  *
  * @author rafael
  */
-public class BattleEvent extends BaseObject {
+public class BattleEvent implements Serializable {
 
     private ActionType type;
     private SubActionType subType;

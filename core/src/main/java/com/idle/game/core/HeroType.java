@@ -11,6 +11,24 @@ public class HeroType extends BaseObject {
     private Integer size = 1;
     private AtittudeType atittudeType;
     private Action defaultAction;
+    private DamageType damageType;
+    private DistanceType distanceType;
+
+    public DamageType getDamageType() {
+        return damageType;
+    }
+
+    public void setDamageType(DamageType damageType) {
+        this.damageType = damageType;
+    }
+
+    public DistanceType getDistanceType() {
+        return distanceType;
+    }
+
+    public void setDistanceType(DistanceType distanceType) {
+        this.distanceType = distanceType;
+    }
 
     public Action getDefaultAction() {
         return defaultAction;
@@ -61,7 +79,7 @@ public class HeroType extends BaseObject {
 
     @Override
     public String toString() {
-        return "HT{" + "type=" + atittudeType + '}';
+        return "HT{" + "t=" + atittudeType + ",dt=" + damageType + ",dist=" + distanceType + '}';
     }
 
 }

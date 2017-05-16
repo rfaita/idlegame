@@ -2,6 +2,7 @@ package com.idle.game.core;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -57,12 +58,14 @@ public class BattleLog extends BaseObject {
     }
 
     public BattleLog(Integer turn, BattleEvent battleEvent) {
+        this.uuid = UUID.randomUUID();
         this.turn = turn;
         this.battleEvent = battleEvent;
         this.sysTime = System.currentTimeMillis();
     }
 
     public BattleLog(Integer turn, BattlePositionedHero heroOrigin, BattleEvent battleEvent, BattlePositionedHero heroTarget) {
+        this.uuid = UUID.randomUUID();
         this.turn = turn;
         this.heroOrigin = heroOrigin;
         this.battleEvent = battleEvent;
@@ -72,6 +75,7 @@ public class BattleLog extends BaseObject {
     }
 
     public BattleLog(Integer turn, BattlePositionedHero heroOrigin, BattleEvent battleEvent, List<BattlePositionedHero> heroesTarget) {
+        this.uuid = UUID.randomUUID();
         this.turn = turn;
         this.heroOrigin = heroOrigin;
         this.battleEvent = battleEvent;
@@ -80,6 +84,7 @@ public class BattleLog extends BaseObject {
     }
 
     public BattleLog(Integer turn, BattlePositionedHero heroOrigin, BattleEvent battleEvent, Buff buffDone) {
+        this.uuid = UUID.randomUUID();
         this.turn = turn;
         this.heroOrigin = heroOrigin;
         this.battleEvent = battleEvent;

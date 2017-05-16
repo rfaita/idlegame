@@ -6,7 +6,6 @@ import com.idle.game.core.Battle;
 import com.idle.game.core.BattlePositionType;
 import com.idle.game.core.Formation;
 import com.idle.game.core.Hero;
-import com.idle.game.core.Player;
 import com.idle.game.core.SubActionType;
 import com.idle.game.core.exception.ValidationException;
 import static com.idle.game.tests.helper.TestHelper.*;
@@ -28,13 +27,9 @@ public class BasicBattleTests {
     public void basicBattleTestValidationFormationAttack() throws Exception {
 
         thrown.expect(ValidationException.class);
-        thrown.expectMessage("player.do.not.have.attack.formation");
+        thrown.expectMessage("not.have.attack.formation");
 
-        Player p1 = createBasicPlayer("teste1");
-
-        Player p2 = createBasicPlayer("teste2");
-
-        Battle b = new Battle(p1, p2);
+        Battle b = new Battle(null, null);
 
         b.doBattle();
     }
@@ -43,18 +38,13 @@ public class BasicBattleTests {
     public void basicBattleTestValidationFormationDefense() throws Exception {
 
         thrown.expect(ValidationException.class);
-        thrown.expectMessage("player.do.not.have.defense.formation");
+        thrown.expectMessage("not.have.defense.formation");
 
-        Hero h1 = createBasicMeleePhysicalNoCritNoDodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h1 = createBasicMeleePhysicalNoCritNoDodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f1 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h1));
 
-        Player p1 = createBasicPlayer("teste1");
-        p1.setAttackFormation(f1);
-
-        Player p2 = createBasicPlayer("teste2");
-
-        Battle b = new Battle(p1, p2);
+        Battle b = new Battle(f1, null);
 
         b.doBattle();
     }
@@ -62,46 +52,34 @@ public class BasicBattleTests {
     @Test
     public void basicBattleTestLimitTurns() throws Exception {
 
-        Hero h1 = createBasicMeleePhysicalNoCritNoDodgeNoBlock10000HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h1 = createBasicMeleePhysicalNoCritNoDodgeNoBlock10000HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f1 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h1));
 
-        Player p1 = createBasicPlayer("teste1");
-        p1.setAttackFormation(f1);
-
-        Hero h2 = createBasicMeleePhysicalNoCritNoDodgeNoBlock10000HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h2 = createBasicMeleePhysicalNoCritNoDodgeNoBlock10000HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f2 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h2));
 
-        Player p2 = createBasicPlayer("teste2");
-        p2.setDefenseFormation(f2);
+        Battle b = new Battle(f1, f2);
 
-        Battle b = new Battle(p1, p2);
-
-        Assert.assertEquals("expected p2 win", p2, b.doBattle());
+        Assert.assertEquals("expected f2 win", f2, b.doBattle());
 
     }
 
     @Test
     public void basicBattleTestDmgMelee1() throws Exception {
 
-        Hero h1 = createBasicMeleePhysicalNoCritNoDodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h1 = createBasicMeleePhysicalNoCritNoDodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f1 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h1));
 
-        Player p1 = createBasicPlayer("teste1");
-        p1.setAttackFormation(f1);
-
-        Hero h2 = createBasicMeleePhysicalNoCritNoDodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h2 = createBasicMeleePhysicalNoCritNoDodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f2 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h2));
 
-        Player p2 = createBasicPlayer("teste2");
-        p2.setDefenseFormation(f2);
+        Battle b = new Battle(f1, f2);
 
-        Battle b = new Battle(p1, p2);
-
-        Assert.assertEquals("expected p1 win", p1, b.doBattle());
+        Assert.assertEquals("expected f1 win", f1, b.doBattle());
 
         Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
 
@@ -124,23 +102,17 @@ public class BasicBattleTests {
     @Test
     public void basicBattleTestDmgMelee2() throws Exception {
 
-        Hero h1 = createBasicMeleePhysicalNoCritNoDodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h1 = createBasicMeleePhysicalNoCritNoDodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f1 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h1));
 
-        Player p1 = createBasicPlayer("teste1");
-        p1.setAttackFormation(f1);
-
-        Hero h2 = createBasicMeleePhysicalNoCritNoDodgeNoBlock200HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h2 = createBasicMeleePhysicalNoCritNoDodgeNoBlock200HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f2 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h2));
 
-        Player p2 = createBasicPlayer("teste2");
-        p2.setDefenseFormation(f2);
+        Battle b = new Battle(f1, f2);
 
-        Battle b = new Battle(p1, p2);
-
-        Assert.assertEquals("expected p2 win", p2, b.doBattle());
+        Assert.assertEquals("expected f2 win", f2, b.doBattle());
 
         Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
 
@@ -167,23 +139,17 @@ public class BasicBattleTests {
     @Test
     public void basicBattleTestDmgRanged1() throws Exception {
 
-        Hero h1 = createBasicRangedPhysicalNoCritNoDodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h1 = createBasicRangedPhysicalNoCritNoDodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f1 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h1));
 
-        Player p1 = createBasicPlayer("teste1");
-        p1.setAttackFormation(f1);
-
-        Hero h2 = createBasicRangedPhysicalNoCritNoDodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h2 = createBasicRangedPhysicalNoCritNoDodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f2 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h2));
 
-        Player p2 = createBasicPlayer("teste2");
-        p2.setDefenseFormation(f2);
+        Battle b = new Battle(f1, f2);
 
-        Battle b = new Battle(p1, p2);
-
-        Assert.assertEquals("expected p1 win", p1, b.doBattle());
+        Assert.assertEquals("expected f1 win", f1, b.doBattle());
 
         Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
 
@@ -206,23 +172,17 @@ public class BasicBattleTests {
     @Test
     public void basicBattleTestDmgRanged2() throws Exception {
 
-        Hero h1 = createBasicRangedPhysicalNoCritNoDodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h1 = createBasicRangedPhysicalNoCritNoDodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f1 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h1));
 
-        Player p1 = createBasicPlayer("teste1");
-        p1.setAttackFormation(f1);
-
-        Hero h2 = createBasicRangedPhysicalNoCritNoDodgeNoBlock200HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h2 = createBasicRangedPhysicalNoCritNoDodgeNoBlock200HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f2 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h2));
 
-        Player p2 = createBasicPlayer("teste2");
-        p2.setDefenseFormation(f2);
+        Battle b = new Battle(f1, f2);
 
-        Battle b = new Battle(p1, p2);
-
-        Assert.assertEquals("expected p2 win", p2, b.doBattle());
+        Assert.assertEquals("expected f2 win", f2, b.doBattle());
 
         Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
 
@@ -249,23 +209,17 @@ public class BasicBattleTests {
     @Test
     public void basicBattleTestDmgMeleeMagic1() throws Exception {
 
-        Hero h1 = createBasicMeleeMagicNoCritNoDodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h1 = createBasicMeleeMagicNoCritNoDodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f1 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h1));
 
-        Player p1 = createBasicPlayer("teste1");
-        p1.setAttackFormation(f1);
-
-        Hero h2 = createBasicMeleeMagicNoCritNoDodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h2 = createBasicMeleeMagicNoCritNoDodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f2 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h2));
 
-        Player p2 = createBasicPlayer("teste2");
-        p2.setDefenseFormation(f2);
+        Battle b = new Battle(f1, f2);
 
-        Battle b = new Battle(p1, p2);
-
-        Assert.assertEquals("expected p1 win", p1, b.doBattle());
+        Assert.assertEquals("expected f1 win", f1, b.doBattle());
 
         Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
 
@@ -288,23 +242,17 @@ public class BasicBattleTests {
     @Test
     public void basicBattleTestDmgMeleeMagic2() throws Exception {
 
-        Hero h1 = createBasicMeleeMagicNoCritNoDodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h1 = createBasicMeleeMagicNoCritNoDodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f1 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h1));
 
-        Player p1 = createBasicPlayer("teste1");
-        p1.setAttackFormation(f1);
-
-        Hero h2 = createBasicMeleeMagicNoCritNoDodgeNoBlock200HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h2 = createBasicMeleeMagicNoCritNoDodgeNoBlock200HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f2 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h2));
 
-        Player p2 = createBasicPlayer("teste2");
-        p2.setDefenseFormation(f2);
+        Battle b = new Battle(f1, f2);
 
-        Battle b = new Battle(p1, p2);
-
-        Assert.assertEquals("expected p2 win", p2, b.doBattle());
+        Assert.assertEquals("expected f2 win", f2, b.doBattle());
 
         Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
 
@@ -331,23 +279,17 @@ public class BasicBattleTests {
     @Test
     public void basicBattleTestDmgRangedMagic1() throws Exception {
 
-        Hero h1 = createBasicRangedMagicNoCritNoDodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h1 = createBasicRangedMagicNoCritNoDodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f1 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h1));
 
-        Player p1 = createBasicPlayer("teste1");
-        p1.setAttackFormation(f1);
-
-        Hero h2 = createBasicRangedMagicNoCritNoDodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h2 = createBasicRangedMagicNoCritNoDodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f2 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h2));
 
-        Player p2 = createBasicPlayer("teste2");
-        p2.setDefenseFormation(f2);
+        Battle b = new Battle(f1, f2);
 
-        Battle b = new Battle(p1, p2);
-
-        Assert.assertEquals("expected p1 win", p1, b.doBattle());
+        Assert.assertEquals("expected f1 win", f1, b.doBattle());
 
         Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
 
@@ -370,23 +312,17 @@ public class BasicBattleTests {
     @Test
     public void basicBattleTestDmgRangedMagic2() throws Exception {
 
-        Hero h1 = createBasicRangedMagicNoCritNoDodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h1 = createBasicRangedMagicNoCritNoDodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f1 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h1));
 
-        Player p1 = createBasicPlayer("teste1");
-        p1.setAttackFormation(f1);
-
-        Hero h2 = createBasicRangedMagicNoCritNoDodgeNoBlock200HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h2 = createBasicRangedMagicNoCritNoDodgeNoBlock200HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f2 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h2));
 
-        Player p2 = createBasicPlayer("teste2");
-        p2.setDefenseFormation(f2);
+        Battle b = new Battle(f1, f2);
 
-        Battle b = new Battle(p1, p2);
-
-        Assert.assertEquals("expected p2 win", p2, b.doBattle());
+        Assert.assertEquals("expected f2 win", f2, b.doBattle());
 
         Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
 
@@ -413,23 +349,17 @@ public class BasicBattleTests {
     @Test
     public void basicBattleTestDmgMeleeHero1100Dodge() throws Exception {
 
-        Hero h1 = createBasicMeleePhysicalNoCrit100DodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h1 = createBasicMeleePhysicalNoCrit100DodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f1 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h1));
 
-        Player p1 = createBasicPlayer("teste1");
-        p1.setAttackFormation(f1);
-
-        Hero h2 = createBasicMeleePhysicalNoCritNoDodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h2 = createBasicMeleePhysicalNoCritNoDodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f2 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h2));
 
-        Player p2 = createBasicPlayer("teste2");
-        p2.setDefenseFormation(f2);
+        Battle b = new Battle(f1, f2);
 
-        Battle b = new Battle(p1, p2);
-
-        Assert.assertEquals("expected p1 win", p1, b.doBattle());
+        Assert.assertEquals("expected f1 win", f1, b.doBattle());
 
         Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
 
@@ -452,23 +382,17 @@ public class BasicBattleTests {
     @Test
     public void basicBattleTestDmgMeleeHero2100Dodge() throws Exception {
 
-        Hero h1 = createBasicMeleePhysicalNoCritNoDodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h1 = createBasicMeleePhysicalNoCritNoDodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f1 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h1));
 
-        Player p1 = createBasicPlayer("teste1");
-        p1.setAttackFormation(f1);
-
-        Hero h2 = createBasicMeleePhysicalNoCrit100DodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h2 = createBasicMeleePhysicalNoCrit100DodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f2 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h2));
 
-        Player p2 = createBasicPlayer("teste2");
-        p2.setDefenseFormation(f2);
+        Battle b = new Battle(f1, f2);
 
-        Battle b = new Battle(p1, p2);
-
-        Assert.assertEquals("expected p2 win", p2, b.doBattle());
+        Assert.assertEquals("expected f2 win", f2, b.doBattle());
 
         Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
 
@@ -495,23 +419,17 @@ public class BasicBattleTests {
     @Test
     public void basicBattleTestDmgMeleeHero1100Crit() throws Exception {
 
-        Hero h1 = createBasicMeleePhysical100CritNoDodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h1 = createBasicMeleePhysical100CritNoDodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f1 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h1));
 
-        Player p1 = createBasicPlayer("teste1");
-        p1.setAttackFormation(f1);
-
-        Hero h2 = createBasicMeleePhysicalNoCritNoDodgeNoBlock200HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h2 = createBasicMeleePhysicalNoCritNoDodgeNoBlock200HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f2 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h2));
 
-        Player p2 = createBasicPlayer("teste2");
-        p2.setDefenseFormation(f2);
+        Battle b = new Battle(f1, f2);
 
-        Battle b = new Battle(p1, p2);
-
-        Assert.assertEquals("expected p1 win", p1, b.doBattle());
+        Assert.assertEquals("expected f1 win", f1, b.doBattle());
 
         Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
 
@@ -534,23 +452,17 @@ public class BasicBattleTests {
     @Test
     public void basicBattleTestDmgRangedHero1100Crit() throws Exception {
 
-        Hero h1 = createBasicRangedPhysical100CritNoDodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h1 = createBasicRangedPhysical100CritNoDodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f1 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h1));
 
-        Player p1 = createBasicPlayer("teste1");
-        p1.setAttackFormation(f1);
-
-        Hero h2 = createBasicMeleePhysicalNoCritNoDodgeNoBlock200HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h2 = createBasicMeleePhysicalNoCritNoDodgeNoBlock200HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f2 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h2));
 
-        Player p2 = createBasicPlayer("teste2");
-        p2.setDefenseFormation(f2);
+        Battle b = new Battle(f1, f2);
 
-        Battle b = new Battle(p1, p2);
-
-        Assert.assertEquals("expected p1 win", p1, b.doBattle());
+        Assert.assertEquals("expected f1 win", f1, b.doBattle());
 
         Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
 
@@ -573,23 +485,17 @@ public class BasicBattleTests {
     @Test
     public void basicBattleTestDmgRangedHero1100Crit2() throws Exception {
 
-        Hero h1 = createBasicRangedPhysical100CritNoDodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h1 = createBasicRangedPhysical100CritNoDodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f1 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h1));
 
-        Player p1 = createBasicPlayer("teste1");
-        p1.setAttackFormation(f1);
-
-        Hero h2 = createBasicMeleePhysicalNoCritNoDodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h2 = createBasicMeleePhysicalNoCritNoDodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f2 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h2));
 
-        Player p2 = createBasicPlayer("teste2");
-        p2.setDefenseFormation(f2);
+        Battle b = new Battle(f1, f2);
 
-        Battle b = new Battle(p1, p2);
-
-        Assert.assertEquals("expected p1 win", p1, b.doBattle());
+        Assert.assertEquals("expected f1 win", f1, b.doBattle());
 
         Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
 
@@ -604,23 +510,17 @@ public class BasicBattleTests {
     @Test
     public void basicBattleTestDmgMeleeHero110xFaster() throws Exception {
 
-        Hero h1 = createBasicMeleePhysicalNoCritNoDodgeNoBlock100HpHero10XFaster(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h1 = createBasicMeleePhysicalNoCritNoDodgeNoBlock100HpHero10XFaster(AtittudeType.AGGRESSIVE);
 
         Formation f1 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h1));
 
-        Player p1 = createBasicPlayer("teste1");
-        p1.setAttackFormation(f1);
-
-        Hero h2 = createBasicMeleePhysicalNoCritNoDodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h2 = createBasicMeleePhysicalNoCritNoDodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         Formation f2 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h2));
 
-        Player p2 = createBasicPlayer("teste2");
-        p2.setDefenseFormation(f2);
+        Battle b = new Battle(f1, f2);
 
-        Battle b = new Battle(p1, p2);
-
-        Assert.assertEquals("expected p1 win", p1, b.doBattle());
+        Assert.assertEquals("expected f1 win", f1, b.doBattle());
 
         Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
 
@@ -639,27 +539,21 @@ public class BasicBattleTests {
     @Test
     public void basicBattleTestDmgMeleeWithChest1() throws Exception {
 
-        Hero h1 = createBasicMeleePhysicalNoCritNoDodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h1 = createBasicMeleePhysicalNoCritNoDodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         h1.setChest(createBasicChest());
 
         Formation f1 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h1));
 
-        Player p1 = createBasicPlayer("teste1");
-        p1.setAttackFormation(f1);
-
-        Hero h2 = createBasicMeleePhysicalNoCritNoDodgeNoBlock100HpHero(createBasicHeroType(AtittudeType.AGGRESSIVE));
+        Hero h2 = createBasicMeleePhysicalNoCritNoDodgeNoBlock100HpHero(AtittudeType.AGGRESSIVE);
 
         h2.setBoot(createBasicBoot());
 
         Formation f2 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h2));
 
-        Player p2 = createBasicPlayer("teste2");
-        p2.setDefenseFormation(f2);
+        Battle b = new Battle(f1, f2);
 
-        Battle b = new Battle(p1, p2);
-
-        Assert.assertEquals("expected p1 win", p1, b.doBattle());
+        Assert.assertEquals("expected f1 win", f1, b.doBattle());
 
         Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
 

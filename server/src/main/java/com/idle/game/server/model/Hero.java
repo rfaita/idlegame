@@ -1,14 +1,29 @@
-package com.idle.game.core;
+package com.idle.game.server.model;
+
+import com.idle.game.core.HeroType;
+import java.io.Serializable;
+import java.util.UUID;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 /**
  *
  * @author rafael
  */
-public class Item extends BaseObject {
+@Entity
+public class Hero implements Serializable {
 
-    private String name;
-    private ItemQuality itemQuality;
-    private ItemType itemType;
+    @Id
+    @SequenceGenerator(name = "seqhero", sequenceName = "seqhero", initialValue = 1000, allocationSize = 100)
+    @GeneratedValue(generator = "seqhero")
+    private Long id;
+    private String heroTypeId;
+    private transient HeroType heroType;
+    private Integer level;
     private Integer dmg;
     private Integer armor;
     private Integer magicResist;
@@ -19,48 +34,48 @@ public class Item extends BaseObject {
     private Integer dodgeChance;
     private Integer blockChance;
     private Integer hp;
+    @ManyToOne
+    @JoinColumn(name = "idplayer")
+    private Player player;
 
-    public Item() {
+    public Player getPlayer() {
+        return player;
     }
 
-    public Item(String name, ItemQuality itemQuality, ItemType itemType, Integer dmg, Integer armor, Integer magicResist, Integer speed, Integer luck, Integer critChance, Integer critDamage, Integer dodgeChance, Integer blockChance, Integer hp) {
-        this.name = name;
-        this.itemQuality = itemQuality;
-        this.itemType = itemType;
-        this.dmg = dmg;
-        this.armor = armor;
-        this.magicResist = magicResist;
-        this.speed = speed;
-        this.luck = luck;
-        this.critChance = critChance;
-        this.critDamage = critDamage;
-        this.dodgeChance = dodgeChance;
-        this.blockChance = blockChance;
-        this.hp = hp;
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
-    public String getName() {
-        return name;
+    public Long getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public ItemQuality getItemQuality() {
-        return itemQuality;
+    public String getHeroTypeId() {
+        return heroTypeId;
     }
 
-    public void setItemQuality(ItemQuality itemQuality) {
-        this.itemQuality = itemQuality;
+    public void setHeroTypeId(String heroTypeId) {
+        this.heroTypeId = heroTypeId;
     }
 
-    public ItemType getItemType() {
-        return itemType;
+    public HeroType getHeroType() {
+        return heroType;
     }
 
-    public void setItemType(ItemType itemType) {
-        this.itemType = itemType;
+    public void setHeroType(HeroType heroType) {
+        this.heroType = heroType;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 
     public Integer getDmg() {
@@ -141,6 +156,10 @@ public class Item extends BaseObject {
 
     public void setHp(Integer hp) {
         this.hp = hp;
+    }
+
+    public com.idle.game.core.Hero toHero() {
+        return new com.idle.game.core.Hero(heroType, level, dmg, armor, magicResist, speed, luck, critChance, critDamage, dodgeChance, blockChance, hp);
     }
 
 }

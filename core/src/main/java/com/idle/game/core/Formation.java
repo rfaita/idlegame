@@ -13,10 +13,15 @@ import java.util.stream.Collectors;
  */
 public class Formation extends BaseObject {
 
+    private FormationType formationType;
     private Integer size = 0;
     private final List<PositionedHero> heroes = new ArrayList<>(IdleConstants.MAX_SIZE_BACK_LINE + IdleConstants.MAX_SIZE_FRONT_LINE);
 
     public Formation() {
+    }
+
+    public Formation(List<PositionedHero> heroes) {
+        this.heroes.addAll(heroes);
     }
 
     public Formation(PositionedHero[] heroes) {
@@ -46,12 +51,10 @@ public class Formation extends BaseObject {
 
     public List<PositionedHero> getBackLinePositionedHeroes() {
         return heroes.stream().filter((ph) -> {
-            System.out.println(ph);
             return ph.getBattlePosition().equals(BattlePositionType.FRONT_BOTTOM)
                     || ph.getBattlePosition().equals(BattlePositionType.FRONT_MIDDLE)
                     || ph.getBattlePosition().equals(BattlePositionType.FRONT_TOP);
-        }
-        ).collect(Collectors.toList());
+        }).collect(Collectors.toList());
 
     }
 
@@ -65,6 +68,22 @@ public class Formation extends BaseObject {
 
     public List<PositionedHero> getPositionedHeroes() {
         return heroes;
+    }
+
+    public FormationType getFormationType() {
+        return formationType;
+    }
+
+    public void setFormationType(FormationType formationType) {
+        this.formationType = formationType;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
     }
 
 }

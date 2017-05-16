@@ -23,10 +23,8 @@ public class Hero extends BaseObject {
 
     private HeroType heroType;
     private Integer level;
-    private Integer baseMeleeDmg;
-    private DamageType dmgTypeMelee;
-    private Integer baseRangedDmg;
-    private DamageType dmgTypeRanged;
+    
+    private Integer baseDmg;
     private Integer baseArmor;
     private Integer baseMagicResist;
     private Integer baseSpeed;
@@ -37,8 +35,7 @@ public class Hero extends BaseObject {
     private Integer baseBlockChance;
     private Integer baseHp;
 
-    private Integer meleeDmg;
-    private Integer rangedDmg;
+    private Integer dmg;
     private Integer armor;
     private Integer magicResist;
     private Integer speed;
@@ -49,8 +46,7 @@ public class Hero extends BaseObject {
     private Integer blockChance;
     private Integer hp;
 
-    private Integer currentMeleeDmg;
-    private Integer currentRangedDmg;
+    private Integer currentDmg;
     private Integer currentArmor;
     private Integer currentMagicResist;
     private Integer currentSpeed;
@@ -71,20 +67,15 @@ public class Hero extends BaseObject {
     private Item ammulet;
     private Item jewel;
 
-    public Hero(UUID id, HeroType heroType, Integer level,
-            Integer baseMeleeDmg, DamageType dmgTypeMelee,
-            Integer baseRangedDmg, DamageType dmgTypeRanged,
-            Integer baseArmor, Integer baseMagicResist,
+    public Hero(HeroType heroType, Integer level,
+            Integer baseDmg, Integer baseArmor, Integer baseMagicResist,
             Integer baseSpeed, Integer baseLuck, Integer baseCritChance,
             Integer baseCritDamage, Integer baseDodgeChance,
             Integer baseBlockChance, Integer baseHp) {
-        this.uuid = id;
+        this.uuid = UUID.randomUUID();
         this.heroType = heroType;
         this.level = level;
-        this.baseMeleeDmg = baseMeleeDmg;
-        this.dmgTypeMelee = dmgTypeMelee;
-        this.baseRangedDmg = baseRangedDmg;
-        this.dmgTypeRanged = dmgTypeRanged;
+        this.baseDmg = baseDmg;
         this.baseArmor = baseArmor;
         this.baseMagicResist = baseMagicResist;
         this.baseSpeed = baseSpeed;
@@ -136,38 +127,6 @@ public class Hero extends BaseObject {
 
     public void setLevel(Integer level) {
         this.level = level;
-    }
-
-    public Integer getBaseMeleeDmg() {
-        return baseMeleeDmg;
-    }
-
-    public void setBaseMeleeDmg(Integer baseMeleeDmg) {
-        this.baseMeleeDmg = baseMeleeDmg;
-    }
-
-    public DamageType getDmgTypeMelee() {
-        return dmgTypeMelee;
-    }
-
-    public void setDmgTypeMelee(DamageType dmgTypeMelee) {
-        this.dmgTypeMelee = dmgTypeMelee;
-    }
-
-    public Integer getBaseRangedDmg() {
-        return baseRangedDmg;
-    }
-
-    public void setBaseRangedDmg(Integer baseRangedDmg) {
-        this.baseRangedDmg = baseRangedDmg;
-    }
-
-    public DamageType getDmgTypeRanged() {
-        return dmgTypeRanged;
-    }
-
-    public void setDmgTypeRanged(DamageType dmgTypeRanged) {
-        this.dmgTypeRanged = dmgTypeRanged;
     }
 
     public Integer getBaseArmor() {
@@ -242,20 +201,20 @@ public class Hero extends BaseObject {
         this.baseHp = baseHp;
     }
 
-    public Integer getMeleeDmg() {
-        return meleeDmg;
+    public Integer getBaseDmg() {
+        return baseDmg;
     }
 
-    public void setMeleeDmg(Integer meleeDmg) {
-        this.meleeDmg = meleeDmg;
+    public void setBaseDmg(Integer baseDmg) {
+        this.baseDmg = baseDmg;
     }
 
-    public Integer getRangedDmg() {
-        return rangedDmg;
+    public Integer getDmg() {
+        return dmg;
     }
 
-    public void setRangedDmg(Integer rangedDmg) {
-        this.rangedDmg = rangedDmg;
+    public void setDmg(Integer dmg) {
+        this.dmg = dmg;
     }
 
     public Integer getArmor() {
@@ -328,22 +287,6 @@ public class Hero extends BaseObject {
 
     public void setHp(Integer hp) {
         this.hp = hp;
-    }
-
-    public Integer getCurrentMeleeDmg() {
-        return currentMeleeDmg;
-    }
-
-    public void setCurrentMeleeDmg(Integer currentMeleeDmg) {
-        this.currentMeleeDmg = currentMeleeDmg;
-    }
-
-    public Integer getCurrentRangedDmg() {
-        return currentRangedDmg;
-    }
-
-    public void setCurrentRangedDmg(Integer currentRangedDmg) {
-        this.currentRangedDmg = currentRangedDmg;
     }
 
     public Integer getCurrentArmor() {
@@ -434,6 +377,14 @@ public class Hero extends BaseObject {
         this.currentBuffs.add(buff);
     }
 
+    public Integer getCurrentDmg() {
+        return currentDmg;
+    }
+
+    public void setCurrentDmg(Integer currentDmg) {
+        this.currentDmg = currentDmg;
+    }
+
     public void setCurrentHp(Integer currentHp) {
         if (currentHp > getHp()) {
             currentHp = getHp();
@@ -442,14 +393,6 @@ public class Hero extends BaseObject {
             currentHp = 0;
         }
         this.currentHp = currentHp;
-    }
-
-    public DamageType getDmgType() {
-        return this.getDmgTypeMelee() != null ? this.getDmgTypeMelee() : this.getDmgTypeRanged();
-    }
-
-    public Integer getCurrentDmg() {
-        return this.getCurrentMeleeDmg() > 0 ? this.getCurrentMeleeDmg() : this.getCurrentRangedDmg();
     }
 
     public void setBoot(Item i) throws Exception {
@@ -514,8 +457,7 @@ public class Hero extends BaseObject {
         this.setCurrentDodgeChance(this.getDodgeChance());
         this.setCurrentLuck(this.getLuck());
         this.setCurrentMagicResist(this.getMagicResist());
-        this.setCurrentMeleeDmg(this.getMeleeDmg());
-        this.setCurrentRangedDmg(this.getRangedDmg());
+        this.setCurrentDmg(this.getDmg());
         this.setCurrentSpeed(this.getSpeed());
         this.setCanDoAction(Boolean.TRUE);
     }
@@ -529,8 +471,7 @@ public class Hero extends BaseObject {
         this.setHp(this.getBaseHp());
         this.setLuck(this.getBaseLuck());
         this.setMagicResist(this.getBaseMagicResist());
-        this.setMeleeDmg(this.getBaseMeleeDmg());
-        this.setRangedDmg(this.getBaseRangedDmg());
+        this.setDmg(this.getBaseDmg());
         this.setSpeed(this.getBaseSpeed());
 
         this.calcAtributtesItem(this.getAmmulet());
@@ -552,8 +493,7 @@ public class Hero extends BaseObject {
             this.setHp(this.getHp() + i.getHp());
             this.setLuck(this.getLuck() + i.getLuck());
             this.setMagicResist(this.getMagicResist() + i.getMagicResist());
-            this.setMeleeDmg(this.getMeleeDmg() + i.getMeleeDmg());
-            this.setRangedDmg(this.getRangedDmg() + i.getRangedDmg());
+            this.setDmg(this.getDmg() + i.getDmg());
             this.setSpeed(this.getSpeed() + i.getSpeed());
         }
     }

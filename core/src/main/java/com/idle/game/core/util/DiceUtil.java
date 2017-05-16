@@ -12,5 +12,4 @@ public class DiceUtil {
         return new Random().nextInt(maxValue);
     }
 
-
 }
