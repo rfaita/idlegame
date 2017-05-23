@@ -1,5 +1,7 @@
 package com.idle.game.server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.idle.game.server.dto.enums.FormationAllocation;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
@@ -23,6 +27,27 @@ public class Formation implements Serializable {
     private Long id;
     @OneToMany(targetEntity = PositionedHero.class, mappedBy = "formation", fetch = FetchType.EAGER)
     private List<PositionedHero> heroes;
+    @ManyToOne
+    @JoinColumn(name = "idplayer")
+    @JsonIgnore
+    private Player player;
+    private FormationAllocation formationAllocation;
+
+    public FormationAllocation getFormationAllocation() {
+        return formationAllocation;
+    }
+
+    public void setFormationAllocation(FormationAllocation formationAllocation) {
+        this.formationAllocation = formationAllocation;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 
     public Long getId() {
         return id;
@@ -40,11 +65,11 @@ public class Formation implements Serializable {
         this.heroes = heroes;
     }
 
-    public com.idle.game.core.Formation toFormation() {
+    public com.idle.game.core.Formation toFormation() throws Exception {
         List<com.idle.game.core.PositionedHero> hs = new ArrayList<>(this.heroes.size());
-        this.heroes.forEach(h -> {
+        for (PositionedHero h : this.heroes) {
             hs.add(h.toPositionedHero());
-        });
+        }
         return new com.idle.game.core.Formation(hs);
     }
 

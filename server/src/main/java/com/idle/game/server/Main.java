@@ -1,5 +1,6 @@
 package com.idle.game.server;
 
+import com.idle.game.core.constant.IdleConstants;
 import java.io.File;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.wildfly.swarm.Swarm;
@@ -45,10 +46,11 @@ public class Main {
         if (System.getProperty(LoggingProperties.LOGGING) != null) {
             leveLog = Level.valueOf(System.getProperty(LoggingProperties.LOGGING));
         } else {
-            leveLog = Level.TRACE;
+            leveLog = Level.ALL;
         }
 
         container.fraction(new LoggingFraction()
+                .logger(new Logger(IdleConstants.LOG_NAME).level(leveLog))
                 .logger(new Logger("org.hibernate.SQL").level(leveLog))
                 .logger(new Logger("org.hibernate.type.descriptor.sql.BasicBinder").level(leveLog))
         );
@@ -64,7 +66,7 @@ public class Main {
 //        );
         container.start();
 
-        WARArchive deployment = ShrinkWrap.createFromZipFile(WARArchive.class, new File("idleserver.war"));
+        WARArchive deployment = ShrinkWrap.createFromZipFile(WARArchive.class, new File("target/idleserver.war"));
 
         WebXmlAsset webXmlAsset = deployment.findWebXmlAsset();
 //        webXmlAsset.setLoginConfig("BASIC", "QGSdomain");

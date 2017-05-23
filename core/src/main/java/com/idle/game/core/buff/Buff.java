@@ -1,5 +1,9 @@
-package com.idle.game.core;
+package com.idle.game.core.buff;
 
+import com.idle.game.core.BaseObject;
+import com.idle.game.core.type.DamageType;
+import com.idle.game.core.type.ActionType;
+import com.idle.game.core.type.ActionType;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -10,7 +14,7 @@ import java.util.UUID;
 public class Buff extends BaseObject {
 
     private Integer turnDuration;
-    private Integer currentTurn;
+    private Integer currTurn;
     private Integer value;
     private DamageType damageType;
     private ActionType effectType;
@@ -31,12 +35,12 @@ public class Buff extends BaseObject {
         this.turnDuration = turnDuration;
     }
 
-    public Integer getCurrentTurn() {
-        return currentTurn;
+    public Integer getCurrTurn() {
+        return currTurn;
     }
 
-    public void setCurrentTurn(Integer currentTurn) {
-        this.currentTurn = currentTurn;
+    public void setCurrTurn(Integer currTurn) {
+        this.currTurn = currTurn;
     }
 
     public Integer getValue() {
@@ -63,7 +67,7 @@ public class Buff extends BaseObject {
         this.turnDuration = turnDuration;
         this.value = value;
         this.effectType = effectType;
-        this.currentTurn = 0;
+        this.currTurn = 0;
         this.damageType = damageType;
     }
 
@@ -94,7 +98,7 @@ public class Buff extends BaseObject {
 
     @Override
     public String toString() {
-        return "B{" + "td=" + turnDuration + ", ct=" + currentTurn + ", v=" + value + ", et=" + effectType + ", dt=" + damageType + '}';
+        return "B{" + "td=" + turnDuration + ", ct=" + currTurn + ", v=" + value + ", et=" + effectType + ", dt=" + damageType + '}';
     }
 
 }

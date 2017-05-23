@@ -1,20 +1,20 @@
 package com.idle.game.core;
 
+import static com.idle.game.core.constant.IdleConstants.LOG;
+import com.idle.game.core.type.BattleTeamType;
+import com.idle.game.core.type.BattlePositionType;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author rafael
  */
 public class BattlePositionedHero extends PositionedHero {
-
-    private static final Logger LOG = Logger.getLogger(BattlePositionedHero.class.getName());
 
     private BattleTeamType battleTeamType;
 

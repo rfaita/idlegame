@@ -1,6 +1,14 @@
 package com.idle.game.core;
 
+import com.idle.game.core.type.HeroType;
+import com.idle.game.core.type.ItemType;
+import com.idle.game.core.item.Item;
+import com.idle.game.core.buff.Buff;
+import com.idle.game.core.constant.IdleConstants;
+import static com.idle.game.core.constant.IdleConstants.LOG;
 import com.idle.game.core.exception.ValidationException;
+import com.idle.game.core.passive.Passive;
+import com.idle.game.core.type.AttributeType;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -11,7 +19,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -19,21 +26,19 @@ import java.util.logging.Logger;
  */
 public class Hero extends BaseObject {
 
-    private static final Logger LOG = Logger.getLogger(Hero.class.getName());
-
     private HeroType heroType;
     private Integer level;
-    
-    private Integer baseDmg;
-    private Integer baseArmor;
-    private Integer baseMagicResist;
-    private Integer baseSpeed;
-    private Integer baseLuck;
-    private Integer baseCritChance;
-    private Integer baseCritDamage;
-    private Integer baseDodgeChance;
-    private Integer baseBlockChance;
-    private Integer baseHp;
+
+    private transient Integer baseDmg;
+    private transient Integer baseArmor;
+    private transient Integer baseMagicResist;
+    private transient Integer baseSpeed;
+    private transient Integer baseLuck;
+    private transient Integer baseCritChance;
+    private transient Integer baseCritDamage;
+    private transient Integer baseDodgeChance;
+    private transient Integer baseBlockChance;
+    private transient Integer baseHp;
 
     private Integer dmg;
     private Integer armor;
@@ -46,19 +51,19 @@ public class Hero extends BaseObject {
     private Integer blockChance;
     private Integer hp;
 
-    private Integer currentDmg;
-    private Integer currentArmor;
-    private Integer currentMagicResist;
-    private Integer currentSpeed;
-    private Integer currentLuck;
-    private Integer currentCritChance;
-    private Integer currentCritDamage;
-    private Integer currentDodgeChance;
-    private Integer currentBlockChance;
-    private Integer currentHp;
+    private Integer currDmg;
+    private Integer currArmor;
+    private Integer currMagicResist;
+    private Integer currSpeed;
+    private Integer currLuck;
+    private Integer currCritChance;
+    private Integer currCritDamage;
+    private Integer currDodgeChance;
+    private Integer currBlockChance;
+    private Integer currHp;
     private Boolean canDoAction;
 
-    private List<Buff> currentBuffs;
+    private List<Buff> currBuffs;
 
     private Item chest;
     private Item weapon;
@@ -66,6 +71,13 @@ public class Hero extends BaseObject {
     private Item ring;
     private Item ammulet;
     private Item jewel;
+
+    public Hero(HeroType heroType, Integer level) throws Exception {
+        this.uuid = UUID.randomUUID();
+        this.heroType = heroType;
+        this.levelUp(level);
+        this.calcAtributtes();
+    }
 
     public Hero(HeroType heroType, Integer level,
             Integer baseDmg, Integer baseArmor, Integer baseMagicResist,
@@ -289,32 +301,32 @@ public class Hero extends BaseObject {
         this.hp = hp;
     }
 
-    public Integer getCurrentArmor() {
-        return currentArmor;
+    public Integer getCurrArmor() {
+        return currArmor;
     }
 
-    public void setCurrentArmor(Integer currentArmor) {
-        this.currentArmor = currentArmor;
+    public void setCurrArmor(Integer currArmor) {
+        this.currArmor = currArmor;
     }
 
-    public Integer getCurrentMagicResist() {
-        return currentMagicResist;
+    public Integer getCurrMagicResist() {
+        return currMagicResist;
     }
 
-    public void setCurrentMagicResist(Integer currentMagicResist) {
-        this.currentMagicResist = currentMagicResist;
+    public void setCurrMagicResist(Integer currMagicResist) {
+        this.currMagicResist = currMagicResist;
     }
 
-    public Integer getCurrentSpeed() {
-        return currentSpeed;
+    public Integer getCurrSpeed() {
+        return currSpeed;
     }
 
-    public void setCurrentSpeed(Integer currentSpeed) {
-        this.currentSpeed = currentSpeed;
+    public void setCurrSpeed(Integer currSpeed) {
+        this.currSpeed = currSpeed;
     }
 
-    public Integer getCurrentLuck() {
-        return currentLuck;
+    public Integer getCurrLuck() {
+        return currLuck;
     }
 
     public Boolean getCanDoAction() {
@@ -325,74 +337,74 @@ public class Hero extends BaseObject {
         this.canDoAction = canDoAction;
     }
 
-    public void setCurrentLuck(Integer currentLuck) {
-        this.currentLuck = currentLuck;
+    public void setCurrLuck(Integer currLuck) {
+        this.currLuck = currLuck;
     }
 
-    public Integer getCurrentCritChance() {
-        return currentCritChance;
+    public Integer getCurrCritChance() {
+        return currCritChance;
     }
 
-    public void setCurrentCritChance(Integer currentCritChance) {
-        this.currentCritChance = currentCritChance;
+    public void setCurrCritChance(Integer currCritChance) {
+        this.currCritChance = currCritChance;
     }
 
-    public Integer getCurrentCritDamage() {
-        return currentCritDamage;
+    public Integer getCurrCritDamage() {
+        return currCritDamage;
     }
 
-    public void setCurrentCritDamage(Integer currentCritDamage) {
-        this.currentCritDamage = currentCritDamage;
+    public void setCurrCritDamage(Integer currCritDamage) {
+        this.currCritDamage = currCritDamage;
     }
 
-    public Integer getCurrentDodgeChance() {
-        return currentDodgeChance;
+    public Integer getCurrDodgeChance() {
+        return currDodgeChance;
     }
 
-    public void setCurrentDodgeChance(Integer currentDodgeChance) {
-        this.currentDodgeChance = currentDodgeChance;
+    public void setCurrDodgeChance(Integer currDodgeChance) {
+        this.currDodgeChance = currDodgeChance;
     }
 
-    public Integer getCurrentBlockChance() {
-        return currentBlockChance;
+    public Integer getCurrBlockChance() {
+        return currBlockChance;
     }
 
-    public void setCurrentBlockChance(Integer currentBlockChance) {
-        this.currentBlockChance = currentBlockChance;
+    public void setCurrBlockChance(Integer currBlockChance) {
+        this.currBlockChance = currBlockChance;
     }
 
-    public Integer getCurrentHp() {
-        return currentHp;
+    public Integer getCurrHp() {
+        return currHp;
     }
 
-    public List<Buff> getCurrentBuffs() {
-        return currentBuffs;
+    public List<Buff> getCurrBuffs() {
+        return currBuffs;
     }
 
-    public void setCurrentBuffs(List<Buff> currentBuffs) {
-        this.currentBuffs = currentBuffs;
+    public void setCurrBuffs(List<Buff> currBuffs) {
+        this.currBuffs = currBuffs;
     }
 
     public void addBuff(Buff buff) {
-        this.currentBuffs.add(buff);
+        this.currBuffs.add(buff);
     }
 
-    public Integer getCurrentDmg() {
-        return currentDmg;
+    public Integer getCurrDmg() {
+        return currDmg;
     }
 
-    public void setCurrentDmg(Integer currentDmg) {
-        this.currentDmg = currentDmg;
+    public void setCurrDmg(Integer currDmg) {
+        this.currDmg = currDmg;
     }
 
-    public void setCurrentHp(Integer currentHp) {
-        if (currentHp > getHp()) {
-            currentHp = getHp();
+    public void setCurrHp(Integer currHp) {
+        if (currHp > getHp()) {
+            currHp = getHp();
         }
-        if (currentHp < 0) {
-            currentHp = 0;
+        if (currHp < 0) {
+            currHp = 0;
         }
-        this.currentHp = currentHp;
+        this.currHp = currHp;
     }
 
     public void setBoot(Item i) throws Exception {
@@ -444,25 +456,113 @@ public class Hero extends BaseObject {
     }
 
     public void prepareToBattle() {
-        this.prepareToComputeBuffs();
-        this.setCurrentHp(this.getHp());
-        this.setCurrentBuffs(new ArrayList<>());
+        LOG.log(Level.FINEST, "[prepareToBattle]");
+        this.prepareToTurn();
+        this.setCurrHp(this.getHp());
+        this.setCurrBuffs(new ArrayList<>());
     }
 
-    public void prepareToComputeBuffs() {
-        this.setCurrentArmor(this.getArmor());
-        this.setCurrentBlockChance(this.getBlockChance());
-        this.setCurrentCritChance(this.getCritChance());
-        this.setCurrentCritDamage(this.getCritDamage());
-        this.setCurrentDodgeChance(this.getDodgeChance());
-        this.setCurrentLuck(this.getLuck());
-        this.setCurrentMagicResist(this.getMagicResist());
-        this.setCurrentDmg(this.getDmg());
-        this.setCurrentSpeed(this.getSpeed());
+    public void prepareToTurn() {
+        LOG.log(Level.FINEST, "[prepareToTurn][hero] {0}", this);
+        this.setCurrArmor(this.getArmor());
+        LOG.log(Level.FINEST, "[prepareToTurn][armor] {0}", this.getCurrArmor());
+        this.setCurrBlockChance(this.getBlockChance());
+        LOG.log(Level.FINEST, "[prepareToTurn][blockChance] {0}", this.getCurrBlockChance());
+        this.setCurrCritChance(this.getCritChance());
+        LOG.log(Level.FINEST, "[prepareToTurn][critChance] {0}", this.getCurrCritChance());
+        this.setCurrCritDamage(this.getCritDamage());
+        LOG.log(Level.FINEST, "[prepareToTurn][critDmg] {0}", this.getCurrCritDamage());
+        this.setCurrDodgeChance(this.getDodgeChance());
+        LOG.log(Level.FINEST, "[prepareToTurn][dodgeChange] {0}", this.getCurrDodgeChance());
+        this.setCurrLuck(this.getLuck());
+        LOG.log(Level.FINEST, "[prepareToTurn][luck] {0}", this.getCurrLuck());
+        this.setCurrMagicResist(this.getMagicResist());
+        LOG.log(Level.FINEST, "[prepareToTurn][magicResist] {0}", this.getCurrMagicResist());
+        this.setCurrDmg(this.getDmg());
+        LOG.log(Level.FINEST, "[prepareToTurn][dmg] {0}", this.getCurrDmg());
+        this.setCurrSpeed(this.getSpeed());
+        LOG.log(Level.FINEST, "[prepareToTurn][speed] {0}", this.getCurrSpeed());
         this.setCanDoAction(Boolean.TRUE);
+        LOG.log(Level.FINEST, "[prepareToTurn][canDoAction] {0}", this.getCanDoAction());
+        LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
+    }
+
+    private Integer getMissingAttributePercentage(AttributeType at) throws Exception {
+        switch (at) {
+            case HP:
+                return (int) ((this.getHp() - this.getCurrHp()) * 1d / this.getHp() * 100);
+        }
+        throw new ValidationException("attribute.can.not.be.trade");
+
+    }
+
+    private void calcTradeAttribute(AttributeType o, AttributeType d, Integer ratioPercentage) throws Exception {
+        Double perc = this.getMissingAttributePercentage(o) / 100d * ratioPercentage / 100d;
+        LOG.log(Level.FINEST, "[passive][perc] {0}", perc);
+        if (perc > 0) {
+            switch (d) {
+                case LUCK:
+                    this.setCurrLuck(this.getCurrLuck() + (int) (this.getCurrLuck() * perc));
+                    LOG.log(Level.FINEST, "[passive][luck] {0}", this.getCurrLuck());
+                    break;
+                case SPEED:
+                    this.setCurrSpeed(this.getCurrSpeed() + (int) (this.getCurrSpeed() * perc));
+                    LOG.log(Level.FINEST, "[passive][speed] {0}", this.getCurrSpeed());
+                    break;
+                case DODGE:
+                    this.setCurrDodgeChance(this.getCurrDodgeChance() + (int) (this.getCurrDodgeChance() * perc));
+                    LOG.log(Level.FINEST, "[passive][dodgeChance] {0}", this.getCurrDodgeChance());
+                    break;
+                case CRIT_DMG:
+                    this.setCurrCritDamage(this.getCurrCritDamage() + (int) (this.getCurrCritDamage() * perc));
+                    LOG.log(Level.FINEST, "[passive][critDmg] {0}", this.getCurrCritDamage());
+                    break;
+                case CRIT_CHANCE:
+                    this.setCurrCritChance(this.getCurrCritChance() + (int) (this.getCurrCritChance() * perc));
+                    LOG.log(Level.FINEST, "[passive][critChance] {0}", this.getCurrCritChance());
+                    break;
+                case DMG:
+                    this.setCurrDmg(this.getCurrDmg() + (int) (this.getCurrDmg() * perc));
+                    LOG.log(Level.FINEST, "[passive][dmg] {0}", this.getCurrDmg());
+                    break;
+                case ARMOR:
+                    this.setCurrArmor(this.getCurrArmor() + (int) (this.getCurrArmor() * perc));
+                    LOG.log(Level.FINEST, "[passive][armor] {0}", this.getCurrArmor());
+                    break;
+                case MAGIC_RESIST:
+                    this.setCurrMagicResist(this.getCurrMagicResist() + (int) (this.getCurrMagicResist() * perc));
+                    LOG.log(Level.FINEST, "[passive][magicResist] {0}", this.getCurrMagicResist());
+                    break;
+                case DEFENSE:
+                    this.setCurrArmor(this.getCurrArmor() + (int) (this.getCurrArmor() * perc));
+                    this.setCurrMagicResist(this.getCurrMagicResist() + (int) (this.getCurrMagicResist() * perc));
+                    LOG.log(Level.FINEST, "[passive][armor] {0}", this.getCurrArmor());
+                    LOG.log(Level.FINEST, "[passive][magicResist] {0}", this.getCurrMagicResist());
+                    break;
+
+            }
+        }
+
+    }
+
+    public void calcPassives() throws Exception {
+        LOG.log(Level.FINEST, "[passive][heroi] {0}", this);
+        if (this.getHeroType().getPassives() != null) {
+            for (Passive p : this.getHeroType().getPassives()) {
+                LOG.log(Level.FINEST, "[passive][type] {0}", p.getPassiveType());
+                switch (p.getPassiveType()) {
+                    case TRADE_ATTRIBUTE:
+                        calcTradeAttribute(p.getAttributeTypeLost(), p.getAttributeTypeGain(), p.getRatioPercentage());
+                        break;
+                }
+                LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
+
+            }
+        }
     }
 
     private void calcAtributtes() {
+        LOG.log(Level.FINEST, "[calcAtributtes]");
         this.setArmor(this.getBaseArmor());
         this.setBlockChance(this.getBaseBlockChance());
         this.setCritChance(this.getBaseCritChance());
@@ -498,6 +598,46 @@ public class Hero extends BaseObject {
         }
     }
 
+    public void levelUp() throws Exception {
+        levelUp(this.getLevel() + 1);
+    }
+
+    public void levelUp(Integer level) throws Exception {
+        HeroType ht = this.getHeroType();
+        if (level <= ht.getMaxLevel()) {
+
+            Double levelUpRatio = 1d * (level - 1) / (ht.getMaxLevel() - 1);
+
+            if (levelUpRatio > 0) {
+                this.setBaseArmor(ht.getBaseArmor() + (int) (ht.getMaxLevelUpIncArmor() * levelUpRatio));
+                this.setBaseBlockChance(ht.getBaseBlockChance() + (int) (ht.getMaxLevelUpIncBlockChance() * levelUpRatio));
+                this.setBaseCritChance(ht.getBaseCritChance() + (int) (ht.getMaxLevelUpIncCritChance() * levelUpRatio));
+                this.setBaseCritDamage(ht.getBaseCritDamage() + (int) (ht.getMaxLevelUpIncCritDamage() * levelUpRatio));
+                this.setBaseDmg(ht.getBaseDmg() + (int) (ht.getMaxLevelUpIncDmg() * levelUpRatio));
+                this.setBaseDodgeChance(ht.getBaseDodgeChance() + (int) (ht.getMaxLevelUpIncDodgeChance() * levelUpRatio));
+                this.setBaseHp(ht.getBaseHp() + (int) (ht.getMaxLevelUpIncHp() * levelUpRatio));
+                this.setBaseLuck(ht.getBaseLuck() + (int) (ht.getMaxLevelUpIncLuck() * levelUpRatio));
+                this.setBaseMagicResist(ht.getBaseMagicResist() + (int) (ht.getMaxLevelUpIncMagicResist() * levelUpRatio));
+                this.setBaseSpeed(ht.getBaseSpeed() + (int) (ht.getMaxLevelUpIncSpeed() * levelUpRatio));
+            } else {
+                this.setBaseArmor(ht.getBaseArmor());
+                this.setBaseBlockChance(ht.getBaseBlockChance());
+                this.setBaseCritChance(ht.getBaseCritChance());
+                this.setBaseCritDamage(ht.getBaseCritDamage());
+                this.setBaseDmg(ht.getBaseDmg());
+                this.setBaseDodgeChance(ht.getBaseDodgeChance());
+                this.setBaseHp(ht.getBaseHp());
+                this.setBaseLuck(ht.getBaseLuck());
+                this.setBaseMagicResist(ht.getBaseMagicResist());
+                this.setBaseSpeed(ht.getBaseSpeed());
+            }
+
+            this.setLevel(level);
+        } else {
+            throw new ValidationException("hero.max.level.reached");
+        }
+    }
+
     public Hero duplicate() {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -515,7 +655,7 @@ public class Hero extends BaseObject {
 
     @Override
     public String toString() {
-        return "H{" + "id=" + this.uuid.toString().substring(0, 7) + ",currHp=" + this.currentHp + ",type=" + this.heroType + '}';
+        return "H{" + "id=" + this.uuid.toString().substring(0, 8) + ",currHp=" + this.currHp + ",type=" + this.heroType + '}';
     }
 
     @Override

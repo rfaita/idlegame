@@ -1,5 +1,8 @@
 package com.idle.game.core;
 
+import com.idle.game.core.constant.IdleConstants;
+import com.idle.game.core.type.FormationType;
+import com.idle.game.core.type.BattlePositionType;
 import com.idle.game.core.exception.ValidationException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -84,6 +87,11 @@ public class Formation extends BaseObject {
 
     public void setSize(Integer size) {
         this.size = size;
+    }
+
+    @Override
+    public String toString() {
+        return "F{" + "ft=" + formationType + ", size=" + size + '}';
     }
 
 }

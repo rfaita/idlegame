@@ -1,4 +1,9 @@
-package com.idle.game.core;
+package com.idle.game.core.action;
+
+import com.idle.game.core.type.ActionType;
+import com.idle.game.core.BaseObject;
+import com.idle.game.core.type.DamageType;
+import com.idle.game.core.type.TargetType;
 
 /**
  *
@@ -81,6 +86,10 @@ public class ActionEffect extends BaseObject {
 
     public void setDamageType(DamageType damageType) {
         this.damageType = damageType;
+    }
+
+    public ActionEffect(ActionType actionType, Integer actionPercentage) {
+        this(actionType, null, actionPercentage, null, null, null, Boolean.FALSE);
     }
 
     public ActionEffect(ActionType actionType, Integer actionPercentage, DamageType damageType) {

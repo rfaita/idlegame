@@ -3,6 +3,7 @@ package com.idle.game.server.model;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -21,8 +22,18 @@ public class Player implements Serializable {
     private Long id;
     private String name;
     private String user;
-    @OneToMany(targetEntity = Hero.class, mappedBy = "player")
+    @OneToMany(targetEntity = Hero.class, mappedBy = "player", fetch = FetchType.EAGER)
     private List<Hero> heroes;
+    @OneToMany(targetEntity = Formation.class, mappedBy = "player")
+    private List<Formation> formations;
+
+    public List<Formation> getFormations() {
+        return formations;
+    }
+
+    public void setFormations(List<Formation> formations) {
+        this.formations = formations;
+    }
 
     public Long getId() {
         return id;

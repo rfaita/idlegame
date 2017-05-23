@@ -1,5 +1,9 @@
 package com.idle.game.core;
 
+import com.idle.game.core.type.DamageType;
+import com.idle.game.core.type.SubActionType;
+import com.idle.game.core.type.BuffType;
+import com.idle.game.core.type.ActionType;
 import java.io.Serializable;
 
 /**

@@ -1,5 +1,6 @@
-package com.idle.game.core;
+package com.idle.game.core.action;
 
+import com.idle.game.core.BaseObject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,10 @@ public class Action extends BaseObject {
     public Action() {
     }
 
+    public Action(ActionEffect mainActionEffect) {
+        this.mainActionEffect = mainActionEffect;
+    }
+    
     public Action(ActionEffect ma, List<ActionEffect> se) {
         this.mainActionEffect = ma;
         this.secundaryActionsEffects = se;

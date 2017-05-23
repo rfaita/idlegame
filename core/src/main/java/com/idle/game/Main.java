@@ -1,15 +1,15 @@
 package com.idle.game;
 
-import com.idle.game.core.Action;
-import com.idle.game.core.ActionEffect;
-import com.idle.game.core.ActionType;
-import com.idle.game.core.AtittudeType;
+import com.idle.game.core.action.Action;
+import com.idle.game.core.action.ActionEffect;
+import com.idle.game.core.type.ActionType;
+import com.idle.game.core.type.AtittudeType;
 import com.idle.game.core.Battle;
-import com.idle.game.core.BattlePositionType;
-import com.idle.game.core.DamageType;
+import com.idle.game.core.type.BattlePositionType;
+import com.idle.game.core.type.DamageType;
 import com.idle.game.core.Formation;
 import com.idle.game.core.Hero;
-import com.idle.game.core.HeroType;
+import com.idle.game.core.type.HeroType;
 import com.idle.game.core.PositionedHero;
 
 /**

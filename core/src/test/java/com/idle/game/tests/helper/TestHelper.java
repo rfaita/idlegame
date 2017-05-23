@@ -1,20 +1,20 @@
 package com.idle.game.tests.helper;
 
-import com.idle.game.core.AtittudeType;
-import com.idle.game.core.BattlePositionType;
-import com.idle.game.core.DamageType;
+import com.idle.game.core.type.AtittudeType;
+import com.idle.game.core.type.BattlePositionType;
+import com.idle.game.core.type.DamageType;
 import com.idle.game.core.Formation;
 import com.idle.game.core.Hero;
-import com.idle.game.core.HeroType;
-import com.idle.game.core.Item;
-import com.idle.game.core.ItemQuality;
-import com.idle.game.core.ItemType;
+import com.idle.game.core.type.HeroType;
+import com.idle.game.core.item.Item;
+import com.idle.game.core.item.ItemQuality;
+import com.idle.game.core.type.ItemType;
 import com.idle.game.core.PositionedHero;
-import com.idle.game.core.Action;
-import com.idle.game.core.ActionEffect;
-import com.idle.game.core.ActionType;
-import com.idle.game.core.DistanceType;
-import com.idle.game.core.TargetType;
+import com.idle.game.core.action.Action;
+import com.idle.game.core.action.ActionEffect;
+import com.idle.game.core.type.ActionType;
+import com.idle.game.core.type.DistanceType;
+import com.idle.game.core.type.TargetType;
 
 /**
  *

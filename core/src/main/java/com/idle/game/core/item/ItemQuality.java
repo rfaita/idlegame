@@ -1,4 +1,4 @@
-package com.idle.game.core;
+package com.idle.game.core.item;
 
 /**
  *

@@ -1,7 +1,7 @@
 package com.idle.game.server.dto;
 
 import com.idle.game.core.BattleLog;
-import com.idle.game.core.FormationType;
+import com.idle.game.core.type.FormationType;
 import java.io.Serializable;
 import java.util.List;
 

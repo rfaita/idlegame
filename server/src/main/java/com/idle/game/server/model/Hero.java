@@ -1,8 +1,8 @@
 package com.idle.game.server.model;
 
-import com.idle.game.core.HeroType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.idle.game.core.type.HeroType;
 import java.io.Serializable;
-import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -24,18 +24,9 @@ public class Hero implements Serializable {
     private String heroTypeId;
     private transient HeroType heroType;
     private Integer level;
-    private Integer dmg;
-    private Integer armor;
-    private Integer magicResist;
-    private Integer speed;
-    private Integer luck;
-    private Integer critChance;
-    private Integer critDamage;
-    private Integer dodgeChance;
-    private Integer blockChance;
-    private Integer hp;
     @ManyToOne
     @JoinColumn(name = "idplayer")
+    @JsonIgnore
     private Player player;
 
     public Player getPlayer() {
@@ -78,88 +69,8 @@ public class Hero implements Serializable {
         this.level = level;
     }
 
-    public Integer getDmg() {
-        return dmg;
-    }
-
-    public void setDmg(Integer dmg) {
-        this.dmg = dmg;
-    }
-
-    public Integer getArmor() {
-        return armor;
-    }
-
-    public void setArmor(Integer armor) {
-        this.armor = armor;
-    }
-
-    public Integer getMagicResist() {
-        return magicResist;
-    }
-
-    public void setMagicResist(Integer magicResist) {
-        this.magicResist = magicResist;
-    }
-
-    public Integer getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(Integer speed) {
-        this.speed = speed;
-    }
-
-    public Integer getLuck() {
-        return luck;
-    }
-
-    public void setLuck(Integer luck) {
-        this.luck = luck;
-    }
-
-    public Integer getCritChance() {
-        return critChance;
-    }
-
-    public void setCritChance(Integer critChance) {
-        this.critChance = critChance;
-    }
-
-    public Integer getCritDamage() {
-        return critDamage;
-    }
-
-    public void setCritDamage(Integer critDamage) {
-        this.critDamage = critDamage;
-    }
-
-    public Integer getDodgeChance() {
-        return dodgeChance;
-    }
-
-    public void setDodgeChance(Integer dodgeChance) {
-        this.dodgeChance = dodgeChance;
-    }
-
-    public Integer getBlockChance() {
-        return blockChance;
-    }
-
-    public void setBlockChance(Integer blockChance) {
-        this.blockChance = blockChance;
-    }
-
-    public Integer getHp() {
-        return hp;
-    }
-
-    public void setHp(Integer hp) {
-        this.hp = hp;
-    }
-
-    public com.idle.game.core.Hero toHero() {
-        return new com.idle.game.core.Hero(heroType, level, dmg, armor, magicResist, speed, luck, critChance, critDamage, dodgeChance, blockChance, hp);
+    public com.idle.game.core.Hero toHero() throws Exception {
+        return new com.idle.game.core.Hero(heroType, level);
     }
 
 }

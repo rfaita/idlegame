@@ -1,5 +1,6 @@
 package com.idle.game.core;
 
+import com.idle.game.core.buff.Buff;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;

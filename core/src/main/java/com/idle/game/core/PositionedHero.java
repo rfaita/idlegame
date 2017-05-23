@@ -1,5 +1,6 @@
 package com.idle.game.core;
 
+import com.idle.game.core.type.BattlePositionType;
 import java.io.Serializable;
 import java.util.Objects;
 

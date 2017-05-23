@@ -1,12 +1,12 @@
 package com.idle.game.tests;
 
-import com.idle.game.core.ActionType;
-import com.idle.game.core.AtittudeType;
+import com.idle.game.core.type.ActionType;
+import com.idle.game.core.type.AtittudeType;
 import com.idle.game.core.Battle;
-import com.idle.game.core.BattlePositionType;
+import com.idle.game.core.type.BattlePositionType;
 import com.idle.game.core.Formation;
 import com.idle.game.core.Hero;
-import com.idle.game.core.SubActionType;
+import com.idle.game.core.type.SubActionType;
 import com.idle.game.core.exception.ValidationException;
 import static com.idle.game.tests.helper.TestHelper.*;
 import junit.framework.Assert;
@@ -559,25 +559,24 @@ public class BasicBattleTests {
 
         Assert.assertEquals("h1 attack first on first turn", h1, b.getBattleLog().get(1).getHeroOrigin().getHero());
         Assert.assertEquals("h2 target first on first turn", h2, b.getBattleLog().get(1).getHeroesTarget().get(0).getHero());
-        Assert.assertEquals("-52 dmg on first turn", new Integer(-52), b.getBattleLog().get(1).getBattleEvent().getValue());
+        Assert.assertEquals("-47 dmg on first turn", new Integer(-47), b.getBattleLog().get(1).getBattleEvent().getValue());
 
         Assert.assertEquals("h2 attack second on first turn", h2, b.getBattleLog().get(2).getHeroOrigin().getHero());
         Assert.assertEquals("h1 target second on first turn", h1, b.getBattleLog().get(2).getHeroesTarget().get(0).getHero());
-        Assert.assertEquals("-52 dmg on first turn", new Integer(-52), b.getBattleLog().get(2).getBattleEvent().getValue());
+        Assert.assertEquals("-47 dmg on first turn", new Integer(-47), b.getBattleLog().get(2).getBattleEvent().getValue());
 
         Assert.assertEquals("h1 attack first on turn 2", h1, b.getBattleLog().get(3).getHeroOrigin().getHero());
         Assert.assertEquals("h2 target first on turn 2", h2, b.getBattleLog().get(3).getHeroesTarget().get(0).getHero());
-        Assert.assertEquals("-52 dmg on turn 2", new Integer(-52), b.getBattleLog().get(3).getBattleEvent().getValue());
+        Assert.assertEquals("-47 dmg on turn 2", new Integer(-47), b.getBattleLog().get(3).getBattleEvent().getValue());
 
         Assert.assertEquals("h2 attack second on turn 2", h2, b.getBattleLog().get(4).getHeroOrigin().getHero());
         Assert.assertEquals("h1 target second on turn 2", h1, b.getBattleLog().get(4).getHeroesTarget().get(0).getHero());
-        Assert.assertEquals("-52 dmg on turn 2", new Integer(-52), b.getBattleLog().get(4).getBattleEvent().getValue());
+        Assert.assertEquals("-47 dmg on turn 2", new Integer(-47), b.getBattleLog().get(4).getBattleEvent().getValue());
 
         Assert.assertEquals("h1 attack first on turn 3", h1, b.getBattleLog().get(5).getHeroOrigin().getHero());
         Assert.assertEquals("h2 target first on turn 3", h2, b.getBattleLog().get(5).getHeroesTarget().get(0).getHero());
-        Assert.assertEquals("-52 dmg on turn 3", new Integer(-52), b.getBattleLog().get(5).getBattleEvent().getValue());
+        Assert.assertEquals("-47 dmg on turn 3", new Integer(-47), b.getBattleLog().get(5).getBattleEvent().getValue());
 
-        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(6).getBattleEvent().getType());
 
     }
 

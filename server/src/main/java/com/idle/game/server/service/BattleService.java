@@ -16,9 +16,22 @@ public class BattleService {
     @Inject
     private FormationService formationService;
     @Inject
+    private HeroTypeService heroTypeService;
+
+    @Inject
     private Validator validator;
 
-    public Battle doBattle(Formation attFormation, Formation defFormation) throws Exception {
+    public Battle doBattle(Long idAttackFormation, Long idDefenseFormation) throws Exception {
+
+        Formation attFormation = formationService.findById(idAttackFormation);
+        attFormation.getHeroes().forEach(ph -> {
+            ph.getHero().setHeroType(heroTypeService.getHeroType(ph.getHero().getHeroTypeId()));
+        });
+
+        Formation defFormation = formationService.findById(idDefenseFormation);
+        defFormation.getHeroes().forEach(ph -> {
+            ph.getHero().setHeroType(heroTypeService.getHeroType(ph.getHero().getHeroTypeId()));
+        });
 
         Battle b = new Battle(attFormation.toFormation(), defFormation.toFormation());
         b.doBattle();

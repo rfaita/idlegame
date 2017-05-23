@@ -1,6 +1,7 @@
 package com.idle.game.server.model;
 
-import com.idle.game.core.BattlePositionType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.idle.game.core.type.BattlePositionType;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,6 +27,7 @@ public class PositionedHero implements Serializable {
     private Hero hero;
     @ManyToOne
     @JoinColumn(name = "idformation")
+    @JsonIgnore
     private Formation formation;
     private BattlePositionType battlePosition;
 
@@ -61,7 +63,7 @@ public class PositionedHero implements Serializable {
         this.battlePosition = battlePosition;
     }
 
-    public com.idle.game.core.PositionedHero toPositionedHero() {
+    public com.idle.game.core.PositionedHero toPositionedHero() throws Exception {
         return new com.idle.game.core.PositionedHero(battlePosition, hero.toHero());
     }
 

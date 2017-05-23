@@ -1,5 +1,18 @@
 package com.idle.game.core;
 
+import com.idle.game.core.constant.IdleConstants;
+import com.idle.game.core.type.BattleTeamType;
+import com.idle.game.core.type.DamageType;
+import com.idle.game.core.type.FormationType;
+import com.idle.game.core.type.TargetType;
+import com.idle.game.core.type.BattlePositionType;
+import com.idle.game.core.type.SubActionType;
+import com.idle.game.core.type.BuffType;
+import com.idle.game.core.buff.Buff;
+import com.idle.game.core.action.ActionEffect;
+import com.idle.game.core.action.Action;
+import static com.idle.game.core.constant.IdleConstants.LOG;
+import com.idle.game.core.type.ActionType;
 import com.idle.game.core.exception.ValidationException;
 import com.idle.game.core.util.DiceUtil;
 import java.util.ArrayList;
@@ -8,7 +21,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -17,8 +29,6 @@ import java.util.stream.Stream;
  * @author rafael
  */
 public class Battle extends BaseObject {
-
-    private static final Logger LOG = Logger.getLogger(Battle.class.getName());
 
     private final List<BattleLog> battleLog;
     private Integer turn = 1;
@@ -75,7 +85,7 @@ public class Battle extends BaseObject {
         return battleLog;
     }
 
-    public Formation doBattle() {
+    public Formation doBattle() throws Exception {
         LOG.log(Level.FINEST, "[battle] INIT");
         this.addBattleLog(new BattleLog(this.turn, new BattleEvent(ActionType.BATTLE_START)));
         this.prepareToBattle();
@@ -93,7 +103,7 @@ public class Battle extends BaseObject {
 
     }
 
-    private void doTurn() {
+    private void doTurn() throws Exception {
 
         Boolean lastTurn = Boolean.FALSE;
 
@@ -101,6 +111,16 @@ public class Battle extends BaseObject {
 
         List<BattlePositionedHero> turnActionRated = getTurnActionRated();
         LOG.log(Level.FINEST, "[turnActionRated] {0}", turnActionRated);
+        LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
+
+        LOG.log(Level.FINEST, "[prepareToTurn] INIT");
+        prepareToTurn(turnActionRated);
+        LOG.log(Level.FINEST, "[prepareToTurn] END");
+        LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
+
+        LOG.log(Level.FINEST, "[passives] INIT");
+        computePassives(turnActionRated);
+        LOG.log(Level.FINEST, "[passives] END");
         LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
 
         LOG.log(Level.FINEST, "[buffs] INIT");
@@ -169,7 +189,7 @@ public class Battle extends BaseObject {
 
     private void doAction(BattlePositionedHero aPositionedHero) {
 
-        if (aPositionedHero.getHero().getCurrentHp() <= 0) {
+        if (aPositionedHero.getHero().getCurrHp() <= 0) {
             LOG.log(Level.FINEST, "[event=HERO_HEAD] HERO DEAD! SKIPPING");
             return;
         }
@@ -199,7 +219,7 @@ public class Battle extends BaseObject {
                 BattleEvent ret = new BattleEvent(actionMainEffect.getActionType());
 
                 if (!actionMainEffect.getCanBeDodge()
-                        || tHero.getCurrentDodgeChance() == 0 || DiceUtil.random(100) > tHero.getCurrentDodgeChance()) {
+                        || tHero.getCurrDodgeChance() == 0 || DiceUtil.random(100) > tHero.getCurrDodgeChance()) {
 
                     switch (actionMainEffect.getActionType()) {
                         case DMG:
@@ -226,9 +246,9 @@ public class Battle extends BaseObject {
     private Double criticalDamage(BattleEvent ret, Hero aHero) {
         Double dmgModifier = 1.0d;
 
-        if (aHero.getCurrentCritChance() > 0
-                && DiceUtil.random(100) <= aHero.getCurrentCritChance()) {
-            dmgModifier += aHero.getCurrentCritDamage() / 100d;
+        if (aHero.getCurrCritChance() > 0
+                && DiceUtil.random(100) <= aHero.getCurrCritChance()) {
+            dmgModifier += aHero.getCurrCritDamage() / 100d;
             ret.setSubType(SubActionType.CRITICAL);
             LOG.log(Level.FINEST, "[event=CRITICAL, value={0}] CRITICAL, MODIFIER {0}", dmgModifier);
         }
@@ -238,18 +258,20 @@ public class Battle extends BaseObject {
 
     private void doDamage(BattleEvent ret, Hero aHero, ActionEffect ae, Hero tHero) {
 
-        Double dmgReduction = 1 - (ae.getDamageType().equals(DamageType.PHYSICAL) ? getDmgAmorReduction(tHero) : getDmgMagicResistReduction(tHero));
+        DamageType dt = ae.getDamageType() != null ? ae.getDamageType() : aHero.getHeroType().getDamageType();
 
-        ret.setValue(-(int) ((aHero.getCurrentDmg() * criticalDamage(ret, aHero) * ae.getActionPercentage() / 100f) * dmgReduction));
+        Double dmgReduction = (dt.equals(DamageType.PHYSICAL) ? getDmgAmorReduction(tHero) : getDmgMagicResistReduction(tHero));
+
+        ret.setValue(-(int) ((aHero.getCurrDmg() * criticalDamage(ret, aHero) * ae.getActionPercentage() / 100f) * dmgReduction));
         ret.setDamageType(ae.getDamageType());
 
-        Integer newHp = tHero.getCurrentHp() + ret.getValue();
+        Integer newHp = tHero.getCurrHp() + ret.getValue();
         if (newHp < 0) {
-            tHero.setCurrentHp(0);
+            tHero.setCurrHp(0);
             ret.setSubType(SubActionType.DEATH);
             LOG.log(Level.FINEST, "[event=DMG_TO_DIE, value={0}] DMG {0} TO HERO, HE DIE {1}", new Object[]{ret.getValue(), tHero});
         } else {
-            tHero.setCurrentHp(newHp);
+            tHero.setCurrHp(newHp);
             LOG.log(Level.FINEST, "[event=DMG, value={0}] DMG {0} TO HERO {1}", new Object[]{ret.getValue(), tHero});
         }
 
@@ -257,10 +279,10 @@ public class Battle extends BaseObject {
 
     private void doHeal(BattleEvent ret, Hero aHero, ActionEffect ae, Hero tHero) {
 
-        ret.setValue((int) ((aHero.getCurrentDmg() * ae.getActionPercentage() / 100f)));
+        ret.setValue((int) ((aHero.getCurrDmg() * ae.getActionPercentage() / 100f)));
         ret.setDamageType(ae.getDamageType());
 
-        tHero.setCurrentHp(tHero.getCurrentHp() + ret.getValue());
+        tHero.setCurrHp(tHero.getCurrHp() + ret.getValue());
         LOG.log(Level.FINEST, "[event=HEAL, value={0}] HEAL {0} TO HERO {1}", new Object[]{ret.getValue(), tHero});
 
     }
@@ -275,7 +297,7 @@ public class Battle extends BaseObject {
                         || DiceUtil.random(100) <= sae.getActionChance()) {
 
                     tHero.addBuff(new Buff(sae.getActionDuration(),
-                            (int) (aHero.getCurrentDmg() * sae.getActionPercentage() / 100d),
+                            (int) (aHero.getCurrDmg() * sae.getActionPercentage() / 100d),
                             sae.getActionType(), sae.getDamageType()));
                 }
 
@@ -340,15 +362,15 @@ public class Battle extends BaseObject {
     }
 
     private Double getDmgMagicResistReduction(Hero h) {
-        return 100d / (100d + h.getCurrentMagicResist());
+        return 100d / (100d + h.getCurrMagicResist());
     }
 
     private Double getDmgAmorReduction(Hero h) {
-        return 100d / (100d + h.getCurrentArmor());
+        return 100d / (100d + h.getCurrArmor());
     }
 
     private Boolean calculateDoubleActionChance(BattlePositionedHero heroFaster, BattlePositionedHero nextHeroFaster) {
-        return (DiceUtil.random(100) < ((heroFaster.getHero().getCurrentSpeed() / nextHeroFaster.getHero().getCurrentSpeed()) - 1) * 25);
+        return (DiceUtil.random(100) < ((heroFaster.getHero().getCurrSpeed() * 1d / nextHeroFaster.getHero().getCurrSpeed()) - 1) * 25);
     }
 
     private List<BattlePositionedHero> getAttackHeroes() {
@@ -361,7 +383,7 @@ public class Battle extends BaseObject {
 
     private BattlePositionedHero getHeroLessLifePerc(BattleTeamType battleTeamType) {
         Optional<BattlePositionedHero> ret = getHeroesByBattleTeamTypeCanDoAction(battleTeamType).reduce((h, h2) -> {
-            return h.getHero().getCurrentHp() / h.getHero().getHp() < h2.getHero().getCurrentHp() / h.getHero().getHp() ? h : h2;
+            return h.getHero().getCurrHp() / h.getHero().getHp() < h2.getHero().getCurrHp() / h.getHero().getHp() ? h : h2;
         });
 
         try {
@@ -374,7 +396,7 @@ public class Battle extends BaseObject {
 
     private BattlePositionedHero getHeroMoreLifePerc(BattleTeamType battleTeamType) {
         Optional<BattlePositionedHero> ret = getHeroesByBattleTeamTypeCanDoAction(battleTeamType).reduce((h, h2) -> {
-            return h.getHero().getCurrentHp() / h.getHero().getHp() > h2.getHero().getCurrentHp() / h.getHero().getHp() ? h : h2;
+            return h.getHero().getCurrHp() / h.getHero().getHp() > h2.getHero().getCurrHp() / h.getHero().getHp() ? h : h2;
         });
 
         try {
@@ -387,7 +409,7 @@ public class Battle extends BaseObject {
 
     private BattlePositionedHero getHeroLessLife(BattleTeamType battleTeamType) {
         Optional<BattlePositionedHero> ret = getHeroesByBattleTeamTypeCanDoAction(battleTeamType).reduce((h, h2) -> {
-            return h.getHero().getCurrentHp() < h2.getHero().getCurrentHp() ? h : h2;
+            return h.getHero().getCurrHp() < h2.getHero().getCurrHp() ? h : h2;
         });
 
         try {
@@ -399,7 +421,7 @@ public class Battle extends BaseObject {
 
     private BattlePositionedHero getHeroMoreLife(BattleTeamType battleTeamType) {
         Optional<BattlePositionedHero> ret = getHeroesByBattleTeamTypeCanDoAction(battleTeamType).reduce((h, h2) -> {
-            return h.getHero().getCurrentHp() > h2.getHero().getCurrentHp() ? h : h2;
+            return h.getHero().getCurrHp() > h2.getHero().getCurrHp() ? h : h2;
         });
 
         try {
@@ -444,7 +466,7 @@ public class Battle extends BaseObject {
 
     private Stream<BattlePositionedHero> getHeroesByBattleTeamTypeCanDoAction(BattleTeamType battleTeamType) {
         return this.getHeroesByBattleTeamType(battleTeamType).filter((BattlePositionedHero t) -> {
-            return t.getHero().getCurrentHp() > 0;
+            return t.getHero().getCurrHp() > 0;
         });
     }
 
@@ -457,10 +479,10 @@ public class Battle extends BaseObject {
     private List<BattlePositionedHero> getTurnActionRated() {
 
         return this.battlePositionedHeroes.stream().filter((BattlePositionedHero t) -> {
-            return t.getHero().getCurrentHp() > 0;
+            return t.getHero().getCurrHp() > 0;
         }).sorted((BattlePositionedHero t, BattlePositionedHero t1) -> {
-            if (t1.getHero().getCurrentSpeed() - t.getHero().getCurrentSpeed() != 0) {
-                return t1.getHero().getCurrentSpeed() - t.getHero().getCurrentSpeed();
+            if (t1.getHero().getCurrSpeed() - t.getHero().getCurrSpeed() != 0) {
+                return t1.getHero().getCurrSpeed() - t.getHero().getCurrSpeed();
             } else {
                 //Velocidade empatada attack team tem vantagem
                 return t1.getBattleTeamType().equals(BattleTeamType.ATTACK) ? 1 : -1;
@@ -475,9 +497,22 @@ public class Battle extends BaseObject {
         });
     }
 
-    private void computeBuffs(List<BattlePositionedHero> battlePositionedHeroes) {
+    private void prepareToTurn(List<BattlePositionedHero> bphs) {
+        bphs.forEach((h) -> {
+            h.getHero().prepareToTurn();
+        });
+    }
 
-        for (int i = battlePositionedHeroes.size() - 1; i >= 0; i--) {
+    private void computePassives(List<BattlePositionedHero> bphs) throws Exception {
+        for (BattlePositionedHero battlePositionedHero : bphs) {
+            battlePositionedHero.getHero().calcPassives();
+        }
+
+    }
+
+    private void computeBuffs(List<BattlePositionedHero> bphs) {
+
+        for (int i = bphs.size() - 1; i >= 0; i--) {
 
             BattlePositionedHero battlePositionedHero = this.battlePositionedHeroes.get(i);
 
@@ -485,9 +520,7 @@ public class Battle extends BaseObject {
                 return;
             }
 
-            battlePositionedHero.getHero().prepareToComputeBuffs();
-
-            Iterator<Buff> it = battlePositionedHero.getHero().getCurrentBuffs().iterator();
+            Iterator<Buff> it = battlePositionedHero.getHero().getCurrBuffs().iterator();
 
             while (it.hasNext()) {
                 Buff buff = it.next();
@@ -497,11 +530,11 @@ public class Battle extends BaseObject {
                 ret.setDamageType(buff.getDamageType());
                 switch (buff.getEffectType()) {
                     case HEAL:
-                        battlePositionedHero.getHero().setCurrentHp(battlePositionedHero.getHero().getCurrentHp() + buff.getValue());
+                        battlePositionedHero.getHero().setCurrHp(battlePositionedHero.getHero().getCurrHp() + buff.getValue());
                         ret.setBuffType(BuffType.BUFF);
                         break;
                     case DMG:
-                        battlePositionedHero.getHero().setCurrentHp(battlePositionedHero.getHero().getCurrentHp() - buff.getValue());
+                        battlePositionedHero.getHero().setCurrHp(battlePositionedHero.getHero().getCurrHp() - buff.getValue());
                         ret.setBuffType(BuffType.DEBUFF);
                         break;
                     case FROZEN:
@@ -511,11 +544,11 @@ public class Battle extends BaseObject {
                         break;
 
                 }
-                buff.setCurrentTurn(buff.getCurrentTurn() + 1);
+                buff.setCurrTurn(buff.getCurrTurn() + 1);
                 this.addBattleLog(new BattleLog(this.turn, battlePositionedHero.duplicate(), ret, battlePositionedHero.duplicate()));
 
                 //Remove expired buffs
-                if (buff.getCurrentTurn() >= buff.getTurnDuration()) {
+                if (buff.getCurrTurn() >= buff.getTurnDuration()) {
                     it.remove();
                     BattleEvent beBuffDone = new BattleEvent();
                     beBuffDone.setType(ActionType.BUFF_DONE);
