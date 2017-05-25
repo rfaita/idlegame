@@ -17,7 +17,6 @@ public class BattleService {
     private FormationService formationService;
     @Inject
     private HeroTypeService heroTypeService;
-
     @Inject
     private Validator validator;
 

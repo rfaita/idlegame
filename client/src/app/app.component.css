@@ -1,0 +1,175 @@
+#main {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../assets/img/background.jpg');
+    background-size: cover;
+    overflow: hidden
+}
+
+#avatar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+}
+
+#avatar-img {
+    width: 64px;
+    height: 64px;
+    border: 1px solid #000;
+    background: url('../assets/img/avatar.gif');
+    display: block;
+}
+
+#resources {
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 1000;
+}
+
+#resources li {
+    float: left;
+}
+
+#resources span {
+    height: 32px;
+    width: 48px;
+    margin: 3px;
+    display: block;
+    background-size: cover;
+}
+
+#social-menu {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
+#social-menu span {
+    height: 48px;
+    width: 48px;
+    margin: 3px;
+    display: block;
+    background-size: cover;
+}
+
+#player-menu {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    z-index: 1000
+}
+
+#player-menu li {
+    float: left;
+}
+
+#player-menu span {
+    height: 48px;
+    width: 48px;
+    margin: 3px;
+    display: block;
+    background-size: cover;
+}
+
+#npcpvp {
+    display: block;
+    background-size: cover;
+    background-image: url("../assets/img/npcpvp.gif");
+    position: fixed;
+    left: 200px;
+    top: 0px;
+    height: 100px;
+    width: 100px;
+    transition: width 0.4s, height 0.4s, top 0.4s, left 0.4s;
+}
+
+#npcpvp:hover {
+    top:-5px;
+    left: 195px;
+    height: 110px;
+}
+
+#npcpve {
+    display: block;
+    background-size: cover;
+    background-image: url("../assets/img/npcpve.gif");
+    position: fixed;
+    left: 520px;
+    top: 205px;
+    height: 100px;
+    width: 100px;
+    transition: width 0.4s, height 0.4s, top 0.4s, left 0.4s;
+}
+
+#npcpve:hover {
+    top:200px;
+    left: 515px;
+    height: 110px;
+    width: 110px;
+}
+
+#npcshop {
+    display: block;
+    background-size: cover;
+    background-image: url("../assets/img/npcshop.gif");
+    position: fixed;
+    left: 155px;
+    top: 265px;
+    height: 100px;
+    width: 100px;
+    transition: width 0.4s, height 0.4s, top 0.4s, left 0.4s;
+}
+
+#npcshop:hover {
+    top:260px;
+    left: 150px;
+    height: 110px;
+    width: 110px;
+}
+
+#npcmage {
+    display: block;
+    background-size: cover;
+    background-image: url("../assets/img/npcmage.gif");
+    position: fixed;
+    left: 440px;
+    top: 30px;
+    height: 100px;
+    width: 130px;
+    transition: width 0.4s, height 0.4s, top 0.4s, left 0.4s;
+}
+
+#npcmage:hover {
+    top:25px;
+    left: 435px;
+    height: 110px;
+    width: 140px;
+}
+
+#modal {
+    background: #000;
+    z-index: 9000;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: .7;
+}
+
+#dialog {
+    border-style: solid;
+    border-width: 25px;
+    border-image: url('../assets/img/border.jpg') 25 fill repeat;
+   
+    z-index: 10000;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    height: 80vh;
+}
