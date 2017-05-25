@@ -8,10 +8,10 @@ import org.wildfly.swarm.config.logging.Level;
 import org.wildfly.swarm.config.logging.Logger;
 import org.wildfly.swarm.datasources.DatasourcesFraction;
 import org.wildfly.swarm.jpa.JPAFraction;
+import org.wildfly.swarm.keycloak.Secured;
 import org.wildfly.swarm.logging.LoggingFraction;
 import org.wildfly.swarm.logging.LoggingProperties;
 import org.wildfly.swarm.undertow.WARArchive;
-import org.wildfly.swarm.undertow.descriptors.WebXmlAsset;
 
 /**
  *
@@ -51,6 +51,7 @@ public class Main {
 
         container.fraction(new LoggingFraction()
                 .logger(new Logger(IdleConstants.LOG_NAME).level(leveLog))
+                .logger(new Logger(IdleConstants.LOG_NAME_SERVER).level(leveLog))
                 .logger(new Logger("org.hibernate.SQL").level(leveLog))
                 .logger(new Logger("org.hibernate.type.descriptor.sql.BasicBinder").level(leveLog))
         );
@@ -68,12 +69,13 @@ public class Main {
 
         WARArchive deployment = ShrinkWrap.createFromZipFile(WARArchive.class, new File("target/idleserver.war"));
 
-        WebXmlAsset webXmlAsset = deployment.findWebXmlAsset();
-//        webXmlAsset.setLoginConfig("BASIC", "QGSdomain");
-//        webXmlAsset.protect("/api/secure/*").withRole("*");
+        deployment.as(Secured.class).protect("/idle/api/*").withRole("*");
 
+//        WebXmlAsset webXmlAsset = deployment.findWebXmlAsset();
+//        webXmlAsset.setLoginConfig("KEYCLOAK", "idlerealm");
+//        webXmlAsset.protect("/idle/api/*").withRole("admin");
 //        webXmlAsset.setContextParam("productionMode", "false");
-//        deployment.setSecurityDomain("QGSdomain");
+//        deployment.setSecurityDomain("idlerealm");
         //Or, you can add web.xml and jboss-web.xml from classpath or somewhere
         //deployment.addAsWebInfResource(new ClassLoaderAsset("WEB-INF/web.xml", Main.class.getClassLoader()), "web.xml");
         //deployment.addAsWebInfResource(new ClassLoaderAsset("WEB-INF/jboss-web.xml", Main.class.getClassLoader()), "jboss-web.xml");

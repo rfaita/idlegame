@@ -1,6 +1,8 @@
 package com.idle.game.server.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -10,7 +12,7 @@ import java.io.Serializable;
 public class Envelope<T> implements Serializable {
 
     private T data;
-    private Error error;
+    private List<Error> errors;
 
     public T getData() {
         return data;
@@ -20,15 +22,17 @@ public class Envelope<T> implements Serializable {
         this.data = data;
     }
 
-    public Error getError() {
-        return error;
+    public List<Error> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(List<Error> errors) {
+        this.errors = errors;
     }
 
     public void setError(Error error) {
-        this.error = error;
+        this.errors = new ArrayList<>();
+        this.errors.add(error);
     }
-    
-    
-    
-    
+
 }

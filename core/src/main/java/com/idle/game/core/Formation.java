@@ -4,6 +4,8 @@ import com.idle.game.core.constant.IdleConstants;
 import com.idle.game.core.type.FormationType;
 import com.idle.game.core.type.BattlePositionType;
 import com.idle.game.core.exception.ValidationException;
+import com.idle.game.core.type.FormationAllocation;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,8 +16,10 @@ import java.util.stream.Collectors;
  *
  * @author rafael
  */
-public class Formation extends BaseObject {
+public class Formation implements Serializable {
 
+    private Long id;
+    private FormationAllocation formationAllocation;
     private FormationType formationType;
     private Integer size = 0;
     private final List<PositionedHero> heroes = new ArrayList<>(IdleConstants.MAX_SIZE_BACK_LINE + IdleConstants.MAX_SIZE_FRONT_LINE);
@@ -25,10 +29,24 @@ public class Formation extends BaseObject {
 
     public Formation(List<PositionedHero> heroes) {
         this.heroes.addAll(heroes);
+        this.size = this.heroes.size();
     }
 
     public Formation(PositionedHero[] heroes) {
         this.heroes.addAll(Arrays.asList(heroes));
+        this.size = this.heroes.size();
+    }
+
+    public Formation(FormationAllocation fa, List<PositionedHero> heroes) {
+        this.formationAllocation = fa;
+        this.heroes.addAll(heroes);
+        this.size = this.heroes.size();
+    }
+
+    public Formation(FormationAllocation fa, PositionedHero[] heroes) {
+        this.formationAllocation = fa;
+        this.heroes.addAll(Arrays.asList(heroes));
+        this.size = this.heroes.size();
     }
 
     public void addPositionedHero(PositionedHero hero) throws Exception {
@@ -52,7 +70,7 @@ public class Formation extends BaseObject {
         }
     }
 
-    public List<PositionedHero> getBackLinePositionedHeroes() {
+    public List<PositionedHero> returnBackLinePositionedHeroes() {
         return heroes.stream().filter((ph) -> {
             return ph.getBattlePosition().equals(BattlePositionType.FRONT_BOTTOM)
                     || ph.getBattlePosition().equals(BattlePositionType.FRONT_MIDDLE)
@@ -61,7 +79,7 @@ public class Formation extends BaseObject {
 
     }
 
-    public List<PositionedHero> getFrontLinePositionedHeroes() {
+    public List<PositionedHero> returnFrontLinePositionedHeroes() {
         return heroes.stream().filter((ph) -> {
             return (ph.getBattlePosition().equals(BattlePositionType.BACK_BOTTOM)
                     || ph.getBattlePosition().equals(BattlePositionType.BACK_MIDDLE)
@@ -89,9 +107,25 @@ public class Formation extends BaseObject {
         this.size = size;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public FormationAllocation getFormationAllocation() {
+        return formationAllocation;
+    }
+
+    public void setFormationAllocation(FormationAllocation formationAllocation) {
+        this.formationAllocation = formationAllocation;
+    }
+    
     @Override
     public String toString() {
-        return "F{" + "ft=" + formationType + ", size=" + size + '}';
+        return "F{" + "ft=" + formationType + ", size=" + size + ", fa=" + formationAllocation + '}';
     }
 
 }

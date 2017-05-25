@@ -1,4 +1,4 @@
-package com.idle.game.server.dto.enums;
+package com.idle.game.core.type;
 
 /**
  *

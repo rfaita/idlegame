@@ -2,6 +2,7 @@ package com.idle.game.core.type;
 
 import com.idle.game.core.BaseObject;
 import com.idle.game.core.action.Action;
+import com.idle.game.core.constant.IdleConstants;
 import com.idle.game.core.passive.Passive;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class HeroType extends BaseObject {
     private DistanceType distanceType;
     private List<Passive> passives;
 
-    private Integer maxLevel = 50;
+    private Integer maxLevel = IdleConstants.HERO_MAX_LEVEL;
 
     private Integer baseDmg;
     private Integer baseArmor;

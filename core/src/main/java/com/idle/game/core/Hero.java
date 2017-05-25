@@ -14,18 +14,19 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.logging.Level;
 
 /**
  *
  * @author rafael
  */
-public class Hero extends BaseObject {
+public class Hero implements Serializable {
 
+    private Long id;
     private HeroType heroType;
     private Integer level;
 
@@ -72,8 +73,8 @@ public class Hero extends BaseObject {
     private Item ammulet;
     private Item jewel;
 
-    public Hero(HeroType heroType, Integer level) throws Exception {
-        this.uuid = UUID.randomUUID();
+    public Hero(Long id, HeroType heroType, Integer level) throws Exception {
+        this.id = id;
         this.heroType = heroType;
         this.levelUp(level);
         this.calcAtributtes();
@@ -84,7 +85,6 @@ public class Hero extends BaseObject {
             Integer baseSpeed, Integer baseLuck, Integer baseCritChance,
             Integer baseCritDamage, Integer baseDodgeChance,
             Integer baseBlockChance, Integer baseHp) {
-        this.uuid = UUID.randomUUID();
         this.heroType = heroType;
         this.level = level;
         this.baseDmg = baseDmg;
@@ -99,6 +99,14 @@ public class Hero extends BaseObject {
         this.baseHp = baseHp;
 
         this.calcAtributtes();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Item getChest() {
@@ -655,13 +663,13 @@ public class Hero extends BaseObject {
 
     @Override
     public String toString() {
-        return "H{" + "id=" + this.uuid.toString().substring(0, 8) + ",currHp=" + this.currHp + ",type=" + this.heroType + '}';
+        return "H{" + "id=" + this.id + ",currHp=" + this.currHp + ",type=" + this.heroType + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 61 * hash + Objects.hashCode(this.uuid);
+        hash = 61 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -677,7 +685,7 @@ public class Hero extends BaseObject {
             return false;
         }
         final Hero other = (Hero) obj;
-        return Objects.equals(this.uuid, other.uuid);
+        return Objects.equals(this.id, other.id);
     }
 
 }

@@ -107,6 +107,14 @@
             <artifactId>jaxrs</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>keycloak-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>keycloak</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.idle.game</groupId>
             <artifactId>core</artifactId>
             <version>${project.version}</version>

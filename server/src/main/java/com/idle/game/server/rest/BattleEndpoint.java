@@ -21,29 +21,20 @@ public class BattleEndpoint {
 
     @Inject
     private BattleService battleService;
-    
 
     @GET
     @Path("/{idAttackFormation}/{idDefenseFormation}")
     @Produces("application/json")
     @GZIP
     public Envelope<BattleRetorno> doGet(@PathParam("idAttackFormation") Long idAttackFormation,
-            @PathParam("idDefenseFormation") Long idDefenseFormation) {
+            @PathParam("idDefenseFormation") Long idDefenseFormation) throws Exception {
 
         Envelope<BattleRetorno> ret = new Envelope<>();
-        try {
 
-            Battle battle = battleService.doBattle(idAttackFormation, idDefenseFormation);
+        Battle battle = battleService.doBattle(idAttackFormation, idDefenseFormation);
 
-            ret.setData(new BattleRetorno(battle.getBattleLog(), battle.getWinner().getFormationType()));
+        ret.setData(new BattleRetorno(battle.getBattleLog(), battle.getWinner().getFormationType()));
 
-        } catch (Exception ex) {
-            if (ex.getCause() instanceof ValidationException) {
-                ret.setError(new com.idle.game.server.dto.Error(-1, ex.getCause().getMessage()));
-            } else {
-                ret.setError(new com.idle.game.server.dto.Error(-1, ex.getMessage()));
-            }
-        }
         return ret;
 
     }

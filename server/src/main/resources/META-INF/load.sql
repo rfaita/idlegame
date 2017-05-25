@@ -1,5 +1,5 @@
-insert into player(id, name, user) values (1, 'Rafael', 'rfaita@gmail.com');
-insert into player(id, name, user) values (2, 'João', 'joao@gmail.com');
+insert into player(id, name, user, linkedUser) values (1, 'Rafael', 'rfaita@gmail.com', '0030d3c8-80b1-4eb9-af33-4f9fd82c1911');
+insert into player(id, name, user, linkedUser) values (2, 'João', 'joao@gmail.com', null);
 
 insert into hero (id, herotypeid, level, idplayer) values (1, '91b9cddc-3fbe-11e7-a919-92ebcb67fe33',1,1);
 insert into hero (id, herotypeid, level, idplayer) values (2, '91b9cddc-3fbe-11e7-a919-92ebcb67fe33',1,1);

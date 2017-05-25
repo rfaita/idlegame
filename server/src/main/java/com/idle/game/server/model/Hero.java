@@ -3,11 +3,17 @@ package com.idle.game.server.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.idle.game.core.type.HeroType;
 import java.io.Serializable;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 
 /**
@@ -15,6 +21,19 @@ import javax.persistence.SequenceGenerator;
  * @author rafael
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Hero.findById", query = "SELECT h FROM Hero h "
+            + "JOIN FETCH h.player "
+            + "WHERE h.id = :id ")
+    ,
+    @NamedQuery(name = "Hero.findByPlayer", query = "SELECT h FROM Hero h "
+            + "JOIN FETCH h.player "
+            + "WHERE h.player.id = :idPlayer ")
+    ,
+    @NamedQuery(name = "Hero.findByLinkedUser", query = "SELECT h FROM Hero h "
+            + "JOIN FETCH h.player "
+            + "WHERE h.player.linkedUser = :linkedUser ")
+})
 public class Hero implements Serializable {
 
     @Id
@@ -22,9 +41,8 @@ public class Hero implements Serializable {
     @GeneratedValue(generator = "seqhero")
     private Long id;
     private String heroTypeId;
-    private transient HeroType heroType;
     private Integer level;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idplayer")
     @JsonIgnore
     private Player player;
@@ -53,14 +71,6 @@ public class Hero implements Serializable {
         this.heroTypeId = heroTypeId;
     }
 
-    public HeroType getHeroType() {
-        return heroType;
-    }
-
-    public void setHeroType(HeroType heroType) {
-        this.heroType = heroType;
-    }
-
     public Integer getLevel() {
         return level;
     }
@@ -69,8 +79,33 @@ public class Hero implements Serializable {
         this.level = level;
     }
 
-    public com.idle.game.core.Hero toHero() throws Exception {
-        return new com.idle.game.core.Hero(heroType, level);
+    public com.idle.game.core.Hero toHero(Map<UUID, HeroType> heroTypes) throws Exception {
+        return new com.idle.game.core.Hero(this.id, heroTypes.get(UUID.fromString(this.heroTypeId)), level);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 17 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Hero other = (Hero) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
 
 }
