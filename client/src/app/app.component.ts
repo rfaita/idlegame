@@ -6,8 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  
-  public showingDialog:boolean = false;
+
+  public showingDialog: boolean = false;
 
   public showDialog() {
     this.showingDialog = true;

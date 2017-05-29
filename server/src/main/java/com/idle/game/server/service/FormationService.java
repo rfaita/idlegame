@@ -1,5 +1,6 @@
 package com.idle.game.server.service;
 
+import com.idle.game.core.type.FormationAllocation;
 import com.idle.game.server.model.Formation;
 import com.idle.game.server.model.Hero;
 import com.idle.game.server.model.PositionedHero;
@@ -64,6 +65,26 @@ public class FormationService extends BaseService {
 
         return f;
 
+    }
+
+    public Formation findByLoggedLinkedUserAndAllocation(FormationAllocation formationAllocation) {
+        return findByLinkedUserAndAllocation(getIDToken().getSubject(), formationAllocation);
+    }
+
+    public Formation findByLinkedUserAndAllocation(String linkedUser, FormationAllocation formationAllocation) {
+        Query q = helper.getEntityManager().createNamedQuery("Formation.findByLinkedUserAndAllocation");
+
+        q.setParameter("linkedUser", linkedUser);
+        q.setParameter("formationAllocation", formationAllocation);
+
+        List<Formation> ret = q.getResultList();
+        if (ret == null || ret.isEmpty()) {
+            throw new ValidationException("formation.not.found");
+        }
+        if (ret.size() > 1) {
+            throw new ValidationException("more.then.one.formation.found");
+        }
+        return ret.get(0);
     }
 
     public List<Formation> findByLoggedLinkedUser() {

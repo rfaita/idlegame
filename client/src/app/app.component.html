@@ -1,14 +1,14 @@
-<div id="modal" *ngIf="showingDialog" (click)="hideDialog()">
+<div id="modal" [hidden]="!showingDialog" (click)="hideDialog()">
 
 </div>
-<div id="dialog" *ngIf="showingDialog">
+<div id="dialog" [hidden]="!showingDialog">
   <div id="dialog-content">
-    
+    <router-outlet></router-outlet>
   </div>
 </div>
 
 <div id="main">
-  <span id="npcpvp" (click)="showDialog()"></span>
+  <span id="npcpvp"></span>
   <span id="npcpve"></span>
   <span id="npcshop"></span>
   <span id="npcmage"></span>
@@ -63,7 +63,7 @@
         <span style="background-image:url('../assets/img/bag.png')"></span>
       </li>
       <li>
-        <span style="background-image:url('../assets/img/hero.png')"></span>
+        <span (click)="showDialog()" routerLink="/heroes" style="background-image:url('../assets/img/hero.png')"></span>
       </li>
     </ul>
 

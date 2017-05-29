@@ -173,3 +173,7 @@
     width: 80vw;
     height: 80vh;
 }
+
+#dialog-content {
+    background: #FFF;
+}

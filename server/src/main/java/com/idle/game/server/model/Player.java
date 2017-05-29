@@ -4,12 +4,13 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 /**
@@ -34,6 +35,44 @@ public class Player implements Serializable {
     @OneToMany(targetEntity = Formation.class, mappedBy = "player")
     private List<Formation> formations;
     private String linkedUser;
+    private Long gem;
+    private Long gold;
+    private Long liquid;
+    @OneToOne
+    @JoinColumn(name = "idNextLevelFormationPve")
+    private Formation nextLevelFormationPve;
+
+    public Formation getNextLevelFormationPve() {
+        return nextLevelFormationPve;
+    }
+
+    public void setNextLevelFormationPve(Formation nextLevelFormationPve) {
+        this.nextLevelFormationPve = nextLevelFormationPve;
+    }
+
+    public Long getGem() {
+        return gem;
+    }
+
+    public void setGem(Long gem) {
+        this.gem = gem;
+    }
+
+    public Long getGold() {
+        return gold;
+    }
+
+    public void setGold(Long gold) {
+        this.gold = gold;
+    }
+
+    public Long getLiquid() {
+        return liquid;
+    }
+
+    public void setLiquid(Long liquid) {
+        this.liquid = liquid;
+    }
 
     public String getLinkedUser() {
         return linkedUser;

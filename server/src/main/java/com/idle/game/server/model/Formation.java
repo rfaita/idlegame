@@ -1,7 +1,6 @@
 package com.idle.game.server.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.idle.game.core.constant.IdleConstants;
 import com.idle.game.core.type.HeroType;
 import com.idle.game.core.type.FormationAllocation;
 import java.io.Serializable;
@@ -19,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -32,15 +32,20 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Formation.findById", query = "SELECT f FROM Formation f "
             + "JOIN FETCH f.heroes h "
             + "JOIN FETCH h.hero "
-            + "JOIN FETCH f.player "
+            + "LEFT JOIN FETCH f.player "
             + "WHERE f.id = :id")
     ,
     @NamedQuery(name = "Formation.findByPlayer", query = "SELECT f FROM Formation f "
-            + "JOIN FETCH f.player "
+            + "LEFT JOIN FETCH f.player "
             + "WHERE f.player.id = :idPlayer ")
     ,
+    @NamedQuery(name = "Formation.findByLinkedUserAndAllocation", query = "SELECT f FROM Formation f "
+            + "LEFT JOIN FETCH f.player "
+            + "WHERE f.player.linkedUser = :linkedUser "
+            + "AND f.formationAllocation = :formationAllocation")
+    ,
     @NamedQuery(name = "Formation.findByLinkedUser", query = "SELECT f FROM Formation f "
-            + "JOIN FETCH f.player "
+            + "LEFT JOIN FETCH f.player "
             + "WHERE f.player.linkedUser = :linkedUser ")
 })
 public class Formation implements Serializable {
@@ -60,6 +65,18 @@ public class Formation implements Serializable {
     private Player player;
     @NotNull(message = "formation.allocation.can.not.be.null")
     private FormationAllocation formationAllocation;
+    @OneToOne
+    @JoinColumn(name = "idNextLevelFormation")
+    @JsonIgnore
+    private Formation nextLevelFormation;
+
+    public Formation getNextLevelFormation() {
+        return nextLevelFormation;
+    }
+
+    public void setNextLevelFormation(Formation nextLevelFormation) {
+        this.nextLevelFormation = nextLevelFormation;
+    }
 
     public FormationAllocation getFormationAllocation() {
         return formationAllocation;

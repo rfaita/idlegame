@@ -1,12 +1,12 @@
 package com.idle.game.server.rest;
 
 import com.idle.game.core.Battle;
+import com.idle.game.core.type.FormationAllocation;
 import com.idle.game.server.dto.BattleRetorno;
 import com.idle.game.server.dto.Envelope;
 import com.idle.game.server.rest.util.annotations.GZIP;
 import com.idle.game.server.service.BattleService;
 import javax.inject.Inject;
-import javax.validation.ValidationException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -32,6 +32,38 @@ public class BattleEndpoint {
         Envelope<BattleRetorno> ret = new Envelope<>();
 
         Battle battle = battleService.doBattle(idAttackFormation, idDefenseFormation);
+
+        ret.setData(new BattleRetorno(battle.getBattleLog(), battle.getWinner().getFormationType()));
+
+        return ret;
+
+    }
+
+    @GET
+    @Path("/pvp/{linkedUserDefense}")
+    @Produces("application/json")
+    @GZIP
+    public Envelope<BattleRetorno> doGetBattlePvP(@PathParam("linkedUserDefense") String linkedUserDefense) throws Exception {
+
+        Envelope<BattleRetorno> ret = new Envelope<>();
+
+        Battle battle = battleService.doBattle(linkedUserDefense, FormationAllocation.PVP);
+
+        ret.setData(new BattleRetorno(battle.getBattleLog(), battle.getWinner().getFormationType()));
+
+        return ret;
+
+    }
+
+    @GET
+    @Path("/pve")
+    @Produces("application/json")
+    @GZIP
+    public Envelope<BattleRetorno> doGetBattlePvE() throws Exception {
+
+        Envelope<BattleRetorno> ret = new Envelope<>();
+
+        Battle battle = battleService.doPveBattle(FormationAllocation.PVE);
 
         ret.setData(new BattleRetorno(battle.getBattleLog(), battle.getWinner().getFormationType()));
 

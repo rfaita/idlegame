@@ -6,6 +6,16 @@ package com.idle.game.core.type;
  */
 public enum FormationAllocation {
 
-    PVP, PVP_DEFENSE, PVE
+    PVP_DEFENSE(null), PVP(PVP_DEFENSE), PVE_DEFENSE(null), PVE(PVE_DEFENSE);
+
+    private final FormationAllocation counter;
+
+    public FormationAllocation getCounter() {
+        return counter;
+    }
+
+    private FormationAllocation(FormationAllocation counter) {
+        this.counter = counter;
+    }
 
 }
