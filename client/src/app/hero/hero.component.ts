@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Hero } from '../model/hero';
-import { HeroService } from './hero.service';
+import { HeroesService } from '../service/heroes.service';
 import { Location } from '@angular/common';
 
 @Component({
@@ -15,26 +15,28 @@ export class HeroComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private location: Location,
-    private heroService: HeroService) { }
+    private heroesService: HeroesService) { }
 
   public back() {
     this.location.back();
   }
 
   public levelUp() {
-    this.heroService.levelUp(this.hero.id)
-        .subscribe(
-        hero => this.hero = hero,
-        error => console.log(error));
+    this.heroesService.levelUp(this.hero.id)
+      .subscribe(
+      hero => this.hero = hero,
+      error => console.log(error)
+      );
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       let id: number = +params['id']; // (+) converts string 'id' to a number
-      this.heroService.getHero(id)
+      this.heroesService.getHero(id)
         .subscribe(
         hero => this.hero = hero,
-        error => console.log(error));
+        error => console.log(error)
+        );
     });
   }
 

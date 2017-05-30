@@ -26,7 +26,7 @@ public class BattleEndpoint {
     @Path("/{idAttackFormation}/{idDefenseFormation}")
     @Produces("application/json")
     @GZIP
-    public Envelope<BattleRetorno> doGet(@PathParam("idAttackFormation") Long idAttackFormation,
+    public Envelope<BattleRetorno> doBattle(@PathParam("idAttackFormation") Long idAttackFormation,
             @PathParam("idDefenseFormation") Long idDefenseFormation) throws Exception {
 
         Envelope<BattleRetorno> ret = new Envelope<>();
@@ -43,7 +43,7 @@ public class BattleEndpoint {
     @Path("/pvp/{linkedUserDefense}")
     @Produces("application/json")
     @GZIP
-    public Envelope<BattleRetorno> doGetBattlePvP(@PathParam("linkedUserDefense") String linkedUserDefense) throws Exception {
+    public Envelope<BattleRetorno> doBattlePvp(@PathParam("linkedUserDefense") String linkedUserDefense) throws Exception {
 
         Envelope<BattleRetorno> ret = new Envelope<>();
 
@@ -59,7 +59,7 @@ public class BattleEndpoint {
     @Path("/pve")
     @Produces("application/json")
     @GZIP
-    public Envelope<BattleRetorno> doGetBattlePvE() throws Exception {
+    public Envelope<BattleRetorno> doPveBattle() throws Exception {
 
         Envelope<BattleRetorno> ret = new Envelope<>();
 

@@ -7,20 +7,23 @@ import { Routes, RouterModule, Router } from '@angular/router';
 import { routing } from './app.routes';
 import { AppComponent } from './app.component';
 import { HeroesComponent } from './heroes/heroes.component';
-import { HeroesService } from './heroes/heroes.service';
+import { HeroesService } from './service/heroes.service';
 import { KeycloakService } from './service/keycloak.service';
 import { KEYCLOAK_HTTP_PROVIDER } from './service/keycloak.http';
 import { ShopComponent } from './shop/shop.component';
-import { ShopService } from './shop/shop.service';
+import { ShopService } from './service/shop.service';
 import { HeroComponent } from './hero/hero.component';
-import { HeroService } from './hero/hero.service';
+import { CampaignComponent } from './campaign/campaign.component';
+import { FormationService } from './service/formation.service';
+import { BattleService } from './service/battle.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeroesComponent,
     ShopComponent,
-    HeroComponent
+    HeroComponent,
+    CampaignComponent
   ],
   imports: [
     BrowserModule,
@@ -32,8 +35,9 @@ import { HeroService } from './hero/hero.service';
   providers: [
     KeycloakService,
     HeroesService,
-    HeroService,
     ShopService,
+    FormationService,
+    BattleService,
     KEYCLOAK_HTTP_PROVIDER
   ],
   bootstrap: [AppComponent]

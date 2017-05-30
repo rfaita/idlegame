@@ -1,0 +1,19 @@
+<div class="dialog-content" *ngIf="!!nextLevelFormationPve && !!formationPve">
+  <p>Seu próximo desafio é:</p>
+  <ul>
+    <li *ngFor="let pHero of nextLevelFormationPve.positionedHeroes" [style.background]="'url(../assets/heroes/' + pHero.hero.heroType.name + '.png)'">
+      <span class="badge">{{pHero.hero.level}}</span>
+    </li>
+  </ul>
+
+  <p>Sua composição é:</p>
+  <ul>
+    <li *ngFor="let pHero of formationPve.positionedHeroes" [style.background]="'url(../assets/heroes/' + pHero.hero.heroType.name + '.png)'">
+      <span class="badge">{{pHero.hero.level}}</span>
+    </li>
+  </ul>
+
+  <p>
+    <a (click)="fight()">Lutar</a>
+  </p>
+</div>

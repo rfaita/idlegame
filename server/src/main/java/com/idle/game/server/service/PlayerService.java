@@ -15,34 +15,41 @@ import javax.validation.Validator;
  */
 @Stateless
 public class PlayerService extends BaseService {
-
+    
     @Inject
     private PersistenceUnitHelper helper;
     @Inject
     private Validator validator;
-
+    
     public Player findById(Long id) {
         Player p = helper.getEntityManager().find(Player.class, id);
         p.getFormations().size();
         return p;
     }
-
+    
     public Player findByLoggedLinkedUser() {
         return findByLinkedUser(getLoggedLinkedUser());
     }
-
+    
     public Player findByLinkedUser(String linkedUser) {
         Query q = helper.getEntityManager().createNamedQuery("Player.findByLinkedUser");
-
+        
         q.setParameter("linkedUser", linkedUser);
-
+        
         List<Player> ret = q.getResultList();
         if (ret == null || ret.isEmpty()) {
             throw new ValidationException("player.not.found");
         }
-
+        
         return ret.get(0);
-
+        
     }
-
+    
+    public void updateToNextLevelFormationPve() {
+        Player p = this.findByLoggedLinkedUser();
+        p.setNextLevelFormationPve(p.getNextLevelFormationPve().getNextLevelFormation());
+        
+        helper.getEntityManager().merge(p);
+    }
+    
 }

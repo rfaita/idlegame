@@ -1,7 +1,9 @@
 package com.idle.game.server.service;
 
 import com.idle.game.core.Battle;
+import com.idle.game.core.type.BattleTeamType;
 import com.idle.game.core.type.FormationAllocation;
+import com.idle.game.core.type.FormationType;
 import com.idle.game.core.type.HeroType;
 import com.idle.game.server.model.Formation;
 import java.util.Map;
@@ -22,6 +24,8 @@ public class BattleService {
     private FormationService formationService;
     @Inject
     private HeroTypeService heroTypeService;
+    @Inject
+    private PlayerService playerService;
     @Inject
     private Validator validator;
 
@@ -62,6 +66,11 @@ public class BattleService {
 
         Battle b = new Battle(attFormation.toFormation(heroTypes), defFormation.toFormation(heroTypes));
         b.doBattle();
+
+        if (b.getWinner().getFormationType().equals(FormationType.ATTACK)) {
+            playerService.updateToNextLevelFormationPve();
+        }
+
         return b;
     }
 

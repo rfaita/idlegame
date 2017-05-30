@@ -3,7 +3,6 @@ package com.idle.game.core.buff;
 import com.idle.game.core.BaseObject;
 import com.idle.game.core.type.DamageType;
 import com.idle.game.core.type.ActionType;
-import com.idle.game.core.type.ActionType;
 import java.util.Objects;
 import java.util.UUID;
 

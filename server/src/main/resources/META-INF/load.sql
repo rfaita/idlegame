@@ -1,7 +1,8 @@
 insert into formation(id, idplayer, formationAllocation) values (10, null, 0);
 insert into formation(id, idplayer, formationAllocation, idnextlevelformation) values (20, null, 0, 10);
+insert into formation(id, idplayer, formationAllocation, idnextlevelformation) values (30, null, 0, 20);
 
-insert into player(id, name, user, linkedUser, idnextlevelformationpve) values (1, 'Rafael', 'rfaita@gmail.com', '0030d3c8-80b1-4eb9-af33-4f9fd82c1911', 20);
+insert into player(id, name, user, linkedUser, idnextlevelformationpve) values (1, 'Rafael', 'rfaita@gmail.com', '0030d3c8-80b1-4eb9-af33-4f9fd82c1911', 30);
 insert into player(id, name, user, linkedUser) values (2, 'João', 'joao@gmail.com', null);
 
 insert into hero (id, herotypeid, level, idplayer) values (1, '91b9cddc-3fbe-11e7-a919-92ebcb67fe33',1,1);
@@ -58,3 +59,7 @@ insert into positionedhero(id, idhero, battlePosition, idformation) values (22, 
 insert into positionedhero(id, idhero, battlePosition, idformation) values (23, 23, 3, 20);
 insert into positionedhero(id, idhero, battlePosition, idformation) values (24, 24, 4, 20);
 insert into positionedhero(id, idhero, battlePosition, idformation) values (25, 25, 5, 20);
+
+
+insert into hero (id, herotypeid, level, idplayer) values (30, '91b9cddc-3fbe-11e7-a919-92ebcb67fe33',1,null);
+insert into positionedhero(id, idhero, battlePosition, idformation) values (30, 30, 0, 30);

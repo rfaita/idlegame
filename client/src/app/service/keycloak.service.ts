@@ -10,10 +10,9 @@ export class KeycloakService {
 
     static init(): Promise<any> {
         const keycloakAuth: any = Keycloak({
-            url: "http://localhost:8080/auth",
-            realm: 'idlerealm',
-            clientId: 'idlegame',
-            publicClient: true
+            url: environment.AUTH_URL,
+            realm: environment.AUTH_REALM,
+            clientId: environment.AUTH_CLIENT
         });
 
         KeycloakService.auth.loggedIn = false;
@@ -24,7 +23,7 @@ export class KeycloakService {
                     KeycloakService.auth.loggedIn = true;
                     KeycloakService.auth.authz = keycloakAuth;
                     KeycloakService.auth.logoutUrl = keycloakAuth.authServerUrl
-                        + '/realms/idlerealm/protocol/openid-connect/logout?redirect_uri='
+                        + '/realms/' + environment.AUTH_REALM + '/protocol/openid-connect/logout?redirect_uri='
                         + document.baseURI;
                     resolve();
                 })
@@ -35,7 +34,6 @@ export class KeycloakService {
     }
 
     logout() {
-        console.log('*** LOGOUT');
         KeycloakService.auth.loggedIn = false;
         KeycloakService.auth.authz = null;
 

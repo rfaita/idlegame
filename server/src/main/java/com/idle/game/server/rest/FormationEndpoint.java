@@ -1,10 +1,12 @@
 package com.idle.game.server.rest;
 
 import com.idle.game.core.Formation;
+import com.idle.game.core.type.FormationAllocation;
 import com.idle.game.server.dto.Envelope;
 import com.idle.game.server.rest.util.annotations.GZIP;
 import com.idle.game.server.service.FormationService;
 import com.idle.game.server.service.HeroTypeService;
+import com.idle.game.server.service.PlayerService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -26,6 +28,8 @@ public class FormationEndpoint {
     private FormationService formationService;
     @Inject
     private HeroTypeService heroTypeService;
+    @Inject
+    private PlayerService playerService;
 
     @GET
     @Path("/all")
@@ -42,6 +46,32 @@ public class FormationEndpoint {
         }
 
         ret.setData(data);
+
+        return ret;
+
+    }
+
+    @GET
+    @Path("/nextLevelFormationPve")
+    @Produces("application/json")
+    @GZIP
+    public Envelope<Formation> doGet() throws Exception {
+
+        Envelope<Formation> ret = new Envelope<>();
+        ret.setData(playerService.findByLoggedLinkedUser().getNextLevelFormationPve().toFormation(heroTypeService.getHeroTypes()));
+
+        return ret;
+
+    }
+
+    @GET
+    @Path("/allocation/{formationAllocation}")
+    @Produces("application/json")
+    @GZIP
+    public Envelope<Formation> doGet(@PathParam("formationAllocation") FormationAllocation formationAllocation) throws Exception {
+
+        Envelope<Formation> ret = new Envelope<>();
+        ret.setData(formationService.findByLoggedLinkedUserAndAllocation(formationAllocation).toFormation(heroTypeService.getHeroTypes()));
 
         return ret;
 

@@ -15,6 +15,6 @@ KeycloakService.init()
   .then(() => {
     platformBrowserDynamic().bootstrapModule(AppModule);
   })
-  .catch(() => {
-    window.location.reload()
+  .catch((error) => {
+    console.log(error);
   });
