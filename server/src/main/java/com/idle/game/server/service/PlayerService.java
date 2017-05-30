@@ -28,7 +28,7 @@ public class PlayerService extends BaseService {
     }
 
     public Player findByLoggedLinkedUser() {
-        return findByLinkedUser(getIDToken().getSubject());
+        return findByLinkedUser(getLoggedLinkedUser());
     }
 
     public Player findByLinkedUser(String linkedUser) {

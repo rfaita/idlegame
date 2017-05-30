@@ -1,7 +1,12 @@
 {
     "realm": "idlerealm",
-    "auth-server-url": "http://localhost:8080/auth",
-    "ssl-required": "external",
     "resource": "idlegame",
-    "public-client": true
+    "auth-server-url": "http://localhost:8080/auth",
+    "bearer-only": true,
+    "public-client": true,
+    "ssl-required": "external",
+    "enable-cors": true,
+    "cors-allowed-methods": "POST,PUT,DELETE,GET",
+    "cors-allowed-headers": "origin, content-type, accept, authorization"
+    
 }

@@ -1,0 +1,16 @@
+div {
+    background-image: url('../../assets/img/backgroundshop.jpg');
+    background-size: cover;
+}
+
+#buyhero {
+    display: block;
+    background-size: cover;
+    background-image: url("../../assets/img/buyhero.png");
+    position: fixed;
+    left: 271px;
+    top: 119px;
+    height: 48px;
+    width: 48px;
+    
+}

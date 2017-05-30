@@ -8,11 +8,19 @@ import { routing } from './app.routes';
 import { AppComponent } from './app.component';
 import { HeroesComponent } from './heroes/heroes.component';
 import { HeroesService } from './heroes/heroes.service';
+import { KeycloakService } from './service/keycloak.service';
+import { KEYCLOAK_HTTP_PROVIDER } from './service/keycloak.http';
+import { ShopComponent } from './shop/shop.component';
+import { ShopService } from './shop/shop.service';
+import { HeroComponent } from './hero/hero.component';
+import { HeroService } from './hero/hero.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeroesComponent
+    HeroesComponent,
+    ShopComponent,
+    HeroComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +30,11 @@ import { HeroesService } from './heroes/heroes.service';
     routing
   ],
   providers: [
-    HeroesService
+    KeycloakService,
+    HeroesService,
+    HeroService,
+    ShopService,
+    KEYCLOAK_HTTP_PROVIDER
   ],
   bootstrap: [AppComponent]
 })

@@ -128,3 +128,15 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+
+
+* {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.dialog-content {
+    min-width: 82vw;
+    min-height: 80vh;
+    max-width: 82vw;
+    max-height: 80vh;
+}

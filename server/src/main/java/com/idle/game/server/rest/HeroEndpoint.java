@@ -8,7 +8,6 @@ import com.idle.game.server.service.HeroTypeService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
-import javax.validation.ValidationException;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;

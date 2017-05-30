@@ -15,11 +15,17 @@ public class BaseService {
     @Resource
     private SessionContext sessionContext;
 
-    protected IDToken getIDToken() {
-        KeycloakPrincipal<KeycloakSecurityContext> kcPrincipal = (KeycloakPrincipal<KeycloakSecurityContext>) (sessionContext.getCallerPrincipal());
-        return kcPrincipal.getKeycloakSecurityContext().getIdToken();
-
+    protected String getLoggedLinkedUser() {
+        return getKeycloakPrincipal().getName();
     }
 
+    protected KeycloakPrincipal<KeycloakSecurityContext> getKeycloakPrincipal() {
+        return (KeycloakPrincipal<KeycloakSecurityContext>) (sessionContext.getCallerPrincipal());
+    }
+
+    protected IDToken getIDToken() {
+        return getKeycloakPrincipal().getKeycloakSecurityContext().getIdToken();
+
+    }
 
 }

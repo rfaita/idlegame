@@ -68,7 +68,7 @@ public class FormationService extends BaseService {
     }
 
     public Formation findByLoggedLinkedUserAndAllocation(FormationAllocation formationAllocation) {
-        return findByLinkedUserAndAllocation(getIDToken().getSubject(), formationAllocation);
+        return findByLinkedUserAndAllocation(getLoggedLinkedUser(), formationAllocation);
     }
 
     public Formation findByLinkedUserAndAllocation(String linkedUser, FormationAllocation formationAllocation) {
@@ -88,7 +88,7 @@ public class FormationService extends BaseService {
     }
 
     public List<Formation> findByLoggedLinkedUser() {
-        return findByLinkedUser(getIDToken().getSubject());
+        return findByLinkedUser(getLoggedLinkedUser());
     }
 
     public List<Formation> findByLinkedUser(String linkedUser) {

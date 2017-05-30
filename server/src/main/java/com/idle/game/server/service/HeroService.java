@@ -3,7 +3,6 @@ package com.idle.game.server.service;
 import com.idle.game.core.constant.IdleConstants;
 import com.idle.game.core.util.DiceUtil;
 import com.idle.game.server.model.Hero;
-import com.idle.game.server.model.Player;
 import com.idle.game.server.util.PersistenceUnitHelper;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -82,7 +81,7 @@ public class HeroService extends BaseService {
     }
 
     public List<Hero> findByLoggedLinkedUser() {
-        return findByLinkedUser(getIDToken().getSubject());
+        return findByLinkedUser(getLoggedLinkedUser());
     }
 
     public List<Hero> findByLinkedUser(String linkedUser) {

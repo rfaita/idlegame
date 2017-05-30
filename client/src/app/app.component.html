@@ -2,7 +2,7 @@
 
 </div>
 <div id="dialog" [hidden]="!showingDialog">
-  <div id="dialog-content">
+  <div id="dialog-content" class="dialog-content">
     <router-outlet></router-outlet>
   </div>
 </div>
@@ -10,7 +10,7 @@
 <div id="main">
   <span id="npcpvp"></span>
   <span id="npcpve"></span>
-  <span id="npcshop"></span>
+  <span id="npcshop" (click)="showDialog()" routerLink="/shop"></span>
   <span id="npcmage"></span>
 </div>
 <div id="avatar">

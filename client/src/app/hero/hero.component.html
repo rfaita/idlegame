@@ -1,0 +1,9 @@
+<div class="dialog-content" *ngIf="!!hero">
+  <img [src]="'../../assets/heroes/'+hero.heroType.name+'.png'"/>
+  {{hero.heroType.name}}
+  {{hero.level}}
+
+  <a (click)="levelUp()">Level Up</a>
+
+  <a (click)="back()">Voltar</a>
+</div>

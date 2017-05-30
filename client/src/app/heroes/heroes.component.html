@@ -1,4 +1,5 @@
-<h3>Heroes:</h3>
 <ul>
-  <li *ngFor="let hero of heroes">{{hero.name}}</li>
+  <li *ngFor="let hero of heroes" [style.background]="'url(../assets/heroes/' + hero.heroType.name + '.png)'" [routerLink]="['/hero', hero.id]">>
+    <span class="badge">{{hero.level}}</span>
+  </li>
 </ul>
