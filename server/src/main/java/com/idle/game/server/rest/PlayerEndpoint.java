@@ -7,6 +7,7 @@ import com.idle.game.server.service.PlayerService;
 import javax.inject.Inject;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
@@ -24,6 +25,31 @@ public class PlayerEndpoint {
 
         Envelope<Player> ret = new Envelope<>();
         ret.setData(playerService.findById(id));
+
+        return ret;
+
+    }
+
+    @GET
+    @Produces("application/json")
+    @GZIP
+    public Envelope<Player> doGet() {
+
+        Envelope<Player> ret = new Envelope<>();
+        ret.setData(playerService.findByLoggedLinkedUser());
+
+        return ret;
+
+    }
+
+    @PUT
+    @Path("/computeResources")
+    @Produces("application/json")
+    @GZIP
+    public Envelope<Player> computeResources() {
+
+        Envelope<Player> ret = new Envelope<>();
+        ret.setData(playerService.computeResources());
 
         return ret;
 

@@ -3,8 +3,13 @@ package com.idle.game.server.service;
 import com.idle.game.core.type.FormationAllocation;
 import com.idle.game.server.model.Formation;
 import com.idle.game.server.model.Hero;
+import com.idle.game.server.model.Player;
 import com.idle.game.server.model.PositionedHero;
+import com.idle.game.server.model.PvpRoll;
 import com.idle.game.server.util.PersistenceUnitHelper;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -97,6 +102,42 @@ public class FormationService extends BaseService {
         q.setParameter("linkedUser", linkedUser);
 
         return q.getResultList();
+
+    }
+
+    public Formation findByPlayerAndAllocation(Long idPlayer, FormationAllocation formationAllocation) {
+        Query q = helper.getEntityManager().createNamedQuery("Formation.findByPlayerAndAllocation");
+
+        q.setParameter("idPlayer", idPlayer);
+        q.setParameter("formationAllocation", formationAllocation);
+
+        List<Formation> ret = q.getResultList();
+
+        if (ret != null & !ret.isEmpty()) {
+            return ret.get(0);
+        } else {
+            return null;
+        }
+
+    }
+
+    public PvpRoll pvpRoll() {
+
+        Player player = playerService.findByLoggedLinkedUser();
+
+        if (player.getLastPvpRoll() == null || Instant.now().isAfter(player.getLastPvpRoll().getExpireDate().toInstant())) {
+            Player pHigher = playerService.findHigherScorePvpByLoggedLinked();
+            Player pLower = playerService.findLowerScorePvpByLoggedLinked();
+            Player pRandom = playerService.findRandomScorePvpByLoggedLinked(Arrays.asList(pHigher.getId(), pLower.getId()));
+
+            Formation fHigher = findByPlayerAndAllocation(pHigher.getId(), FormationAllocation.PVP_DEFENSE);
+            Formation fLower = findByPlayerAndAllocation(pLower.getId(), FormationAllocation.PVP_DEFENSE);
+            Formation fRandom = findByPlayerAndAllocation(pRandom.getId(), FormationAllocation.PVP_DEFENSE);
+
+            player = playerService.refreshLastPvpRoll(player, fHigher, fLower, fRandom);
+
+        }
+        return player.getLastPvpRoll();
 
     }
 

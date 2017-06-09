@@ -1,23 +1,30 @@
 package com.idle.game.server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author rafael
  */
 @Entity
+@Table(name = "player")
 @NamedQueries({
     @NamedQuery(name = "Player.findByLinkedUser", query = "SELECT h FROM Player h "
             + "WHERE h.linkedUser = :linkedUser ")
@@ -29,18 +36,109 @@ public class Player implements Serializable {
     @GeneratedValue(generator = "seqplayer")
     private Long id;
     private String name;
+    private Integer level;
     private String user;
     @OneToMany(targetEntity = Hero.class, mappedBy = "player")
+    @JsonIgnore
     private List<Hero> heroes;
     @OneToMany(targetEntity = Formation.class, mappedBy = "player")
+    @JsonIgnore
     private List<Formation> formations;
+    @JsonIgnore
     private String linkedUser;
-    private Long gem;
-    private Long gold;
-    private Long liquid;
-    @OneToOne
+    private Long gold = 0l;
+    private Long soul = 0l;
+    private Long ancientRune = 0l;
+    private Long spiritCrystal = 0l;
+    private Long goldPerSecond = 0l;
+    private Long soulPerSecond = 0l;
+    private Long ancientRunePerSecond = 0l;
+    private Long spiritCrystalPerSecond = 0l;
+    private Long pvpScore = 0l;
+    @ManyToOne
     @JoinColumn(name = "idNextLevelFormationPve")
     private Formation nextLevelFormationPve;
+    @ManyToOne
+    @JoinColumn(name = "idNextLevelFormationDungeon")
+    private Formation nextLevelFormationDungeon;
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonIgnore
+    private Date lastTimeResourcesCollected;
+    @OneToOne
+    @JoinColumn(name = "idLastPvpRoll")
+    private PvpRoll lastPvpRoll;
+
+    public Long getPvpScore() {
+        return pvpScore;
+    }
+
+    public PvpRoll getLastPvpRoll() {
+        return lastPvpRoll;
+    }
+
+    public void setLastPvpRoll(PvpRoll lastPvpRoll) {
+        this.lastPvpRoll = lastPvpRoll;
+    }
+
+    public void setPvpScore(Long pvpScore) {
+        this.pvpScore = pvpScore;
+    }
+
+    public Formation getNextLevelFormationDungeon() {
+        return nextLevelFormationDungeon;
+    }
+
+    public void setNextLevelFormationDungeon(Formation nextLevelFormationDungeon) {
+        this.nextLevelFormationDungeon = nextLevelFormationDungeon;
+    }
+
+    public Date getLastTimeResourcesCollected() {
+        return lastTimeResourcesCollected;
+    }
+
+    public void setLastTimeResourcesCollected(Date lastTimeResourcesCollected) {
+        this.lastTimeResourcesCollected = lastTimeResourcesCollected;
+    }
+
+    public Long getGoldPerSecond() {
+        return goldPerSecond;
+    }
+
+    public void setGoldPerSecond(Long goldPerSecond) {
+        this.goldPerSecond = goldPerSecond;
+    }
+
+    public Long getSoulPerSecond() {
+        return soulPerSecond;
+    }
+
+    public void setSoulPerSecond(Long soulPerSecond) {
+        this.soulPerSecond = soulPerSecond;
+    }
+
+    public Long getAncientRunePerSecond() {
+        return ancientRunePerSecond;
+    }
+
+    public void setAncientRunePerSecond(Long ancientRunePerSecond) {
+        this.ancientRunePerSecond = ancientRunePerSecond;
+    }
+
+    public Long getSpiritCrystalPerSecond() {
+        return spiritCrystalPerSecond;
+    }
+
+    public void setSpiritCrystalPerSecond(Long spiritCrystalPerSecond) {
+        this.spiritCrystalPerSecond = spiritCrystalPerSecond;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
 
     public Formation getNextLevelFormationPve() {
         return nextLevelFormationPve;
@@ -48,14 +146,6 @@ public class Player implements Serializable {
 
     public void setNextLevelFormationPve(Formation nextLevelFormationPve) {
         this.nextLevelFormationPve = nextLevelFormationPve;
-    }
-
-    public Long getGem() {
-        return gem;
-    }
-
-    public void setGem(Long gem) {
-        this.gem = gem;
     }
 
     public Long getGold() {
@@ -66,12 +156,28 @@ public class Player implements Serializable {
         this.gold = gold;
     }
 
-    public Long getLiquid() {
-        return liquid;
+    public Long getSoul() {
+        return soul;
     }
 
-    public void setLiquid(Long liquid) {
-        this.liquid = liquid;
+    public void setSoul(Long soul) {
+        this.soul = soul;
+    }
+
+    public Long getAncientRune() {
+        return ancientRune;
+    }
+
+    public void setAncientRune(Long ancientRune) {
+        this.ancientRune = ancientRune;
+    }
+
+    public Long getSpiritCrystal() {
+        return spiritCrystal;
+    }
+
+    public void setSpiritCrystal(Long spiritCrystal) {
+        this.spiritCrystal = spiritCrystal;
     }
 
     public String getLinkedUser() {

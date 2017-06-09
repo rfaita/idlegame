@@ -20,6 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -28,6 +29,7 @@ import javax.validation.constraints.Size;
  * @author rafael
  */
 @Entity
+@Table(name = "formation")
 @NamedQueries({
     @NamedQuery(name = "Formation.findById", query = "SELECT f FROM Formation f "
             + "JOIN FETCH f.heroes h "
@@ -38,6 +40,11 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Formation.findByPlayer", query = "SELECT f FROM Formation f "
             + "LEFT JOIN FETCH f.player "
             + "WHERE f.player.id = :idPlayer ")
+    ,
+    @NamedQuery(name = "Formation.findByPlayerAndAllocation", query = "SELECT f FROM Formation f "
+            + "LEFT JOIN FETCH f.player "
+            + "WHERE f.player.id = :idPlayer "
+            + "AND f.formationAllocation = :formationAllocation")
     ,
     @NamedQuery(name = "Formation.findByLinkedUserAndAllocation", query = "SELECT f FROM Formation f "
             + "LEFT JOIN FETCH f.player "
@@ -69,6 +76,18 @@ public class Formation implements Serializable {
     @JoinColumn(name = "idNextLevelFormation")
     @JsonIgnore
     private Formation nextLevelFormation;
+    @OneToOne
+    @JoinColumn(name = "idreward")
+    @JsonIgnore
+    private Reward reward;
+
+    public Reward getReward() {
+        return reward;
+    }
+
+    public void setReward(Reward reward) {
+        this.reward = reward;
+    }
 
     public Formation getNextLevelFormation() {
         return nextLevelFormation;

@@ -13,23 +13,23 @@
   <span id="npcshop" (click)="showDialog()" routerLink="/shop"></span>
   <span id="npcmage"></span>
 </div>
-<div id="avatar">
+<div id="avatar" *ngIf="!!player">
   <span id="avatar-img"></span>
-  <span id="avatar-name">Jiajoy</span>
-  <span id="avatar-level">95</span>
+  <span id="avatar-name">{{player.name}}</span>
+  <span id="avatar-level">{{player.level}}</span>
 </div>
 
-<div id="resources">
+<div id="resources" *ngIf="!!player">
   <div>
     <ul>
       <li>
-        <span style="background-image:url('../assets/img/gold.png')">1000</span>
+        <span style="background-image:url('../assets/img/gold.png')">{{player.gold}}</span>
       </li>
       <li>
-        <span style="background-image:url('../assets/img/gosma.png')">1000</span>
+        <span style="background-image:url('../assets/img/gosma.png')">{{player.liquid}}</span>
       </li>
       <li>
-        <span style="background-image:url('../assets/img/gems.png')">95</span>
+        <span style="background-image:url('../assets/img/gems.png')">{{player.gems}}</span>
       </li>
     </ul>
   </div>

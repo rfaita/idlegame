@@ -8,9 +8,9 @@ div {
     background-size: cover;
     background-image: url("../../assets/img/buyhero.png");
     position: fixed;
-    left: 271px;
-    top: 119px;
-    height: 48px;
-    width: 48px;
+    height: 19%;
+    width: 9%;
+    margin-top: 32%;
+    margin-left: 75%;
     
 }

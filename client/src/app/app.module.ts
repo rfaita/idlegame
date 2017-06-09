@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { Routes, RouterModule, Router } from '@angular/router';
+import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 
 import { routing } from './app.routes';
 import { AppComponent } from './app.component';
@@ -16,6 +17,8 @@ import { HeroComponent } from './hero/hero.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { FormationService } from './service/formation.service';
 import { BattleService } from './service/battle.service';
+import { PlayerService } from './service/player.service';
+import { KeysPipe } from './keys.pipe';
 
 @NgModule({
   declarations: [
@@ -23,13 +26,15 @@ import { BattleService } from './service/battle.service';
     HeroesComponent,
     ShopComponent,
     HeroComponent,
-    CampaignComponent
+    CampaignComponent,
+    KeysPipe
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     JsonpModule,
+    DragulaModule,
     routing
   ],
   providers: [
@@ -38,6 +43,7 @@ import { BattleService } from './service/battle.service';
     ShopService,
     FormationService,
     BattleService,
+    PlayerService,
     KEYCLOAK_HTTP_PROVIDER
   ],
   bootstrap: [AppComponent]

@@ -3,6 +3,7 @@ package com.idle.game.server.rest;
 import com.idle.game.core.Formation;
 import com.idle.game.core.type.FormationAllocation;
 import com.idle.game.server.dto.Envelope;
+import com.idle.game.server.model.PvpRoll;
 import com.idle.game.server.rest.util.annotations.GZIP;
 import com.idle.game.server.service.FormationService;
 import com.idle.game.server.service.HeroTypeService;
@@ -52,13 +53,39 @@ public class FormationEndpoint {
     }
 
     @GET
+    @Path("/pvpRoll")
+    @Produces("application/json")
+    @GZIP
+    public Envelope<PvpRoll> findPvpOpponents() throws Exception {
+
+        Envelope<PvpRoll> ret = new Envelope<>();
+        ret.setData(formationService.pvpRoll());
+
+        return ret;
+
+    }
+
+    @GET
     @Path("/nextLevelFormationPve")
     @Produces("application/json")
     @GZIP
-    public Envelope<Formation> doGet() throws Exception {
+    public Envelope<Formation> nextLevelFormationPve() throws Exception {
 
         Envelope<Formation> ret = new Envelope<>();
         ret.setData(playerService.findByLoggedLinkedUser().getNextLevelFormationPve().toFormation(heroTypeService.getHeroTypes()));
+
+        return ret;
+
+    }
+
+    @GET
+    @Path("/nextLevelFormationDungeon")
+    @Produces("application/json")
+    @GZIP
+    public Envelope<Formation> nextLevelFormationDungeon() throws Exception {
+
+        Envelope<Formation> ret = new Envelope<>();
+        ret.setData(playerService.findByLoggedLinkedUser().getNextLevelFormationDungeon().toFormation(heroTypeService.getHeroTypes()));
 
         return ret;
 

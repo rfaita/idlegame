@@ -23,17 +23,30 @@ public class Main {
 
         Swarm container = new Swarm(args);
 
+//        container.fraction(new DatasourcesFraction()
+//                .jdbcDriver("com.h2database.h2", (d) -> {
+//                    d.driverClassName("org.h2.Driver");
+//                    d.xaDatasourceClass("org.h2.jdbcx.JdbcDataSource");
+//                    d.driverModuleName("com.h2database.h2");
+//                })
+//                .dataSource("idleDS", (ds) -> {
+//                    ds.driverName("h2");
+//                    ds.connectionUrl("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE");
+//                    ds.userName("sa");
+//                    ds.password("sa");
+//                })
+//        );
         container.fraction(new DatasourcesFraction()
-                .jdbcDriver("h2", (d) -> {
-                    d.driverClassName("org.h2.Driver");
-                    d.xaDatasourceClass("org.h2.jdbcx.JdbcDataSource");
-                    d.driverModuleName("com.h2database.h2");
+                .jdbcDriver("com.mysql", (d) -> {
+                    d.driverClassName("com.mysql.cj.jdbc.Driver");
+                    d.xaDatasourceClass("com.mysql.jdbc.jdbc2.optional.MysqlXADataSource");
+                    d.driverModuleName("com.mysql");
                 })
                 .dataSource("idleDS", (ds) -> {
-                    ds.driverName("h2");
-                    ds.connectionUrl("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE");
-                    ds.userName("sa");
-                    ds.password("sa");
+                    ds.driverName("com.mysql");
+                    ds.connectionUrl("jdbc:mysql://localhost:3306/idle?useTimezone=true&serverTimezone=UTC");
+                    ds.userName("root");
+                    ds.password("rf190287");
                 })
         );
 

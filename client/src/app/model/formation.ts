@@ -5,6 +5,6 @@ export class Formation {
     public formationType: string;
     public formationAllocation: string;
     public size: number;
-    public heroes: PositionedHero;
+    public positionedHeroes: PositionedHero[];
 
 }

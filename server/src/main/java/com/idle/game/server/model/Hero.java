@@ -15,12 +15,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 /**
  *
  * @author rafael
  */
 @Entity
+@Table(name = "hero")
 @NamedQueries({
     @NamedQuery(name = "Hero.findById", query = "SELECT h FROM Hero h "
             + "JOIN FETCH h.player "

@@ -1,7 +1,6 @@
 package com.idle.game.server.service;
 
 import com.idle.game.core.Battle;
-import com.idle.game.core.type.BattleTeamType;
 import com.idle.game.core.type.FormationAllocation;
 import com.idle.game.core.type.FormationType;
 import com.idle.game.core.type.HeroType;
@@ -53,13 +52,34 @@ public class BattleService {
         return b;
     }
 
-    public Battle doPveBattle(FormationAllocation formationAllocation) throws Exception {
+    public Battle doPveBattle() throws Exception {
 
-        Formation attFormation = formationService.findByLoggedLinkedUserAndAllocation(formationAllocation);
+        Formation attFormation = formationService.findByLoggedLinkedUserAndAllocation(FormationAllocation.PVE);
         Formation defFormation = attFormation.getPlayer().getNextLevelFormationPve();
 
         if (defFormation.getPlayer() != null) {
             throw new ValidationException("this.formation.is.not.for.pve");
+        }
+
+        Map<UUID, HeroType> heroTypes = heroTypeService.getHeroTypes();
+
+        Battle b = new Battle(attFormation.toFormation(heroTypes), defFormation.toFormation(heroTypes));
+        b.doBattle();
+
+        if (b.getWinner().getFormationType().equals(FormationType.ATTACK)) {
+            playerService.updateToNextLevelFormationPve();
+        }
+
+        return b;
+    }
+
+    public Battle doDungeonBattle() throws Exception {
+
+        Formation attFormation = formationService.findByLoggedLinkedUserAndAllocation(FormationAllocation.PVE_DUNGEON);
+        Formation defFormation = attFormation.getPlayer().getNextLevelFormationDungeon();
+
+        if (defFormation.getPlayer() != null) {
+            throw new ValidationException("this.formation.is.not.for.pve.dungeon");
         }
 
         Map<UUID, HeroType> heroTypes = heroTypeService.getHeroTypes();

@@ -4,6 +4,7 @@ div {
 
 ul {
     display: inline-block;
+    overflow: hidden;
 }
 
 li {
@@ -16,9 +17,6 @@ li {
 
 .badge {
     border-radius: 50%;
-}
-
-.badge {
     background-color: #eee;
     color: #000;
     display: inline-block;
@@ -30,4 +28,33 @@ li {
     height: 16px;
     line-height: 16px;
     border: 1px solid #CCC;
+}
+
+
+.badge-top-left {
+    margin-top: 0px;
+    margin-left: 0px;
+}
+
+
+.badge-normal {
+    border-radius: 50%;
+    background-color: #eee;
+    color: #000;
+    display: inline-block;
+    text-align: center;
+    font-size: 11px;
+    margin-top: 32px;
+    margin-left: 32px;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    border: 1px solid #CCC;
+}
+
+
+.lineUp {
+    width: 48px;
+    height: 48px;
+    margin-top: -19px;
 }

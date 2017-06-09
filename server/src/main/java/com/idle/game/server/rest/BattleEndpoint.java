@@ -63,7 +63,23 @@ public class BattleEndpoint {
 
         Envelope<BattleRetorno> ret = new Envelope<>();
 
-        Battle battle = battleService.doPveBattle(FormationAllocation.PVE);
+        Battle battle = battleService.doPveBattle();
+
+        ret.setData(new BattleRetorno(battle.getBattleLog(), battle.getWinner().getFormationType()));
+
+        return ret;
+
+    }
+
+    @GET
+    @Path("/dungeon")
+    @Produces("application/json")
+    @GZIP
+    public Envelope<BattleRetorno> doDungeonBattle() throws Exception {
+
+        Envelope<BattleRetorno> ret = new Envelope<>();
+
+        Battle battle = battleService.doDungeonBattle();
 
         ret.setData(new BattleRetorno(battle.getBattleLog(), battle.getWinner().getFormationType()));
 

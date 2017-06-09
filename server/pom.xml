@@ -14,6 +14,7 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.h2>1.4.195</version.h2>
+        <version.mysql>6.0.6</version.mysql>
     </properties>
 
     <dependencyManagement>
@@ -124,6 +125,12 @@
             <artifactId>h2</artifactId>
             <version>${version.h2}</version>
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${version.mysql}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
