@@ -2,46 +2,70 @@ package com.idle.game.server.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
  * @author rafael
  */
-@Entity
-@Table(name = "pvproll")
 public class PvpRoll implements Serializable {
 
-    @Id
-    @SequenceGenerator(name = "seqPvpRoll", sequenceName = "seqPvpRoll", initialValue = 1000, allocationSize = 100)
-    @GeneratedValue(generator = "seqPvpRoll")
-    private Long id;
-    @Temporal(TemporalType.TIMESTAMP)
     private Date expireDate;
-    @ManyToOne
-    @JoinColumn(name = "idFormationHigher")
     private Formation formationHigher;
-    @ManyToOne
-    @JoinColumn(name = "idFormationLower")
     private Formation formationLower;
-    @ManyToOne
-    @JoinColumn(name = "idFormationRandom")
     private Formation formationRandom;
+    private String namePlayerHigher;
+    private String namePlayerLower;
+    private String namePlayerRandom;
+    private Long pvpScoreHigher;
+    private Long pvpScoreLower;
+    private Long pvpScoreRandom;
 
-    public Long getId() {
-        return id;
+    public String getNamePlayerHigher() {
+        return namePlayerHigher;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setNamePlayerHigher(String namePlayerHigher) {
+        this.namePlayerHigher = namePlayerHigher;
+    }
+
+    public String getNamePlayerLower() {
+        return namePlayerLower;
+    }
+
+    public void setNamePlayerLower(String namePlayerLower) {
+        this.namePlayerLower = namePlayerLower;
+    }
+
+    public String getNamePlayerRandom() {
+        return namePlayerRandom;
+    }
+
+    public void setNamePlayerRandom(String namePlayerRandom) {
+        this.namePlayerRandom = namePlayerRandom;
+    }
+
+    public Long getPvpScoreHigher() {
+        return pvpScoreHigher;
+    }
+
+    public void setPvpScoreHigher(Long pvpScoreHigher) {
+        this.pvpScoreHigher = pvpScoreHigher;
+    }
+
+    public Long getPvpScoreLower() {
+        return pvpScoreLower;
+    }
+
+    public void setPvpScoreLower(Long pvpScoreLower) {
+        this.pvpScoreLower = pvpScoreLower;
+    }
+
+    public Long getPvpScoreRandom() {
+        return pvpScoreRandom;
+    }
+
+    public void setPvpScoreRandom(Long pvpScoreRandom) {
+        this.pvpScoreRandom = pvpScoreRandom;
     }
 
     public Date getExpireDate() {

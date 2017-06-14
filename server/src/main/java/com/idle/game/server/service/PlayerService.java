@@ -40,26 +40,6 @@ public class PlayerService extends BaseService {
         return findByLinkedUser(getLoggedLinkedUser());
     }
     
-    public Player refreshLastPvpRoll(Player player, Formation fHigher, Formation fLower, Formation fRandom) {
-        
-        if (player.getLastPvpRoll() != null) {
-            helper.getEntityManager().remove(player.getLastPvpRoll());
-        }
-        
-        PvpRoll lastPvpRoll = new PvpRoll();
-        lastPvpRoll.setFormationHigher(fHigher);
-        lastPvpRoll.setFormationLower(fLower);
-        lastPvpRoll.setFormationRandom(fRandom);
-        
-        lastPvpRoll.setExpireDate(Date.from(Instant.now().plus(Duration.ofMinutes(10L))));
-        
-        helper.getEntityManager().persist(lastPvpRoll);
-        player.setLastPvpRoll(lastPvpRoll);
-        helper.getEntityManager().merge(player);
-        
-        return player;
-    }
-    
     public Player findByLinkedUser(String linkedUser) {
         Query q = helper.getEntityManager().createNamedQuery("Player.findByLinkedUser");
         

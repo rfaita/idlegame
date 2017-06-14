@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -64,20 +63,9 @@ public class Player implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonIgnore
     private Date lastTimeResourcesCollected;
-    @OneToOne
-    @JoinColumn(name = "idLastPvpRoll")
-    private PvpRoll lastPvpRoll;
 
     public Long getPvpScore() {
         return pvpScore;
-    }
-
-    public PvpRoll getLastPvpRoll() {
-        return lastPvpRoll;
-    }
-
-    public void setLastPvpRoll(PvpRoll lastPvpRoll) {
-        this.lastPvpRoll = lastPvpRoll;
     }
 
     public void setPvpScore(Long pvpScore) {

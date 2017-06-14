@@ -13,8 +13,15 @@ public class PersistenceUnitHelper {
 
     @PersistenceContext(name = "PU")
     private EntityManager em;
+    @PersistenceContext(name = "noSqlPU")
+    private EntityManager noSqlEm;
 
     public EntityManager getEntityManager() {
         return em;
     }
+
+    public EntityManager getEntityManagerNoSql() {
+        return noSqlEm;
+    }
+
 }

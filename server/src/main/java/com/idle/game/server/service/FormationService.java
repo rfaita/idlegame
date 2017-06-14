@@ -7,9 +7,10 @@ import com.idle.game.server.model.Player;
 import com.idle.game.server.model.PositionedHero;
 import com.idle.game.server.model.PvpRoll;
 import com.idle.game.server.util.PersistenceUnitHelper;
+import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,6 +21,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
+import org.infinispan.Cache;
 
 /**
  *
@@ -36,6 +38,8 @@ public class FormationService extends BaseService {
     private PlayerService playerService;
     @Inject
     private Validator validator;
+    @Inject
+    private Cache<String, PvpRoll> cachePvpRoll;
 
     public Formation findById(Long id) {
         Query q = helper.getEntityManager().createNamedQuery("Formation.findById");
@@ -123,9 +127,9 @@ public class FormationService extends BaseService {
 
     public PvpRoll pvpRoll() {
 
-        Player player = playerService.findByLoggedLinkedUser();
+        PvpRoll pvpRoll = cachePvpRoll.get(getLoggedLinkedUser());
 
-        if (player.getLastPvpRoll() == null || Instant.now().isAfter(player.getLastPvpRoll().getExpireDate().toInstant())) {
+        if (pvpRoll == null || Instant.now().isAfter(pvpRoll.getExpireDate().toInstant())) {
             Player pHigher = playerService.findHigherScorePvpByLoggedLinked();
             Player pLower = playerService.findLowerScorePvpByLoggedLinked();
             Player pRandom = playerService.findRandomScorePvpByLoggedLinked(Arrays.asList(pHigher.getId(), pLower.getId()));
@@ -134,10 +138,26 @@ public class FormationService extends BaseService {
             Formation fLower = findByPlayerAndAllocation(pLower.getId(), FormationAllocation.PVP_DEFENSE);
             Formation fRandom = findByPlayerAndAllocation(pRandom.getId(), FormationAllocation.PVP_DEFENSE);
 
-            player = playerService.refreshLastPvpRoll(player, fHigher, fLower, fRandom);
+            pvpRoll = new PvpRoll();
+            pvpRoll.setFormationHigher(fHigher);
+            pvpRoll.setFormationLower(fLower);
+            pvpRoll.setFormationRandom(fRandom);
+            
+            pvpRoll.setNamePlayerHigher(pHigher.getName());
+            pvpRoll.setNamePlayerLower(pLower.getName());
+            pvpRoll.setNamePlayerRandom(pRandom.getName());
+            
+            pvpRoll.setPvpScoreHigher(pHigher.getPvpScore());
+            pvpRoll.setPvpScoreLower(pLower.getPvpScore());
+            pvpRoll.setPvpScoreRandom(pRandom.getPvpScore());
+
+            pvpRoll.setExpireDate(Date.from(Instant.now().plus(Duration.ofMinutes(10L))));
+
+            cachePvpRoll.put(getLoggedLinkedUser(), pvpRoll);
 
         }
-        return player.getLastPvpRoll();
+
+        return cachePvpRoll.get(getLoggedLinkedUser());
 
     }
 

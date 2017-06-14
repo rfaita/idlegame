@@ -8,9 +8,10 @@
     <packaging>war</packaging>
 
     <properties>
-        <version.wildfly.swarm>2017.5.0</version.wildfly.swarm>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <version.wildfly.swarm>2017.5.0</version.wildfly.swarm>
+        <version.infinispan>9.0.0.Final</version.infinispan>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.h2>1.4.195</version.h2>
@@ -26,6 +27,13 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
+            <dependency>
+                <groupId>org.infinispan</groupId>
+                <artifactId>infinispan-bom</artifactId>
+                <version>${version.infinispan}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -38,6 +46,12 @@
                 <version>${version.wildfly.swarm}</version>
                 <configuration>
                     <mainClass>com.idle.game.server.Main</mainClass>
+                    <environment>
+                        <DATABASE_URL>localhost:3306</DATABASE_URL>
+                        <DATABASE_DB>idle</DATABASE_DB>
+                        <DATABASE_USER>root</DATABASE_USER>
+                        <DATABASE_PASS>rf190287</DATABASE_PASS>
+                    </environment>
                 </configuration>
                 <executions>
                     <execution>
@@ -135,6 +149,18 @@
             <groupId>org.hibernate.javax.persistence</groupId>
             <artifactId>hibernate-jpa-2.1-api</artifactId>
             <version>1.0.0.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>infinispan</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-embedded</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.cache</groupId>
+            <artifactId>cache-api</artifactId>
         </dependency>
     </dependencies>
 </project>

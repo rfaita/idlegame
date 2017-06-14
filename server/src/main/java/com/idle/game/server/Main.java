@@ -44,9 +44,10 @@ public class Main {
                 })
                 .dataSource("idleDS", (ds) -> {
                     ds.driverName("com.mysql");
-                    ds.connectionUrl("jdbc:mysql://localhost:3306/idle?useTimezone=true&serverTimezone=UTC");
-                    ds.userName("root");
-                    ds.password("rf190287");
+                    ds.connectionUrl("jdbc:mysql://" + System.getenv("DATABASE_URL") + "/" + System.getenv("DATABASE_DB")
+                            + "?useTimezone=true&serverTimezone=UTC");
+                    ds.userName(System.getenv("DATABASE_USER"));
+                    ds.password(System.getenv("DATABASE_PASS"));
                 })
         );
 
