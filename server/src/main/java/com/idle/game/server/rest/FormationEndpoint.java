@@ -118,15 +118,11 @@ public class FormationEndpoint {
     }
 
     @PUT
-    @Path("/{id}")
     @Produces("application/json")
     @GZIP
-    public Envelope<Formation> doPut(@PathParam("id") Long id,
-            com.idle.game.server.model.Formation f) throws Exception {
+    public Envelope<Formation> doPut(com.idle.game.server.model.Formation f) throws Exception {
 
         Envelope<Formation> ret = new Envelope<>();
-
-        f.setId(id);
 
         f = formationService.save(f);
 
@@ -139,8 +135,7 @@ public class FormationEndpoint {
     @POST
     @Produces("application/json")
     @GZIP
-    public Envelope<Formation> doPut(
-            com.idle.game.server.model.Formation f) throws Exception {
+    public Envelope<Formation> doPost(com.idle.game.server.model.Formation f) throws Exception {
 
         Envelope<Formation> ret = new Envelope<>();
 

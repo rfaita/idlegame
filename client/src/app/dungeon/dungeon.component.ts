@@ -6,7 +6,6 @@ import { BattleService } from '../service/battle.service';
 import { HeroesService } from '../service/heroes.service';
 import { PositionedHero } from '../model/positionedHero';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
-import { BattlePositionedHero } from '../model/battlePositionedHero';
 
 @Component({
   selector: 'app-campaign',
@@ -16,15 +15,26 @@ import { BattlePositionedHero } from '../model/battlePositionedHero';
 export class CampaignComponent implements OnInit {
 
   public nextLevelFormationPve: Formation;
+  public formationPve: Formation;
   public selectHeroes: Hero[];
   public heroes: Hero[];
-  public formationPve: Map<string, PositionedHero>;
+  public formationPveTmp: Map<string, PositionedHero> = new Map();
 
   constructor(private formationService: FormationService,
     private battleService: BattleService,
     private heroesService: HeroesService,
     private dragulaService: DragulaService) {
 
+    this.formationPveTmp.set("FRONT_TOP", null);
+    this.formationPveTmp.set("FRONT_MIDDLE", null);
+    this.formationPveTmp.set("FRONT_BOTTOM", null);
+    this.formationPveTmp.set("BACK_TOP", null);
+    this.formationPveTmp.set("BACK_MIDDLE", null);
+    this.formationPveTmp.set("BACK_BOTTOM", null);
+
+    dragulaService.drag.subscribe((value) => {
+      
+    });
     dragulaService.drop.subscribe((value) => {
       let [el, dragD, dragO] = value.splice(1);
 
@@ -35,44 +45,25 @@ export class CampaignComponent implements OnInit {
           dragO.appendChild(dragD.children[0]);
         }
       }
-      if (dragD.id != null && dragD.id != "") {
-        this.formationPve.set(dragD.id, new BattlePositionedHero(this.heroes.filter(h => h.id === Number.parseInt(el.id))[0], dragD.id));
-      }
-      if (dragO.id != null && dragO.id != "") {
-        if (dragO.children.length > 0) {
-          this.formationPve.set(dragO.id, new BattlePositionedHero(this.heroes.filter(h => h.id === Number.parseInt(dragO.children[0].id))[0], dragO.id));
-        } else {
-          this.formationPve.set(dragO.id, null);
-        }
-      }
+
+      
+
+    });
+    dragulaService.over.subscribe((value) => {
+      
+
+    });
+    dragulaService.out.subscribe((value) => {
+      
+
     });
 
   }
 
   public fight() {
+    console.log(this.formationPveTmp);
 
-    let formation: Formation = new Formation();
-    formation.formationAllocation = "PVE";
-    formation.heroes = new Array();
-
-    this.formationPve.forEach(pHero => {
-      if (pHero != null) {
-        formation.heroes.push(new PositionedHero(new Hero(pHero.hero.id), pHero.battlePosition));
-      }
-    });
-
-    console.log(formation);
-
-    this.formationService.putFormation(formation)
-      .subscribe(
-      ret => {
-        this.doBattlePve();
-      }, error => console.log(error)
-      );
-  }
-
-  private doBattlePve() {
-    this.battleService.doBattlePve()
+    /*this.battleService.doBattlePve()
       .subscribe(
       battleRetorno => {
         alert("O time vencedor é: " + battleRetorno.winner);
@@ -82,7 +73,7 @@ export class CampaignComponent implements OnInit {
         console.log(battleRetorno);
       },
       error => console.log(error)
-      );
+      );*/
   }
 
   public loadNextLevelFormationPve() {
@@ -98,22 +89,22 @@ export class CampaignComponent implements OnInit {
   ngOnInit() {
     this.loadNextLevelFormationPve();
 
+
+
     this.formationService.getFormationByAllocation("PVE")
       .subscribe(
       formationPve => {
-        this.formationPve = new Map();
-
-        this.formationPve.set("FRONT_TOP", formationPve.heroes.filter(h => h.battlePosition == "FRONT_TOP")[0]);
-        this.formationPve.set("FRONT_MIDDLE", formationPve.heroes.filter(h => h.battlePosition == "FRONT_MIDDLE")[0]);
-        this.formationPve.set("FRONT_BOTTOM", formationPve.heroes.filter(h => h.battlePosition == "FRONT_BOTTOM")[0]);
-        this.formationPve.set("BACK_TOP", formationPve.heroes.filter(h => h.battlePosition == "BACK_TOP")[0]);
-        this.formationPve.set("BACK_MIDDLE", formationPve.heroes.filter(h => h.battlePosition == "BACK_MIDDLE")[0]);
-        this.formationPve.set("BACK_BOTTOM", formationPve.heroes.filter(h => h.battlePosition == "BACK_BOTTOM")[0]);
-
+        this.formationPve = formationPve;
+        console.log(this.formationPve);
+        this.formationPve.positionedHeroes.forEach(hero => {
+          this.formationPveTmp.set(hero.battlePosition, hero);
+        });
+        console.log(this.formationPveTmp);
         this.loadHeroes();
       },
       error => console.log(error)
       );
+
 
   }
 
@@ -122,7 +113,7 @@ export class CampaignComponent implements OnInit {
       .subscribe(
       heroes => {
         this.heroes = heroes
-        this.selectHeroes = Object.assign([], heroes);
+        this.selectHeroes = heroes;
         this.cleanUpHeroes();
       },
       error => console.log(error));
@@ -130,12 +121,15 @@ export class CampaignComponent implements OnInit {
 
 
   private cleanUpHeroes() {
-    this.formationPve.forEach(pHero => {
-      this.selectHeroes.forEach((hero, index, data) => {
+    this.selectHeroes.forEach((hero, index, data) => {
+
+      this.formationPveTmp.forEach(pHero => {
         if (pHero != null && pHero.hero.id == hero.id) {
           data.splice(index, 1);
         }
-      });
+      })
+
+
     });
   }
 

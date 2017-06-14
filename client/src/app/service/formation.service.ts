@@ -26,6 +26,12 @@ export class FormationService {
             .catch(this.handleError);
     }
 
+    putFormation(formation: Formation): Observable<Formation> {
+        return this.http.put(environment.API_BASE_URL + "formation", formation)
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
     private extractData(res: Response) {
         let body = res.json();
         return body.data || {};

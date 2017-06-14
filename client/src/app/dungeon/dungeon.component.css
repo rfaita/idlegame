@@ -9,11 +9,10 @@ ul {
 
 li {
     float: left;
-    width: 50px;
-    height: 50px;
-    background: #000;
-    margin: 3px;
-    overflow: hidden;
+    width: 48px;
+    height: 48px;
+    background: #FFF;
+    margin: 4px 4px 0 0;
 }
 
 .badge {
@@ -45,8 +44,8 @@ li {
     display: inline-block;
     text-align: center;
     font-size: 11px;
-    margin-top: 30px;
-    margin-left: 30px;
+    margin-top: 32px;
+    margin-left: 32px;
     width: 16px;
     height: 16px;
     line-height: 16px;
@@ -58,10 +57,4 @@ li {
     width: 48px;
     height: 48px;
     margin-top: -19px;
-    border:1px solid #CCC;
-}
-
-.lineUpHero {
-    width: 48px;
-    height: 48px;
 }

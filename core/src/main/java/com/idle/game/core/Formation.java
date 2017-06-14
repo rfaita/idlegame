@@ -87,7 +87,7 @@ public class Formation implements Serializable {
         }).collect(Collectors.toList());
     }
 
-    public List<PositionedHero> getPositionedHeroes() {
+    public List<PositionedHero> getHeroes() {
         return heroes;
     }
 

@@ -51,10 +51,10 @@ public class Battle extends BaseObject {
 
         this.battlePositionedHeroes = new ArrayList<>();
 
-        this.attackFormation.getPositionedHeroes().forEach((t) -> {
+        this.attackFormation.getHeroes().forEach((t) -> {
             this.battlePositionedHeroes.add(new BattlePositionedHero(BattleTeamType.ATTACK, t.getBattlePosition(), t.getHero()));
         });
-        this.defenseFormation.getPositionedHeroes().forEach((t) -> {
+        this.defenseFormation.getHeroes().forEach((t) -> {
             this.battlePositionedHeroes.add(new BattlePositionedHero(BattleTeamType.DEFENSE, t.getBattlePosition(), t.getHero()));
         });
 
