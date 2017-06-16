@@ -2,11 +2,8 @@ package com.idle.game.server.service;
 
 import com.idle.game.server.model.Formation;
 import com.idle.game.server.model.Player;
-import com.idle.game.server.model.PvpRoll;
 import com.idle.game.server.model.Reward;
 import com.idle.game.server.util.PersistenceUnitHelper;
-import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
@@ -77,10 +74,19 @@ public class PlayerService extends BaseService {
     }
     
     public Player computeResources() {
+        return computeResources(null);
+    }
+    
+    public Player computeResources(String linkedUser) {
         
         long seconds = 0l;
         
-        Player p = this.findByLoggedLinkedUser();
+        Player p = null;
+        if (linkedUser != null) {
+            p = this.findByLinkedUser(linkedUser);
+        } else {
+            p = this.findByLoggedLinkedUser();
+        }
         
         if (p.getLastTimeResourcesCollected() != null) {
             LocalDateTime lastTimeResourcesCollected = LocalDateTime.ofInstant(p.getLastTimeResourcesCollected().toInstant(), ZoneId.systemDefault());
@@ -94,7 +100,7 @@ public class PlayerService extends BaseService {
             
         }
         
-        if (p.getLastTimeResourcesCollected() == null || seconds > 0) {
+        if (p.getLastTimeResourcesCollected() == null || seconds >= 5) {
             p.setLastTimeResourcesCollected(new Date());
             helper.getEntityManager().merge(p);
         }

@@ -87,23 +87,7 @@ export class CampaignComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadNextLevelFormationPve();
-
-
-
-    this.formationService.getFormationByAllocation("PVE")
-      .subscribe(
-      formationPve => {
-        this.formationPve = formationPve;
-        console.log(this.formationPve);
-        this.formationPve.positionedHeroes.forEach(hero => {
-          this.formationPveTmp.set(hero.battlePosition, hero);
-        });
-        console.log(this.formationPveTmp);
-        this.loadHeroes();
-      },
-      error => console.log(error)
-      );
+       
 
 
   }

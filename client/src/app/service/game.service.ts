@@ -10,22 +10,21 @@ import { SocketMessage } from '../model/socketMessage';
 @Injectable()
 export class GameService {
 
-    public subject: Subject<SocketMessage>;
+    public authToken: string;
+    private subject: Subject<SocketMessage>;
 
     constructor(private wsService: WebSocketService) {
-        this.subject =
-            <Subject<SocketMessage>>this.wsService.connect(environment.WS_BASE_URL)
-                .map((response: MessageEvent): SocketMessage => {
-                    let data = JSON.parse(response.data);
-                    return new SocketMessage(data.object, data.action);
+    }
 
-                });
-
-
+    public getSubject(): Subject<SocketMessage> {
+        if (!this.subject) {
+            this.subject = this.wsService.connect(environment.WS_BASE_URL, this.authToken);
+        }
+        return this.subject;
     }
 
     public send(o: SocketMessage) {
-        this.subject.next(o);
+        this.wsService.subject.next(JSON.stringify(o));
     }
 
 
