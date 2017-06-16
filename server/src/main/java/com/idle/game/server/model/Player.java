@@ -48,6 +48,7 @@ public class Player implements Serializable {
     private Long gold = 0l;
     private Long soul = 0l;
     private Long ancientRune = 0l;
+    //premium resource
     private Long spiritCrystal = 0l;
     private Long goldPerSecond = 0l;
     private Long soulPerSecond = 0l;

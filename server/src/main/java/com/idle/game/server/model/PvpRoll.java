@@ -1,7 +1,11 @@
 package com.idle.game.server.model;
 
+import com.idle.game.core.type.HeroType;
+import com.idle.game.server.dto.PvpRollRetorno;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  *
@@ -100,4 +104,21 @@ public class PvpRoll implements Serializable {
         this.formationRandom = formationRandom;
     }
 
+    public PvpRollRetorno toPvpRollRetorno(Map<UUID, HeroType> heroTypes) throws Exception {
+        
+        PvpRollRetorno ret = new PvpRollRetorno();
+        ret.setExpireDate(this.getExpireDate());
+        ret.setFormationHigher(this.getFormationHigher().toFormation(heroTypes));
+        ret.setFormationLower(this.getFormationLower().toFormation(heroTypes));
+        ret.setFormationRandom(this.getFormationRandom().toFormation(heroTypes));
+        ret.setNamePlayerHigher(this.getNamePlayerHigher());
+        ret.setNamePlayerLower(this.getNamePlayerLower());
+        ret.setNamePlayerRandom(this.getNamePlayerRandom());
+        ret.setPvpScoreHigher(this.getPvpScoreHigher());
+        ret.setPvpScoreLower(this.getPvpScoreLower());
+        ret.setPvpScoreRandom(this.getPvpScoreRandom());
+        
+        return ret;
+    }
+    
 }

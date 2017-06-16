@@ -3,7 +3,7 @@ package com.idle.game.server.rest;
 import com.idle.game.core.Formation;
 import com.idle.game.core.type.FormationAllocation;
 import com.idle.game.server.dto.Envelope;
-import com.idle.game.server.model.PvpRoll;
+import com.idle.game.server.dto.PvpRollRetorno;
 import com.idle.game.server.rest.util.annotations.GZIP;
 import com.idle.game.server.service.FormationService;
 import com.idle.game.server.service.HeroTypeService;
@@ -56,10 +56,23 @@ public class FormationEndpoint {
     @Path("/pvpRoll")
     @Produces("application/json")
     @GZIP
-    public Envelope<PvpRoll> findPvpOpponents() throws Exception {
+    public Envelope<PvpRollRetorno> findPvpOpponents() throws Exception {
 
-        Envelope<PvpRoll> ret = new Envelope<>();
-        ret.setData(formationService.pvpRoll());
+        Envelope<PvpRollRetorno> ret = new Envelope<>();
+        ret.setData(formationService.pvpRoll().toPvpRollRetorno(heroTypeService.getHeroTypes()));
+
+        return ret;
+
+    }
+
+    @GET
+    @Path("/pvpRoll/paid")
+    @Produces("application/json")
+    @GZIP
+    public Envelope<PvpRollRetorno> findPvpOpponentsPaid() throws Exception {
+
+        Envelope<PvpRollRetorno> ret = new Envelope<>();
+        ret.setData(formationService.pvpRoll(Boolean.TRUE).toPvpRollRetorno(heroTypeService.getHeroTypes()));
 
         return ret;
 

@@ -7,6 +7,7 @@ import com.idle.game.server.model.Player;
 import com.idle.game.server.model.PositionedHero;
 import com.idle.game.server.model.PvpRoll;
 import com.idle.game.server.util.PersistenceUnitHelper;
+import com.idle.game.server.util.PriceEnum;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
@@ -132,10 +133,24 @@ public class FormationService extends BaseService {
     }
     
     public PvpRoll pvpRoll() {
+        return pvpRoll(Boolean.FALSE);
+    }
+    
+    public PvpRoll pvpRoll(Boolean paid) {
         
         PvpRoll pvpRoll = cachePvpRoll.get(getLoggedLinkedUser());
         
-        if (pvpRoll == null || Instant.now().isAfter(pvpRoll.getExpireDate().toInstant())) {
+        if (paid) {
+            Player p = playerService.findByLoggedLinkedUser();
+            
+            if (!PriceEnum.PAID_PVP_ROLL.playerCanPay(p)) {
+                throw new ValidationException("not.enough.spirit.crystal");
+            }
+            
+            helper.getEntityManager().merge(PriceEnum.PAID_PVP_ROLL.pay(p));
+        }
+        
+        if (pvpRoll == null || paid || Instant.now().isAfter(pvpRoll.getExpireDate().toInstant())) {
             Player pHigher = playerService.findHigherScorePvpByLoggedLinked();
             Player pLower = playerService.findLowerScorePvpByLoggedLinked();
             Player pRandom = playerService.findRandomScorePvpByLoggedLinked(Arrays.asList(pHigher.getId(), pLower.getId()));

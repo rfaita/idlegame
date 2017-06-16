@@ -21,6 +21,12 @@ export class FormationService {
             .catch(this.handleError);
     }
 
+    getNextLevelFormationDungeon(): Observable<Formation> {
+        return this.http.get(environment.API_BASE_URL + "formation/nextLevelFormationDungeon")
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
     getFormationByAllocation(allocation: string): Observable<Formation> {
         return this.http.get(environment.API_BASE_URL + "formation/allocation/" + allocation)
             .map(this.extractData)
@@ -38,6 +44,13 @@ export class FormationService {
             .map(this.extractData)
             .catch(this.handleError);
     }
+
+    pvpRollPaid(): Observable<PvpRoll> {
+        return this.http.get(environment.API_BASE_URL + "formation/pvpRoll/paid")
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
 
 
     private extractData(res: Response) {

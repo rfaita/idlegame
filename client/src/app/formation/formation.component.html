@@ -1,0 +1,18 @@
+<div *ngIf="!!data">
+  <p *ngIf="!!title">{{title}}</p>
+  <ul>
+    <li *ngFor="let pHero of data.heroes">
+      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'FRONT_TOP'">FT</span>
+      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'FRONT_MIDDLE'">FM</span>
+      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'FRONT_BOTTOM'">FB</span>
+      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'BACK_TOP'">BT</span>
+      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'BACK_MIDDLE'">BM</span>
+      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'BACK_BOTTOM'">BB</span>
+      <div class="lineUp">
+        <div class="lineUpHero" [style.background]="'url(../assets/heroes/' + pHero.hero.heroType.name + '.png)'">
+          <span class="badge-normal">{{pHero.hero.level}}</span>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

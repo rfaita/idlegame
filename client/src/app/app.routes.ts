@@ -5,10 +5,12 @@ import { ShopComponent } from './shop/shop.component';
 import { HeroComponent } from './hero/hero.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { PvpComponent } from './pvp/pvp.component';
+import { DungeonComponent } from './dungeon/dungeon.component';
 
 
 export const routes: Routes = [
     { path: 'campaign', component: CampaignComponent },
+    { path: 'dungeon', component: DungeonComponent },
     { path: 'heroes', component: HeroesComponent },
     { path: 'hero/:id', component: HeroComponent },
     { path: 'shop', component: ShopComponent },

@@ -2,7 +2,7 @@ import { PositionedHero } from './positionedHero';
 import { Formation } from './formation';
 
 export class PvpRoll {
-    public expireDate: Date;
+    public expireDate: number;
     public formationHigher: Formation;
     public formationLower: Formation;
     public formationRandom: Formation;

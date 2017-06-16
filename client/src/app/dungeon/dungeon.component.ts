@@ -1,120 +1,62 @@
 import { Component, OnInit } from '@angular/core';
-import { FormationService } from '../service/formation.service';
 import { Formation } from '../model/formation';
-import { Hero } from '../model/hero';
+import { FormationService } from '../service/formation.service';
 import { BattleService } from '../service/battle.service';
-import { HeroesService } from '../service/heroes.service';
-import { PositionedHero } from '../model/positionedHero';
-import { DragulaService } from 'ng2-dragula/ng2-dragula';
 
 @Component({
-  selector: 'app-campaign',
-  templateUrl: './campaign.component.html',
-  styleUrls: ['./campaign.component.css']
+  selector: 'app-dungeon',
+  templateUrl: './dungeon.component.html',
+  styleUrls: ['./dungeon.component.css']
 })
-export class CampaignComponent implements OnInit {
+export class DungeonComponent implements OnInit {
 
-  public nextLevelFormationPve: Formation;
-  public formationPve: Formation;
-  public selectHeroes: Hero[];
-  public heroes: Hero[];
-  public formationPveTmp: Map<string, PositionedHero> = new Map();
+  public nextLevelFormationDungeon: Formation;
+  public formation: Formation;
 
   constructor(private formationService: FormationService,
-    private battleService: BattleService,
-    private heroesService: HeroesService,
-    private dragulaService: DragulaService) {
+    private battleService: BattleService) {
+  }
 
-    this.formationPveTmp.set("FRONT_TOP", null);
-    this.formationPveTmp.set("FRONT_MIDDLE", null);
-    this.formationPveTmp.set("FRONT_BOTTOM", null);
-    this.formationPveTmp.set("BACK_TOP", null);
-    this.formationPveTmp.set("BACK_MIDDLE", null);
-    this.formationPveTmp.set("BACK_BOTTOM", null);
-
-    dragulaService.drag.subscribe((value) => {
-      
-    });
-    dragulaService.drop.subscribe((value) => {
-      let [el, dragD, dragO] = value.splice(1);
-
-      if (dragD.children.length > 1) {
-        if (el === dragD.children[0]) {
-          dragO.appendChild(dragD.children[1]);
-        } else {
-          dragO.appendChild(dragD.children[0]);
-        }
-      }
-
-      
-
-    });
-    dragulaService.over.subscribe((value) => {
-      
-
-    });
-    dragulaService.out.subscribe((value) => {
-      
-
-    });
-
+  public refresh(formation: Formation) {
+    this.formation = formation;
   }
 
   public fight() {
-    console.log(this.formationPveTmp);
+    this.formationService.putFormation(this.formation)
+      .subscribe(
+      ret => {
+        this.doBattleDungeon();
+      }, error => console.log(error)
+      );
+  }
 
-    /*this.battleService.doBattlePve()
+  private doBattleDungeon() {
+    this.battleService.doBattleDungeon()
       .subscribe(
       battleRetorno => {
         alert("O time vencedor é: " + battleRetorno.winner);
         if (battleRetorno.winner === "ATTACK") {
-          this.loadNextLevelFormationPve();
+          this.loadNextLevelFormationDungeon();
         }
         console.log(battleRetorno);
       },
       error => console.log(error)
-      );*/
+      );
   }
 
-  public loadNextLevelFormationPve() {
-    this.formationService.getNextLevelFormationPve()
+  public loadNextLevelFormationDungeon() {
+    this.formationService.getNextLevelFormationDungeon()
       .subscribe(
-      nextLevelFormationPve => {
-        this.nextLevelFormationPve = nextLevelFormationPve;
+      nextLevelFormationDungeon => {
+        this.nextLevelFormationDungeon = nextLevelFormationDungeon;
       },
       error => console.log(error)
       );
   }
 
   ngOnInit() {
-       
+    this.loadNextLevelFormationDungeon();
 
-
-  }
-
-  private loadHeroes() {
-    this.heroesService.getHeroes()
-      .subscribe(
-      heroes => {
-        this.heroes = heroes
-        this.selectHeroes = heroes;
-        this.cleanUpHeroes();
-      },
-      error => console.log(error));
-  }
-
-
-  private cleanUpHeroes() {
-    this.selectHeroes.forEach((hero, index, data) => {
-
-      this.formationPveTmp.forEach(pHero => {
-        if (pHero != null && pHero.hero.id == hero.id) {
-          data.splice(index, 1);
-        }
-      })
-
-
-    });
   }
 
 }

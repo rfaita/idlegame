@@ -1,5 +1,6 @@
 package com.idle.game.server.service;
 
+import java.security.Principal;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import org.keycloak.KeycloakPrincipal;
@@ -19,8 +20,22 @@ public class BaseService {
         return getKeycloakPrincipal().getName();
     }
 
+    protected String getLoggedLinkedUser(Principal principal) {
+        return getKeycloakPrincipal(principal).getName();
+
+    }
+
+    protected KeycloakPrincipal<KeycloakSecurityContext> getKeycloakPrincipal(Principal principal) {
+        return (KeycloakPrincipal<KeycloakSecurityContext>) (principal);
+    }
+
     protected KeycloakPrincipal<KeycloakSecurityContext> getKeycloakPrincipal() {
-        return (KeycloakPrincipal<KeycloakSecurityContext>) (sessionContext.getCallerPrincipal());
+        return getKeycloakPrincipal(sessionContext.getCallerPrincipal());
+    }
+
+    protected IDToken getIDToken(Principal principal) {
+        return getKeycloakPrincipal(principal).getKeycloakSecurityContext().getIdToken();
+
     }
 
     protected IDToken getIDToken() {

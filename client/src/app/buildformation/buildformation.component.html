@@ -1,0 +1,29 @@
+<div *ngIf="!!buildFormation">
+  <p>Sua composição é:</p>
+  <ul>
+    <li *ngFor="let key of buildFormation | keys">
+      <span class="badge badge-top-left" *ngIf="key.key == 'FRONT_TOP'">FT</span>
+      <span class="badge badge-top-left" *ngIf="key.key == 'FRONT_MIDDLE'">FM</span>
+      <span class="badge badge-top-left" *ngIf="key.key == 'FRONT_BOTTOM'">FB</span>
+      <span class="badge badge-top-left" *ngIf="key.key == 'BACK_TOP'">BT</span>
+      <span class="badge badge-top-left" *ngIf="key.key == 'BACK_MIDDLE'">BM</span>
+      <span class="badge badge-top-left" *ngIf="key.key == 'BACK_BOTTOM'">BB</span>
+      <div class="lineUp" [dragula]='"heroLineUp"' id="{{key.key}}">
+        <div class="lineUpHero" *ngIf="key.value != null" [style.background]="'url(../assets/heroes/' + key.value.hero.heroType.name + '.png)'"
+          id={{key.value.hero.id}}>
+          <span class="badge-normal">{{key.value.hero.level}}</span>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+  <p>Seus Heróis:</p>
+  <ul>
+    <li [dragula]='"heroLineUp"' *ngFor="let hero of selectHeroes">
+      <div class="lineUpHero" [style.background]="'url(../assets/heroes/' + hero.heroType.name + '.png)'" id="{{hero.id}}">
+        <span class="badge-normal">{{hero.level}}</span>
+      </div>
+    </li>
+    <li [dragula]='"heroLineUp"' *ngFor="let key of buildFormation | keys"></li>
+  </ul>
+</div>

@@ -1,56 +1,32 @@
 <div *ngIf="!!pvpRoll">
-  <p>
-    {{pvpRoll.namePlayerHigher}} - {{pvpRoll.pvpScoreHigher}}
-  </p>
-  <ul>
-    <li *ngFor="let pHero of pvpRoll.formationHigher.heroes">
-      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'FRONT_TOP'">FT</span>
-      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'FRONT_MIDDLE'">FM</span>
-      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'FRONT_BOTTOM'">FB</span>
-      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'BACK_TOP'">BT</span>
-      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'BACK_MIDDLE'">BM</span>
-      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'BACK_BOTTOM'">BB</span>
-      <div class="lineUp">
-        <div class="lineUpHero" [style.background]="'url(../assets/heroes/' + pHero.hero.heroType.name + '.png)'">
-          <span class="badge-normal">{{pHero.hero.level}}</span>
-        </div>
-      </div>
-    </li>
-  </ul>
-  <p>
-    {{pvpRoll.namePlayerLower}} - {{pvpRoll.pvpScoreLower}}
-  </p>
-  <ul>
-    <li *ngFor="let pHero of pvpRoll.formationLower.heroes">
-      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'FRONT_TOP'">FT</span>
-      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'FRONT_MIDDLE'">FM</span>
-      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'FRONT_BOTTOM'">FB</span>
-      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'BACK_TOP'">BT</span>
-      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'BACK_MIDDLE'">BM</span>
-      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'BACK_BOTTOM'">BB</span>
-      <div class="lineUp">
-        <div class="lineUpHero" [style.background]="'url(../assets/heroes/' + pHero.hero.heroType.name + '.png)'">
-          <span class="badge-normal">{{pHero.hero.level}}</span>
-        </div>
-      </div>
-    </li>
-  </ul>
-  <p>
-    {{pvpRoll.namePlayerRandom}} - {{pvpRoll.pvpScoreRandom}}
-  </p>
-  <ul>
-    <li *ngFor="let pHero of pvpRoll.formationRandom.heroes">
-      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'FRONT_TOP'">FT</span>
-      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'FRONT_MIDDLE'">FM</span>
-      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'FRONT_BOTTOM'">FB</span>
-      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'BACK_TOP'">BT</span>
-      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'BACK_MIDDLE'">BM</span>
-      <span class="badge badge-top-left" *ngIf="pHero.battlePosition == 'BACK_BOTTOM'">BB</span>
-      <div class="lineUp">
-        <div class="lineUpHero" [style.background]="'url(../assets/heroes/' + pHero.hero.heroType.name + '.png)'">
-          <span class="badge-normal">{{pHero.hero.level}}</span>
-        </div>
-      </div>
-    </li>
-  </ul>
+  <p>Próximo roll em: {{timeUntilNextRoll | timeTo}} <button (click)="refreshRoll()">Roll</button><button (click)="paidRoll()">Roll Pago</button></p>
+  <div class="playerPvp">
+    <p>
+      {{pvpRoll.namePlayerHigher}} - {{pvpRoll.pvpScoreHigher}}
+    </p>
+    <formation [data]="pvpRoll.formationHigher"></formation>
+    <p>
+      <button>Lutar</button>
+    </p>
+  </div>
+  <div class="playerPvp">
+    <p>
+      {{pvpRoll.namePlayerLower}} - {{pvpRoll.pvpScoreLower}}
+    </p>
+    <formation [data]="pvpRoll.formationLower"></formation>
+    <p>
+      <button>Lutar</button>
+    </p>
+  </div>
+  <div class="playerPvp">
+    <p>
+      {{pvpRoll.namePlayerRandom}} - {{pvpRoll.pvpScoreRandom}}
+    </p>
+    <formation [data]="pvpRoll.formationRandom"></formation>
+    <p>
+      <button>Lutar</button>
+    </p>
+  </div>
+  <buildformation [allocation]="'PVP'" (newFormation)="refresh($event)"></buildformation>
+
 </div>

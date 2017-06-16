@@ -23,6 +23,10 @@ import { WebSocketService } from './service/websocket.service';
 import { GameService } from './service/game.service';
 import { NumberPipe } from './number.pipe';
 import { PvpComponent } from './pvp/pvp.component';
+import { DungeonComponent } from './dungeon/dungeon.component';
+import { FormationComponent } from './formation/formation.component';
+import { BuildformationComponent } from './buildformation/buildformation.component';
+import { TimeToPipe } from './time.to.pipe';
 
 @NgModule({
   declarations: [
@@ -33,7 +37,11 @@ import { PvpComponent } from './pvp/pvp.component';
     CampaignComponent,
     KeysPipe,
     NumberPipe,
-    PvpComponent
+    PvpComponent,
+    DungeonComponent,
+    FormationComponent,
+    BuildformationComponent,
+    TimeToPipe
   ],
   imports: [
     BrowserModule,
