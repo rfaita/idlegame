@@ -14,8 +14,8 @@ export class PlayerService {
 
     }
 
-    getPlayer(): Observable<Player> {
-        return this.http.get(environment.API_BASE_URL + "player")
+    computeResources(): Observable<Player> {
+        return this.http.put(environment.API_BASE_URL + "player/computeResources", null)
             .map(this.extractData)
             .catch(this.handleError);
     }

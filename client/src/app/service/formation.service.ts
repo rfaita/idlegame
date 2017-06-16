@@ -5,6 +5,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { environment } from '../../environments/environment';
 import { Formation } from '../model/formation';
+import { PvpRoll } from '../model/pvpRoll';
 
 @Injectable()
 export class FormationService {
@@ -31,6 +32,13 @@ export class FormationService {
             .map(this.extractData)
             .catch(this.handleError);
     }
+
+    pvpRoll(): Observable<PvpRoll> {
+        return this.http.get(environment.API_BASE_URL + "formation/pvpRoll")
+            .map(this.extractData)
+            .catch(this.handleError);
+    }
+
 
     private extractData(res: Response) {
         let body = res.json();

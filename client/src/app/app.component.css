@@ -30,14 +30,16 @@
 
 #resources li {
     float: left;
+    border:1px solid #ccc;
+    margin:1px;
+    padding: 3px;
+    color: #FFF;
 }
 
-#resources span {
-    height: 32px;
-    width: 48px;
-    margin: 3px;
-    display: block;
-    background-size: cover;
+#resources img {
+    width: 24px;
+    height: 24px;
+    
 }
 
 #social-menu {

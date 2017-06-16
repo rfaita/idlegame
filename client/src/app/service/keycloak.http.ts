@@ -9,12 +9,12 @@ import { Observable } from 'rxjs/Rx';
  */
 @Injectable()
 export class KeycloakHttp extends Http {
-    constructor(_backend: ConnectionBackend, _defaultOptions: RequestOptions, private _keycloakService: KeycloakService) {
-        super(_backend, _defaultOptions);
+    constructor(backend: ConnectionBackend, defaultOptions: RequestOptions, private keycloakService: KeycloakService) {
+        super(backend, defaultOptions);
     }
 
     request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
-        const tokenPromise: Promise<string> = this._keycloakService.getToken();
+        const tokenPromise: Promise<string> = this.keycloakService.getToken();
         const tokenObservable: Observable<string> = Observable.fromPromise(tokenPromise);
 
 

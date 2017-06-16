@@ -8,8 +8,8 @@
 </div>
 
 <div id="main">
-  <span id="npcpvp"></span>
-  <span id="npcpve"  (click)="showDialog()" routerLink="/campaign"></span>
+  <span id="npcpvp" (click)="showDialog()" routerLink="/pvp"></span>
+  <span id="npcpve" (click)="showDialog()" routerLink="/campaign"></span>
   <span id="npcshop" (click)="showDialog()" routerLink="/shop"></span>
   <span id="npcmage"></span>
 </div>
@@ -23,13 +23,16 @@
   <div>
     <ul>
       <li>
-        <span style="background-image:url('../assets/img/gold.png')">{{player.gold}}</span>
+        <img src="../assets/img/gold.png" alt="" /><span>{{player.gold | number}}</span>
       </li>
       <li>
-        <span style="background-image:url('../assets/img/gosma.png')">{{player.liquid}}</span>
+        <img src="../assets/img/gosma.png" alt="" /><span>{{player.soul | number}}</span>
       </li>
       <li>
-        <span style="background-image:url('../assets/img/gems.png')">{{player.gems}}</span>
+        <img src="../assets/img/gems.png" alt="" /><span>{{player.ancientRune | number}}</span>
+      </li>
+      <li>
+        <img src="../assets/img/gems.png" alt="" /><span>{{player.spiritCrystal | number}}</span>
       </li>
     </ul>
   </div>

@@ -83,7 +83,8 @@ public class Main {
 
         WARArchive deployment = ShrinkWrap.createFromZipFile(WARArchive.class, new File("target/idleserver.war"));
 
-        deployment.as(Secured.class).protect("/idle/api/*").withMethod("GET", "PUT", "DELETE", "POST").withRole("*");
+        deployment.as(Secured.class).protect("/idle/api/*").withMethod("GET", "PUT", "DELETE", "POST", "OPTIONS").withRole("*");
+        deployment.as(Secured.class).protect("/idle/websocket").withMethod("GET", "PUT", "DELETE", "POST", "OPTIONS").withRole("*");
 
 //        WebXmlAsset webXmlAsset = deployment.findWebXmlAsset();
 //        webXmlAsset.setLoginConfig("KEYCLOAK", "idlerealm");

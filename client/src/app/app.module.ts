@@ -19,6 +19,10 @@ import { FormationService } from './service/formation.service';
 import { BattleService } from './service/battle.service';
 import { PlayerService } from './service/player.service';
 import { KeysPipe } from './keys.pipe';
+import { WebSocketService } from './service/websocket.service';
+import { GameService } from './service/game.service';
+import { NumberPipe } from './number.pipe';
+import { PvpComponent } from './pvp/pvp.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +31,9 @@ import { KeysPipe } from './keys.pipe';
     ShopComponent,
     HeroComponent,
     CampaignComponent,
-    KeysPipe
+    KeysPipe,
+    NumberPipe,
+    PvpComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +45,8 @@ import { KeysPipe } from './keys.pipe';
   ],
   providers: [
     KeycloakService,
+    WebSocketService,
+    GameService,
     HeroesService,
     ShopService,
     FormationService,
