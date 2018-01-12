@@ -1,0 +1,41 @@
+info:
+    version: @pom.version@
+    stage: dev
+server:
+    port: 8081
+
+management: 
+    security: 
+        enabled: false
+idle:
+    config:
+        # RabbitMQ Settings
+        rabbitmq:
+            hostname: 172.16.50.24
+            username: admin
+            password: admin123
+            
+        # Mongo Settings
+        mongodb:
+            hostname: localhost
+            port: 11111
+            database: test
+    
+        # Oracle settings
+        datasource:
+            url: jdbc:oracle:thin:@172.16.50.5:1521:TSONE
+            username: pferdesenv1
+            password: fozsan
+            driver-class-name: oracle.jdbc.driver.OracleDriver
+            
+        #Redis
+        redis:
+            hostname: 172.16.50.24
+            port: 6379
+
+#Spring Boot Config            
+spring:
+    profiles:
+        active: default
+    application:
+        name: @pom.artifactId@

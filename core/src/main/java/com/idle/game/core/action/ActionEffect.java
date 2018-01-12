@@ -1,9 +1,12 @@
 package com.idle.game.core.action;
 
-import com.idle.game.core.type.ActionType;
+import com.idle.game.core.action.type.ActionType;
 import com.idle.game.core.BaseObject;
+import com.idle.game.core.buff.type.BuffEffect;
 import com.idle.game.core.type.DamageType;
+import static com.idle.game.core.type.DamageType.PHYSICAL;
 import com.idle.game.core.type.TargetType;
+import java.util.List;
 
 /**
  *
@@ -11,33 +14,22 @@ import com.idle.game.core.type.TargetType;
  */
 public class ActionEffect extends BaseObject {
 
-    private ActionType actionType;
+    private ActionType type;
     private TargetType targetType;
     //Habilidade pode errar?
     private Boolean canBeDodge = Boolean.TRUE;
     //Percentual do dano que sera utilizado no efeito caso o mesmo necessite
-    private Integer actionPercentage;
-    //Percentual do efeito ocorrer;
-    private Integer actionChance;
-    //Numero de turnos que o efeito persiste
-    private Integer actionDuration;
+    private Integer percentage;
     private DamageType damageType;
-    private Boolean actionOverSameTeam;
+    private Boolean overSameTeam;
+    private List<BuffEffect> buffEffects;
 
-    public Boolean getActionOverSameTeam() {
-        return actionOverSameTeam;
+    public ActionType getType() {
+        return type;
     }
 
-    public void setActionOverSameTeam(Boolean actionOverSameTeam) {
-        this.actionOverSameTeam = actionOverSameTeam;
-    }
-
-    public ActionType getActionType() {
-        return actionType;
-    }
-
-    public void setActionType(ActionType at) {
-        this.actionType = at;
+    public void setType(ActionType type) {
+        this.type = type;
     }
 
     public TargetType getTargetType() {
@@ -56,28 +48,12 @@ public class ActionEffect extends BaseObject {
         this.canBeDodge = canBeDodge;
     }
 
-    public Integer getActionPercentage() {
-        return actionPercentage;
+    public Integer getPercentage() {
+        return percentage;
     }
 
-    public void setActionPercentage(Integer ap) {
-        this.actionPercentage = ap;
-    }
-
-    public Integer getActionChance() {
-        return actionChance;
-    }
-
-    public void setActionChance(Integer ac) {
-        this.actionChance = ac;
-    }
-
-    public Integer getActionDuration() {
-        return actionDuration;
-    }
-
-    public void setActionDuration(Integer ac) {
-        this.actionDuration = ac;
+    public void setPercentage(Integer percentage) {
+        this.percentage = percentage;
     }
 
     public DamageType getDamageType() {
@@ -88,24 +64,41 @@ public class ActionEffect extends BaseObject {
         this.damageType = damageType;
     }
 
-    public ActionEffect(ActionType actionType, Integer actionPercentage) {
-        this(actionType, null, actionPercentage, null, null, null, Boolean.FALSE);
+    public Boolean getOverSameTeam() {
+        return overSameTeam;
     }
 
-    public ActionEffect(ActionType actionType, Integer actionPercentage, DamageType damageType) {
-        this(actionType, null, actionPercentage, null, null, damageType, Boolean.FALSE);
+    public void setOverSameTeam(Boolean overSameTeam) {
+        this.overSameTeam = overSameTeam;
     }
 
-    public ActionEffect(ActionType actionType, TargetType targetType,
-            Integer actionPercentage, Integer actionChance,
-            Integer actionDuration, DamageType damageType, Boolean actionOverSameTeam) {
-        this.actionType = actionType;
+    public List<BuffEffect> getBuffEffects() {
+        return buffEffects;
+    }
+
+    public void setBuffEffects(List<BuffEffect> buffEffects) {
+        this.buffEffects = buffEffects;
+    }
+
+    public ActionEffect(ActionType type, TargetType targetType, Integer percentage) {
+        this(type, targetType, percentage, PHYSICAL);
+    }
+
+    public ActionEffect(ActionType type, TargetType targetType, Integer percentage, DamageType damageType) {
+        this(type, targetType, percentage, damageType, Boolean.FALSE);
+    }
+
+    public ActionEffect(ActionType type, TargetType targetType, Integer percentage, DamageType damageType, Boolean overSameTeam) {
+        this(type, targetType, percentage, damageType, overSameTeam, null);
+    }
+
+    public ActionEffect(ActionType type, TargetType targetType, Integer percentage, DamageType damageType, Boolean overSameTeam, List<BuffEffect> buffEffects) {
+        this.type = type;
         this.targetType = targetType;
-        this.actionPercentage = actionPercentage;
-        this.actionChance = actionChance;
-        this.actionDuration = actionDuration;
+        this.percentage = percentage;
         this.damageType = damageType;
-        this.actionOverSameTeam = actionOverSameTeam;
+        this.overSameTeam = overSameTeam;
+        this.buffEffects = buffEffects;
     }
 
     public ActionEffect() {
@@ -113,8 +106,8 @@ public class ActionEffect extends BaseObject {
 
     @Override
     public String toString() {
-        return "SSE{" + "t=" + actionType + ", tt=" + targetType + ", d?=" + canBeDodge
-                + ", ap=" + actionPercentage + ", ac=" + actionChance + ", ad=" + actionDuration + ", dt=" + damageType + ", aost=" + actionOverSameTeam + '}';
+        return "SSE{" + "t=" + type + ", tt=" + targetType + ", d?=" + canBeDodge
+                + ", ap=" + percentage + ", dt=" + damageType + ", aost=" + overSameTeam + '}';
     }
 
 }

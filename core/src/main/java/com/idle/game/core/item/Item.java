@@ -1,6 +1,5 @@
 package com.idle.game.core.item;
 
-import com.idle.game.core.type.ItemType;
 import com.idle.game.core.BaseObject;
 
 /**

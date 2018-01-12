@@ -2,7 +2,8 @@ package com.idle.game.core.buff;
 
 import com.idle.game.core.BaseObject;
 import com.idle.game.core.type.DamageType;
-import com.idle.game.core.type.ActionType;
+import com.idle.game.core.action.type.ActionType;
+import com.idle.game.core.buff.type.BuffType;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -17,6 +18,7 @@ public class Buff extends BaseObject {
     private Integer value;
     private DamageType damageType;
     private ActionType effectType;
+    private BuffType buffType;
 
     public DamageType getDamageType() {
         return damageType;
@@ -61,7 +63,7 @@ public class Buff extends BaseObject {
     public Buff() {
     }
 
-    public Buff(Integer turnDuration, Integer value, ActionType effectType, DamageType damageType) {
+    public Buff(Integer turnDuration, Integer value, ActionType effectType, DamageType damageType, BuffType buffType) {
         this.uuid = UUID.randomUUID();
         this.turnDuration = turnDuration;
         this.value = value;
@@ -97,7 +99,9 @@ public class Buff extends BaseObject {
 
     @Override
     public String toString() {
-        return "B{" + "td=" + turnDuration + ", ct=" + currTurn + ", v=" + value + ", et=" + effectType + ", dt=" + damageType + '}';
+        return "B{" + "td=" + turnDuration + ", ct=" + currTurn + ", v=" + value + ", dt=" + damageType + ", et=" + effectType + ", bt=" + buffType + '}';
     }
+
+    
 
 }

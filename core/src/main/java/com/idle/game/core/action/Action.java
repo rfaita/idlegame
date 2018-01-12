@@ -1,7 +1,6 @@
 package com.idle.game.core.action;
 
 import com.idle.game.core.BaseObject;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,20 +9,33 @@ import java.util.List;
  */
 public class Action extends BaseObject {
 
+    private Boolean special = Boolean.FALSE;
     private ActionEffect mainActionEffect;
-
-    private List<ActionEffect> secundaryActionsEffects = new ArrayList<>();
+    private List<ActionEffect> secundaryActionsEffects;
 
     public Action() {
     }
 
     public Action(ActionEffect mainActionEffect) {
-        this.mainActionEffect = mainActionEffect;
+        this(mainActionEffect, Boolean.FALSE);
     }
-    
-    public Action(ActionEffect ma, List<ActionEffect> se) {
+
+    public Action(ActionEffect mainActionEffect, Boolean special) {
+        this(mainActionEffect, null, special);
+    }
+
+    public Action(ActionEffect ma, List<ActionEffect> se, Boolean special) {
         this.mainActionEffect = ma;
         this.secundaryActionsEffects = se;
+        this.special = special;
+    }
+
+    public Boolean getSpecial() {
+        return special;
+    }
+
+    public void setSpecial(Boolean special) {
+        this.special = special;
     }
 
     public ActionEffect getMainActionEffect() {

@@ -1,12 +1,11 @@
 package com.idle.game.tests;
 
-import com.idle.game.core.type.ActionType;
-import com.idle.game.core.type.AtittudeType;
-import com.idle.game.core.Battle;
-import com.idle.game.core.type.BattlePositionType;
-import com.idle.game.core.type.BuffType;
-import com.idle.game.core.Formation;
-import com.idle.game.core.Hero;
+import com.idle.game.core.action.type.ActionType;
+import com.idle.game.core.battle.Battle;
+import com.idle.game.core.formation.type.FormationPosition;
+import com.idle.game.core.buff.type.BuffType;
+import com.idle.game.core.formation.Formation;
+import com.idle.game.core.hero.BattleHero;
 import static com.idle.game.tests.helper.TestHelper.*;
 import junit.framework.Assert;
 import org.junit.Test;
@@ -20,15 +19,15 @@ public class HealBattleTests {
     @Test
     public void basicHealTest1() throws Exception {
 
-        Hero h1 = createBasicMeleePhysicalNoCritNoDodgeNoBlock200Hp10000SpeedHero(AtittudeType.AGGRESSIVE);
+        BattleHero h1 = createBasicMeleePhysicalNoCritNoDodge200Hp10000SpeedHero();
         h1.getHeroType().setDefaultAction(createBasicHealSpell());
 
-        Formation f1 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h1));
+        Formation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
 
-        Hero h2 = createBasicMeleePhysicalNoCritNoDodgeNoBlock200Hp10000SpeedHero(AtittudeType.AGGRESSIVE);
+        BattleHero h2 = createBasicMeleePhysicalNoCritNoDodge200Hp10000SpeedHero();
         h2.getHeroType().setDefaultAction(createBasicHealSpell());
 
-        Formation f2 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h2));
+        Formation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
 
         Battle b = new Battle(f1, f2);
 
@@ -53,15 +52,15 @@ public class HealBattleTests {
     @Test
     public void basicHealTestWithBuff() throws Exception {
 
-        Hero h1 = createBasicMeleePhysicalNoCritNoDodgeNoBlock200Hp10000SpeedHero(AtittudeType.AGGRESSIVE);
+        BattleHero h1 = createBasicMeleePhysicalNoCritNoDodge200Hp10000SpeedHero();
         h1.getHeroType().setDefaultAction(createHealSpellWithBuff());
 
-        Formation f1 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h1));
+        Formation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
 
-        Hero h2 = createBasicMeleePhysicalNoCritNoDodgeNoBlock200Hp10000SpeedHero(AtittudeType.AGGRESSIVE);
+        BattleHero h2 = createBasicMeleePhysicalNoCritNoDodge200Hp10000SpeedHero();
         h2.getHeroType().setDefaultAction(createHealSpellWithBuff());
 
-        Formation f2 = createBasicFormation(createBasicPositionedHero(BattlePositionType.FRONT_TOP, h2));
+        Formation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
 
         Battle b = new Battle(f1, f2);
 
