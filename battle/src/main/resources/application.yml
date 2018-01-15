@@ -38,6 +38,12 @@ idle:
             hostname: 172.16.50.24
             port: 6379
 
+keycloak:
+    auth-server-url: http://localhost:8180/auth
+    realm: idlerealm
+    resource: idlegame
+    public-client: true
+
 #Spring Boot Config            
 spring:
     profiles:

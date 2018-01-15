@@ -39,11 +39,11 @@ public class HeroService {
     }
 
     @CachePut(cacheNames = {"heroFindById"}, key = "#id")
-    public Hero levelUp(String id) {
+    public Hero levelUp(String id, String player) {
 
         Hero h = heroRepository.findById(id);
-
-        validateLevelUp(h);
+        
+        validateLevelUp(h, player);
 
         h.setLevel(h.getLevel() + 1);
 
@@ -51,13 +51,13 @@ public class HeroService {
         return h;
     }
 
-    private void validateLevelUp(Hero h) {
+    private void validateLevelUp(Hero h, String player) {
         if (h == null) {
             throw new ValidationException("hero.not.found");
         }
-//        if (!findByLoggedLinkedUser().contains(h)) {
-//            throw new ValidationException("player.is.not.owner.of.this.hero");
-//        }
+        if (!h.getPlayer().equalsIgnoreCase(player)) {
+            throw new ValidationException("player.is.not.owner.of.this.hero");
+        }
         if (h.getLevel() + 1 > IdleConstants.HERO_MAX_LEVEL) {
             throw new ValidationException("hero.max.level.reached");
         }

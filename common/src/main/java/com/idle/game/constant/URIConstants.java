@@ -6,6 +6,7 @@ package com.idle.game.constant;
  */
 public interface URIConstants {
 
-    String FIND_ALL_BY_HERO_TYPE_QUALITY = "findAllByHeroTypeQuality";
+    String HERO__FIND_ALL_BY_HERO_TYPE_QUALITY = "findAllByHeroTypeQuality";
+    String HERO__FIND_ALL_BY_PLAYER = "all";
 
 }

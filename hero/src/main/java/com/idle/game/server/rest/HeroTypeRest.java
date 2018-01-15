@@ -1,6 +1,5 @@
 package com.idle.game.server.rest;
 
-import static com.idle.game.constant.URIConstants.FIND_ALL_BY_HERO_TYPE_QUALITY;
 import com.idle.game.core.type.HeroTypeQuality;
 import com.idle.game.model.mongo.HeroType;
 import com.idle.game.server.dto.Envelope;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import static com.idle.game.constant.URIConstants.HERO__FIND_ALL_BY_HERO_TYPE_QUALITY;
 
 @RestController
 @RequestMapping("/heroType")
@@ -42,7 +42,7 @@ public class HeroTypeRest {
 
     }
 
-    @RequestMapping(path = "/" + FIND_ALL_BY_HERO_TYPE_QUALITY + "/{quality}", method = RequestMethod.GET)
+    @RequestMapping(path = "/" + HERO__FIND_ALL_BY_HERO_TYPE_QUALITY + "/{quality}", method = RequestMethod.GET)
     public @ResponseBody
     Envelope<List<HeroType>> findAllByHeroTypeQuality(@PathVariable("quality") String quality) {
 

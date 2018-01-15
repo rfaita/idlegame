@@ -1,12 +1,9 @@
 package com.idle.game.helper;
 
-import static com.idle.game.constant.URIConstants.FIND_ALL_BY_HERO_TYPE_QUALITY;
 import com.idle.game.core.type.HeroTypeQuality;
 import com.idle.game.model.mongo.Hero;
 import com.idle.game.model.mongo.HeroType;
 import com.idle.game.server.dto.Envelope;
-import com.idle.game.server.dto.HeroTypeEnvelope;
-import com.idle.game.server.dto.ListHeroTypeEnvelope;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import java.net.URI;
 import java.util.List;
@@ -15,6 +12,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import static com.idle.game.constant.URIConstants.HERO__FIND_ALL_BY_HERO_TYPE_QUALITY;
+import static com.idle.game.constant.URIConstants.HERO__FIND_ALL_BY_PLAYER;
+import org.keycloak.representations.AccessToken;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 /**
  *
@@ -29,6 +34,9 @@ public class HeroTypeHelper {
     @Autowired
     private RedisTemplate<Object, Object> redisTemplate;
 
+    @Autowired
+    private AccessToken accessToken;
+
     @Value("${idle.url.heroType}")
     private String urlHeroType;
 
@@ -37,10 +45,19 @@ public class HeroTypeHelper {
 
         URI uri = URI.create(urlHeroType + "/" + id);
 
-        Envelope<HeroType> ret = restTemplate.getForObject(uri, HeroTypeEnvelope.class);
+        ResponseEntity<Envelope<HeroType>> ret = restTemplate.exchange(uri,
+                HttpMethod.GET,
+                new HttpEntity(TokenHelper.getAuthHeaders(accessToken.getAccessTokenHash())),
+                new ParameterizedTypeReference<Envelope<HeroType>>() {
+        });
 
-        if (ret.getErrors() == null || ret.getErrors().isEmpty()) {
-            return ret.getData();
+        if (ret.getStatusCode() == HttpStatus.OK) {
+            Envelope<HeroType> data = ret.getBody();
+            if (data.getErrors() == null || data.getErrors().isEmpty()) {
+                return data.getData();
+            } else {
+                return null;
+            }
         } else {
             return null;
         }
@@ -55,14 +72,44 @@ public class HeroTypeHelper {
         }
     }
 
+    public List<Hero> getHeroByPlayer(String player) {
+        URI uri = URI.create(urlHeroType + "/" + HERO__FIND_ALL_BY_PLAYER + "/" + player);
+
+        ResponseEntity<Envelope<List<Hero>>> ret = restTemplate.exchange(uri,
+                HttpMethod.GET,
+                new HttpEntity(TokenHelper.getAuthHeaders(accessToken.getAccessTokenHash())),
+                new ParameterizedTypeReference<Envelope<List<Hero>>>() {
+        });
+
+        if (ret.getStatusCode() == HttpStatus.OK) {
+            Envelope<List<Hero>> data = ret.getBody();
+            if (data.getErrors() == null || data.getErrors().isEmpty()) {
+                return data.getData();
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
     public List<HeroType> getHeroTypeByHeroTypeQuality(HeroTypeQuality quality) {
 
-        URI uri = URI.create(urlHeroType + "/" + FIND_ALL_BY_HERO_TYPE_QUALITY + "/" + quality.toString());
+        URI uri = URI.create(urlHeroType + "/" + HERO__FIND_ALL_BY_HERO_TYPE_QUALITY + "/" + quality.toString());
 
-        Envelope<List<HeroType>> ret = restTemplate.getForObject(uri, ListHeroTypeEnvelope.class);
+        ResponseEntity<Envelope<List<HeroType>>> ret = restTemplate.exchange(uri,
+                HttpMethod.GET,
+                new HttpEntity(TokenHelper.getAuthHeaders(accessToken.getAccessTokenHash())),
+                new ParameterizedTypeReference<Envelope<List<HeroType>>>() {
+        });
 
-        if (ret.getErrors() == null || ret.getErrors().isEmpty()) {
-            return ret.getData();
+        if (ret.getStatusCode() == HttpStatus.OK) {
+            Envelope<List<HeroType>> data = ret.getBody();
+            if (data.getErrors() == null || data.getErrors().isEmpty()) {
+                return data.getData();
+            } else {
+                return null;
+            }
         } else {
             return null;
         }

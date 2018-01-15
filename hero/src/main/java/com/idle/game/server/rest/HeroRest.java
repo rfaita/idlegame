@@ -1,9 +1,11 @@
 package com.idle.game.server.rest;
 
+import static com.idle.game.constant.URIConstants.HERO__FIND_ALL_BY_PLAYER;
 import com.idle.game.model.mongo.Hero;
 import com.idle.game.server.service.*;
 import com.idle.game.server.dto.Envelope;
 import java.util.List;
+import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,18 +20,21 @@ public class HeroRest {
     @Autowired
     private HeroService heroService;
 
+    @Autowired
+    private AccessToken accessToken;
+
     @RequestMapping(path = "/roll", method = RequestMethod.GET)
     public @ResponseBody
     Envelope<Hero> rollHero() {
 
         Envelope<Hero> ret = new Envelope<>();
-        ret.setData(heroService.rollHero("asd"));
+        ret.setData(heroService.rollHero(accessToken.getSubject()));
 
         return ret;
 
     }
 
-    @RequestMapping(path = "/all/{player}", method = RequestMethod.GET)
+    @RequestMapping(path = "/" + HERO__FIND_ALL_BY_PLAYER + "/{player}", method = RequestMethod.GET)
     public @ResponseBody
     Envelope<List<Hero>> findByAllByPlayer(@PathVariable("player") String player) {
 
@@ -56,7 +61,7 @@ public class HeroRest {
     Envelope<Hero> levelUp(@PathVariable("id") String id) {
 
         Envelope<Hero> ret = new Envelope<>();
-        ret.setData(heroService.levelUp(id));
+        ret.setData(heroService.levelUp(id, accessToken.getSubject()));
 
         return ret;
 
