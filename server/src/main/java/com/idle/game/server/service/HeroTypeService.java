@@ -1,7 +1,7 @@
 package com.idle.game.server.service;
 
-import static com.idle.game.core.constant.HeroTypeInstances.*;
-import com.idle.game.core.type.HeroType;
+import static com.idle.game.core.hero.HeroTypeInstances.*;
+import com.idle.game.model.mongo.HeroType;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;

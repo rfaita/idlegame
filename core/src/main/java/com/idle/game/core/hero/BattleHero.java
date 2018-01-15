@@ -1,6 +1,5 @@
 package com.idle.game.core.hero;
 
-import com.idle.game.model.mongo.HeroType;
 import com.idle.game.core.item.ItemType;
 import com.idle.game.core.item.Item;
 import com.idle.game.core.buff.Buff;
@@ -8,6 +7,7 @@ import com.idle.game.core.constant.IdleConstants;
 import static com.idle.game.core.constant.IdleConstants.LOG;
 import com.idle.game.core.passive.Passive;
 import com.idle.game.core.type.AttributeType;
+import com.idle.game.core.type.BattleHeroType;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -26,7 +26,7 @@ import java.util.logging.Level;
 public class BattleHero implements Serializable {
 
     private String id;
-    private HeroType heroType;
+    private BattleHeroType heroType;
     private Integer level;
 
     private Integer dmg;
@@ -37,7 +37,6 @@ public class BattleHero implements Serializable {
     private Integer critChance;
     private Integer critDamage;
     private Integer dodgeChance;
-    private Integer blockChance;
     private Integer hp;
 
     private Integer currDmg;
@@ -48,7 +47,6 @@ public class BattleHero implements Serializable {
     private Integer currCritChance;
     private Integer currCritDamage;
     private Integer currDodgeChance;
-    private Integer currBlockChance;
     private Integer currHp;
     private Boolean canDoAction;
 
@@ -61,7 +59,7 @@ public class BattleHero implements Serializable {
     private Item ammulet;
     private Item jewel;
 
-    public BattleHero(String id, HeroType heroType, Integer level) {
+    public BattleHero(String id, BattleHeroType heroType, Integer level) {
         this.id = id;
         this.heroType = heroType;
         this.calcAtributtes();
@@ -99,11 +97,11 @@ public class BattleHero implements Serializable {
         return jewel;
     }
 
-    public HeroType getHeroType() {
+    public BattleHeroType getHeroType() {
         return heroType;
     }
 
-    public void setHeroType(HeroType heroType) {
+    public void setHeroType(BattleHeroType heroType) {
         this.heroType = heroType;
     }
 
@@ -179,14 +177,6 @@ public class BattleHero implements Serializable {
         this.dodgeChance = dodgeChange;
     }
 
-    public Integer getBlockChance() {
-        return blockChance;
-    }
-
-    public void setBlockChance(Integer blockChange) {
-        this.blockChance = blockChange;
-    }
-
     public Integer getHp() {
         return hp;
     }
@@ -257,14 +247,6 @@ public class BattleHero implements Serializable {
 
     public void setCurrDodgeChance(Integer currDodgeChance) {
         this.currDodgeChance = currDodgeChance;
-    }
-
-    public Integer getCurrBlockChance() {
-        return currBlockChance;
-    }
-
-    public void setCurrBlockChance(Integer currBlockChance) {
-        this.currBlockChance = currBlockChance;
     }
 
     public Integer getCurrHp() {
@@ -348,8 +330,6 @@ public class BattleHero implements Serializable {
         LOG.log(Level.FINEST, "[prepareToTurn][hero] {0}", this);
         this.setCurrArmor(this.getArmor());
         LOG.log(Level.FINEST, "[prepareToTurn][armor] {0}", this.getCurrArmor());
-        this.setCurrBlockChance(this.getBlockChance());
-        LOG.log(Level.FINEST, "[prepareToTurn][blockChance] {0}", this.getCurrBlockChance());
         this.setCurrCritChance(this.getCritChance());
         LOG.log(Level.FINEST, "[prepareToTurn][critChance] {0}", this.getCurrCritChance());
         this.setCurrCritDamage(this.getCritDamage());
@@ -459,7 +439,6 @@ public class BattleHero implements Serializable {
     private void calcAtributtesItem(Item i) {
         if (i != null) {
             this.setArmor(this.getArmor() + i.getArmor());
-            this.setBlockChance(this.getBlockChance() + i.getBlockChance());
             this.setCritChance(this.getCritChance() + i.getCritChance());
             this.setCritDamage(this.getCritDamage() + i.getCritDamage());
             this.setDodgeChance(this.getDodgeChance() + i.getDodgeChance());

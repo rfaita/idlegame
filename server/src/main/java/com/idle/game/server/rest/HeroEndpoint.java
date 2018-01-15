@@ -1,6 +1,6 @@
 package com.idle.game.server.rest;
 
-import com.idle.game.core.Hero;
+import com.idle.game.core.hero.BattleHero;
 import com.idle.game.server.dto.Envelope;
 import com.idle.game.server.rest.util.annotations.GZIP;
 import com.idle.game.server.service.HeroService;
@@ -26,11 +26,11 @@ public class HeroEndpoint {
     @Produces("application/json")
     @Path("/all")
     @GZIP
-    public Envelope<List<Hero>> doGetAll() throws Exception {
+    public Envelope<List<BattleHero>> doGetAll() throws Exception {
 
-        Envelope<List<Hero>> ret = new Envelope<>();
+        Envelope<List<BattleHero>> ret = new Envelope<>();
 
-        List<Hero> data = new ArrayList<>();
+        List<BattleHero> data = new ArrayList<>();
 
         for (com.idle.game.server.model.Hero hs : heroService.findByLoggedLinkedUser()) {
             data.add(hs.toHero(heroTypeService.getHeroTypes()));
@@ -46,9 +46,9 @@ public class HeroEndpoint {
     @Path("/{id}")
     @Produces("application/json")
     @GZIP
-    public Envelope<Hero> doGet(@PathParam("id") Long id) throws Exception {
+    public Envelope<BattleHero> doGet(@PathParam("id") Long id) throws Exception {
 
-        Envelope<Hero> ret = new Envelope<>();
+        Envelope<BattleHero> ret = new Envelope<>();
         ret.setData(heroService.findById(id).toHero(heroTypeService.getHeroTypes()));
 
         return ret;
@@ -59,9 +59,9 @@ public class HeroEndpoint {
     @Path("/generate")
     @Produces("application/json")
     @GZIP
-    public Envelope<Hero> generateHero() throws Exception {
+    public Envelope<BattleHero> generateHero() throws Exception {
 
-        Envelope<Hero> ret = new Envelope<>();
+        Envelope<BattleHero> ret = new Envelope<>();
         ret.setData(heroService.generateHero().toHero(heroTypeService.getHeroTypes()));
 
         return ret;
@@ -72,9 +72,9 @@ public class HeroEndpoint {
     @Path("/{id}/levelUp")
     @Produces("application/json")
     @GZIP
-    public Envelope<Hero> doLevelUp(@PathParam("id") Long id) throws Exception {
+    public Envelope<BattleHero> doLevelUp(@PathParam("id") Long id) throws Exception {
 
-        Envelope<Hero> ret = new Envelope<>();
+        Envelope<BattleHero> ret = new Envelope<>();
 
         ret.setData(heroService.levelUp(id).toHero(heroTypeService.getHeroTypes()));
 

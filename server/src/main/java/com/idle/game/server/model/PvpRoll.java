@@ -1,6 +1,6 @@
 package com.idle.game.server.model;
 
-import com.idle.game.core.type.HeroType;
+import com.idle.game.model.mongo.HeroType;
 import com.idle.game.server.dto.PvpRollRetorno;
 import java.io.Serializable;
 import java.util.Date;

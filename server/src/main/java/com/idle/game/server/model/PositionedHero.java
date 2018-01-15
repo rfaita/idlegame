@@ -1,8 +1,8 @@
 package com.idle.game.server.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.idle.game.core.type.BattlePositionType;
-import com.idle.game.core.type.HeroType;
+import com.idle.game.core.formation.type.FormationPosition;
+import com.idle.game.model.mongo.HeroType;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.UUID;
@@ -27,7 +27,7 @@ public class PositionedHero implements Serializable {
     @SequenceGenerator(name = "seqPositionedHero", sequenceName = "seqPositionedHero", initialValue = 1000, allocationSize = 100)
     @GeneratedValue(generator = "seqPositionedHero")
     private Long id;
-    private BattlePositionType battlePosition;
+    private FormationPosition battlePosition;
     @OneToOne
     @JoinColumn(name = "idhero")
     private Hero hero;
@@ -60,16 +60,16 @@ public class PositionedHero implements Serializable {
         this.hero = hero;
     }
 
-    public BattlePositionType getBattlePosition() {
+    public FormationPosition getBattlePosition() {
         return battlePosition;
     }
 
-    public void setBattlePosition(BattlePositionType battlePosition) {
+    public void setBattlePosition(FormationPosition battlePosition) {
         this.battlePosition = battlePosition;
     }
 
-    public com.idle.game.core.PositionedHero toPositionedHero(Map<UUID, HeroType> heroTypes) throws Exception {
-        return new com.idle.game.core.PositionedHero(battlePosition, hero.toHero(heroTypes));
+    public com.idle.game.core.formation.PositionedHero toPositionedHero(Map<UUID, HeroType> heroTypes) throws Exception {
+        return new com.idle.game.core.formation.PositionedHero(battlePosition, hero.toHero(heroTypes));
     }
 
 }

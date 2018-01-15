@@ -1,9 +1,9 @@
 package com.idle.game.server.service;
 
-import com.idle.game.core.Battle;
-import com.idle.game.core.type.FormationAllocation;
-import com.idle.game.core.type.FormationType;
-import com.idle.game.core.type.HeroType;
+import com.idle.game.core.battle.Battle;
+import com.idle.game.core.formation.type.FormationAllocation;
+import com.idle.game.core.formation.type.FormationType;
+import com.idle.game.model.mongo.HeroType;
 import com.idle.game.server.model.Formation;
 import java.util.Map;
 import java.util.UUID;

@@ -1,7 +1,7 @@
 package com.idle.game.server.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.idle.game.core.type.HeroType;
+import com.idle.game.model.mongo.HeroType;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
@@ -81,8 +81,8 @@ public class Hero implements Serializable {
         this.level = level;
     }
 
-    public com.idle.game.core.Hero toHero(Map<UUID, HeroType> heroTypes) throws Exception {
-        return new com.idle.game.core.Hero(this.id, heroTypes.get(UUID.fromString(this.heroTypeId)), level);
+    public com.idle.game.core.hero.BattleHero toHero(Map<UUID, HeroType> heroTypes) throws Exception {
+        return new com.idle.game.core.hero.BattleHero(this.id, heroTypes.get(UUID.fromString(this.heroTypeId)), level);
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.idle.game.server.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.idle.game.core.type.HeroType;
-import com.idle.game.core.type.FormationAllocation;
+import com.idle.game.model.mongo.HeroType;
+import com.idle.game.core.formation.type.FormationAllocation;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -129,12 +129,12 @@ public class Formation implements Serializable {
         this.heroes = heroes;
     }
 
-    public com.idle.game.core.Formation toFormation(Map<UUID, HeroType> heroTypes) throws Exception {
-        List<com.idle.game.core.PositionedHero> hs = new ArrayList<>(this.heroes.size());
+    public com.idle.game.core.formation.Formation toFormation(Map<UUID, HeroType> heroTypes) throws Exception {
+        List<com.idle.game.core.formation.PositionedHero> hs = new ArrayList<>(this.heroes.size());
         for (PositionedHero h : this.heroes) {
             hs.add(h.toPositionedHero(heroTypes));
         }
-        return new com.idle.game.core.Formation(this.formationAllocation, hs);
+        return new com.idle.game.core.formation.Formation(this.formationAllocation, hs);
     }
 
 }

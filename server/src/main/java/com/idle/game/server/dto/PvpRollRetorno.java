@@ -1,6 +1,6 @@
 package com.idle.game.server.dto;
 
-import com.idle.game.core.Formation;
+import com.idle.game.core.formation.Formation;
 import java.io.Serializable;
 import java.util.Date;
 
