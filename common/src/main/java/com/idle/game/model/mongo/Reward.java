@@ -1,11 +1,13 @@
 package com.idle.game.model.mongo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 
 /**
  *
  * @author rafael
  */
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class Reward implements Serializable {
 
     private Long gold;

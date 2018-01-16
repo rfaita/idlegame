@@ -1,5 +1,6 @@
 package com.idle.game.model.mongo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.idle.game.core.action.Action;
 import com.idle.game.core.constant.IdleConstants;
 import com.idle.game.core.passive.Passive;
@@ -17,6 +18,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author rafael
  */
 @Document(collection = "heroType")
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class HeroType implements Serializable {
 
     @Id

@@ -1,5 +1,6 @@
 package com.idle.game.model.mongo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.idle.game.core.formation.PositionedHero;
 import com.idle.game.core.formation.type.FormationAllocation;
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author rafael
  */
 @Document(collection = "formation")
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class Formation implements Serializable {
 
     @Id

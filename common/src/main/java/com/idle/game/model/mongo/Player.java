@@ -1,5 +1,6 @@
 package com.idle.game.model.mongo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import java.util.Date;
 import org.springframework.data.annotation.Id;
@@ -10,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author rafael
  */
 @Document(collection = "player")
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class Player implements Serializable {
 
     @Id

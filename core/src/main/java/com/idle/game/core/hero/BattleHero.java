@@ -1,5 +1,6 @@
 package com.idle.game.core.hero;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.idle.game.core.item.ItemType;
 import com.idle.game.core.item.Item;
 import com.idle.game.core.buff.Buff;
@@ -23,6 +24,7 @@ import java.util.logging.Level;
  *
  * @author rafael
  */
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class BattleHero implements Serializable {
 
     private String id;

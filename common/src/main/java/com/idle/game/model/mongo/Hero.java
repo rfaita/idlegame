@@ -1,5 +1,6 @@
 package com.idle.game.model.mongo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.idle.game.core.type.HeroQuality;
 import java.io.Serializable;
 import java.util.Objects;
@@ -11,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author rafael
  */
 @Document(collection = "hero")
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class Hero implements Serializable {
 
     @Id
