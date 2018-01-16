@@ -26,6 +26,9 @@ public class Formation implements Serializable {
     private String nextLevelFormation;
     private Reward reward;
 
+    public Formation() {
+    }
+
     public String getId() {
         return id;
     }

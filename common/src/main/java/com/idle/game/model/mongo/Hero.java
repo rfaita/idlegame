@@ -2,6 +2,7 @@ package com.idle.game.model.mongo;
 
 import com.idle.game.core.type.HeroQuality;
 import java.io.Serializable;
+import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -54,7 +55,6 @@ public class Hero implements Serializable {
     public void setHeroQuality(HeroQuality heroQuality) {
         this.heroQuality = heroQuality;
     }
-    
 
     public String getHeroType() {
         return heroType;
@@ -144,7 +144,6 @@ public class Hero implements Serializable {
         this.baseDodgeChance = baseDodgeChance;
     }
 
-
     public Integer getBaseHp() {
         return baseHp;
     }
@@ -224,6 +223,27 @@ public class Hero implements Serializable {
     public void setMaxLevelUpIncHp(Integer maxLevelUpIncHp) {
         this.maxLevelUpIncHp = maxLevelUpIncHp;
     }
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Hero other = (Hero) obj;
+        return Objects.equals(this.id, other.id);
+    }
 
 }

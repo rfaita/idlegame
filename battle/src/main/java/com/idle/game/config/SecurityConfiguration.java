@@ -66,7 +66,7 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     public AccessToken getAccessToken() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         KeycloakSecurityContext ksc = ((KeycloakAuthenticationToken) request.getUserPrincipal()).getAccount().getKeycloakSecurityContext();
-        
+        //Hacking, set the token inside the context
         AccessToken ret = ksc.getToken();
         ret.setAccessTokenHash(ksc.getTokenString());
         

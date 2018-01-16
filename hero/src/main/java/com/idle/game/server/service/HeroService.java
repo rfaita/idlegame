@@ -1,5 +1,8 @@
 package com.idle.game.server.service;
 
+import static com.idle.game.constant.CacheConstants.BATTLE_HERO_FIND_BY_ID;
+import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_ID;
+import static com.idle.game.constant.CacheConstants.HERO_FIND_BY_ID;
 import com.idle.game.core.constant.IdleConstants;
 import com.idle.game.core.type.HeroQuality;
 import com.idle.game.core.util.DiceUtil;
@@ -10,8 +13,10 @@ import com.idle.game.server.repository.HeroRepository;
 import java.util.List;
 import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,11 +28,11 @@ public class HeroService {
 
     @Autowired
     private HeroTypeHelper heroTypeHelper;
-    
+
     @Autowired
     private HeroRepository heroRepository;
 
-    @Cacheable(cacheNames = {"heroFindById"}, key = "#id")
+    @Cacheable(value = HERO_FIND_BY_ID, key = "'" + HERO_FIND_BY_ID + "' + #id")
     public Hero findById(String id) {
 
         return heroRepository.findById(id);
@@ -38,11 +43,16 @@ public class HeroService {
         return heroRepository.findAllByPlayer(idPlayer);
     }
 
-    @CachePut(cacheNames = {"heroFindById"}, key = "#id")
+    @Caching(put
+            = @CachePut(value = HERO_FIND_BY_ID, key = "'" + HERO_FIND_BY_ID + "' + #id"),
+            evict
+            = @CacheEvict(value = BATTLE_HERO_FIND_BY_ID, key = "'" + BATTLE_HERO_FIND_BY_ID + "' + #id")
+    )
+
     public Hero levelUp(String id, String player) {
 
         Hero h = heroRepository.findById(id);
-        
+
         validateLevelUp(h, player);
 
         h.setLevel(h.getLevel() + 1);

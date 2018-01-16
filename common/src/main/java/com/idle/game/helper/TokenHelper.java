@@ -1,19 +1,26 @@
 package com.idle.game.helper;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.keycloak.representations.AccessToken;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author rafael
  */
+
+@Service
 public class TokenHelper {
-
-    public static HttpHeaders getAuthHeaders(String token) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Bearer " + token);
-        return headers;
+    
+    @Autowired
+    private AccessToken accessToken;
+    
+    public String getToken() {
+        return accessToken.getAccessTokenHash();
     }
-
+    
+    public String getUser() {
+        return accessToken.getSubject();
+    }
+    
 }

@@ -3,8 +3,9 @@ package com.idle.game;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.cloud.netflix.hystrix.EnableHystrix;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.context.annotation.Bean;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -15,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * @author rafael
  */
 @SpringBootApplication
-@EnableHystrix
+@EnableCircuitBreaker
 public class IdleBattleApplication {
 
     public static void main(String[] args) {
@@ -36,6 +37,11 @@ public class IdleBattleApplication {
     @Bean
     public RestTemplate rest(RestTemplateBuilder builder) {
         return builder.build();
+    }
+
+    @Bean
+    public javax.validation.Validator localValidatorFactoryBean() {
+        return new LocalValidatorFactoryBean();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.idle.game.server.service;
 
+import static com.idle.game.constant.CacheConstants.BATTLE_HERO_FIND_BY_ID;
 import com.idle.game.core.hero.BattleHero;
 import com.idle.game.helper.HeroHelper;
 import com.idle.game.helper.HeroTypeHelper;
@@ -7,6 +8,7 @@ import com.idle.game.model.mongo.Hero;
 import com.idle.game.model.mongo.HeroType;
 import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,6 +24,7 @@ public class BattleHeroService {
     @Autowired
     private HeroTypeHelper heroTypeHelper;
 
+    @Cacheable(value = BATTLE_HERO_FIND_BY_ID, key = "'" + BATTLE_HERO_FIND_BY_ID + "' + #idHero")
     public BattleHero getBattleHero(String idHero) {
 
         Hero hero = heroHelper.getHeroById(idHero);

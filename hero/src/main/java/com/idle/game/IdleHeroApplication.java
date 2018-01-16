@@ -7,11 +7,14 @@ import com.idle.game.model.mongo.HeroType;
 import com.idle.game.model.mongo.Player;
 import com.idle.game.server.repository.HeroTypeRepository;
 import com.idle.game.server.repository.PlayerRepository;
+import com.idle.game.server.service.HeroTypeService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.context.annotation.Bean;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -22,6 +25,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * @author rafael
  */
 @SpringBootApplication
+@EnableCircuitBreaker
 public class IdleHeroApplication {
 
     public static void main(String[] args) {
@@ -45,7 +49,14 @@ public class IdleHeroApplication {
     }
 
     @Bean
-    public CommandLineRunner init(PlayerRepository playerRepository, HeroTypeRepository heroTypeRepository) {
+    public javax.validation.Validator localValidatorFactoryBean() {
+        return new LocalValidatorFactoryBean();
+    }
+
+    @Bean
+    public CommandLineRunner init(PlayerRepository playerRepository,
+            HeroTypeService heroTypeService,
+            HeroTypeRepository heroTypeRepository) {
 
         return args -> {
 
@@ -102,7 +113,7 @@ public class IdleHeroApplication {
                 htAidan.setDistanceType(DistanceType.RANGED);
                 htAidan.setHeroTypeQuality(HeroTypeQuality.BEST);
 
-                heroTypeRepository.save(htAidan);
+                heroTypeService.save(htAidan);
             }
 
             if (heroTypeRepository.findByName("Dominator") == null) {
@@ -152,7 +163,7 @@ public class IdleHeroApplication {
                 htAidan.setDistanceType(DistanceType.MELEE);
                 htAidan.setHeroTypeQuality(HeroTypeQuality.POOR);
 
-                heroTypeRepository.save(htAidan);
+                heroTypeService.save(htAidan);
             }
 
             if (heroTypeRepository.findByName("Field") == null) {
@@ -202,7 +213,7 @@ public class IdleHeroApplication {
                 htAidan.setDistanceType(DistanceType.RANGED);
                 htAidan.setHeroTypeQuality(HeroTypeQuality.AVERAGE);
 
-                heroTypeRepository.save(htAidan);
+                heroTypeService.save(htAidan);
             }
 
         };

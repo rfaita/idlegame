@@ -59,6 +59,9 @@ public class BattleHero implements Serializable {
     private Item ammulet;
     private Item jewel;
 
+    public BattleHero() {
+    }
+
     public BattleHero(String id, BattleHeroType heroType, Integer level) {
         this.id = id;
         this.heroType = heroType;

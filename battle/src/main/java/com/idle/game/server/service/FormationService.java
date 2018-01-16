@@ -1,7 +1,9 @@
 package com.idle.game.server.service;
 
+import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_ID;
 import com.idle.game.core.formation.PositionedHero;
-import com.idle.game.helper.HeroTypeHelper;
+import com.idle.game.core.formation.type.FormationAllocation;
+import com.idle.game.helper.HeroHelper;
 import com.idle.game.model.mongo.Formation;
 import com.idle.game.model.mongo.Hero;
 import com.idle.game.server.repository.FormationRepository;
@@ -12,8 +14,9 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
-import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -30,8 +33,16 @@ public class FormationService {
     private Validator validator;
 
     @Autowired
-    private HeroTypeHelper heroTypeHelper;
-    
+    private HeroHelper heroHelper;
+
+    @Cacheable(value = FORMATION_FIND_BY_ID, key = "'" + FORMATION_FIND_BY_ID + "' + #id")
+    public Formation findById(String id) {
+        return formationRepository.findById(id);
+    }
+
+    public Formation findByPlayerAndFormationAllocation(String player, FormationAllocation fa) {
+        return formationRepository.findByPlayerAndFormationAllocation(player, fa);
+    }
 
     private void validateSave(Formation f) {
 
@@ -40,16 +51,24 @@ public class FormationService {
             throw new ConstraintViolationException(new HashSet<>(violations));
         }
 
-        List<Hero> heroes = heroTypeHelper.getHeroByPlayer(f.getPlayer());
+        List<Hero> heroes = heroHelper.getHeroesByPlayer(f.getPlayer());
 
         for (PositionedHero ph : f.getHeroes()) {
-            if (!heroes.contains(ph.getHero())) {
+            Boolean contains = Boolean.FALSE;
+            for (Hero h : heroes) {
+                if (h.getId().equals(ph.getHero().getId())) {
+                    contains = Boolean.TRUE;
+                    break;
+                }
+            }
+            if (!contains) {
                 throw new ValidationException("player.is.not.owner.of.this.hero");
             }
         }
 
     }
 
+    @CachePut(value = FORMATION_FIND_BY_ID, key = "'" + FORMATION_FIND_BY_ID + "' + #id")
     public Formation save(Formation f) {
 
         validateSave(f);

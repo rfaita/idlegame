@@ -14,6 +14,13 @@ public class Envelope<T> implements Serializable {
     private T data;
     private List<Error> errors;
 
+    public Envelope(T data) {
+        this.data = data;
+    }
+
+    public Envelope() {
+    }
+
     public T getData() {
         return data;
     }

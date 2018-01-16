@@ -1,10 +1,12 @@
 package com.idle.game.helper;
 
+import static com.idle.game.constant.CacheConstants.HERO_FIND_BY_ID;
+import static com.idle.game.constant.URIConstants.HERO__FIND_ALL_BY_PLAYER;
 import com.idle.game.model.mongo.Hero;
 import com.idle.game.server.dto.Envelope;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import java.net.URI;
-import org.keycloak.representations.AccessToken;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -28,21 +30,25 @@ public class HeroHelper {
 
     @Autowired
     private RedisTemplate<Object, Object> redisTemplate;
-    
+
     @Autowired
-    private AccessToken accessToken;
+    private TokenHelper tokenHelper;
 
     @Value("${idle.url.hero}")
     private String urlHero;
 
-    @HystrixCommand(fallbackMethod = "getHeroCacheById")
     public Hero getHeroById(String id) {
+        return getHeroById(id, tokenHelper.getToken());
+    }
+
+    @HystrixCommand(fallbackMethod = "getHeroCacheById")
+    public Hero getHeroById(String id, String token) {
 
         URI uri = URI.create(urlHero + "/" + id);
 
         ResponseEntity<Envelope<Hero>> ret = restTemplate.exchange(uri,
                 HttpMethod.GET,
-                new HttpEntity(TokenHelper.getAuthHeaders(accessToken.getAccessTokenHash())),
+                new HttpEntity(HeaderUtil.getAuthHeaders(token)),
                 new ParameterizedTypeReference<Envelope<Hero>>() {
         });
 
@@ -58,10 +64,31 @@ public class HeroHelper {
         }
     }
 
-    public Hero getHeroCacheById(String id) {
-        Hero ret = (Hero) redisTemplate.boundValueOps(id).get();
+    public Hero getHeroCacheById(String id, String token) {
+        Hero ret = (Hero) redisTemplate.boundValueOps(HERO_FIND_BY_ID + id).get();
         if (ret != null) {
             return ret;
+        } else {
+            return null;
+        }
+    }
+
+    public List<Hero> getHeroesByPlayer(String player) {
+        URI uri = URI.create(urlHero + "/" + HERO__FIND_ALL_BY_PLAYER + "/" + player);
+
+        ResponseEntity<Envelope<List<Hero>>> ret = restTemplate.exchange(uri,
+                HttpMethod.GET,
+                new HttpEntity(HeaderUtil.getAuthHeaders(tokenHelper.getToken())),
+                new ParameterizedTypeReference<Envelope<List<Hero>>>() {
+        });
+
+        if (ret.getStatusCode() == HttpStatus.OK) {
+            Envelope<List<Hero>> data = ret.getBody();
+            if (data.getErrors() == null || data.getErrors().isEmpty()) {
+                return data.getData();
+            } else {
+                return null;
+            }
         } else {
             return null;
         }

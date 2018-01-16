@@ -16,8 +16,7 @@ public class BattleHeroRest {
 
     @Autowired
     private BattleHeroService heroService;
-
-
+    
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public @ResponseBody
     Envelope<BattleHero> getBattleHero(@PathVariable("id") String id) {
