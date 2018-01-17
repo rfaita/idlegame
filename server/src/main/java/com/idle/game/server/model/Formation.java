@@ -129,12 +129,12 @@ public class Formation implements Serializable {
         this.heroes = heroes;
     }
 
-    public com.idle.game.core.formation.Formation toFormation(Map<UUID, HeroType> heroTypes) throws Exception {
+    public com.idle.game.core.formation.BattleFormation toFormation(Map<UUID, HeroType> heroTypes) throws Exception {
         List<com.idle.game.core.formation.PositionedHero> hs = new ArrayList<>(this.heroes.size());
         for (PositionedHero h : this.heroes) {
             hs.add(h.toPositionedHero(heroTypes));
         }
-        return new com.idle.game.core.formation.Formation(this.formationAllocation, hs);
+        return new com.idle.game.core.formation.BattleFormation(this.formationAllocation, hs);
     }
 
 }

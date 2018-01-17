@@ -1,7 +1,10 @@
 package com.idle.game.core.type;
 
+import com.idle.game.core.hero.type.HeroTypeQuality;
 import com.idle.game.core.action.Action;
 import com.idle.game.core.constant.IdleConstants;
+import com.idle.game.core.hero.type.HeroTypeFaction;
+import com.idle.game.core.hero.type.HeroTypeRole;
 import com.idle.game.core.passive.Passive;
 import java.io.Serializable;
 import java.util.List;
@@ -12,7 +15,9 @@ import java.util.List;
  */
 public class BattleHeroType implements Serializable {
 
-    private HeroTypeQuality heroTypeQuality;
+    private HeroTypeQuality quality;
+    private HeroTypeFaction faction;
+    private HeroTypeRole role;
     private String name;
     private Action specialAction;
     private Action defaultAction;
@@ -25,12 +30,28 @@ public class BattleHeroType implements Serializable {
     public BattleHeroType() {
     }
 
-    public HeroTypeQuality getHeroTypeQuality() {
-        return heroTypeQuality;
+    public HeroTypeQuality getQuality() {
+        return quality;
     }
 
-    public void setHeroTypeQuality(HeroTypeQuality heroTypeQuality) {
-        this.heroTypeQuality = heroTypeQuality;
+    public void setQuality(HeroTypeQuality quality) {
+        this.quality = quality;
+    }
+
+    public HeroTypeFaction getFaction() {
+        return faction;
+    }
+
+    public void setFaction(HeroTypeFaction faction) {
+        this.faction = faction;
+    }
+
+    public HeroTypeRole getRole() {
+        return role;
+    }
+
+    public void setRole(HeroTypeRole role) {
+        this.role = role;
     }
 
     public String getName() {

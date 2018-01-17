@@ -3,7 +3,7 @@ package com.idle.game.tests;
 import com.idle.game.core.action.type.ActionType;
 import com.idle.game.core.battle.Battle;
 import com.idle.game.core.formation.type.FormationPosition;
-import com.idle.game.core.formation.Formation;
+import com.idle.game.core.formation.BattleFormation;
 import com.idle.game.core.hero.BattleHero;
 import com.idle.game.core.action.type.SubActionType;
 import static com.idle.game.tests.helper.TestHelper.*;
@@ -21,11 +21,11 @@ public class BasicBattleTests {
 
         BattleHero h1 = createBasicMeleePhysicalNoCritNoDodge10000HpHero();
 
-        Formation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
+        BattleFormation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
 
         BattleHero h2 = createBasicMeleePhysicalNoCritNoDodge10000HpHero();
 
-        Formation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
+        BattleFormation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
 
         Battle b = new Battle(f1, f2);
 
@@ -38,11 +38,11 @@ public class BasicBattleTests {
 
         BattleHero h1 = createBasicMeleePhysicalNoCritNoDodge100HpHero();
 
-        Formation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
+        BattleFormation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
 
         BattleHero h2 = createBasicMeleePhysicalNoCritNoDodge100HpHero();
 
-        Formation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
+        BattleFormation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
 
         Battle b = new Battle(f1, f2);
 
@@ -71,11 +71,11 @@ public class BasicBattleTests {
 
         BattleHero h1 = createBasicMeleePhysicalNoCritNoDodge100HpHero();
 
-        Formation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
+        BattleFormation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
 
         BattleHero h2 = createBasicMeleePhysicalNoCritNoDodge200HpHero();
 
-        Formation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
+        BattleFormation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
 
         Battle b = new Battle(f1, f2);
 
@@ -108,11 +108,11 @@ public class BasicBattleTests {
 
         BattleHero h1 = createBasicRangedPhysicalNoCritNoDodge100HpHero();
 
-        Formation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
+        BattleFormation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
 
         BattleHero h2 = createBasicRangedPhysicalNoCritNoDodge100HpHero();
 
-        Formation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
+        BattleFormation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
 
         Battle b = new Battle(f1, f2);
 
@@ -141,11 +141,11 @@ public class BasicBattleTests {
 
         BattleHero h1 = createBasicRangedPhysicalNoCritNoDodge100HpHero();
 
-        Formation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
+        BattleFormation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
 
         BattleHero h2 = createBasicRangedPhysicalNoCritNoDodge200HpHero();
 
-        Formation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
+        BattleFormation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
 
         Battle b = new Battle(f1, f2);
 
@@ -178,11 +178,11 @@ public class BasicBattleTests {
 
         BattleHero h1 = createBasicMeleeMagicNoCritNoDodge100HpHero();
 
-        Formation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
+        BattleFormation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
 
         BattleHero h2 = createBasicMeleeMagicNoCritNoDodge100HpHero();
 
-        Formation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
+        BattleFormation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
 
         Battle b = new Battle(f1, f2);
 
@@ -211,11 +211,11 @@ public class BasicBattleTests {
 
         BattleHero h1 = createBasicMeleeMagicNoCritNoDodge100HpHero();
 
-        Formation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
+        BattleFormation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
 
         BattleHero h2 = createBasicMeleeMagicNoCritNoDodge200HpHero();
 
-        Formation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
+        BattleFormation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
 
         Battle b = new Battle(f1, f2);
 
@@ -248,11 +248,11 @@ public class BasicBattleTests {
 
         BattleHero h1 = createBasicRangedMagicNoCritNoDodge100HpHero();
 
-        Formation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
+        BattleFormation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
 
         BattleHero h2 = createBasicRangedMagicNoCritNoDodge100HpHero();
 
-        Formation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
+        BattleFormation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
 
         Battle b = new Battle(f1, f2);
 
@@ -281,11 +281,11 @@ public class BasicBattleTests {
 
         BattleHero h1 = createBasicRangedMagicNoCritNoDodge100HpHero();
 
-        Formation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
+        BattleFormation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
 
         BattleHero h2 = createBasicRangedMagicNoCritNoDodge200HpHero();
 
-        Formation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
+        BattleFormation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
 
         Battle b = new Battle(f1, f2);
 
@@ -318,11 +318,11 @@ public class BasicBattleTests {
 
         BattleHero h1 = createBasicMeleePhysicalNoCrit100Dodge100HpHero();
 
-        Formation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
+        BattleFormation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
 
         BattleHero h2 = createBasicMeleePhysicalNoCritNoDodge100HpHero();
 
-        Formation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
+        BattleFormation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
 
         Battle b = new Battle(f1, f2);
 
@@ -351,11 +351,11 @@ public class BasicBattleTests {
 
         BattleHero h1 = createBasicMeleePhysicalNoCritNoDodge100HpHero();
 
-        Formation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
+        BattleFormation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
 
         BattleHero h2 = createBasicMeleePhysicalNoCrit100Dodge100HpHero();
 
-        Formation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
+        BattleFormation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
 
         Battle b = new Battle(f1, f2);
 
@@ -388,11 +388,11 @@ public class BasicBattleTests {
 
         BattleHero h1 = createBasicMeleePhysical100CritNoDodge100HpHero();
 
-        Formation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
+        BattleFormation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
 
         BattleHero h2 = createBasicMeleePhysicalNoCritNoDodge200HpHero();
 
-        Formation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
+        BattleFormation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
 
         Battle b = new Battle(f1, f2);
 
@@ -421,11 +421,11 @@ public class BasicBattleTests {
 
         BattleHero h1 = createBasicRangedPhysical100CritNoDodge100HpHero();
 
-        Formation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
+        BattleFormation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
 
         BattleHero h2 = createBasicMeleePhysicalNoCritNoDodge200HpHero();
 
-        Formation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
+        BattleFormation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
 
         Battle b = new Battle(f1, f2);
 
@@ -454,11 +454,11 @@ public class BasicBattleTests {
 
         BattleHero h1 = createBasicRangedPhysical100CritNoDodge100HpHero();
 
-        Formation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
+        BattleFormation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
 
         BattleHero h2 = createBasicMeleePhysicalNoCritNoDodge100HpHero();
 
-        Formation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
+        BattleFormation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
 
         Battle b = new Battle(f1, f2);
 
@@ -481,13 +481,13 @@ public class BasicBattleTests {
 
         h1.setChest(createBasicChest());
 
-        Formation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
+        BattleFormation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
 
         BattleHero h2 = createBasicMeleePhysicalNoCritNoDodge100HpHero();
 
         h2.setBoot(createBasicBoot());
 
-        Formation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
+        BattleFormation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
 
         Battle b = new Battle(f1, f2);
 

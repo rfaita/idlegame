@@ -3,11 +3,13 @@ package com.idle.game.model.mongo;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.idle.game.core.action.Action;
 import com.idle.game.core.constant.IdleConstants;
+import com.idle.game.core.hero.type.HeroTypeFaction;
 import com.idle.game.core.passive.Passive;
 import com.idle.game.core.type.BattleHeroType;
 import com.idle.game.core.type.DamageType;
 import com.idle.game.core.type.DistanceType;
-import com.idle.game.core.type.HeroTypeQuality;
+import com.idle.game.core.hero.type.HeroTypeQuality;
+import com.idle.game.core.hero.type.HeroTypeRole;
 import java.io.Serializable;
 import java.util.List;
 import org.springframework.data.annotation.Id;
@@ -18,12 +20,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author rafael
  */
 @Document(collection = "heroType")
-@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class HeroType implements Serializable {
 
     @Id
     private String id;
-    private HeroTypeQuality heroTypeQuality;
+    private HeroTypeQuality quality;
+    private HeroTypeFaction faction;
+    private HeroTypeRole role;
     private String name;
     private Action specialAction;
     private Action defaultAction;
@@ -33,45 +37,45 @@ public class HeroType implements Serializable {
 
     private Integer maxLevel = IdleConstants.HERO_MAX_LEVEL;
 
-    private Integer minBaseDmg;
-    private Integer minBaseArmor;
-    private Integer minBaseMagicResist;
-    private Integer minBaseSpeed;
-    private Integer minBaseLuck;
-    private Integer minBaseCritChance;
-    private Integer minBaseCritDamage;
-    private Integer minBaseDodgeChance;
-    private Integer minBaseHp;
+    private Integer minBaseDmg = 0;
+    private Integer minBaseArmor = 0;
+    private Integer minBaseMagicResist = 0;
+    private Integer minBaseSpeed = 0;
+    private Integer minBaseLuck = 0;
+    private Integer minBaseCritChance = 0;
+    private Integer minBaseCritDamage = 0;
+    private Integer minBaseDodgeChance = 0;
+    private Integer minBaseHp = 0;
 
-    private Integer minMaxLevelUpIncDmg;
-    private Integer minMaxLevelUpIncArmor;
-    private Integer minMaxLevelUpIncMagicResist;
-    private Integer minMaxLevelUpIncSpeed;
-    private Integer minMaxLevelUpIncLuck;
-    private Integer minMaxLevelUpIncCritChance;
-    private Integer minMaxLevelUpIncCritDamage;
-    private Integer minMaxLevelUpIncDodgeChance;
-    private Integer minMaxLevelUpIncHp;
+    private Integer minMaxLevelDmg = 0;
+    private Integer minMaxLevelArmor = 0;
+    private Integer minMaxLevelMagicResist = 0;
+    private Integer minMaxLevelSpeed = 0;
+    private Integer minMaxLevelLuck = 0;
+    private Integer minMaxLevelCritChance = 0;
+    private Integer minMaxLevelCritDamage = 0;
+    private Integer minMaxLevelDodgeChance = 0;
+    private Integer minMaxLevelHp = 0;
 
-    private Integer maxBaseDmg;
-    private Integer maxBaseArmor;
-    private Integer maxBaseMagicResist;
-    private Integer maxBaseSpeed;
-    private Integer maxBaseLuck;
-    private Integer maxBaseCritChance;
-    private Integer maxBaseCritDamage;
-    private Integer maxBaseDodgeChance;
-    private Integer maxBaseHp;
+    private Integer maxBaseDmg = 0;
+    private Integer maxBaseArmor = 0;
+    private Integer maxBaseMagicResist = 0;
+    private Integer maxBaseSpeed = 0;
+    private Integer maxBaseLuck = 0;
+    private Integer maxBaseCritChance = 0;
+    private Integer maxBaseCritDamage = 0;
+    private Integer maxBaseDodgeChance = 0;
+    private Integer maxBaseHp = 0;
 
-    private Integer maxMaxLevelUpIncDmg;
-    private Integer maxMaxLevelUpIncArmor;
-    private Integer maxMaxLevelUpIncMagicResist;
-    private Integer maxMaxLevelUpIncSpeed;
-    private Integer maxMaxLevelUpIncLuck;
-    private Integer maxMaxLevelUpIncCritChance;
-    private Integer maxMaxLevelUpIncCritDamage;
-    private Integer maxMaxLevelUpIncDodgeChance;
-    private Integer maxMaxLevelUpIncHp;
+    private Integer maxMaxLevelDmg = 0;
+    private Integer maxMaxLevelArmor = 0;
+    private Integer maxMaxLevelMagicResist = 0;
+    private Integer maxMaxLevelSpeed = 0;
+    private Integer maxMaxLevelLuck = 0;
+    private Integer maxMaxLevelCritChance = 0;
+    private Integer maxMaxLevelCritDamage = 0;
+    private Integer maxMaxLevelDodgeChance = 0;
+    private Integer maxMaxLevelHp = 0;
 
     public HeroType() {
     }
@@ -81,7 +85,9 @@ public class HeroType implements Serializable {
         ret.setDamageType(this.getDamageType());
         ret.setDefaultAction(this.getDefaultAction());
         ret.setDistanceType(this.getDistanceType());
-        ret.setHeroTypeQuality(this.getHeroTypeQuality());
+        ret.setQuality(this.getQuality());
+        ret.setRole(this.getRole());
+        ret.setFaction(this.getFaction());
         ret.setMaxLevel(this.getMaxLevel());
         ret.setName(this.getName());
         ret.setPassives(this.getPassives());
@@ -90,12 +96,28 @@ public class HeroType implements Serializable {
         return ret;
     }
 
-    public HeroTypeQuality getHeroTypeQuality() {
-        return heroTypeQuality;
+    public HeroTypeQuality getQuality() {
+        return quality;
     }
 
-    public void setHeroTypeQuality(HeroTypeQuality heroTypeQuality) {
-        this.heroTypeQuality = heroTypeQuality;
+    public void setQuality(HeroTypeQuality quality) {
+        this.quality = quality;
+    }
+
+    public HeroTypeFaction getFaction() {
+        return faction;
+    }
+
+    public void setFaction(HeroTypeFaction faction) {
+        this.faction = faction;
+    }
+
+    public HeroTypeRole getRole() {
+        return role;
+    }
+
+    public void setRole(HeroTypeRole role) {
+        this.role = role;
     }
 
     public String getId() {
@@ -234,76 +256,76 @@ public class HeroType implements Serializable {
         this.minBaseHp = minBaseHp;
     }
 
-    public Integer getMinMaxLevelUpIncDmg() {
-        return minMaxLevelUpIncDmg;
+    public Integer getMinMaxLevelDmg() {
+        return minMaxLevelDmg;
     }
 
-    public void setMinMaxLevelUpIncDmg(Integer minMaxLevelUpIncDmg) {
-        this.minMaxLevelUpIncDmg = minMaxLevelUpIncDmg;
+    public void setMinMaxLevelDmg(Integer minMaxLevelDmg) {
+        this.minMaxLevelDmg = minMaxLevelDmg;
     }
 
-    public Integer getMinMaxLevelUpIncArmor() {
-        return minMaxLevelUpIncArmor;
+    public Integer getMinMaxLevelArmor() {
+        return minMaxLevelArmor;
     }
 
-    public void setMinMaxLevelUpIncArmor(Integer minMaxLevelUpIncArmor) {
-        this.minMaxLevelUpIncArmor = minMaxLevelUpIncArmor;
+    public void setMinMaxLevelArmor(Integer minMaxLevelArmor) {
+        this.minMaxLevelArmor = minMaxLevelArmor;
     }
 
-    public Integer getMinMaxLevelUpIncMagicResist() {
-        return minMaxLevelUpIncMagicResist;
+    public Integer getMinMaxLevelMagicResist() {
+        return minMaxLevelMagicResist;
     }
 
-    public void setMinMaxLevelUpIncMagicResist(Integer minMaxLevelUpIncMagicResist) {
-        this.minMaxLevelUpIncMagicResist = minMaxLevelUpIncMagicResist;
+    public void setMinMaxLevelMagicResist(Integer minMaxLevelMagicResist) {
+        this.minMaxLevelMagicResist = minMaxLevelMagicResist;
     }
 
-    public Integer getMinMaxLevelUpIncSpeed() {
-        return minMaxLevelUpIncSpeed;
+    public Integer getMinMaxLevelSpeed() {
+        return minMaxLevelSpeed;
     }
 
-    public void setMinMaxLevelUpIncSpeed(Integer minMaxLevelUpIncSpeed) {
-        this.minMaxLevelUpIncSpeed = minMaxLevelUpIncSpeed;
+    public void setMinMaxLevelSpeed(Integer minMaxLevelSpeed) {
+        this.minMaxLevelSpeed = minMaxLevelSpeed;
     }
 
-    public Integer getMinMaxLevelUpIncLuck() {
-        return minMaxLevelUpIncLuck;
+    public Integer getMinMaxLevelLuck() {
+        return minMaxLevelLuck;
     }
 
-    public void setMinMaxLevelUpIncLuck(Integer minMaxLevelUpIncLuck) {
-        this.minMaxLevelUpIncLuck = minMaxLevelUpIncLuck;
+    public void setMinMaxLevelLuck(Integer minMaxLevelLuck) {
+        this.minMaxLevelLuck = minMaxLevelLuck;
     }
 
-    public Integer getMinMaxLevelUpIncCritChance() {
-        return minMaxLevelUpIncCritChance;
+    public Integer getMinMaxLevelCritChance() {
+        return minMaxLevelCritChance;
     }
 
-    public void setMinMaxLevelUpIncCritChance(Integer minMaxLevelUpIncCritChance) {
-        this.minMaxLevelUpIncCritChance = minMaxLevelUpIncCritChance;
+    public void setMinMaxLevelCritChance(Integer minMaxLevelCritChance) {
+        this.minMaxLevelCritChance = minMaxLevelCritChance;
     }
 
-    public Integer getMinMaxLevelUpIncCritDamage() {
-        return minMaxLevelUpIncCritDamage;
+    public Integer getMinMaxLevelCritDamage() {
+        return minMaxLevelCritDamage;
     }
 
-    public void setMinMaxLevelUpIncCritDamage(Integer minMaxLevelUpIncCritDamage) {
-        this.minMaxLevelUpIncCritDamage = minMaxLevelUpIncCritDamage;
+    public void setMinMaxLevelCritDamage(Integer minMaxLevelCritDamage) {
+        this.minMaxLevelCritDamage = minMaxLevelCritDamage;
     }
 
-    public Integer getMinMaxLevelUpIncDodgeChance() {
-        return minMaxLevelUpIncDodgeChance;
+    public Integer getMinMaxLevelDodgeChance() {
+        return minMaxLevelDodgeChance;
     }
 
-    public void setMinMaxLevelUpIncDodgeChance(Integer minMaxLevelUpIncDodgeChance) {
-        this.minMaxLevelUpIncDodgeChance = minMaxLevelUpIncDodgeChance;
+    public void setMinMaxLevelDodgeChance(Integer minMaxLevelDodgeChance) {
+        this.minMaxLevelDodgeChance = minMaxLevelDodgeChance;
     }
 
-    public Integer getMinMaxLevelUpIncHp() {
-        return minMaxLevelUpIncHp;
+    public Integer getMinMaxLevelHp() {
+        return minMaxLevelHp;
     }
 
-    public void setMinMaxLevelUpIncHp(Integer minMaxLevelUpIncHp) {
-        this.minMaxLevelUpIncHp = minMaxLevelUpIncHp;
+    public void setMinMaxLevelHp(Integer minMaxLevelHp) {
+        this.minMaxLevelHp = minMaxLevelHp;
     }
 
     public Integer getMaxBaseDmg() {
@@ -378,76 +400,76 @@ public class HeroType implements Serializable {
         this.maxBaseHp = maxBaseHp;
     }
 
-    public Integer getMaxMaxLevelUpIncDmg() {
-        return maxMaxLevelUpIncDmg;
+    public Integer getMaxMaxLevelDmg() {
+        return maxMaxLevelDmg;
     }
 
-    public void setMaxMaxLevelUpIncDmg(Integer maxMaxLevelUpIncDmg) {
-        this.maxMaxLevelUpIncDmg = maxMaxLevelUpIncDmg;
+    public void setMaxMaxLevelDmg(Integer maxMaxLevelDmg) {
+        this.maxMaxLevelDmg = maxMaxLevelDmg;
     }
 
-    public Integer getMaxMaxLevelUpIncArmor() {
-        return maxMaxLevelUpIncArmor;
+    public Integer getMaxMaxLevelArmor() {
+        return maxMaxLevelArmor;
     }
 
-    public void setMaxMaxLevelUpIncArmor(Integer maxMaxLevelUpIncArmor) {
-        this.maxMaxLevelUpIncArmor = maxMaxLevelUpIncArmor;
+    public void setMaxMaxLevelArmor(Integer maxMaxLevelArmor) {
+        this.maxMaxLevelArmor = maxMaxLevelArmor;
     }
 
-    public Integer getMaxMaxLevelUpIncMagicResist() {
-        return maxMaxLevelUpIncMagicResist;
+    public Integer getMaxMaxLevelMagicResist() {
+        return maxMaxLevelMagicResist;
     }
 
-    public void setMaxMaxLevelUpIncMagicResist(Integer maxMaxLevelUpIncMagicResist) {
-        this.maxMaxLevelUpIncMagicResist = maxMaxLevelUpIncMagicResist;
+    public void setMaxMaxLevelMagicResist(Integer maxMaxLevelMagicResist) {
+        this.maxMaxLevelMagicResist = maxMaxLevelMagicResist;
     }
 
-    public Integer getMaxMaxLevelUpIncSpeed() {
-        return maxMaxLevelUpIncSpeed;
+    public Integer getMaxMaxLevelSpeed() {
+        return maxMaxLevelSpeed;
     }
 
-    public void setMaxMaxLevelUpIncSpeed(Integer maxMaxLevelUpIncSpeed) {
-        this.maxMaxLevelUpIncSpeed = maxMaxLevelUpIncSpeed;
+    public void setMaxMaxLevelSpeed(Integer maxMaxLevelSpeed) {
+        this.maxMaxLevelSpeed = maxMaxLevelSpeed;
     }
 
-    public Integer getMaxMaxLevelUpIncLuck() {
-        return maxMaxLevelUpIncLuck;
+    public Integer getMaxMaxLevelLuck() {
+        return maxMaxLevelLuck;
     }
 
-    public void setMaxMaxLevelUpIncLuck(Integer maxMaxLevelUpIncLuck) {
-        this.maxMaxLevelUpIncLuck = maxMaxLevelUpIncLuck;
+    public void setMaxMaxLevelLuck(Integer maxMaxLevelLuck) {
+        this.maxMaxLevelLuck = maxMaxLevelLuck;
     }
 
-    public Integer getMaxMaxLevelUpIncCritChance() {
-        return maxMaxLevelUpIncCritChance;
+    public Integer getMaxMaxLevelCritChance() {
+        return maxMaxLevelCritChance;
     }
 
-    public void setMaxMaxLevelUpIncCritChance(Integer maxMaxLevelUpIncCritChance) {
-        this.maxMaxLevelUpIncCritChance = maxMaxLevelUpIncCritChance;
+    public void setMaxMaxLevelCritChance(Integer maxMaxLevelCritChance) {
+        this.maxMaxLevelCritChance = maxMaxLevelCritChance;
     }
 
-    public Integer getMaxMaxLevelUpIncCritDamage() {
-        return maxMaxLevelUpIncCritDamage;
+    public Integer getMaxMaxLevelCritDamage() {
+        return maxMaxLevelCritDamage;
     }
 
-    public void setMaxMaxLevelUpIncCritDamage(Integer maxMaxLevelUpIncCritDamage) {
-        this.maxMaxLevelUpIncCritDamage = maxMaxLevelUpIncCritDamage;
+    public void setMaxMaxLevelCritDamage(Integer maxMaxLevelCritDamage) {
+        this.maxMaxLevelCritDamage = maxMaxLevelCritDamage;
     }
 
-    public Integer getMaxMaxLevelUpIncDodgeChance() {
-        return maxMaxLevelUpIncDodgeChance;
+    public Integer getMaxMaxLevelDodgeChance() {
+        return maxMaxLevelDodgeChance;
     }
 
-    public void setMaxMaxLevelUpIncDodgeChance(Integer maxMaxLevelUpIncDodgeChance) {
-        this.maxMaxLevelUpIncDodgeChance = maxMaxLevelUpIncDodgeChance;
+    public void setMaxMaxLevelDodgeChance(Integer maxMaxLevelDodgeChance) {
+        this.maxMaxLevelDodgeChance = maxMaxLevelDodgeChance;
     }
 
-    public Integer getMaxMaxLevelUpIncHp() {
-        return maxMaxLevelUpIncHp;
+    public Integer getMaxMaxLevelHp() {
+        return maxMaxLevelHp;
     }
 
-    public void setMaxMaxLevelUpIncHp(Integer maxMaxLevelUpIncHp) {
-        this.maxMaxLevelUpIncHp = maxMaxLevelUpIncHp;
+    public void setMaxMaxLevelHp(Integer maxMaxLevelHp) {
+        this.maxMaxLevelHp = maxMaxLevelHp;
     }
 
     @Override

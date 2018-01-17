@@ -1,4 +1,4 @@
-package com.idle.game.core.type;
+package com.idle.game.core.hero.type;
 
 /**
  *

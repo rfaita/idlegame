@@ -1,7 +1,7 @@
 package com.idle.game.model.mongo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.idle.game.core.type.HeroQuality;
+import com.idle.game.core.hero.type.HeroQuality;
 import java.io.Serializable;
 import java.util.Objects;
 import org.springframework.data.annotation.Id;
@@ -20,7 +20,7 @@ public class Hero implements Serializable {
     private String heroType;
     private String player;
     private Integer level;
-    private HeroQuality heroQuality;
+    private HeroQuality quality;
 
     private Integer baseDmg;
     private Integer baseArmor;
@@ -32,15 +32,15 @@ public class Hero implements Serializable {
     private Integer baseDodgeChance;
     private Integer baseHp;
 
-    private Integer maxLevelUpIncDmg;
-    private Integer maxLevelUpIncArmor;
-    private Integer maxLevelUpIncMagicResist;
-    private Integer maxLevelUpIncSpeed;
-    private Integer maxLevelUpIncLuck;
-    private Integer maxLevelUpIncCritChance;
-    private Integer maxLevelUpIncCritDamage;
-    private Integer maxLevelUpIncDodgeChance;
-    private Integer maxLevelUpIncHp;
+    private Integer maxLevelDmg;
+    private Integer maxLevelArmor;
+    private Integer maxLevelMagicResist;
+    private Integer maxLevelSpeed;
+    private Integer maxLevelLuck;
+    private Integer maxLevelCritChance;
+    private Integer maxLevelCritDamage;
+    private Integer maxLevelDodgeChance;
+    private Integer maxLevelHp;
 
     public String getId() {
         return id;
@@ -50,12 +50,12 @@ public class Hero implements Serializable {
         this.id = id;
     }
 
-    public HeroQuality getHeroQuality() {
-        return heroQuality;
+    public HeroQuality getQuality() {
+        return quality;
     }
 
-    public void setHeroQuality(HeroQuality heroQuality) {
-        this.heroQuality = heroQuality;
+    public void setQuality(HeroQuality heroQuality) {
+        this.quality = heroQuality;
     }
 
     public String getHeroType() {
@@ -154,76 +154,76 @@ public class Hero implements Serializable {
         this.baseHp = baseHp;
     }
 
-    public Integer getMaxLevelUpIncDmg() {
-        return maxLevelUpIncDmg;
+    public Integer getMaxLevelDmg() {
+        return maxLevelDmg;
     }
 
-    public void setMaxLevelUpIncDmg(Integer maxLevelUpIncDmg) {
-        this.maxLevelUpIncDmg = maxLevelUpIncDmg;
+    public void setMaxLevelDmg(Integer maxLevelDmg) {
+        this.maxLevelDmg = maxLevelDmg;
     }
 
-    public Integer getMaxLevelUpIncArmor() {
-        return maxLevelUpIncArmor;
+    public Integer getMaxLevelArmor() {
+        return maxLevelArmor;
     }
 
-    public void setMaxLevelUpIncArmor(Integer maxLevelUpIncArmor) {
-        this.maxLevelUpIncArmor = maxLevelUpIncArmor;
+    public void setMaxLevelArmor(Integer maxLevelArmor) {
+        this.maxLevelArmor = maxLevelArmor;
     }
 
-    public Integer getMaxLevelUpIncMagicResist() {
-        return maxLevelUpIncMagicResist;
+    public Integer getMaxLevelMagicResist() {
+        return maxLevelMagicResist;
     }
 
-    public void setMaxLevelUpIncMagicResist(Integer maxLevelUpIncMagicResist) {
-        this.maxLevelUpIncMagicResist = maxLevelUpIncMagicResist;
+    public void setMaxLevelMagicResist(Integer maxLevelMagicResist) {
+        this.maxLevelMagicResist = maxLevelMagicResist;
     }
 
-    public Integer getMaxLevelUpIncSpeed() {
-        return maxLevelUpIncSpeed;
+    public Integer getMaxLevelSpeed() {
+        return maxLevelSpeed;
     }
 
-    public void setMaxLevelUpIncSpeed(Integer maxLevelUpIncSpeed) {
-        this.maxLevelUpIncSpeed = maxLevelUpIncSpeed;
+    public void setMaxLevelSpeed(Integer maxLevelSpeed) {
+        this.maxLevelSpeed = maxLevelSpeed;
     }
 
-    public Integer getMaxLevelUpIncLuck() {
-        return maxLevelUpIncLuck;
+    public Integer getMaxLevelLuck() {
+        return maxLevelLuck;
     }
 
-    public void setMaxLevelUpIncLuck(Integer maxLevelUpIncLuck) {
-        this.maxLevelUpIncLuck = maxLevelUpIncLuck;
+    public void setMaxLevelLuck(Integer maxLevelLuck) {
+        this.maxLevelLuck = maxLevelLuck;
     }
 
-    public Integer getMaxLevelUpIncCritChance() {
-        return maxLevelUpIncCritChance;
+    public Integer getMaxLevelCritChance() {
+        return maxLevelCritChance;
     }
 
-    public void setMaxLevelUpIncCritChance(Integer maxLevelUpIncCritChance) {
-        this.maxLevelUpIncCritChance = maxLevelUpIncCritChance;
+    public void setMaxLevelCritChance(Integer maxLevelCritChance) {
+        this.maxLevelCritChance = maxLevelCritChance;
     }
 
-    public Integer getMaxLevelUpIncCritDamage() {
-        return maxLevelUpIncCritDamage;
+    public Integer getMaxLevelCritDamage() {
+        return maxLevelCritDamage;
     }
 
-    public void setMaxLevelUpIncCritDamage(Integer maxLevelUpIncCritDamage) {
-        this.maxLevelUpIncCritDamage = maxLevelUpIncCritDamage;
+    public void setMaxLevelCritDamage(Integer maxLevelCritDamage) {
+        this.maxLevelCritDamage = maxLevelCritDamage;
     }
 
-    public Integer getMaxLevelUpIncDodgeChance() {
-        return maxLevelUpIncDodgeChance;
+    public Integer getMaxLevelDodgeChance() {
+        return maxLevelDodgeChance;
     }
 
-    public void setMaxLevelUpIncDodgeChance(Integer maxLevelUpIncDodgeChance) {
-        this.maxLevelUpIncDodgeChance = maxLevelUpIncDodgeChance;
+    public void setMaxLevelDodgeChance(Integer maxLevelDodgeChance) {
+        this.maxLevelDodgeChance = maxLevelDodgeChance;
     }
 
-    public Integer getMaxLevelUpIncHp() {
-        return maxLevelUpIncHp;
+    public Integer getMaxLevelHp() {
+        return maxLevelHp;
     }
 
-    public void setMaxLevelUpIncHp(Integer maxLevelUpIncHp) {
-        this.maxLevelUpIncHp = maxLevelUpIncHp;
+    public void setMaxLevelHp(Integer maxLevelHp) {
+        this.maxLevelHp = maxLevelHp;
     }
 
     @Override

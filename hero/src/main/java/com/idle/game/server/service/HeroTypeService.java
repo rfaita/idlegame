@@ -1,9 +1,9 @@
 package com.idle.game.server.service;
 
-import static com.idle.game.constant.CacheConstants.BATTLE_HERO_FIND_BY_ID;
 import static com.idle.game.constant.CacheConstants.HERO_TYPE_FIND_BY_ID;
 import static com.idle.game.constant.CacheConstants.HERO_TYPE_FIND_BY_NAME;
-import com.idle.game.core.type.HeroTypeQuality;
+import com.idle.game.core.hero.type.HeroTypeFaction;
+import com.idle.game.core.hero.type.HeroTypeQuality;
 import com.idle.game.model.mongo.HeroType;
 import com.idle.game.server.repository.HeroTypeRepository;
 import java.util.List;
@@ -43,9 +43,19 @@ public class HeroTypeService {
         return heroTypeRepository.save(ht);
     }
 
-    public List<HeroType> findAllByHeroTypeQuality(HeroTypeQuality quality) {
+    public List<HeroType> findAllByQuality(HeroTypeQuality quality) {
 
-        return heroTypeRepository.findAllByHeroTypeQuality(quality);
+        return heroTypeRepository.findAllByQuality(quality);
+    }
+
+    public List<HeroType> findAllByFaction(HeroTypeFaction faction) {
+
+        return heroTypeRepository.findAllByFaction(faction);
+    }
+
+    public List<HeroType> findAllByFactionAndQuality(HeroTypeFaction faction, HeroTypeQuality quality) {
+
+        return heroTypeRepository.findAllByFactionAndQuality(faction, quality);
     }
 
 }

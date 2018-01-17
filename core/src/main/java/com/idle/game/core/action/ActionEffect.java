@@ -106,7 +106,7 @@ public class ActionEffect extends BaseObject {
 
     @Override
     public String toString() {
-        return "SSE{" + "t=" + type + ", tt=" + targetType + ", d?=" + canBeDodge
+        return "AE{" + "t=" + type + ", tt=" + targetType + ", d?=" + canBeDodge
                 + ", ap=" + percentage + ", dt=" + damageType + ", aost=" + overSameTeam + '}';
     }
 

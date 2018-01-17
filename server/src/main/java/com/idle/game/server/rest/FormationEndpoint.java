@@ -1,6 +1,6 @@
 package com.idle.game.server.rest;
 
-import com.idle.game.core.formation.Formation;
+import com.idle.game.core.formation.BattleFormation;
 import com.idle.game.core.formation.type.FormationAllocation;
 import com.idle.game.server.dto.Envelope;
 import com.idle.game.server.dto.PvpRollRetorno;
@@ -36,11 +36,11 @@ public class FormationEndpoint {
     @Path("/all")
     @Produces("application/json")
     @GZIP
-    public Envelope<List<Formation>> doGetAll() throws Exception {
+    public Envelope<List<BattleFormation>> doGetAll() throws Exception {
 
-        Envelope<List<Formation>> ret = new Envelope<>();
+        Envelope<List<BattleFormation>> ret = new Envelope<>();
 
-        List<Formation> data = new ArrayList<>();
+        List<BattleFormation> data = new ArrayList<>();
 
         for (com.idle.game.server.model.Formation hs : formationService.findByLoggedLinkedUser()) {
             data.add(hs.toFormation(heroTypeService.getHeroTypes()));
@@ -82,9 +82,9 @@ public class FormationEndpoint {
     @Path("/nextLevelFormationPve")
     @Produces("application/json")
     @GZIP
-    public Envelope<Formation> nextLevelFormationPve() throws Exception {
+    public Envelope<BattleFormation> nextLevelFormationPve() throws Exception {
 
-        Envelope<Formation> ret = new Envelope<>();
+        Envelope<BattleFormation> ret = new Envelope<>();
         ret.setData(playerService.findByLoggedLinkedUser().getNextLevelFormationPve().toFormation(heroTypeService.getHeroTypes()));
 
         return ret;
@@ -95,9 +95,9 @@ public class FormationEndpoint {
     @Path("/nextLevelFormationDungeon")
     @Produces("application/json")
     @GZIP
-    public Envelope<Formation> nextLevelFormationDungeon() throws Exception {
+    public Envelope<BattleFormation> nextLevelFormationDungeon() throws Exception {
 
-        Envelope<Formation> ret = new Envelope<>();
+        Envelope<BattleFormation> ret = new Envelope<>();
         ret.setData(playerService.findByLoggedLinkedUser().getNextLevelFormationDungeon().toFormation(heroTypeService.getHeroTypes()));
 
         return ret;
@@ -108,9 +108,9 @@ public class FormationEndpoint {
     @Path("/allocation/{formationAllocation}")
     @Produces("application/json")
     @GZIP
-    public Envelope<Formation> doGet(@PathParam("formationAllocation") FormationAllocation formationAllocation) throws Exception {
+    public Envelope<BattleFormation> doGet(@PathParam("formationAllocation") FormationAllocation formationAllocation) throws Exception {
 
-        Envelope<Formation> ret = new Envelope<>();
+        Envelope<BattleFormation> ret = new Envelope<>();
         ret.setData(formationService.findByLoggedLinkedUserAndAllocation(formationAllocation).toFormation(heroTypeService.getHeroTypes()));
 
         return ret;
@@ -121,9 +121,9 @@ public class FormationEndpoint {
     @Path("/{id}")
     @Produces("application/json")
     @GZIP
-    public Envelope<Formation> doGet(@PathParam("id") Long id) throws Exception {
+    public Envelope<BattleFormation> doGet(@PathParam("id") Long id) throws Exception {
 
-        Envelope<Formation> ret = new Envelope<>();
+        Envelope<BattleFormation> ret = new Envelope<>();
         ret.setData(formationService.findById(id).toFormation(heroTypeService.getHeroTypes()));
 
         return ret;
@@ -133,9 +133,9 @@ public class FormationEndpoint {
     @PUT
     @Produces("application/json")
     @GZIP
-    public Envelope<Formation> doPut(com.idle.game.server.model.Formation f) throws Exception {
+    public Envelope<BattleFormation> doPut(com.idle.game.server.model.Formation f) throws Exception {
 
-        Envelope<Formation> ret = new Envelope<>();
+        Envelope<BattleFormation> ret = new Envelope<>();
 
         f = formationService.save(f);
 
@@ -148,9 +148,9 @@ public class FormationEndpoint {
     @POST
     @Produces("application/json")
     @GZIP
-    public Envelope<Formation> doPost(com.idle.game.server.model.Formation f) throws Exception {
+    public Envelope<BattleFormation> doPost(com.idle.game.server.model.Formation f) throws Exception {
 
-        Envelope<Formation> ret = new Envelope<>();
+        Envelope<BattleFormation> ret = new Envelope<>();
 
         f = formationService.save(f);
 

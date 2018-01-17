@@ -37,18 +37,18 @@ public class BattleHeroService {
 
                 BattleHero ret = new BattleHero(hero.getId(), heroType.toBattleHeroType(), hero.getLevel());
 
-                Double levelUpRatio = 1d * (hero.getLevel() - 1) / (heroType.getMaxLevel() - 1);
+                Double levelUpRatio = 1d * ((hero.getLevel() - 1d) / (heroType.getMaxLevel() - 1d));
 
                 if (levelUpRatio > 0) {
-                    ret.setArmor(hero.getBaseArmor() + (int) (hero.getMaxLevelUpIncArmor() * levelUpRatio));
-                    ret.setCritChance(hero.getBaseCritChance() + (int) (hero.getMaxLevelUpIncCritChance() * levelUpRatio));
-                    ret.setCritDamage(hero.getBaseCritDamage() + (int) (hero.getMaxLevelUpIncCritDamage() * levelUpRatio));
-                    ret.setDmg(hero.getBaseDmg() + (int) (hero.getMaxLevelUpIncDmg() * levelUpRatio));
-                    ret.setDodgeChance(hero.getBaseDodgeChance() + (int) (hero.getMaxLevelUpIncDodgeChance() * levelUpRatio));
-                    ret.setHp(hero.getBaseHp() + (int) (hero.getMaxLevelUpIncHp() * levelUpRatio));
-                    ret.setLuck(hero.getBaseLuck() + (int) (hero.getMaxLevelUpIncLuck() * levelUpRatio));
-                    ret.setMagicResist(hero.getBaseMagicResist() + (int) (hero.getMaxLevelUpIncMagicResist() * levelUpRatio));
-                    ret.setSpeed(hero.getBaseSpeed() + (int) (hero.getMaxLevelUpIncSpeed() * levelUpRatio));
+                    ret.setArmor(hero.getBaseArmor() + (int) ((hero.getMaxLevelArmor() - hero.getBaseArmor()) * levelUpRatio));
+                    ret.setCritChance(hero.getBaseCritChance() + (int) ((hero.getMaxLevelCritChance() - hero.getBaseCritChance()) * levelUpRatio));
+                    ret.setCritDamage(hero.getBaseCritDamage() + (int) ((hero.getMaxLevelCritDamage() - hero.getBaseCritDamage()) * levelUpRatio));
+                    ret.setDmg(hero.getBaseDmg() + (int) ((hero.getMaxLevelDmg() - hero.getBaseDmg()) * levelUpRatio));
+                    ret.setDodgeChance(hero.getBaseDodgeChance() + (int) ((hero.getMaxLevelDodgeChance() - hero.getBaseDodgeChance()) * levelUpRatio));
+                    ret.setHp(hero.getBaseHp() + (int) ((hero.getMaxLevelHp() - hero.getBaseHp()) * levelUpRatio));
+                    ret.setLuck(hero.getBaseLuck() + (int) ((hero.getMaxLevelLuck() - hero.getBaseLuck()) * levelUpRatio));
+                    ret.setMagicResist(hero.getBaseMagicResist() + (int) ((hero.getMaxLevelMagicResist() - hero.getBaseMagicResist()) * levelUpRatio));
+                    ret.setSpeed(hero.getBaseSpeed() + (int) ((hero.getMaxLevelSpeed() - hero.getBaseSpeed()) * levelUpRatio));
                 } else {
                     ret.setArmor(hero.getBaseArmor());
                     ret.setCritChance(hero.getBaseCritChance());

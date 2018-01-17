@@ -24,7 +24,7 @@ import java.util.logging.Level;
  *
  * @author rafael
  */
-@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class BattleHero implements Serializable {
 
     private String id;
@@ -325,33 +325,33 @@ public class BattleHero implements Serializable {
     }
 
     public void prepareToBattle() {
-        LOG.log(Level.FINEST, "[prepareToBattle]");
+        LOG.log(Level.INFO, "[prepareToBattle]");
         this.prepareToTurn();
         this.setCurrHp(this.getHp());
         this.setCurrBuffs(new ArrayList<>());
     }
 
     public void prepareToTurn() {
-        LOG.log(Level.FINEST, "[prepareToTurn][hero] {0}", this);
+        LOG.log(Level.INFO, "[prepareToTurn][hero] {0}", this);
         this.setCurrArmor(this.getArmor());
-        LOG.log(Level.FINEST, "[prepareToTurn][armor] {0}", this.getCurrArmor());
+        LOG.log(Level.INFO, "[prepareToTurn][armor] {0}", this.getCurrArmor());
         this.setCurrCritChance(this.getCritChance());
-        LOG.log(Level.FINEST, "[prepareToTurn][critChance] {0}", this.getCurrCritChance());
+        LOG.log(Level.INFO, "[prepareToTurn][critChance] {0}", this.getCurrCritChance());
         this.setCurrCritDamage(this.getCritDamage());
-        LOG.log(Level.FINEST, "[prepareToTurn][critDmg] {0}", this.getCurrCritDamage());
+        LOG.log(Level.INFO, "[prepareToTurn][critDmg] {0}", this.getCurrCritDamage());
         this.setCurrDodgeChance(this.getDodgeChance());
-        LOG.log(Level.FINEST, "[prepareToTurn][dodgeChange] {0}", this.getCurrDodgeChance());
+        LOG.log(Level.INFO, "[prepareToTurn][dodgeChange] {0}", this.getCurrDodgeChance());
         this.setCurrLuck(this.getLuck());
-        LOG.log(Level.FINEST, "[prepareToTurn][luck] {0}", this.getCurrLuck());
+        LOG.log(Level.INFO, "[prepareToTurn][luck] {0}", this.getCurrLuck());
         this.setCurrMagicResist(this.getMagicResist());
-        LOG.log(Level.FINEST, "[prepareToTurn][magicResist] {0}", this.getCurrMagicResist());
+        LOG.log(Level.INFO, "[prepareToTurn][magicResist] {0}", this.getCurrMagicResist());
         this.setCurrDmg(this.getDmg());
-        LOG.log(Level.FINEST, "[prepareToTurn][dmg] {0}", this.getCurrDmg());
+        LOG.log(Level.INFO, "[prepareToTurn][dmg] {0}", this.getCurrDmg());
         this.setCurrSpeed(this.getSpeed());
-        LOG.log(Level.FINEST, "[prepareToTurn][speed] {0}", this.getCurrSpeed());
+        LOG.log(Level.INFO, "[prepareToTurn][speed] {0}", this.getCurrSpeed());
         this.setCanDoAction(Boolean.TRUE);
-        LOG.log(Level.FINEST, "[prepareToTurn][canDoAction] {0}", this.getCanDoAction());
-        LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
+        LOG.log(Level.INFO, "[prepareToTurn][canDoAction] {0}", this.getCanDoAction());
+        LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
     }
 
     private Integer getMissingAttributePercentage(AttributeType at) {
@@ -366,46 +366,46 @@ public class BattleHero implements Serializable {
 
     private void calcTradeAttribute(AttributeType o, AttributeType d, Integer ratioPercentage) {
         Double perc = this.getMissingAttributePercentage(o) / 100d * ratioPercentage / 100d;
-        LOG.log(Level.FINEST, "[passive][perc] {0}", perc);
+        LOG.log(Level.INFO, "[passive][perc] {0}", perc);
         if (perc > 0) {
             switch (d) {
                 case LUCK:
                     this.setCurrLuck(this.getCurrLuck() + (int) (this.getCurrLuck() * perc));
-                    LOG.log(Level.FINEST, "[passive][luck] {0}", this.getCurrLuck());
+                    LOG.log(Level.INFO, "[passive][luck] {0}", this.getCurrLuck());
                     break;
                 case SPEED:
                     this.setCurrSpeed(this.getCurrSpeed() + (int) (this.getCurrSpeed() * perc));
-                    LOG.log(Level.FINEST, "[passive][speed] {0}", this.getCurrSpeed());
+                    LOG.log(Level.INFO, "[passive][speed] {0}", this.getCurrSpeed());
                     break;
                 case DODGE:
                     this.setCurrDodgeChance(this.getCurrDodgeChance() + (int) (this.getCurrDodgeChance() * perc));
-                    LOG.log(Level.FINEST, "[passive][dodgeChance] {0}", this.getCurrDodgeChance());
+                    LOG.log(Level.INFO, "[passive][dodgeChance] {0}", this.getCurrDodgeChance());
                     break;
                 case CRIT_DMG:
                     this.setCurrCritDamage(this.getCurrCritDamage() + (int) (this.getCurrCritDamage() * perc));
-                    LOG.log(Level.FINEST, "[passive][critDmg] {0}", this.getCurrCritDamage());
+                    LOG.log(Level.INFO, "[passive][critDmg] {0}", this.getCurrCritDamage());
                     break;
                 case CRIT_CHANCE:
                     this.setCurrCritChance(this.getCurrCritChance() + (int) (this.getCurrCritChance() * perc));
-                    LOG.log(Level.FINEST, "[passive][critChance] {0}", this.getCurrCritChance());
+                    LOG.log(Level.INFO, "[passive][critChance] {0}", this.getCurrCritChance());
                     break;
                 case DMG:
                     this.setCurrDmg(this.getCurrDmg() + (int) (this.getCurrDmg() * perc));
-                    LOG.log(Level.FINEST, "[passive][dmg] {0}", this.getCurrDmg());
+                    LOG.log(Level.INFO, "[passive][dmg] {0}", this.getCurrDmg());
                     break;
                 case ARMOR:
                     this.setCurrArmor(this.getCurrArmor() + (int) (this.getCurrArmor() * perc));
-                    LOG.log(Level.FINEST, "[passive][armor] {0}", this.getCurrArmor());
+                    LOG.log(Level.INFO, "[passive][armor] {0}", this.getCurrArmor());
                     break;
                 case MAGIC_RESIST:
                     this.setCurrMagicResist(this.getCurrMagicResist() + (int) (this.getCurrMagicResist() * perc));
-                    LOG.log(Level.FINEST, "[passive][magicResist] {0}", this.getCurrMagicResist());
+                    LOG.log(Level.INFO, "[passive][magicResist] {0}", this.getCurrMagicResist());
                     break;
                 case DEFENSE:
                     this.setCurrArmor(this.getCurrArmor() + (int) (this.getCurrArmor() * perc));
                     this.setCurrMagicResist(this.getCurrMagicResist() + (int) (this.getCurrMagicResist() * perc));
-                    LOG.log(Level.FINEST, "[passive][armor] {0}", this.getCurrArmor());
-                    LOG.log(Level.FINEST, "[passive][magicResist] {0}", this.getCurrMagicResist());
+                    LOG.log(Level.INFO, "[passive][armor] {0}", this.getCurrArmor());
+                    LOG.log(Level.INFO, "[passive][magicResist] {0}", this.getCurrMagicResist());
                     break;
 
             }
@@ -414,23 +414,23 @@ public class BattleHero implements Serializable {
     }
 
     public void calcPassives() {
-        LOG.log(Level.FINEST, "[passive][heroi] {0}", this);
+        LOG.log(Level.INFO, "[passive][heroi] {0}", this);
         if (this.getHeroType().getPassives() != null) {
             for (Passive p : this.getHeroType().getPassives()) {
-                LOG.log(Level.FINEST, "[passive][type] {0}", p.getPassiveType());
+                LOG.log(Level.INFO, "[passive][type] {0}", p.getPassiveType());
                 switch (p.getPassiveType()) {
                     case TRADE_ATTRIBUTE:
                         calcTradeAttribute(p.getAttributeTypeLost(), p.getAttributeTypeGain(), p.getRatioPercentage());
                         break;
                 }
-                LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
+                LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
 
             }
         }
     }
 
     private void calcAtributtes() {
-        LOG.log(Level.FINEST, "[calcAtributtes]");
+        LOG.log(Level.INFO, "[calcAtributtes]");
 
         this.calcAtributtesItem(this.getAmmulet());
         this.calcAtributtesItem(this.getBoot());
@@ -472,7 +472,8 @@ public class BattleHero implements Serializable {
 
     @Override
     public String toString() {
-        return "H{" + "id=" + this.id + ",currHp=" + this.currHp + ",type=" + this.heroType + '}';
+        return "H{" + "id=" + this.id.substring(this.id.length() - 5, this.id.length() - 1)
+                + ",currHp=" + this.currHp + ",type=" + this.heroType + '}';
     }
 
     @Override

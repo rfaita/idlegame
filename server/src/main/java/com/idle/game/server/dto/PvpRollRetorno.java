@@ -1,6 +1,6 @@
 package com.idle.game.server.dto;
 
-import com.idle.game.core.formation.Formation;
+import com.idle.game.core.formation.BattleFormation;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,9 +11,9 @@ import java.util.Date;
 public class PvpRollRetorno implements Serializable {
 
     private Date expireDate;
-    private Formation formationHigher;
-    private Formation formationLower;
-    private Formation formationRandom;
+    private BattleFormation formationHigher;
+    private BattleFormation formationLower;
+    private BattleFormation formationRandom;
     private String namePlayerHigher;
     private String namePlayerLower;
     private String namePlayerRandom;
@@ -29,27 +29,27 @@ public class PvpRollRetorno implements Serializable {
         this.expireDate = expireDate;
     }
 
-    public Formation getFormationHigher() {
+    public BattleFormation getFormationHigher() {
         return formationHigher;
     }
 
-    public void setFormationHigher(Formation formationHigher) {
+    public void setFormationHigher(BattleFormation formationHigher) {
         this.formationHigher = formationHigher;
     }
 
-    public Formation getFormationLower() {
+    public BattleFormation getFormationLower() {
         return formationLower;
     }
 
-    public void setFormationLower(Formation formationLower) {
+    public void setFormationLower(BattleFormation formationLower) {
         this.formationLower = formationLower;
     }
 
-    public Formation getFormationRandom() {
+    public BattleFormation getFormationRandom() {
         return formationRandom;
     }
 
-    public void setFormationRandom(Formation formationRandom) {
+    public void setFormationRandom(BattleFormation formationRandom) {
         this.formationRandom = formationRandom;
     }
 

@@ -1,6 +1,6 @@
 package com.idle.game.tests;
 
-import com.idle.game.core.type.HeroQuality;
+import com.idle.game.core.hero.type.HeroQuality;
 import com.idle.game.model.mongo.Hero;
 import com.idle.game.server.service.HeroService;
 import static com.idle.game.tests.helper.TestHelper.createGenericHeroType;
@@ -40,24 +40,24 @@ public class RandomHeroTests {
             Assert.assertTrue("Value must be greater or equal to 895", h.getBaseSpeed() >= 895);
             Assert.assertTrue("Value must be lower or equal to 930", h.getBaseSpeed() <= 930);
 
-            Assert.assertTrue("Value must be greater or equal to 10", h.getMaxLevelUpIncArmor() >= 10);
-            Assert.assertTrue("Value must be lower or equal to 12", h.getMaxLevelUpIncArmor() <= 12);
-            Assert.assertTrue("Value must be greater or equal to 10", h.getMaxLevelUpIncCritChance() >= 10);
-            Assert.assertTrue("Value must be lower or equal to 12", h.getMaxLevelUpIncCritChance() <= 12);
-            Assert.assertTrue("Value must be greater or equal to 100", h.getMaxLevelUpIncCritDamage() >= 100);
-            Assert.assertTrue("Value must be lower or equal to 120", h.getMaxLevelUpIncCritDamage() <= 127);
-            Assert.assertTrue("Value must be greater or equal to 1000", h.getMaxLevelUpIncDmg() >= 1000);
-            Assert.assertTrue("Value must be lower or equal to 1277", h.getMaxLevelUpIncDmg() <= 1277);
-            Assert.assertTrue("Value must be greater or equal to 10", h.getMaxLevelUpIncDodgeChance() >= 10);
-            Assert.assertTrue("Value must be lower or equal to 12", h.getMaxLevelUpIncDodgeChance() <= 12);
-            Assert.assertTrue("Value must be greater or equal to 10000", h.getMaxLevelUpIncHp() >= 10000);
-            Assert.assertTrue("Value must be lower or equal to 12167", h.getMaxLevelUpIncHp() <= 12167);
-            Assert.assertTrue("Value must be greater or equal to 1", h.getMaxLevelUpIncLuck() >= 1);
-            Assert.assertTrue("Value must be lower or equal to 2", h.getMaxLevelUpIncLuck() <= 2);
-            Assert.assertTrue("Value must be greater or equal to 155", h.getMaxLevelUpIncMagicResist() >= 155);
-            Assert.assertTrue("Value must be lower or equal to 181", h.getMaxLevelUpIncMagicResist() <= 181);
-            Assert.assertTrue("Value must be greater or equal to 895", h.getMaxLevelUpIncSpeed() >= 895);
-            Assert.assertTrue("Value must be lower or equal to 930", h.getMaxLevelUpIncSpeed() <= 930);
+            Assert.assertTrue("Value must be greater or equal to 10", h.getMaxLevelArmor() >= 10);
+            Assert.assertTrue("Value must be lower or equal to 12", h.getMaxLevelArmor() <= 12);
+            Assert.assertTrue("Value must be greater or equal to 10", h.getMaxLevelCritChance() >= 10);
+            Assert.assertTrue("Value must be lower or equal to 12", h.getMaxLevelCritChance() <= 12);
+            Assert.assertTrue("Value must be greater or equal to 100", h.getMaxLevelCritDamage() >= 100);
+            Assert.assertTrue("Value must be lower or equal to 120", h.getMaxLevelCritDamage() <= 127);
+            Assert.assertTrue("Value must be greater or equal to 1000", h.getMaxLevelDmg() >= 1000);
+            Assert.assertTrue("Value must be lower or equal to 1277", h.getMaxLevelDmg() <= 1277);
+            Assert.assertTrue("Value must be greater or equal to 10", h.getMaxLevelDodgeChance() >= 10);
+            Assert.assertTrue("Value must be lower or equal to 12", h.getMaxLevelDodgeChance() <= 12);
+            Assert.assertTrue("Value must be greater or equal to 10000", h.getMaxLevelHp() >= 10000);
+            Assert.assertTrue("Value must be lower or equal to 12167", h.getMaxLevelHp() <= 12167);
+            Assert.assertTrue("Value must be greater or equal to 1", h.getMaxLevelLuck() >= 1);
+            Assert.assertTrue("Value must be lower or equal to 2", h.getMaxLevelLuck() <= 2);
+            Assert.assertTrue("Value must be greater or equal to 155", h.getMaxLevelMagicResist() >= 155);
+            Assert.assertTrue("Value must be lower or equal to 181", h.getMaxLevelMagicResist() <= 181);
+            Assert.assertTrue("Value must be greater or equal to 895", h.getMaxLevelSpeed() >= 895);
+            Assert.assertTrue("Value must be lower or equal to 930", h.getMaxLevelSpeed() <= 930);
         }
 
     }
@@ -89,24 +89,24 @@ public class RandomHeroTests {
             Assert.assertTrue("Value must be greater or equal to 930", h.getBaseSpeed() >= 930);
             Assert.assertTrue("Value must be lower or equal to 965", h.getBaseSpeed() <= 965);
             
-             Assert.assertTrue("Value must be greater or equal to 11", h.getMaxLevelUpIncArmor() >= 11);
-            Assert.assertTrue("Value must be lower or equal to 13", h.getMaxLevelUpIncArmor() <= 13);
-            Assert.assertTrue("Value must be greater or equal to 11", h.getMaxLevelUpIncCritChance() >= 11);
-            Assert.assertTrue("Value must be lower or equal to 13", h.getMaxLevelUpIncCritChance() <= 13);
-            Assert.assertTrue("Value must be greater or equal to 116", h.getMaxLevelUpIncCritDamage() >= 116);
-            Assert.assertTrue("Value must be lower or equal to 133", h.getMaxLevelUpIncCritDamage() <= 133);
-            Assert.assertTrue("Value must be greater or equal to 1166", h.getMaxLevelUpIncDmg() >= 1166);
-            Assert.assertTrue("Value must be lower or equal to 1333", h.getMaxLevelUpIncDmg() <= 1333);
-            Assert.assertTrue("Value must be greater or equal to 11", h.getMaxLevelUpIncDodgeChance() >= 11);
-            Assert.assertTrue("Value must be lower or equal to 13", h.getMaxLevelUpIncDodgeChance() <= 13);
-            Assert.assertTrue("Value must be greater or equal to 12166", h.getMaxLevelUpIncHp() >= 12166);
-            Assert.assertTrue("Value must be lower or equal to 14333", h.getMaxLevelUpIncHp() <= 14333);
-            Assert.assertTrue("Value must be greater or equal to 1", h.getMaxLevelUpIncLuck() >= 1);
-            Assert.assertTrue("Value must be lower or equal to 2", h.getMaxLevelUpIncLuck() <= 2);
-            Assert.assertTrue("Value must be greater or equal to 181", h.getMaxLevelUpIncMagicResist() >= 181);
-            Assert.assertTrue("Value must be lower or equal to 207", h.getMaxLevelUpIncMagicResist() <= 207);
-            Assert.assertTrue("Value must be greater or equal to 930", h.getMaxLevelUpIncSpeed() >= 930);
-            Assert.assertTrue("Value must be lower or equal to 965", h.getMaxLevelUpIncSpeed() <= 965);
+             Assert.assertTrue("Value must be greater or equal to 11", h.getMaxLevelArmor() >= 11);
+            Assert.assertTrue("Value must be lower or equal to 13", h.getMaxLevelArmor() <= 13);
+            Assert.assertTrue("Value must be greater or equal to 11", h.getMaxLevelCritChance() >= 11);
+            Assert.assertTrue("Value must be lower or equal to 13", h.getMaxLevelCritChance() <= 13);
+            Assert.assertTrue("Value must be greater or equal to 116", h.getMaxLevelCritDamage() >= 116);
+            Assert.assertTrue("Value must be lower or equal to 133", h.getMaxLevelCritDamage() <= 133);
+            Assert.assertTrue("Value must be greater or equal to 1166", h.getMaxLevelDmg() >= 1166);
+            Assert.assertTrue("Value must be lower or equal to 1333", h.getMaxLevelDmg() <= 1333);
+            Assert.assertTrue("Value must be greater or equal to 11", h.getMaxLevelDodgeChance() >= 11);
+            Assert.assertTrue("Value must be lower or equal to 13", h.getMaxLevelDodgeChance() <= 13);
+            Assert.assertTrue("Value must be greater or equal to 12166", h.getMaxLevelHp() >= 12166);
+            Assert.assertTrue("Value must be lower or equal to 14333", h.getMaxLevelHp() <= 14333);
+            Assert.assertTrue("Value must be greater or equal to 1", h.getMaxLevelLuck() >= 1);
+            Assert.assertTrue("Value must be lower or equal to 2", h.getMaxLevelLuck() <= 2);
+            Assert.assertTrue("Value must be greater or equal to 181", h.getMaxLevelMagicResist() >= 181);
+            Assert.assertTrue("Value must be lower or equal to 207", h.getMaxLevelMagicResist() <= 207);
+            Assert.assertTrue("Value must be greater or equal to 930", h.getMaxLevelSpeed() >= 930);
+            Assert.assertTrue("Value must be lower or equal to 965", h.getMaxLevelSpeed() <= 965);
         }
 
     }
@@ -138,24 +138,24 @@ public class RandomHeroTests {
             Assert.assertTrue("Value must be greater or equal to 965", h.getBaseSpeed() >= 965);
             Assert.assertTrue("Value must be lower or equal to 1000", h.getBaseSpeed() <= 1000);
             
-            Assert.assertTrue("Value must be greater or equal to 13", h.getMaxLevelUpIncArmor() >= 13);
-            Assert.assertTrue("Value must be lower or equal to 15", h.getMaxLevelUpIncArmor() <= 15);
-            Assert.assertTrue("Value must be greater or equal to 13", h.getMaxLevelUpIncCritChance() >= 13);
-            Assert.assertTrue("Value must be lower or equal to 15", h.getMaxLevelUpIncCritChance() <= 15);
-            Assert.assertTrue("Value must be greater or equal to 133", h.getMaxLevelUpIncCritDamage() >= 133);
-            Assert.assertTrue("Value must be lower or equal to 150", h.getMaxLevelUpIncCritDamage() <= 150);
-            Assert.assertTrue("Value must be greater or equal to 1333", h.getMaxLevelUpIncDmg() >= 1333);
-            Assert.assertTrue("Value must be lower or equal to 1500", h.getMaxLevelUpIncDmg() <= 1500);
-            Assert.assertTrue("Value must be greater or equal to 13", h.getMaxLevelUpIncDodgeChance() >= 13);
-            Assert.assertTrue("Value must be lower or equal to 15", h.getMaxLevelUpIncDodgeChance() <= 15);
-            Assert.assertTrue("Value must be greater or equal to 14333", h.getMaxLevelUpIncHp() >= 14333);
-            Assert.assertTrue("Value must be lower or equal to 16500", h.getMaxLevelUpIncHp() <= 16500);
-            Assert.assertTrue("Value must be greater or equal to 1", h.getMaxLevelUpIncLuck() >= 1);
-            Assert.assertTrue("Value must be lower or equal to 2", h.getMaxLevelUpIncLuck() <= 2);
-            Assert.assertTrue("Value must be greater or equal to 207", h.getMaxLevelUpIncMagicResist() >= 207);
-            Assert.assertTrue("Value must be lower or equal to 233", h.getMaxLevelUpIncMagicResist() <= 233);
-            Assert.assertTrue("Value must be greater or equal to 965", h.getMaxLevelUpIncSpeed() >= 965);
-            Assert.assertTrue("Value must be lower or equal to 1000", h.getMaxLevelUpIncSpeed() <= 1000);
+            Assert.assertTrue("Value must be greater or equal to 13", h.getMaxLevelArmor() >= 13);
+            Assert.assertTrue("Value must be lower or equal to 15", h.getMaxLevelArmor() <= 15);
+            Assert.assertTrue("Value must be greater or equal to 13", h.getMaxLevelCritChance() >= 13);
+            Assert.assertTrue("Value must be lower or equal to 15", h.getMaxLevelCritChance() <= 15);
+            Assert.assertTrue("Value must be greater or equal to 133", h.getMaxLevelCritDamage() >= 133);
+            Assert.assertTrue("Value must be lower or equal to 150", h.getMaxLevelCritDamage() <= 150);
+            Assert.assertTrue("Value must be greater or equal to 1333", h.getMaxLevelDmg() >= 1333);
+            Assert.assertTrue("Value must be lower or equal to 1500", h.getMaxLevelDmg() <= 1500);
+            Assert.assertTrue("Value must be greater or equal to 13", h.getMaxLevelDodgeChance() >= 13);
+            Assert.assertTrue("Value must be lower or equal to 15", h.getMaxLevelDodgeChance() <= 15);
+            Assert.assertTrue("Value must be greater or equal to 14333", h.getMaxLevelHp() >= 14333);
+            Assert.assertTrue("Value must be lower or equal to 16500", h.getMaxLevelHp() <= 16500);
+            Assert.assertTrue("Value must be greater or equal to 1", h.getMaxLevelLuck() >= 1);
+            Assert.assertTrue("Value must be lower or equal to 2", h.getMaxLevelLuck() <= 2);
+            Assert.assertTrue("Value must be greater or equal to 207", h.getMaxLevelMagicResist() >= 207);
+            Assert.assertTrue("Value must be lower or equal to 233", h.getMaxLevelMagicResist() <= 233);
+            Assert.assertTrue("Value must be greater or equal to 965", h.getMaxLevelSpeed() >= 965);
+            Assert.assertTrue("Value must be lower or equal to 1000", h.getMaxLevelSpeed() <= 1000);
         }
 
     }
@@ -178,15 +178,15 @@ public class RandomHeroTests {
             Assert.assertTrue("Value must be equal to 233", h.getBaseMagicResist() == 233);
             Assert.assertTrue("Value must be equal to 1000", h.getBaseSpeed() == 1000);
             
-            Assert.assertTrue("Value must be equal to 15", h.getMaxLevelUpIncArmor() == 15);
-            Assert.assertTrue("Value must be equal to 15", h.getMaxLevelUpIncCritChance() == 15);
-            Assert.assertTrue("Value must be equal to 150", h.getMaxLevelUpIncCritDamage() == 150);
-            Assert.assertTrue("Value must be equal to 1500", h.getMaxLevelUpIncDmg() == 1500);
-            Assert.assertTrue("Value must be equal to 15", h.getMaxLevelUpIncDodgeChance() == 15);
-            Assert.assertTrue("Value must be equal to 16500", h.getMaxLevelUpIncHp() == 16500);
-            Assert.assertTrue("Value must be equal to 2", h.getMaxLevelUpIncLuck() == 2);
-            Assert.assertTrue("Value must be equal to 233", h.getMaxLevelUpIncMagicResist() == 233);
-            Assert.assertTrue("Value must be equal to 1000", h.getMaxLevelUpIncSpeed() == 1000);
+            Assert.assertTrue("Value must be equal to 15", h.getMaxLevelArmor() == 15);
+            Assert.assertTrue("Value must be equal to 15", h.getMaxLevelCritChance() == 15);
+            Assert.assertTrue("Value must be equal to 150", h.getMaxLevelCritDamage() == 150);
+            Assert.assertTrue("Value must be equal to 1500", h.getMaxLevelDmg() == 1500);
+            Assert.assertTrue("Value must be equal to 15", h.getMaxLevelDodgeChance() == 15);
+            Assert.assertTrue("Value must be equal to 16500", h.getMaxLevelHp() == 16500);
+            Assert.assertTrue("Value must be equal to 2", h.getMaxLevelLuck() == 2);
+            Assert.assertTrue("Value must be equal to 233", h.getMaxLevelMagicResist() == 233);
+            Assert.assertTrue("Value must be equal to 1000", h.getMaxLevelSpeed() == 1000);
         }
 
     }
@@ -219,23 +219,23 @@ public class RandomHeroTests {
             Assert.assertTrue("Value must be lower or equal to 1000", h.getBaseSpeed() <= 1100);
             
               Assert.assertTrue("Value must be greater or equal to 15", h.getBaseArmor() >= 15);
-            Assert.assertTrue("Value must be lower or equal to 15", h.getMaxLevelUpIncArmor() <= 16);
-            Assert.assertTrue("Value must be greater or equal to 15", h.getMaxLevelUpIncCritChance() >= 15);
-            Assert.assertTrue("Value must be lower or equal to 15", h.getMaxLevelUpIncCritChance() <= 16);
-            Assert.assertTrue("Value must be greater or equal to 150", h.getMaxLevelUpIncCritDamage() >= 150);
-            Assert.assertTrue("Value must be lower or equal to 150", h.getMaxLevelUpIncCritDamage() <= 165);
-            Assert.assertTrue("Value must be greater or equal to 1500", h.getMaxLevelUpIncDmg() >= 1500);
-            Assert.assertTrue("Value must be lower or equal to 1500", h.getMaxLevelUpIncDmg() <= 1650);
-            Assert.assertTrue("Value must be greater or equal to 15", h.getMaxLevelUpIncDodgeChance() >= 15);
-            Assert.assertTrue("Value must be lower or equal to 15", h.getMaxLevelUpIncDodgeChance() <= 16);
-            Assert.assertTrue("Value must be greater or equal to 16500", h.getMaxLevelUpIncHp() >= 16500);
-            Assert.assertTrue("Value must be lower or equal to 16500", h.getMaxLevelUpIncHp() <= 18150);
-            Assert.assertTrue("Value must be greater or equal to 2", h.getMaxLevelUpIncLuck() >= 2);
-            Assert.assertTrue("Value must be lower or equal to 2", h.getMaxLevelUpIncLuck() <= 2);
-            Assert.assertTrue("Value must be greater or equal to 233", h.getMaxLevelUpIncMagicResist() >= 233);
-            Assert.assertTrue("Value must be lower or equal to 233", h.getMaxLevelUpIncMagicResist() <= 256);
-            Assert.assertTrue("Value must be greater or equal to 1000", h.getMaxLevelUpIncSpeed() >= 1000);
-            Assert.assertTrue("Value must be lower or equal to 1000", h.getMaxLevelUpIncSpeed() <= 1100);
+            Assert.assertTrue("Value must be lower or equal to 15", h.getMaxLevelArmor() <= 16);
+            Assert.assertTrue("Value must be greater or equal to 15", h.getMaxLevelCritChance() >= 15);
+            Assert.assertTrue("Value must be lower or equal to 15", h.getMaxLevelCritChance() <= 16);
+            Assert.assertTrue("Value must be greater or equal to 150", h.getMaxLevelCritDamage() >= 150);
+            Assert.assertTrue("Value must be lower or equal to 150", h.getMaxLevelCritDamage() <= 165);
+            Assert.assertTrue("Value must be greater or equal to 1500", h.getMaxLevelDmg() >= 1500);
+            Assert.assertTrue("Value must be lower or equal to 1500", h.getMaxLevelDmg() <= 1650);
+            Assert.assertTrue("Value must be greater or equal to 15", h.getMaxLevelDodgeChance() >= 15);
+            Assert.assertTrue("Value must be lower or equal to 15", h.getMaxLevelDodgeChance() <= 16);
+            Assert.assertTrue("Value must be greater or equal to 16500", h.getMaxLevelHp() >= 16500);
+            Assert.assertTrue("Value must be lower or equal to 16500", h.getMaxLevelHp() <= 18150);
+            Assert.assertTrue("Value must be greater or equal to 2", h.getMaxLevelLuck() >= 2);
+            Assert.assertTrue("Value must be lower or equal to 2", h.getMaxLevelLuck() <= 2);
+            Assert.assertTrue("Value must be greater or equal to 233", h.getMaxLevelMagicResist() >= 233);
+            Assert.assertTrue("Value must be lower or equal to 233", h.getMaxLevelMagicResist() <= 256);
+            Assert.assertTrue("Value must be greater or equal to 1000", h.getMaxLevelSpeed() >= 1000);
+            Assert.assertTrue("Value must be lower or equal to 1000", h.getMaxLevelSpeed() <= 1100);
         }
 
     }

@@ -1,5 +1,6 @@
 package com.idle.game.core.formation;
 
+import com.idle.game.core.battle.BattlePositionedHero;
 import com.idle.game.core.formation.type.FormationPosition;
 import com.idle.game.core.constant.IdleConstants;
 import com.idle.game.core.formation.type.FormationType;
@@ -15,49 +16,49 @@ import java.util.stream.Collectors;
  *
  * @author rafael
  */
-public class Formation implements Serializable {
+public class BattleFormation implements Serializable {
 
-    private Long id;
+    private String id;
     private FormationAllocation formationAllocation;
     private FormationType formationType;
     private Integer size = 0;
-    private final List<PositionedHero> heroes = new ArrayList<>(IdleConstants.MAX_SIZE_BACK_LINE + IdleConstants.MAX_SIZE_FRONT_LINE);
+    private final List<BattlePositionedHero> heroes = new ArrayList<>(IdleConstants.MAX_SIZE_BACK_LINE + IdleConstants.MAX_SIZE_FRONT_LINE);
 
-    public Formation() {
+    public BattleFormation() {
     }
 
-    public Formation(List<PositionedHero> heroes) {
+    public BattleFormation(List<BattlePositionedHero> heroes) {
         this.heroes.addAll(heroes);
         this.size = this.heroes.size();
     }
 
-    public Formation(PositionedHero[] heroes) {
+    public BattleFormation(BattlePositionedHero[] heroes) {
         this.heroes.addAll(Arrays.asList(heroes));
         this.size = this.heroes.size();
     }
 
-    public Formation(FormationAllocation fa, List<PositionedHero> heroes) {
+    public BattleFormation(FormationAllocation fa, List<BattlePositionedHero> heroes) {
         this.formationAllocation = fa;
         this.heroes.addAll(heroes);
         this.size = this.heroes.size();
     }
 
-    public Formation(FormationAllocation fa, PositionedHero[] heroes) {
+    public BattleFormation(FormationAllocation fa, BattlePositionedHero[] heroes) {
         this.formationAllocation = fa;
         this.heroes.addAll(Arrays.asList(heroes));
         this.size = this.heroes.size();
     }
 
-    public void addPositionedHero(PositionedHero hero) throws Exception {
+    public void addBattlePositionedHero(BattlePositionedHero hero) throws Exception {
 
         assert this.size + 1 < IdleConstants.MAX_SIZE_FORMATION : "Formation max size reached, BUG";
         this.size++;
         this.heroes.add(hero);
     }
 
-    public void removedPositionedHero(FormationPosition p) {
-        Optional<PositionedHero> ret = heroes.stream().filter(
-                (ph) -> (ph.getBattlePosition().equals(p))
+    public void removedBattlePositionedHero(FormationPosition p) {
+        Optional<BattlePositionedHero> ret = heroes.stream().filter(
+                (ph) -> (ph.getPosition().equals(p))
         ).findFirst();
         if (ret.isPresent()) {
             this.size--;
@@ -65,24 +66,24 @@ public class Formation implements Serializable {
         }
     }
 
-    public List<PositionedHero> returnBackLinePositionedHeroes() {
+    public List<BattlePositionedHero> returnBackLineBattlePositionedHeroes() {
         return heroes.stream().filter((ph) -> {
-            return ph.getBattlePosition().equals(FormationPosition.BACK_4)
-                    || ph.getBattlePosition().equals(FormationPosition.FRONT_2)
-                    || ph.getBattlePosition().equals(FormationPosition.FRONT_1);
+            return ph.getPosition().equals(FormationPosition.BACK_4)
+                    || ph.getPosition().equals(FormationPosition.FRONT_2)
+                    || ph.getPosition().equals(FormationPosition.FRONT_1);
         }).collect(Collectors.toList());
 
     }
 
-    public List<PositionedHero> returnFrontLinePositionedHeroes() {
+    public List<BattlePositionedHero> returnFrontLineBattlePositionedHeroes() {
         return heroes.stream().filter((ph) -> {
-            return (ph.getBattlePosition().equals(FormationPosition.BACK_3)
-                    || ph.getBattlePosition().equals(FormationPosition.BACK_2)
-                    || ph.getBattlePosition().equals(FormationPosition.BACK_1));
+            return (ph.getPosition().equals(FormationPosition.BACK_3)
+                    || ph.getPosition().equals(FormationPosition.BACK_2)
+                    || ph.getPosition().equals(FormationPosition.BACK_1));
         }).collect(Collectors.toList());
     }
 
-    public List<PositionedHero> getHeroes() {
+    public List<BattlePositionedHero> getHeroes() {
         return heroes;
     }
 
@@ -102,11 +103,11 @@ public class Formation implements Serializable {
         this.size = size;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -1,6 +1,7 @@
 package com.idle.game.server.rest;
 
 import static com.idle.game.constant.URIConstants.HERO__FIND_ALL_BY_PLAYER;
+import com.idle.game.core.hero.type.HeroQuality;
 import com.idle.game.helper.TokenHelper;
 import com.idle.game.model.mongo.Hero;
 import com.idle.game.server.service.*;
@@ -23,6 +24,17 @@ public class HeroRest {
     @Autowired
     private TokenHelper tokenHelper;
 
+    @RequestMapping(path = "/customRoll/{player}/{heroType}", method = RequestMethod.GET)
+    public @ResponseBody
+    Envelope<Hero> customRoll(@PathVariable("player") String player, @PathVariable("heroType") String heroType) {
+
+        Envelope<Hero> ret = new Envelope<>();
+        ret.setData(heroService.rollHero(player, heroType));
+
+        return ret;
+
+    }
+
     @RequestMapping(path = "/roll", method = RequestMethod.GET)
     public @ResponseBody
     Envelope<Hero> rollHero() {
@@ -39,7 +51,18 @@ public class HeroRest {
     Envelope<List<Hero>> findByAllByPlayer(@PathVariable("player") String player) {
 
         Envelope<List<Hero>> ret = new Envelope<>();
-        ret.setData(heroService.findByAllByPlayer(player));
+        ret.setData(heroService.findAllByPlayer(player));
+
+        return ret;
+
+    }
+
+    @RequestMapping(path = "/" + HERO__FIND_ALL_BY_PLAYER + "/{player}/{quality}", method = RequestMethod.GET)
+    public @ResponseBody
+    Envelope<List<Hero>> findByAllByPlayer(@PathVariable("player") String player, @PathVariable("quality") String quality) {
+
+        Envelope<List<Hero>> ret = new Envelope<>();
+        ret.setData(heroService.findAllByPlayerAndQuality(player, HeroQuality.valueOf(quality)));
 
         return ret;
 

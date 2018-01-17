@@ -1,7 +1,8 @@
 package com.idle.game.core.util;
 
-import com.idle.game.core.type.HeroQuality;
-import com.idle.game.core.type.HeroTypeQuality;
+import com.idle.game.core.hero.type.HeroQuality;
+import com.idle.game.core.hero.type.HeroTypeFaction;
+import com.idle.game.core.hero.type.HeroTypeQuality;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -32,6 +33,26 @@ public class DiceUtil {
             return HeroQuality.SHINE;
         } else {
             return HeroQuality.UNIQUE;
+        }
+
+    }
+
+    public static HeroTypeFaction randomHeroTypeFaction() {
+
+        Integer heroTypeFaction = DiceUtil.random(100);
+
+        if (heroTypeFaction <= 20) {
+            return HeroTypeFaction.CHAOS;
+        } else if (heroTypeFaction <= 40) {
+            return HeroTypeFaction.FORTIFIED;
+        } else if (heroTypeFaction <= 60) {
+            return HeroTypeFaction.SAVAGE;
+        } else if (heroTypeFaction <= 80) {
+            return HeroTypeFaction.SHADOW;
+        } else if (heroTypeFaction <= 90) {
+            return HeroTypeFaction.DARK;
+        } else {
+            return HeroTypeFaction.LIGHT;
         }
 
     }

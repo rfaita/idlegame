@@ -2,16 +2,16 @@ package com.idle.game.tests.helper;
 
 import com.idle.game.core.formation.type.FormationPosition;
 import com.idle.game.core.type.DamageType;
-import com.idle.game.core.formation.Formation;
+import com.idle.game.core.formation.BattleFormation;
 import com.idle.game.core.hero.BattleHero;
 import com.idle.game.core.item.Item;
 import com.idle.game.core.item.ItemQuality;
 import com.idle.game.core.item.ItemType;
-import com.idle.game.core.formation.PositionedHero;
 import com.idle.game.core.action.Action;
 import com.idle.game.core.action.ActionEffect;
 import com.idle.game.core.action.type.ActionType;
 import static com.idle.game.core.action.type.ActionType.HEAL;
+import com.idle.game.core.battle.BattlePositionedHero;
 import com.idle.game.core.buff.type.BuffEffect;
 import static com.idle.game.core.buff.type.BuffType.BUFF;
 import com.idle.game.core.type.DistanceType;
@@ -62,8 +62,8 @@ public class TestHelper {
     public static BattleHero createBasicMeleePhysicalNoCritNoDodge100HpHero() {
         BattleHero ret = new BattleHero(UUID.randomUUID().toString(), createHeroTypePhysicalMelee(), 1);
         ret.setDmg(100);
-        ret.setArmor(100);
-        ret.setMagicResist(100);
+        ret.setArmor(6000);
+        ret.setMagicResist(6000);
         ret.setSpeed(1);
         ret.setLuck(1);
         ret.setCritChance(0);
@@ -113,8 +113,8 @@ public class TestHelper {
     public static BattleHero createBasicRangedPhysicalNoCritNoDodge100HpHero() {
         BattleHero ret = new BattleHero(UUID.randomUUID().toString(), createHeroTypePhysicalRanged(), 1);
         ret.setDmg(100);
-        ret.setArmor(100);
-        ret.setMagicResist(100);
+        ret.setArmor(6000);
+        ret.setMagicResist(6000);
         ret.setSpeed(1);
         ret.setLuck(1);
         ret.setCritChance(0);
@@ -135,8 +135,8 @@ public class TestHelper {
     public static BattleHero createBasicMeleeMagicNoCritNoDodge100HpHero() {
         BattleHero ret = new BattleHero(UUID.randomUUID().toString(), createHeroTypeMagicMelee(), 1);
         ret.setDmg(100);
-        ret.setArmor(100);
-        ret.setMagicResist(100);
+        ret.setArmor(6000);
+        ret.setMagicResist(6000);
         ret.setSpeed(1);
         ret.setLuck(1);
         ret.setCritChance(0);
@@ -157,8 +157,8 @@ public class TestHelper {
     public static BattleHero createBasicRangedMagicNoCritNoDodge100HpHero() {
         BattleHero ret = new BattleHero(UUID.randomUUID().toString(), createHeroTypeMagicRanged(), 1);
         ret.setDmg(100);
-        ret.setArmor(100);
-        ret.setMagicResist(100);
+        ret.setArmor(6000);
+        ret.setMagicResist(6000);
         ret.setSpeed(1);
         ret.setLuck(1);
         ret.setCritChance(0);
@@ -292,12 +292,12 @@ public class TestHelper {
         return ret;
     }
 
-    public static PositionedHero createBasicPositionedHero(FormationPosition battlePositionType, BattleHero hero) {
-        return new PositionedHero(battlePositionType, hero);
+    public static BattlePositionedHero createBasicPositionedHero(FormationPosition battlePositionType, BattleHero hero) {
+        return new BattlePositionedHero(battlePositionType, hero);
     }
 
-    public static Formation createBasicFormation(PositionedHero... heroes) {
-        return new Formation(heroes);
+    public static BattleFormation createBasicFormation(BattlePositionedHero... heroes) {
+        return new BattleFormation(heroes);
     }
 
     public static Item createBasicChest() {

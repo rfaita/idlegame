@@ -1,7 +1,7 @@
 package com.idle.game.core.battle;
 
 import com.idle.game.core.BaseObject;
-import com.idle.game.core.formation.Formation;
+import com.idle.game.core.formation.BattleFormation;
 import com.idle.game.core.hero.BattleHero;
 import com.idle.game.core.constant.IdleConstants;
 import com.idle.game.core.battle.type.BattleTeamType;
@@ -42,12 +42,12 @@ public class Battle extends BaseObject {
 
     private final List<BattleLog> battleLog;
     private Integer turn = 1;
-    private final Formation attackFormation;
-    private final Formation defenseFormation;
+    private final BattleFormation attackFormation;
+    private final BattleFormation defenseFormation;
     private final List<BattlePositionedHero> battlePositionedHeroes;
-    private Formation winner;
+    private BattleFormation winner;
 
-    public Battle(Formation attackForm, Formation defenseForm) throws Exception {
+    public Battle(BattleFormation attackForm, BattleFormation defenseForm) {
         assert attackForm != null : "Attack formation can not be null, BUG";
         assert defenseForm != null : "Defense formation can not be null, BUG";
 
@@ -59,24 +59,24 @@ public class Battle extends BaseObject {
         this.battlePositionedHeroes = new ArrayList<>();
 
         this.attackFormation.getHeroes().forEach((t) -> {
-            this.battlePositionedHeroes.add(new BattlePositionedHero(BattleTeamType.ATTACK_TEAM, t.getBattlePosition(), t.getHero()));
+            this.battlePositionedHeroes.add(new BattlePositionedHero(BattleTeamType.ATTACK_TEAM, t.getPosition(), t.getHero()));
         });
         this.defenseFormation.getHeroes().forEach((t) -> {
-            this.battlePositionedHeroes.add(new BattlePositionedHero(BattleTeamType.DEFENSE_TEAM, t.getBattlePosition(), t.getHero()));
+            this.battlePositionedHeroes.add(new BattlePositionedHero(BattleTeamType.DEFENSE_TEAM, t.getPosition(), t.getHero()));
         });
 
         this.battleLog = new ArrayList<>();
     }
 
-    public Formation getAttackFormation() {
+    public BattleFormation getAttackFormation() {
         return this.attackFormation;
     }
 
-    public Formation getDefenseFormation() {
+    public BattleFormation getDefenseFormation() {
         return this.defenseFormation;
     }
 
-    public Formation getWinner() {
+    public BattleFormation getWinner() {
         return winner;
     }
 
@@ -92,73 +92,73 @@ public class Battle extends BaseObject {
         return battleLog;
     }
 
-    public Formation doBattle() throws Exception {
-        LOG.log(Level.FINEST, "[battle] INIT");
+    public BattleFormation doBattle() {
+        LOG.log(Level.INFO, "[battle] INIT");
         addBattleLog(new BattleLog(this.turn, new BattleEvent(BATTLE_START)));
         prepareToBattle();
         doTurn();
 
-        LOG.log(Level.FINEST, "[battle] END");
-        LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
-        LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
+        LOG.log(Level.INFO, "[battle] END");
+        LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
+        LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
 
-        LOG.log(Level.FINEST, "[battleLog] {0}", this);
+        LOG.log(Level.INFO, "[battleLog] {0}", this);
         getBattleLog().forEach((BattleLog t) -> {
-            LOG.log(Level.FINEST, "[battleLog] {0}", t);
+            LOG.log(Level.INFO, "[battleLog] {0}", t);
         });
 
         return winner;
 
     }
 
-    private void doTurn() throws Exception {
+    private void doTurn() {
 
         Boolean lastTurn = Boolean.FALSE;
 
-        LOG.log(Level.FINEST, "[turn] INIT {0}", turn);
+        LOG.log(Level.INFO, "[turn] INIT {0}", turn);
 
         List<BattlePositionedHero> turnActionRated = getTurnActionRated();
-        LOG.log(Level.FINEST, "[turnActionRated] {0}", turnActionRated);
-        LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
+        LOG.log(Level.INFO, "[turnActionRated] {0}", turnActionRated);
+        LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
 
-        LOG.log(Level.FINEST, "[prepareToTurn] INIT");
+        LOG.log(Level.INFO, "[prepareToTurn] INIT");
         prepareToTurn(turnActionRated);
-        LOG.log(Level.FINEST, "[prepareToTurn] END");
-        LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
+        LOG.log(Level.INFO, "[prepareToTurn] END");
+        LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
 
-        LOG.log(Level.FINEST, "[passives] INIT");
+        LOG.log(Level.INFO, "[passives] INIT");
         computePassives(turnActionRated);
-        LOG.log(Level.FINEST, "[passives] END");
-        LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
+        LOG.log(Level.INFO, "[passives] END");
+        LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
 
-        LOG.log(Level.FINEST, "[buffs] INIT");
+        LOG.log(Level.INFO, "[buffs] INIT");
         computeBuffs(turnActionRated);
-        LOG.log(Level.FINEST, "[buffs] END");
-        LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
+        LOG.log(Level.INFO, "[buffs] END");
+        LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
 
-        LOG.log(Level.FINEST, "[actions] INIT");
+        LOG.log(Level.INFO, "[actions] INIT");
 
         if (this.winner == null) {
             for (int i = 0; i < turnActionRated.size(); i++) {
-                LOG.log(Level.FINEST, "[action] INIT {0}", turnActionRated.get(i));
+                LOG.log(Level.INFO, "[action] INIT {0}", turnActionRated.get(i));
                 doAction(turnActionRated.get(i));
-                LOG.log(Level.FINEST, "[action] END");
-                LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
+                LOG.log(Level.INFO, "[action] END");
+                LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
             }
         }
-        LOG.log(Level.FINEST, "[actions] END");
-        LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
+        LOG.log(Level.INFO, "[actions] END");
+        LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
 
-        LOG.log(Level.FINEST, "[turn] {0} END", turn);
-        LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
+        LOG.log(Level.INFO, "[turn] {0} END", turn);
+        LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
 
-        LOG.log(Level.FINEST, "[event=VERIFY_WINNER] INIT");
+        LOG.log(Level.INFO, "[event=VERIFY_WINNER] INIT");
         this.winner = verifyWinner();
-        LOG.log(Level.FINEST, "[event=VERIFY_WINNER] {0}", this.winner);
-        LOG.log(Level.FINEST, "[event=VERIFY_WINNER] END");
-        LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
+        LOG.log(Level.INFO, "[event=VERIFY_WINNER] {0}", this.winner);
+        LOG.log(Level.INFO, "[event=VERIFY_WINNER] END");
+        LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
 
-        LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
+        LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
         if (this.winner == null) {
             if (this.turn < IdleConstants.TURN_LIMIT) {
                 this.turn++;
@@ -172,15 +172,15 @@ public class Battle extends BaseObject {
         }
 
         if (lastTurn) {
-            LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
-            LOG.log(Level.FINEST, "[event=WINNER] WINNER: {0} on turn: {1}", new Object[]{this.winner, this.turn});
-            LOG.log(Level.FINEST, IdleConstants.LOG_DELIMITER);
+            LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
+            LOG.log(Level.INFO, "[event=WINNER] WINNER: {0} on turn: {1}", new Object[]{this.winner, this.turn});
+            LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
             this.addBattleLog(new BattleLog(this.turn, new BattleEvent(BATTLE_END)));
         }
 
     }
 
-    private Formation verifyWinner() {
+    private BattleFormation verifyWinner() {
         if (getHeroesByBattleTeamTypeCanDoAction(ATTACK_TEAM).count() <= 0) {
             return defenseFormation;
         } else if (getHeroesByBattleTeamTypeCanDoAction(DEFENSE_TEAM).count() <= 0) {
@@ -192,12 +192,12 @@ public class Battle extends BaseObject {
     private void doAction(BattlePositionedHero aPositionedHero) {
 
         if (aPositionedHero.getHero().getCurrHp() <= 0) {
-            LOG.log(Level.FINEST, "[event=HERO_HEAD] HERO DEAD! SKIPPING");
+            LOG.log(Level.INFO, "[event=HERO_HEAD] HERO DEAD! SKIPPING");
             return;
         }
 
         if (!aPositionedHero.getHero().getCanDoAction()) {
-            LOG.log(Level.FINEST, "[event=HERO_CAN_NOT_DO_ACTION] SKIPPING");
+            LOG.log(Level.INFO, "[event=HERO_CAN_NOT_DO_ACTION] SKIPPING");
             return;
         }
 
@@ -215,7 +215,7 @@ public class Battle extends BaseObject {
             }
         }
 
-        LOG.log(Level.FINEST, "[event=ACTION] {0}", action);
+        LOG.log(Level.INFO, "[event=ACTION] {0}", action);
 
         calculateAction(aPositionedHero, action);
 
@@ -230,7 +230,7 @@ public class Battle extends BaseObject {
                 && DiceUtil.random(100) <= aHero.getCurrCritChance()) {
             dmgModifier += aHero.getCurrCritDamage() / 100d;
             ret.setSubType(SubActionType.CRITICAL);
-            LOG.log(Level.FINEST, "[event=CRITICAL, value={0}] CRITICAL, MODIFIER {0}", dmgModifier);
+            LOG.log(Level.INFO, "[event=CRITICAL, value={0}] CRITICAL, MODIFIER {0}", dmgModifier);
         }
 
         return dmgModifier;
@@ -251,13 +251,13 @@ public class Battle extends BaseObject {
             tPositionedHero.getHero().setCurrHp(0);
             tPositionedHero.setEnergy(0);
             be.setSubType(DEATH);
-            LOG.log(Level.FINEST, "[event=DMG_TO_DIE, value={0}] DMG {0} TO HERO, HE DIE {1}", new Object[]{be.getValue(), tPositionedHero});
+            LOG.log(Level.INFO, "[event=DMG_TO_DIE, value={0}] DMG {0} TO HERO, HE DIE {1}", new Object[]{be.getValue(), tPositionedHero});
         } else {
             tPositionedHero.getHero().setCurrHp(newHp);
             if (tPositionedHero.getEnergy() < IdleConstants.MAX_ENERGY) {
                 tPositionedHero.setEnergy(tPositionedHero.getEnergy() + IdleConstants.ENERGY_GAIN_ON_ATTACK);
             }
-            LOG.log(Level.FINEST, "[event=DMG, value={0}] DMG {0} TO HERO {1}", new Object[]{be.getValue(), tPositionedHero});
+            LOG.log(Level.INFO, "[event=DMG, value={0}] DMG {0} TO HERO {1}", new Object[]{be.getValue(), tPositionedHero});
         }
 
     }
@@ -268,7 +268,7 @@ public class Battle extends BaseObject {
         be.setDamageType(ae.getDamageType());
 
         aPositionedHero.getHero().setCurrHp(aPositionedHero.getHero().getCurrHp() + be.getValue());
-        LOG.log(Level.FINEST, "[event=HEAL, value={0}] HEAL {0} TO HERO {1}", new Object[]{be.getValue(), aPositionedHero.getHero()});
+        LOG.log(Level.INFO, "[event=HEAL, value={0}] HEAL {0} TO HERO {1}", new Object[]{be.getValue(), aPositionedHero.getHero()});
 
     }
 
@@ -276,7 +276,7 @@ public class Battle extends BaseObject {
         assert ae.getTargetType() != null : "Target of action can not be null, BUG";
 
         List<BattlePositionedHero> targets = getTargetsOfActionEffect(ae, aPositionedHero.getBattleTeamType());
-
+        
         if (targets != null && !targets.isEmpty()) {
 
             final Integer energyGain = IdleConstants.ENERGY_GAIN_DOING_ATTACK / targets.size();
@@ -302,11 +302,15 @@ public class Battle extends BaseObject {
                         aPositionedHero.setEnergy(aPositionedHero.getEnergy() + energyGain);
                     }
 
+                    if (special) {
+                        aPositionedHero.setEnergy(IdleConstants.MIN_ENERGY);
+                    }
+
                     calculateBuffs(aPositionedHero, ae, tPositionedHero);
 
                 } else {
                     be.setSubType(SubActionType.DODGE);
-                    LOG.log(Level.FINEST, "[event=DODGE] DODGE");
+                    LOG.log(Level.INFO, "[event=DODGE] DODGE");
                 }
 
                 addBattleLog(new BattleLog(this.turn, aPositionedHero.duplicate(), be, tPositionedHero.duplicate()));
@@ -317,7 +321,7 @@ public class Battle extends BaseObject {
 
     private void calculateAction(BattlePositionedHero aPositionedHero, Action a) {
         final ActionEffect actionMainEffect = a.getMainActionEffect();
-        LOG.log(Level.FINEST, "[event=ACTION_EFFECT] {0}", actionMainEffect);
+        LOG.log(Level.INFO, "[event=ACTION_EFFECT] {0}", actionMainEffect);
 
         calculateActionEffect(aPositionedHero, actionMainEffect, a.getSpecial());
 
@@ -328,7 +332,7 @@ public class Battle extends BaseObject {
 
         if (secondaryActions != null) {
             secondaryActions.forEach((sa) -> {
-                LOG.log(Level.FINEST, "[event=SECONDARY_ACTION_EFFECT] {0}", sa);
+                LOG.log(Level.INFO, "[event=SECONDARY_ACTION_EFFECT] {0}", sa);
 
                 calculateActionEffect(aPositionedHero, sa, a.getSpecial());
             });
@@ -417,17 +421,17 @@ public class Battle extends BaseObject {
                 break;
         }
 
-        LOG.log(Level.FINEST, "[target] {0}", targets);
+        LOG.log(Level.INFO, "[target] {0}", targets);
 
         return targets;
     }
 
     private Double getDmgMagicResistReduction(BattleHero h) {
-        return 100d / (100d + h.getCurrMagicResist());
+        return 6000d / (6000d + h.getCurrMagicResist());
     }
 
     private Double getDmgAmorReduction(BattleHero h) {
-        return 100d / (100d + h.getCurrArmor());
+        return 6000d / (6000d + h.getCurrArmor());
     }
 
     private BattlePositionedHero getHeroLessLifePerc(BattleTeamType battleTeamType) {
@@ -486,7 +490,7 @@ public class Battle extends BaseObject {
 
         if (size > 0) {
             Optional<BattlePositionedHero> ret = getHeroesByBattleTeamTypeCanDoAction(battleTeamType)
-                    .skip(DiceUtil.random(size)).findFirst();
+                    .skip(DiceUtil.random(size - 1)).findFirst();
             try {
                 return ret.get();
             } catch (NoSuchElementException e) {
@@ -500,7 +504,7 @@ public class Battle extends BaseObject {
 
         Optional<BattlePositionedHero> ret = getHeroesByBattleTeamTypeCanDoAction(battleTeamType)
                 .sorted((BattlePositionedHero t, BattlePositionedHero t1) -> {
-                    return t1.getBattlePosition().getOrder() - t.getBattlePosition().getOrder();
+                    return t1.getPosition().getOrder() - t.getPosition().getOrder();
                 }).findFirst();
 
         try {
@@ -512,14 +516,14 @@ public class Battle extends BaseObject {
 
     private List<BattlePositionedHero> getBackLinePositionedHeroes(BattleTeamType battleTeamType) {
         return this.getHeroesByBattleTeamTypeCanDoAction(battleTeamType).filter((ph) -> {
-            return ph.getBattlePosition().getType().equals(BACK);
+            return ph.getPosition().getType().equals(BACK);
         }).collect(Collectors.toList());
 
     }
 
     private List<BattlePositionedHero> getFrontLinePositionedHeroes(BattleTeamType battleTeamType) {
         return this.getHeroesByBattleTeamTypeCanDoAction(battleTeamType).filter((ph) -> {
-            return ph.getBattlePosition().getType().equals(FRONT);
+            return ph.getPosition().getType().equals(FRONT);
         }).collect(Collectors.toList());
     }
 
@@ -553,6 +557,7 @@ public class Battle extends BaseObject {
     public void prepareToBattle() {
         this.battlePositionedHeroes.forEach((h) -> {
             h.getHero().prepareToBattle();
+            h.setEnergy(IdleConstants.ENERGY_GAIN_ON_BATTLE_START);
         });
     }
 
@@ -562,7 +567,7 @@ public class Battle extends BaseObject {
         });
     }
 
-    private void computePassives(List<BattlePositionedHero> bphs) throws Exception {
+    private void computePassives(List<BattlePositionedHero> bphs) {
         bphs.forEach((h) -> {
             h.getHero().calcPassives();
         });

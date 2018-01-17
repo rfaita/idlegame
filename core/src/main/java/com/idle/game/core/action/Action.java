@@ -1,6 +1,7 @@
 package com.idle.game.core.action;
 
 import com.idle.game.core.BaseObject;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ public class Action extends BaseObject {
 
     private Boolean special = Boolean.FALSE;
     private ActionEffect mainActionEffect;
-    private List<ActionEffect> secundaryActionsEffects;
+    private List<ActionEffect> secundaryActionsEffects = new ArrayList<>();
 
     public Action() {
     }
@@ -56,7 +57,7 @@ public class Action extends BaseObject {
 
     @Override
     public String toString() {
-        return "SS{" + "ma=" + mainActionEffect + ", sas=" + secundaryActionsEffects + '}';
+        return (special ? "AS" : "A") + "{" + "ma=" + mainActionEffect + ", sas=" + secundaryActionsEffects + '}';
     }
 
 }

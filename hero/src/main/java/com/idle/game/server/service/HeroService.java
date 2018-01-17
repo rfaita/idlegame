@@ -1,16 +1,19 @@
 package com.idle.game.server.service;
 
 import static com.idle.game.constant.CacheConstants.BATTLE_HERO_FIND_BY_ID;
-import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_ID;
 import static com.idle.game.constant.CacheConstants.HERO_FIND_BY_ID;
 import com.idle.game.core.constant.IdleConstants;
-import com.idle.game.core.type.HeroQuality;
+import static com.idle.game.core.constant.IdleConstants.LOG;
+import com.idle.game.core.hero.type.HeroQuality;
+import com.idle.game.core.hero.type.HeroTypeFaction;
+import com.idle.game.core.hero.type.HeroTypeQuality;
 import com.idle.game.core.util.DiceUtil;
 import com.idle.game.helper.HeroTypeHelper;
 import com.idle.game.model.mongo.Hero;
 import com.idle.game.model.mongo.HeroType;
 import com.idle.game.server.repository.HeroRepository;
 import java.util.List;
+import java.util.logging.Level;
 import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -38,9 +41,14 @@ public class HeroService {
         return heroRepository.findById(id);
     }
 
-    public List<Hero> findByAllByPlayer(String idPlayer) {
+    public List<Hero> findAllByPlayer(String idPlayer) {
 
         return heroRepository.findAllByPlayer(idPlayer);
+    }
+
+    public List<Hero> findAllByPlayerAndQuality(String idPlayer, HeroQuality quality) {
+
+        return heroRepository.findAllByPlayerAndQuality(idPlayer, quality);
     }
 
     @Caching(put
@@ -74,14 +82,31 @@ public class HeroService {
     }
 
     public Hero rollHero(String player) {
+        return rollHero(player, null);
+    }
 
-        List<HeroType> heroTypes = heroTypeHelper.getHeroTypeByHeroTypeQuality(DiceUtil.randomHeroTypeQuality());
+    public Hero rollHero(String player, String customHeroType) {
 
-        if (heroTypes == null || heroTypes.isEmpty()) {
-            throw new ValidationException("hero.type.not.found");
+        HeroType heroType;
+        
+        if (customHeroType == null) {
+            HeroTypeFaction faction = DiceUtil.randomHeroTypeFaction();
+            HeroTypeQuality quality = DiceUtil.randomHeroTypeQuality();
+
+            List<HeroType> heroTypes = heroTypeHelper.getHeroTypeByFactionAndQuality(
+                    faction, quality
+            );
+
+            if (heroTypes == null || heroTypes.isEmpty()) {
+                LOG.log(Level.SEVERE, "Hero Type not found for, FACTION: {0}, QUALITY: {1}", new Object[]{faction, quality});
+                throw new ValidationException("hero.type.not.found");
+            }
+
+            heroType = heroTypes.get(DiceUtil.random(heroTypes.size() - 1));
+
+        } else {
+            heroType = heroTypeHelper.getHeroTypeById(customHeroType);
         }
-
-        HeroType heroType = heroTypes.get(0);
 
         HeroQuality heroQuality = DiceUtil.randomHeroQuality();
 
@@ -103,7 +128,7 @@ public class HeroService {
         }
 
         hero.setPlayer(player);
-        hero.setHeroQuality(heroQuality);
+        hero.setQuality(heroQuality);
         hero.setLevel(1);
         hero.setHeroType(heroType.getId());
 
@@ -127,15 +152,15 @@ public class HeroService {
         ret.setBaseMagicResist(DiceUtil.randomAttribute(hq, ht.getMinBaseMagicResist(), ht.getMaxBaseMagicResist()));
         ret.setBaseSpeed(DiceUtil.randomAttribute(hq, ht.getMinBaseSpeed(), ht.getMaxBaseSpeed()));
 
-        ret.setMaxLevelUpIncArmor(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelUpIncArmor(), ht.getMaxMaxLevelUpIncArmor()));
-        ret.setMaxLevelUpIncCritChance(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelUpIncCritChance(), ht.getMaxMaxLevelUpIncCritChance()));
-        ret.setMaxLevelUpIncCritDamage(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelUpIncCritDamage(), ht.getMaxMaxLevelUpIncCritDamage()));
-        ret.setMaxLevelUpIncDmg(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelUpIncDmg(), ht.getMaxMaxLevelUpIncDmg()));
-        ret.setMaxLevelUpIncDodgeChance(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelUpIncDodgeChance(), ht.getMaxMaxLevelUpIncDodgeChance()));
-        ret.setMaxLevelUpIncHp(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelUpIncHp(), ht.getMaxMaxLevelUpIncHp()));
-        ret.setMaxLevelUpIncLuck(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelUpIncLuck(), ht.getMaxMaxLevelUpIncLuck()));
-        ret.setMaxLevelUpIncMagicResist(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelUpIncMagicResist(), ht.getMaxMaxLevelUpIncMagicResist()));
-        ret.setMaxLevelUpIncSpeed(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelUpIncSpeed(), ht.getMaxMaxLevelUpIncSpeed()));
+        ret.setMaxLevelArmor(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelArmor(), ht.getMaxMaxLevelArmor()));
+        ret.setMaxLevelCritChance(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelCritChance(), ht.getMaxMaxLevelCritChance()));
+        ret.setMaxLevelCritDamage(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelCritDamage(), ht.getMaxMaxLevelCritDamage()));
+        ret.setMaxLevelDmg(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelDmg(), ht.getMaxMaxLevelDmg()));
+        ret.setMaxLevelDodgeChance(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelDodgeChance(), ht.getMaxMaxLevelDodgeChance()));
+        ret.setMaxLevelHp(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelHp(), ht.getMaxMaxLevelHp()));
+        ret.setMaxLevelLuck(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelLuck(), ht.getMaxMaxLevelLuck()));
+        ret.setMaxLevelMagicResist(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelMagicResist(), ht.getMaxMaxLevelMagicResist()));
+        ret.setMaxLevelSpeed(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelSpeed(), ht.getMaxMaxLevelSpeed()));
 
         return ret;
     }
@@ -154,15 +179,15 @@ public class HeroService {
         ret.setBaseMagicResist((int) (heroType.getMaxBaseMagicResist()));
         ret.setBaseSpeed((int) (heroType.getMaxBaseSpeed()));
 
-        ret.setMaxLevelUpIncArmor((int) (heroType.getMaxMaxLevelUpIncArmor()));
-        ret.setMaxLevelUpIncCritChance((int) (heroType.getMaxMaxLevelUpIncCritChance()));
-        ret.setMaxLevelUpIncCritDamage((int) (heroType.getMaxMaxLevelUpIncCritDamage()));
-        ret.setMaxLevelUpIncDmg((int) (heroType.getMaxMaxLevelUpIncDmg()));
-        ret.setMaxLevelUpIncDodgeChance((int) (heroType.getMaxMaxLevelUpIncDodgeChance()));
-        ret.setMaxLevelUpIncHp((int) (heroType.getMaxMaxLevelUpIncHp()));
-        ret.setMaxLevelUpIncLuck((int) (heroType.getMaxMaxLevelUpIncLuck()));
-        ret.setMaxLevelUpIncMagicResist((int) (heroType.getMaxMaxLevelUpIncMagicResist()));
-        ret.setMaxLevelUpIncSpeed((int) (heroType.getMaxMaxLevelUpIncSpeed()));
+        ret.setMaxLevelArmor((int) (heroType.getMaxMaxLevelArmor()));
+        ret.setMaxLevelCritChance((int) (heroType.getMaxMaxLevelCritChance()));
+        ret.setMaxLevelCritDamage((int) (heroType.getMaxMaxLevelCritDamage()));
+        ret.setMaxLevelDmg((int) (heroType.getMaxMaxLevelDmg()));
+        ret.setMaxLevelDodgeChance((int) (heroType.getMaxMaxLevelDodgeChance()));
+        ret.setMaxLevelHp((int) (heroType.getMaxMaxLevelHp()));
+        ret.setMaxLevelLuck((int) (heroType.getMaxMaxLevelLuck()));
+        ret.setMaxLevelMagicResist((int) (heroType.getMaxMaxLevelMagicResist()));
+        ret.setMaxLevelSpeed((int) (heroType.getMaxMaxLevelSpeed()));
 
         return ret;
     }
@@ -181,15 +206,15 @@ public class HeroService {
         ret.setBaseMagicResist((int) (heroType.getMaxBaseMagicResist() * (1d + (DiceUtil.random(10) / 100d))));
         ret.setBaseSpeed((int) (heroType.getMaxBaseSpeed() * (1d + (DiceUtil.random(10) / 100d))));
 
-        ret.setMaxLevelUpIncArmor((int) (heroType.getMaxMaxLevelUpIncArmor() * (1d + (DiceUtil.random(10) / 100d))));
-        ret.setMaxLevelUpIncCritChance((int) (heroType.getMaxMaxLevelUpIncCritChance() * (1d + (DiceUtil.random(10) / 100d))));
-        ret.setMaxLevelUpIncCritDamage((int) (heroType.getMaxMaxLevelUpIncCritDamage() * (1d + (DiceUtil.random(10) / 100d))));
-        ret.setMaxLevelUpIncDmg((int) (heroType.getMaxMaxLevelUpIncDmg() * (1d + (DiceUtil.random(10) / 100d))));
-        ret.setMaxLevelUpIncDodgeChance((int) (heroType.getMaxMaxLevelUpIncDodgeChance() * (1d + (DiceUtil.random(10) / 100d))));
-        ret.setMaxLevelUpIncHp((int) (heroType.getMaxMaxLevelUpIncHp() * (1d + (DiceUtil.random(10) / 100d))));
-        ret.setMaxLevelUpIncLuck((int) (heroType.getMaxMaxLevelUpIncLuck() * (1d + (DiceUtil.random(10) / 100d))));
-        ret.setMaxLevelUpIncMagicResist((int) (heroType.getMaxMaxLevelUpIncMagicResist() * (1d + (DiceUtil.random(10) / 100d))));
-        ret.setMaxLevelUpIncSpeed((int) (heroType.getMaxMaxLevelUpIncSpeed() * (1d + (DiceUtil.random(10) / 100d))));
+        ret.setMaxLevelArmor((int) (heroType.getMaxMaxLevelArmor() * (1d + (DiceUtil.random(10) / 100d))));
+        ret.setMaxLevelCritChance((int) (heroType.getMaxMaxLevelCritChance() * (1d + (DiceUtil.random(10) / 100d))));
+        ret.setMaxLevelCritDamage((int) (heroType.getMaxMaxLevelCritDamage() * (1d + (DiceUtil.random(10) / 100d))));
+        ret.setMaxLevelDmg((int) (heroType.getMaxMaxLevelDmg() * (1d + (DiceUtil.random(10) / 100d))));
+        ret.setMaxLevelDodgeChance((int) (heroType.getMaxMaxLevelDodgeChance() * (1d + (DiceUtil.random(10) / 100d))));
+        ret.setMaxLevelHp((int) (heroType.getMaxMaxLevelHp() * (1d + (DiceUtil.random(10) / 100d))));
+        ret.setMaxLevelLuck((int) (heroType.getMaxMaxLevelLuck() * (1d + (DiceUtil.random(10) / 100d))));
+        ret.setMaxLevelMagicResist((int) (heroType.getMaxMaxLevelMagicResist() * (1d + (DiceUtil.random(10) / 100d))));
+        ret.setMaxLevelSpeed((int) (heroType.getMaxMaxLevelSpeed() * (1d + (DiceUtil.random(10) / 100d))));
 
         return ret;
     }

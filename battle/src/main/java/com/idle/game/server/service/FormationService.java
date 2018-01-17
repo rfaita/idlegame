@@ -1,8 +1,9 @@
 package com.idle.game.server.service;
 
 import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_ID;
-import com.idle.game.core.formation.PositionedHero;
+import com.idle.game.core.battle.BattlePositionedHero;
 import com.idle.game.core.formation.type.FormationAllocation;
+import com.idle.game.helper.BattleHeroHelper;
 import com.idle.game.helper.HeroHelper;
 import com.idle.game.model.mongo.Formation;
 import com.idle.game.model.mongo.Hero;
@@ -35,13 +36,30 @@ public class FormationService {
     @Autowired
     private HeroHelper heroHelper;
 
+    @Autowired
+    private BattleHeroHelper battleHeroHelper;
+
     @Cacheable(value = FORMATION_FIND_BY_ID, key = "'" + FORMATION_FIND_BY_ID + "' + #id")
     public Formation findById(String id) {
-        return formationRepository.findById(id);
+
+        Formation ret = formationRepository.findById(id);
+
+        ret.getHeroes().forEach((h) -> {
+            h.setHero(battleHeroHelper.getBattleHeroById(h.getHero().getId()));
+        });
+
+        return ret;
     }
 
     public Formation findByPlayerAndFormationAllocation(String player, FormationAllocation fa) {
-        return formationRepository.findByPlayerAndFormationAllocation(player, fa);
+
+        Formation ret = formationRepository.findByPlayerAndFormationAllocation(player, fa);
+
+        ret.getHeroes().forEach((h) -> {
+            h.setHero(battleHeroHelper.getBattleHeroById(h.getHero().getId()));
+        });
+
+        return ret;
     }
 
     private void validateSave(Formation f) {
@@ -53,7 +71,7 @@ public class FormationService {
 
         List<Hero> heroes = heroHelper.getHeroesByPlayer(f.getPlayer());
 
-        for (PositionedHero ph : f.getHeroes()) {
+        for (BattlePositionedHero ph : f.getHeroes()) {
             Boolean contains = Boolean.FALSE;
             for (Hero h : heroes) {
                 if (h.getId().equals(ph.getHero().getId())) {
@@ -79,7 +97,9 @@ public class FormationService {
             f.setId(fFind.getId());
         }
 
-        return formationRepository.save(f);
+        f = formationRepository.save(f);
+
+        return findById(f.getId());
 
     }
 

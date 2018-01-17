@@ -1,7 +1,7 @@
 package com.idle.game.model.mongo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.idle.game.core.formation.PositionedHero;
+import com.idle.game.core.battle.BattlePositionedHero;
 import com.idle.game.core.formation.type.FormationAllocation;
 import java.io.Serializable;
 import java.util.List;
@@ -22,7 +22,7 @@ public class Formation implements Serializable {
     private String id;
     private String player;
     @Size(min = 1, max = 6, message = "formation.min.size.max.size")
-    private List<PositionedHero> heroes;
+    private List<BattlePositionedHero> heroes;
     @NotNull(message = "formation.allocation.can.not.be.null")
     private FormationAllocation formationAllocation;
     private String nextLevelFormation;
@@ -47,11 +47,11 @@ public class Formation implements Serializable {
         this.player = player;
     }
 
-    public List<PositionedHero> getHeroes() {
+    public List<BattlePositionedHero> getHeroes() {
         return heroes;
     }
 
-    public void setHeroes(List<PositionedHero> heroes) {
+    public void setHeroes(List<BattlePositionedHero> heroes) {
         this.heroes = heroes;
     }
 

@@ -1,6 +1,7 @@
 package com.idle.game.server.rest;
 
-import com.idle.game.core.type.HeroTypeQuality;
+import com.idle.game.constant.URIConstants;
+import com.idle.game.core.hero.type.HeroTypeQuality;
 import com.idle.game.model.mongo.HeroType;
 import com.idle.game.server.dto.Envelope;
 import com.idle.game.server.service.HeroTypeService;
@@ -11,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import static com.idle.game.constant.URIConstants.HERO__FIND_ALL_BY_HERO_TYPE_QUALITY;
+import com.idle.game.core.hero.type.HeroTypeFaction;
+import static com.idle.game.constant.URIConstants.HEROTYPE__FIND_ALL_BY_QUALITY;
 
 @RestController
 @RequestMapping("/heroType")
@@ -42,12 +44,34 @@ public class HeroTypeRest {
 
     }
 
-    @RequestMapping(path = "/" + HERO__FIND_ALL_BY_HERO_TYPE_QUALITY + "/{quality}", method = RequestMethod.GET)
+    @RequestMapping(path = "/" + HEROTYPE__FIND_ALL_BY_QUALITY + "/{quality}", method = RequestMethod.GET)
     public @ResponseBody
-    Envelope<List<HeroType>> findAllByHeroTypeQuality(@PathVariable("quality") String quality) {
+    Envelope<List<HeroType>> findAllByQuality(@PathVariable("quality") String quality) {
 
         Envelope<List<HeroType>> ret = new Envelope<>();
-        ret.setData(heroTypeService.findAllByHeroTypeQuality(HeroTypeQuality.valueOf(quality)));
+        ret.setData(heroTypeService.findAllByQuality(HeroTypeQuality.valueOf(quality)));
+
+        return ret;
+
+    }
+
+    @RequestMapping(path = "/" + URIConstants.HEROTYPE__FIND_ALL_BY_FACTION + "/{faction}", method = RequestMethod.GET)
+    public @ResponseBody
+    Envelope<List<HeroType>> findAllByFaction(@PathVariable("faction") String faction) {
+
+        Envelope<List<HeroType>> ret = new Envelope<>();
+        ret.setData(heroTypeService.findAllByFaction(HeroTypeFaction.valueOf(faction)));
+
+        return ret;
+
+    }
+
+    @RequestMapping(path = "/" + URIConstants.HEROTYPE__FIND_ALL_BY_FACTION_AND_QUALITY + "/{faction}/{quality}", method = RequestMethod.GET)
+    public @ResponseBody
+    Envelope<List<HeroType>> findAllByFactionAndQuality(@PathVariable("faction") String faction, @PathVariable("quality") String quality) {
+
+        Envelope<List<HeroType>> ret = new Envelope<>();
+        ret.setData(heroTypeService.findAllByFactionAndQuality(HeroTypeFaction.valueOf(faction), HeroTypeQuality.valueOf(quality)));
 
         return ret;
 

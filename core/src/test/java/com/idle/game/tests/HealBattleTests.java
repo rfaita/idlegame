@@ -4,7 +4,7 @@ import com.idle.game.core.action.type.ActionType;
 import com.idle.game.core.battle.Battle;
 import com.idle.game.core.formation.type.FormationPosition;
 import com.idle.game.core.buff.type.BuffType;
-import com.idle.game.core.formation.Formation;
+import com.idle.game.core.formation.BattleFormation;
 import com.idle.game.core.hero.BattleHero;
 import static com.idle.game.tests.helper.TestHelper.*;
 import junit.framework.Assert;
@@ -22,12 +22,12 @@ public class HealBattleTests {
         BattleHero h1 = createBasicMeleePhysicalNoCritNoDodge200Hp10000SpeedHero();
         h1.getHeroType().setDefaultAction(createBasicHealSpell());
 
-        Formation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
+        BattleFormation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
 
         BattleHero h2 = createBasicMeleePhysicalNoCritNoDodge200Hp10000SpeedHero();
         h2.getHeroType().setDefaultAction(createBasicHealSpell());
 
-        Formation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
+        BattleFormation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
 
         Battle b = new Battle(f1, f2);
 
@@ -55,12 +55,12 @@ public class HealBattleTests {
         BattleHero h1 = createBasicMeleePhysicalNoCritNoDodge200Hp10000SpeedHero();
         h1.getHeroType().setDefaultAction(createHealSpellWithBuff());
 
-        Formation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
+        BattleFormation f1 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h1));
 
         BattleHero h2 = createBasicMeleePhysicalNoCritNoDodge200Hp10000SpeedHero();
         h2.getHeroType().setDefaultAction(createHealSpellWithBuff());
 
-        Formation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
+        BattleFormation f2 = createBasicFormation(createBasicPositionedHero(FormationPosition.FRONT_1, h2));
 
         Battle b = new Battle(f1, f2);
 

@@ -33,24 +33,24 @@ public class TestHelper {
         ret.setMinBaseSpeed(895);
         ret.setMaxBaseSpeed(1000);
 
-        ret.setMinMaxLevelUpIncArmor(10);
-        ret.setMaxMaxLevelUpIncArmor(15);
-        ret.setMinMaxLevelUpIncCritChance(10);
-        ret.setMaxMaxLevelUpIncCritChance(15);
-        ret.setMinMaxLevelUpIncCritDamage(100);
-        ret.setMaxMaxLevelUpIncCritDamage(150);
-        ret.setMinMaxLevelUpIncDmg(1000);
-        ret.setMaxMaxLevelUpIncDmg(1500);
-        ret.setMinMaxLevelUpIncDodgeChance(10);
-        ret.setMaxMaxLevelUpIncDodgeChance(15);
-        ret.setMinMaxLevelUpIncHp(10000);
-        ret.setMaxMaxLevelUpIncHp(16500);
-        ret.setMinMaxLevelUpIncLuck(1);
-        ret.setMaxMaxLevelUpIncLuck(2);
-        ret.setMinMaxLevelUpIncMagicResist(155);
-        ret.setMaxMaxLevelUpIncMagicResist(233);
-        ret.setMinMaxLevelUpIncSpeed(895);
-        ret.setMaxMaxLevelUpIncSpeed(1000);
+        ret.setMinMaxLevelArmor(10);
+        ret.setMaxMaxLevelArmor(15);
+        ret.setMinMaxLevelCritChance(10);
+        ret.setMaxMaxLevelCritChance(15);
+        ret.setMinMaxLevelCritDamage(100);
+        ret.setMaxMaxLevelCritDamage(150);
+        ret.setMinMaxLevelDmg(1000);
+        ret.setMaxMaxLevelDmg(1500);
+        ret.setMinMaxLevelDodgeChance(10);
+        ret.setMaxMaxLevelDodgeChance(15);
+        ret.setMinMaxLevelHp(10000);
+        ret.setMaxMaxLevelHp(16500);
+        ret.setMinMaxLevelLuck(1);
+        ret.setMaxMaxLevelLuck(2);
+        ret.setMinMaxLevelMagicResist(155);
+        ret.setMaxMaxLevelMagicResist(233);
+        ret.setMinMaxLevelSpeed(895);
+        ret.setMaxMaxLevelSpeed(1000);
 
         return ret;
     }
