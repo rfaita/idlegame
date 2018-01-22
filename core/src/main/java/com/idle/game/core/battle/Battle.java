@@ -19,8 +19,6 @@ import static com.idle.game.core.action.type.ActionType.BATTLE_START;
 import static com.idle.game.core.action.type.ActionType.BUFF_DONE;
 import static com.idle.game.core.formation.type.FormationPositionType.BACK;
 import static com.idle.game.core.formation.type.FormationPositionType.FRONT;
-import static com.idle.game.core.buff.type.BuffType.BUFF;
-import static com.idle.game.core.buff.type.BuffType.DEBUFF;
 import com.idle.game.core.util.DiceUtil;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -102,10 +100,12 @@ public class Battle extends BaseObject {
         LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
         LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
 
+        LOG.log(Level.INFO, "[battleLog] INIT");
         LOG.log(Level.INFO, "[battleLog] {0}", this);
         getBattleLog().forEach((BattleLog t) -> {
             LOG.log(Level.INFO, "[battleLog] {0}", t);
         });
+        LOG.log(Level.INFO, "[battleLog] END");
 
         return winner;
 
@@ -124,11 +124,6 @@ public class Battle extends BaseObject {
         LOG.log(Level.INFO, "[prepareToTurn] INIT");
         prepareToTurn(turnActionRated);
         LOG.log(Level.INFO, "[prepareToTurn] END");
-        LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
-
-        LOG.log(Level.INFO, "[passives] INIT");
-        computePassives(turnActionRated);
-        LOG.log(Level.INFO, "[passives] END");
         LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
 
         LOG.log(Level.INFO, "[buffs] INIT");
@@ -205,7 +200,8 @@ public class Battle extends BaseObject {
 
         Action action;
         if (aPositionedHero.getEnergy() >= IdleConstants.MAX_ENERGY
-                && aHero.getHeroType().getSpecialAction() != null) {
+                && aHero.getHeroType().getSpecialAction() != null
+                && aHero.getCanDoSpecialAction()) {
             action = aHero.getHeroType().getSpecialAction();
         } else {
             if (aHero.getHeroType().getDefaultAction() == null) {
@@ -276,7 +272,7 @@ public class Battle extends BaseObject {
         assert ae.getTargetType() != null : "Target of action can not be null, BUG";
 
         List<BattlePositionedHero> targets = getTargetsOfActionEffect(ae, aPositionedHero.getBattleTeamType());
-        
+
         if (targets != null && !targets.isEmpty()) {
 
             final Integer energyGain = IdleConstants.ENERGY_GAIN_DOING_ATTACK / targets.size();
@@ -343,15 +339,51 @@ public class Battle extends BaseObject {
     private void calculateBuffs(BattlePositionedHero aPositionedHero, ActionEffect ae, BattlePositionedHero tPositionedHero) {
 
         if (ae.getBuffEffects() != null) {
-            ae.getBuffEffects().forEach((buff) -> {
+            ae.getBuffEffects().forEach((be) -> {
 
-                if (buff.getChance() == null
-                        || buff.getChance() == 0
-                        || DiceUtil.random(100) <= buff.getChance()) {
+                if (be.getChance() == null
+                        || be.getChance() == 0
+                        || DiceUtil.random(100) <= be.getChance()) {
 
-                    tPositionedHero.getHero().addBuff(new Buff(buff.getDuration(),
-                            (int) (aPositionedHero.getHero().getCurrDmg() * buff.getPercentage() / 100d),
-                            buff.getActionType(), ae.getDamageType(), buff.getBuffType()));
+                    switch (be.getEffectType()) {
+                        case DMG:
+                            tPositionedHero.getHero().addBuff(
+                                    new Buff(
+                                            be.getDuration(),
+                                            (int) (aPositionedHero.getHero().getCurrDmg() * be.getPercentage() / 100d),
+                                            be.getEffectType(), ae.getDamageType()
+                                    )
+                            );
+                            break;
+                        case HEAL:
+                            tPositionedHero.getHero().addBuff(
+                                    new Buff(
+                                            be.getDuration(),
+                                            (int) (aPositionedHero.getHero().getCurrDmg() * be.getPercentage() / 100d),
+                                            be.getEffectType()
+                                    )
+                            );
+                            break;
+                        case FROZEN:
+                        case STUN:
+                        case SILENCE:
+                            tPositionedHero.getHero().addBuff(
+                                    new Buff(
+                                            be.getDuration(), be.getEffectType()
+                                    )
+                            );
+                            break;
+                        case DECREASE_ATTRIBUTE:
+                        case INCREASE_ATTRIBUTE:
+                            tPositionedHero.getHero().addBuff(
+                                    new Buff(
+                                            be.getDuration(), be.getPercentage(),
+                                            be.getEffectType(), be.getAttributeType()
+                                    ));
+                            break;
+                        default:
+                            break;
+                    }
                 }
             });
 
@@ -567,13 +599,6 @@ public class Battle extends BaseObject {
         });
     }
 
-    private void computePassives(List<BattlePositionedHero> bphs) {
-        bphs.forEach((h) -> {
-            h.getHero().calcPassives();
-        });
-
-    }
-
     private void computeBuffs(List<BattlePositionedHero> bphs) {
 
         for (int i = bphs.size() - 1; i >= 0; i--) {
@@ -589,20 +614,33 @@ public class Battle extends BaseObject {
 
             while (it.hasNext()) {
                 Buff buff = it.next();
-                BattleEvent ret = new BattleEvent(buff.getEffectType(), buff.getValue(), buff.getDamageType());
+                BattleEvent ret = new BattleEvent(buff.getEffectType());
                 switch (buff.getEffectType()) {
                     case HEAL:
                         hero.setCurrHp(hero.getCurrHp() + buff.getValue());
-                        ret.setBuffType(BUFF);
+                        ret.setValue(buff.getValue());
                         break;
                     case DMG:
                         hero.setCurrHp(hero.getCurrHp() - buff.getValue());
-                        ret.setBuffType(DEBUFF);
+                        ret.setDamageType(buff.getDamageType());
+                        ret.setValue(buff.getValue());
                         break;
                     case FROZEN:
                     case STUN:
-                    case SILENCE:
                         hero.setCanDoAction(Boolean.FALSE);
+                        break;
+                    case SILENCE:
+                        hero.setCanDoSpecialAction(Boolean.FALSE);
+                        break;
+                    case INCREASE_ATTRIBUTE:
+                        hero.recalcAttribute(buff.getAttributeType(), buff.getValue(), 1);
+                        ret.setValue(buff.getValue());
+                        ret.setAttributeType(buff.getAttributeType());
+                        break;
+                    case DECREASE_ATTRIBUTE:
+                        hero.recalcAttribute(buff.getAttributeType(), buff.getValue(), -1);
+                        ret.setValue(buff.getValue());
+                        ret.setAttributeType(buff.getAttributeType());
                         break;
 
                 }

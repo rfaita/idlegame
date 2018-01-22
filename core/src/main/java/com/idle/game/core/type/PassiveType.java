@@ -6,6 +6,6 @@ package com.idle.game.core.type;
  */
 public enum PassiveType {
     
-    GENERIC, TRADE_ATTRIBUTE, UNIQUE
+    GENERIC, TRADE_ATTRIBUTE, UNIQUE, DECREASE_ATTRIBUTE, INCREASE_ATTRIBUTE
     
 }

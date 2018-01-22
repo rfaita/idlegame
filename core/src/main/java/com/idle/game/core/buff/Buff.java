@@ -2,8 +2,8 @@ package com.idle.game.core.buff;
 
 import com.idle.game.core.BaseObject;
 import com.idle.game.core.type.DamageType;
-import com.idle.game.core.action.type.ActionType;
-import com.idle.game.core.buff.type.BuffType;
+import com.idle.game.core.buff.type.BuffEffectType;
+import com.idle.game.core.type.AttributeType;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -17,8 +17,16 @@ public class Buff extends BaseObject {
     private Integer currTurn;
     private Integer value;
     private DamageType damageType;
-    private ActionType effectType;
-    private BuffType buffType;
+    private BuffEffectType effectType;
+    private AttributeType attributeType;
+
+    public AttributeType getAttributeType() {
+        return attributeType;
+    }
+
+    public void setAttributeType(AttributeType attributeType) {
+        this.attributeType = attributeType;
+    }
 
     public DamageType getDamageType() {
         return damageType;
@@ -52,24 +60,41 @@ public class Buff extends BaseObject {
         this.value = value;
     }
 
-    public ActionType getEffectType() {
+    public BuffEffectType getEffectType() {
         return effectType;
     }
 
-    public void setEffectType(ActionType effectType) {
+    public void setEffectType(BuffEffectType effectType) {
         this.effectType = effectType;
     }
 
     public Buff() {
     }
 
-    public Buff(Integer turnDuration, Integer value, ActionType effectType, DamageType damageType, BuffType buffType) {
+    private Buff(Integer turnDuration, Integer value, DamageType damageType, BuffEffectType effectType, AttributeType attributeType) {
         this.uuid = UUID.randomUUID();
         this.turnDuration = turnDuration;
         this.value = value;
-        this.effectType = effectType;
-        this.currTurn = 0;
         this.damageType = damageType;
+        this.effectType = effectType;
+        this.attributeType = attributeType;
+        this.currTurn = 0;
+    }
+
+    public Buff(Integer turnDuration, Integer value, BuffEffectType effectType, AttributeType attributeType) {
+        this(turnDuration, value, null, effectType, attributeType);
+    }
+
+    public Buff(Integer turnDuration, Integer value, BuffEffectType effectType) {
+        this(turnDuration, value, null, effectType, null);
+    }
+
+    public Buff(Integer turnDuration, Integer value, BuffEffectType effectType, DamageType damageType) {
+        this(turnDuration, value, damageType, effectType, null);
+    }
+
+    public Buff(Integer turnDuration, BuffEffectType effectType) {
+        this(turnDuration, null, null, effectType, null);
     }
 
     @Override
@@ -99,9 +124,7 @@ public class Buff extends BaseObject {
 
     @Override
     public String toString() {
-        return "B{" + "td=" + turnDuration + ", ct=" + currTurn + ", v=" + value + ", dt=" + damageType + ", et=" + effectType + ", bt=" + buffType + '}';
+        return "B{" + "td=" + turnDuration + ", ct=" + currTurn + ", v=" + value + ", dt=" + damageType + ", et=" + effectType + '}';
     }
-
-    
 
 }

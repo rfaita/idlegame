@@ -2,8 +2,9 @@ package com.idle.game.core.battle;
 
 import com.idle.game.core.type.DamageType;
 import com.idle.game.core.action.type.SubActionType;
-import com.idle.game.core.buff.type.BuffType;
 import com.idle.game.core.action.type.ActionType;
+import com.idle.game.core.buff.type.BuffEffectType;
+import com.idle.game.core.type.AttributeType;
 import java.io.Serializable;
 
 /**
@@ -12,11 +13,30 @@ import java.io.Serializable;
  */
 public class BattleEvent implements Serializable {
 
-    private ActionType type;
-    private SubActionType subType;
+    private ActionType actionType;
+    private BuffEffectType buffEffectType;
     private Integer value;
+
+    private SubActionType subType;
+
     private DamageType damageType;
-    private BuffType buffType;
+    private AttributeType attributeType;
+
+    public AttributeType getAttributeType() {
+        return attributeType;
+    }
+
+    public void setAttributeType(AttributeType attributeType) {
+        this.attributeType = attributeType;
+    }
+
+    public BuffEffectType getBuffEffectType() {
+        return buffEffectType;
+    }
+
+    public void setBuffEffectType(BuffEffectType buffEffectType) {
+        this.buffEffectType = buffEffectType;
+    }
 
     public SubActionType getSubType() {
         return subType;
@@ -26,12 +46,12 @@ public class BattleEvent implements Serializable {
         this.subType = subType;
     }
 
-    public ActionType getType() {
-        return type;
+    public ActionType getActionType() {
+        return actionType;
     }
 
-    public void setType(ActionType type) {
-        this.type = type;
+    public void setActionType(ActionType type) {
+        this.actionType = type;
     }
 
     public Integer getValue() {
@@ -50,37 +70,28 @@ public class BattleEvent implements Serializable {
         this.damageType = damageType;
     }
 
-    public BuffType getBuffType() {
-        return buffType;
-    }
-
-    public void setBuffType(BuffType buffType) {
-        this.buffType = buffType;
-    }
-
     public BattleEvent() {
     }
 
     public BattleEvent(ActionType type) {
-        this.type = type;
+        this.actionType = type;
     }
 
-    public BattleEvent(ActionType type, Integer value, DamageType damageType) {
-        this.type = type;
-        this.value = value;
-        this.damageType = damageType;
-    }
-
-    public BattleEvent(ActionType type, Integer value, DamageType damageType, BuffType buffType) {
-        this.type = type;
-        this.value = value;
-        this.damageType = damageType;
-        this.buffType = buffType;
+    public BattleEvent(BuffEffectType buffEffectType) {
+        this.buffEffectType = buffEffectType;
     }
 
     @Override
     public String toString() {
-        return "BE{" + "t=" + type + ", st=" + subType + ", value=" + value + ", dt=" + damageType + ", bt=" + buffType + '}';
+        if (actionType != null) {
+            return "BE{" + "t=" + actionType + ", st=" + subType + ", value=" + value + ", dt=" + damageType + '}';
+        } else if (damageType != null) {
+            return "BE{" + "bet=" + buffEffectType + ", st=" + subType + ", value=" + value + ", dt=" + damageType + '}';
+        } else if (value != null) {
+            return "BE{" + "bet=" + buffEffectType + ", st=" + subType + ", value=" + value + ", at=" + attributeType + '}';
+        } else {
+            return "BE{" + "bet=" + buffEffectType + ", st=" + subType + ", at=" + attributeType + '}';
+        }
     }
 
 }

@@ -2,10 +2,11 @@ package com.idle.game.core.action;
 
 import com.idle.game.core.action.type.ActionType;
 import com.idle.game.core.BaseObject;
-import com.idle.game.core.buff.type.BuffEffect;
+import com.idle.game.core.buff.BuffEffect;
 import com.idle.game.core.type.DamageType;
 import static com.idle.game.core.type.DamageType.PHYSICAL;
 import com.idle.game.core.type.TargetType;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -70,6 +71,13 @@ public class ActionEffect extends BaseObject {
 
     public void setOverSameTeam(Boolean overSameTeam) {
         this.overSameTeam = overSameTeam;
+    }
+
+    public void addBuffEffect(BuffEffect buffEffect) {
+        if (this.buffEffects == null) {
+            this.buffEffects = new ArrayList<>();
+        }
+        this.buffEffects.add(buffEffect);
     }
 
     public List<BuffEffect> getBuffEffects() {

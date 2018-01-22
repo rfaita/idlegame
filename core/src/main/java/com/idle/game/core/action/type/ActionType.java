@@ -6,6 +6,6 @@ package com.idle.game.core.action.type;
  */
 public enum ActionType {
 
-    BATTLE_START, BATTLE_END, DMG, HEAL, REVIVE, BUFF_DONE, FROZEN, STUN, SILENCE
+    BATTLE_START, BATTLE_END, NONE, DMG, HEAL, REVIVE, BUFF_DONE
 
 }

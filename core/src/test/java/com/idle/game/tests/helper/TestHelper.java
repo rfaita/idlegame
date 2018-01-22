@@ -12,7 +12,8 @@ import com.idle.game.core.action.ActionEffect;
 import com.idle.game.core.action.type.ActionType;
 import static com.idle.game.core.action.type.ActionType.HEAL;
 import com.idle.game.core.battle.BattlePositionedHero;
-import com.idle.game.core.buff.type.BuffEffect;
+import com.idle.game.core.buff.BuffEffect;
+import com.idle.game.core.buff.type.BuffEffectType;
 import static com.idle.game.core.buff.type.BuffType.BUFF;
 import com.idle.game.core.type.DistanceType;
 import com.idle.game.core.type.BattleHeroType;
@@ -326,7 +327,7 @@ public class TestHelper {
         Action healSkill = new Action();
 
         List<BuffEffect> bes = new ArrayList<>();
-        bes.add(new BuffEffect(BUFF, 25, 0, 3, HEAL));
+        bes.add(new BuffEffect(BuffEffectType.HEAL, 25, 0, 3));
 
         healSkill.setMainActionEffect(new ActionEffect(ActionType.HEAL, TargetType.LESS_LIFE, 100, DamageType.MAGIC, Boolean.TRUE, bes));
 

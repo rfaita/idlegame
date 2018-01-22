@@ -6,7 +6,6 @@ import com.idle.game.core.item.Item;
 import com.idle.game.core.buff.Buff;
 import com.idle.game.core.constant.IdleConstants;
 import static com.idle.game.core.constant.IdleConstants.LOG;
-import com.idle.game.core.passive.Passive;
 import com.idle.game.core.type.AttributeType;
 import com.idle.game.core.type.BattleHeroType;
 import java.io.ByteArrayInputStream;
@@ -51,6 +50,7 @@ public class BattleHero implements Serializable {
     private Integer currDodgeChance;
     private Integer currHp;
     private Boolean canDoAction;
+    private Boolean canDoSpecialAction;
 
     private List<Buff> currBuffs;
 
@@ -68,6 +68,14 @@ public class BattleHero implements Serializable {
         this.id = id;
         this.heroType = heroType;
         this.calcAtributtes();
+    }
+
+    public Boolean getCanDoSpecialAction() {
+        return canDoSpecialAction;
+    }
+
+    public void setCanDoSpecialAction(Boolean canDoSpecialAction) {
+        this.canDoSpecialAction = canDoSpecialAction;
     }
 
     public String getId() {
@@ -351,82 +359,58 @@ public class BattleHero implements Serializable {
         LOG.log(Level.INFO, "[prepareToTurn][speed] {0}", this.getCurrSpeed());
         this.setCanDoAction(Boolean.TRUE);
         LOG.log(Level.INFO, "[prepareToTurn][canDoAction] {0}", this.getCanDoAction());
+        this.setCanDoSpecialAction(Boolean.TRUE);
+        LOG.log(Level.INFO, "[prepareToTurn][canDoSpecialAction] {0}", this.getCanDoSpecialAction());
         LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
     }
 
-    private Integer getMissingAttributePercentage(AttributeType at) {
-        switch (at) {
-            case HP:
-                return (int) ((this.getHp() - this.getCurrHp()) * 1d / this.getHp() * 100);
-            default:
-                return 0;
-        }
-
-    }
-
-    private void calcTradeAttribute(AttributeType o, AttributeType d, Integer ratioPercentage) {
-        Double perc = this.getMissingAttributePercentage(o) / 100d * ratioPercentage / 100d;
-        LOG.log(Level.INFO, "[passive][perc] {0}", perc);
+    public void recalcAttribute(AttributeType d, Integer ratioPercentage, Integer signal) {
+        Double perc = ratioPercentage / 100d * signal;
+        LOG.log(Level.INFO, "[recalcAttribute][perc] {0}", perc);
         if (perc > 0) {
             switch (d) {
                 case LUCK:
                     this.setCurrLuck(this.getCurrLuck() + (int) (this.getCurrLuck() * perc));
-                    LOG.log(Level.INFO, "[passive][luck] {0}", this.getCurrLuck());
+                    LOG.log(Level.INFO, "[recalcAttribute][luck] {0}", this.getCurrLuck());
                     break;
                 case SPEED:
                     this.setCurrSpeed(this.getCurrSpeed() + (int) (this.getCurrSpeed() * perc));
-                    LOG.log(Level.INFO, "[passive][speed] {0}", this.getCurrSpeed());
+                    LOG.log(Level.INFO, "[recalcAttribute][speed] {0}", this.getCurrSpeed());
                     break;
                 case DODGE:
                     this.setCurrDodgeChance(this.getCurrDodgeChance() + (int) (this.getCurrDodgeChance() * perc));
-                    LOG.log(Level.INFO, "[passive][dodgeChance] {0}", this.getCurrDodgeChance());
+                    LOG.log(Level.INFO, "[recalcAttribute][dodgeChance] {0}", this.getCurrDodgeChance());
                     break;
                 case CRIT_DMG:
                     this.setCurrCritDamage(this.getCurrCritDamage() + (int) (this.getCurrCritDamage() * perc));
-                    LOG.log(Level.INFO, "[passive][critDmg] {0}", this.getCurrCritDamage());
+                    LOG.log(Level.INFO, "[recalcAttribute][critDmg] {0}", this.getCurrCritDamage());
                     break;
                 case CRIT_CHANCE:
                     this.setCurrCritChance(this.getCurrCritChance() + (int) (this.getCurrCritChance() * perc));
-                    LOG.log(Level.INFO, "[passive][critChance] {0}", this.getCurrCritChance());
+                    LOG.log(Level.INFO, "[recalcAttribute][critChance] {0}", this.getCurrCritChance());
                     break;
                 case DMG:
                     this.setCurrDmg(this.getCurrDmg() + (int) (this.getCurrDmg() * perc));
-                    LOG.log(Level.INFO, "[passive][dmg] {0}", this.getCurrDmg());
+                    LOG.log(Level.INFO, "[recalcAttribute][dmg] {0}", this.getCurrDmg());
                     break;
                 case ARMOR:
                     this.setCurrArmor(this.getCurrArmor() + (int) (this.getCurrArmor() * perc));
-                    LOG.log(Level.INFO, "[passive][armor] {0}", this.getCurrArmor());
+                    LOG.log(Level.INFO, "[recalcAttribute][armor] {0}", this.getCurrArmor());
                     break;
                 case MAGIC_RESIST:
                     this.setCurrMagicResist(this.getCurrMagicResist() + (int) (this.getCurrMagicResist() * perc));
-                    LOG.log(Level.INFO, "[passive][magicResist] {0}", this.getCurrMagicResist());
+                    LOG.log(Level.INFO, "[recalcAttribute][magicResist] {0}", this.getCurrMagicResist());
                     break;
                 case DEFENSE:
                     this.setCurrArmor(this.getCurrArmor() + (int) (this.getCurrArmor() * perc));
                     this.setCurrMagicResist(this.getCurrMagicResist() + (int) (this.getCurrMagicResist() * perc));
-                    LOG.log(Level.INFO, "[passive][armor] {0}", this.getCurrArmor());
-                    LOG.log(Level.INFO, "[passive][magicResist] {0}", this.getCurrMagicResist());
+                    LOG.log(Level.INFO, "[recalcAttribute][armor] {0}", this.getCurrArmor());
+                    LOG.log(Level.INFO, "[recalcAttribute][magicResist] {0}", this.getCurrMagicResist());
                     break;
 
             }
         }
 
-    }
-
-    public void calcPassives() {
-        LOG.log(Level.INFO, "[passive][heroi] {0}", this);
-        if (this.getHeroType().getPassives() != null) {
-            for (Passive p : this.getHeroType().getPassives()) {
-                LOG.log(Level.INFO, "[passive][type] {0}", p.getPassiveType());
-                switch (p.getPassiveType()) {
-                    case TRADE_ATTRIBUTE:
-                        calcTradeAttribute(p.getAttributeTypeLost(), p.getAttributeTypeGain(), p.getRatioPercentage());
-                        break;
-                }
-                LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
-
-            }
-        }
     }
 
     private void calcAtributtes() {

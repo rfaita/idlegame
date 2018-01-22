@@ -23,4 +23,8 @@ public class TokenHelper {
         return accessToken.getSubject();
     }
     
+    public String getLocale() {
+        return accessToken.getLocale();
+    }
+    
 }

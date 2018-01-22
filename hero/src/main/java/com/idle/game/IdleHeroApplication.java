@@ -3,6 +3,8 @@ package com.idle.game;
 import com.idle.game.core.action.Action;
 import com.idle.game.core.action.ActionEffect;
 import com.idle.game.core.action.type.ActionType;
+import com.idle.game.core.buff.BuffEffect;
+import com.idle.game.core.buff.type.BuffEffectType;
 import static com.idle.game.core.hero.type.HeroTypeFaction.CHAOS;
 import static com.idle.game.core.hero.type.HeroTypeFaction.DARK;
 import static com.idle.game.core.hero.type.HeroTypeFaction.FORTIFIED;
@@ -17,6 +19,8 @@ import static com.idle.game.core.hero.type.HeroTypeRole.MAGE;
 import static com.idle.game.core.hero.type.HeroTypeRole.PRIEST;
 import static com.idle.game.core.hero.type.HeroTypeRole.RANGER;
 import static com.idle.game.core.hero.type.HeroTypeRole.WARRIOR;
+import com.idle.game.core.type.AttributeType;
+import com.idle.game.core.type.DamageType;
 import static com.idle.game.core.type.DamageType.MAGIC;
 import static com.idle.game.core.type.DamageType.PHYSICAL;
 import static com.idle.game.core.type.DistanceType.MELEE;
@@ -85,6 +89,13 @@ public class IdleHeroApplication {
 
             playerRepository.save(p);
 
+            ActionEffect ae;
+            ActionEffect sae1;
+            ActionEffect sae2;
+            ActionEffect sae3;
+            
+            Action specialAction;
+            
             HeroType ht = new HeroType();
             ht.setName("Barea");
             ht.setFaction(CHAOS);
@@ -888,10 +899,10 @@ public class IdleHeroApplication {
             ht.setMaxBaseSpeed(624);
             ht.setMaxBaseMagicResist(730);
             
-            ActionEffect ae = new ActionEffect(ActionType.DMG, TargetType.RANDOM, 158, MAGIC);
-            ActionEffect sae1 = new ActionEffect(ActionType.HEAL, TargetType.LESS_PERC_LIFE, 420, MAGIC, Boolean.TRUE);
+            ae = new ActionEffect(ActionType.DMG, TargetType.RANDOM, 158, MAGIC);
+            sae1 = new ActionEffect(ActionType.HEAL, TargetType.LESS_PERC_LIFE, 420, MAGIC, Boolean.TRUE);
             
-            Action specialAction = new Action();
+            specialAction = new Action();
             specialAction.setMainActionEffect(ae);
             specialAction.addSecundaryActionsEffects(sae1);
             specialAction.setSpecial(Boolean.TRUE);
@@ -1269,6 +1280,18 @@ public class IdleHeroApplication {
             ht.setMaxBaseArmor(695);
             ht.setMaxBaseSpeed(667);
             ht.setMaxBaseMagicResist(695);
+            
+            //Attacks the weakest enemy for 207% of Baade’s ATK, and reduces the target’s ATK by 27% for two rounds. Can’t be dodged.
+            BuffEffect b1 = new BuffEffect(BuffEffectType.DECREASE_ATTRIBUTE,27, 0, 2, AttributeType.DMG);
+                    
+            ae = new ActionEffect(ActionType.DMG, TargetType.LESS_LIFE, 207, DamageType.PHYSICAL, Boolean.FALSE);
+            ae.addBuffEffect(b1);
+            
+            specialAction = new Action();
+            specialAction.setMainActionEffect(ae);
+            specialAction.setSpecial(Boolean.TRUE);
+
+            ht.setSpecialAction(specialAction);
 
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);

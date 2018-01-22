@@ -48,7 +48,7 @@ public class BasicBattleTests {
 
         Assert.assertEquals("expected f1 win", f1, b.doBattle());
 
-        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
+        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getActionType());
 
         Assert.assertEquals("h1 attack first on first turn", h1, b.getBattleLog().get(1).getHeroOrigin().getHero());
         Assert.assertEquals("h2 target first on first turn", h2, b.getBattleLog().get(1).getHeroesTarget().get(0).getHero());
@@ -62,7 +62,7 @@ public class BasicBattleTests {
         Assert.assertEquals("h2 target first on turn 2", h2, b.getBattleLog().get(3).getHeroesTarget().get(0).getHero());
         Assert.assertEquals("-50 dmg on first turn", new Integer(-50), b.getBattleLog().get(3).getBattleEvent().getValue());
 
-        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(4).getBattleEvent().getType());
+        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(4).getBattleEvent().getActionType());
 
     }
 
@@ -81,7 +81,7 @@ public class BasicBattleTests {
 
         Assert.assertEquals("expected f2 win", f2, b.doBattle());
 
-        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
+        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getActionType());
 
         Assert.assertEquals("h1 attack first on first turn", h1, b.getBattleLog().get(1).getHeroOrigin().getHero());
         Assert.assertEquals("h2 target first on first turn", h2, b.getBattleLog().get(1).getHeroesTarget().get(0).getHero());
@@ -99,7 +99,7 @@ public class BasicBattleTests {
         Assert.assertEquals("h1 target first on turn 2", h1, b.getBattleLog().get(4).getHeroesTarget().get(0).getHero());
         Assert.assertEquals("-50 dmg on first turn", new Integer(-50), b.getBattleLog().get(4).getBattleEvent().getValue());
 
-        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(5).getBattleEvent().getType());
+        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(5).getBattleEvent().getActionType());
 
     }
 
@@ -118,7 +118,7 @@ public class BasicBattleTests {
 
         Assert.assertEquals("expected f1 win", f1, b.doBattle());
 
-        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
+        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getActionType());
 
         Assert.assertEquals("h1 attack first on first turn", h1, b.getBattleLog().get(1).getHeroOrigin().getHero());
         Assert.assertEquals("h2 target first on first turn", h2, b.getBattleLog().get(1).getHeroesTarget().get(0).getHero());
@@ -132,7 +132,7 @@ public class BasicBattleTests {
         Assert.assertEquals("h2 target first on turn 2", h2, b.getBattleLog().get(3).getHeroesTarget().get(0).getHero());
         Assert.assertEquals("-50 dmg on first turn", new Integer(-50), b.getBattleLog().get(3).getBattleEvent().getValue());
 
-        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(4).getBattleEvent().getType());
+        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(4).getBattleEvent().getActionType());
 
     }
 
@@ -151,7 +151,7 @@ public class BasicBattleTests {
 
         Assert.assertEquals("expected f2 win", f2, b.doBattle());
 
-        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
+        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getActionType());
 
         Assert.assertEquals("h1 attack first on first turn", h1, b.getBattleLog().get(1).getHeroOrigin().getHero());
         Assert.assertEquals("h2 target first on first turn", h2, b.getBattleLog().get(1).getHeroesTarget().get(0).getHero());
@@ -169,7 +169,7 @@ public class BasicBattleTests {
         Assert.assertEquals("h1 target first on turn 2", h1, b.getBattleLog().get(4).getHeroesTarget().get(0).getHero());
         Assert.assertEquals("-50 dmg on first turn", new Integer(-50), b.getBattleLog().get(4).getBattleEvent().getValue());
 
-        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(5).getBattleEvent().getType());
+        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(5).getBattleEvent().getActionType());
 
     }
 
@@ -188,7 +188,7 @@ public class BasicBattleTests {
 
         Assert.assertEquals("expected f1 win", f1, b.doBattle());
 
-        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
+        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getActionType());
 
         Assert.assertEquals("h1 attack first on first turn", h1, b.getBattleLog().get(1).getHeroOrigin().getHero());
         Assert.assertEquals("h2 target first on first turn", h2, b.getBattleLog().get(1).getHeroesTarget().get(0).getHero());
@@ -202,7 +202,7 @@ public class BasicBattleTests {
         Assert.assertEquals("h2 target first on turn 2", h2, b.getBattleLog().get(3).getHeroesTarget().get(0).getHero());
         Assert.assertEquals("-50 dmg on first turn", new Integer(-50), b.getBattleLog().get(3).getBattleEvent().getValue());
 
-        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(4).getBattleEvent().getType());
+        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(4).getBattleEvent().getActionType());
 
     }
 
@@ -221,7 +221,7 @@ public class BasicBattleTests {
 
         Assert.assertEquals("expected f2 win", f2, b.doBattle());
 
-        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
+        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getActionType());
 
         Assert.assertEquals("h1 attack first on first turn", h1, b.getBattleLog().get(1).getHeroOrigin().getHero());
         Assert.assertEquals("h2 target first on first turn", h2, b.getBattleLog().get(1).getHeroesTarget().get(0).getHero());
@@ -239,7 +239,7 @@ public class BasicBattleTests {
         Assert.assertEquals("h1 target first on turn 2", h1, b.getBattleLog().get(4).getHeroesTarget().get(0).getHero());
         Assert.assertEquals("-50 dmg on first turn", new Integer(-50), b.getBattleLog().get(4).getBattleEvent().getValue());
 
-        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(5).getBattleEvent().getType());
+        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(5).getBattleEvent().getActionType());
 
     }
 
@@ -258,7 +258,7 @@ public class BasicBattleTests {
 
         Assert.assertEquals("expected f1 win", f1, b.doBattle());
 
-        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
+        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getActionType());
 
         Assert.assertEquals("h1 attack first on first turn", h1, b.getBattleLog().get(1).getHeroOrigin().getHero());
         Assert.assertEquals("h2 target first on first turn", h2, b.getBattleLog().get(1).getHeroesTarget().get(0).getHero());
@@ -272,7 +272,7 @@ public class BasicBattleTests {
         Assert.assertEquals("h2 target first on turn 2", h2, b.getBattleLog().get(3).getHeroesTarget().get(0).getHero());
         Assert.assertEquals("-50 dmg on first turn", new Integer(-50), b.getBattleLog().get(3).getBattleEvent().getValue());
 
-        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(4).getBattleEvent().getType());
+        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(4).getBattleEvent().getActionType());
 
     }
 
@@ -291,7 +291,7 @@ public class BasicBattleTests {
 
         Assert.assertEquals("expected f2 win", f2, b.doBattle());
 
-        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
+        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getActionType());
 
         Assert.assertEquals("h1 attack first on first turn", h1, b.getBattleLog().get(1).getHeroOrigin().getHero());
         Assert.assertEquals("h2 target first on first turn", h2, b.getBattleLog().get(1).getHeroesTarget().get(0).getHero());
@@ -309,7 +309,7 @@ public class BasicBattleTests {
         Assert.assertEquals("h1 target first on turn 2", h1, b.getBattleLog().get(4).getHeroesTarget().get(0).getHero());
         Assert.assertEquals("-50 dmg on first turn", new Integer(-50), b.getBattleLog().get(4).getBattleEvent().getValue());
 
-        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(5).getBattleEvent().getType());
+        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(5).getBattleEvent().getActionType());
 
     }
 
@@ -328,7 +328,7 @@ public class BasicBattleTests {
 
         Assert.assertEquals("expected f1 win", f1, b.doBattle());
 
-        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
+        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getActionType());
 
         Assert.assertEquals("h1 attack first on first turn", h1, b.getBattleLog().get(1).getHeroOrigin().getHero());
         Assert.assertEquals("h2 target first on first turn", h2, b.getBattleLog().get(1).getHeroesTarget().get(0).getHero());
@@ -342,7 +342,7 @@ public class BasicBattleTests {
         Assert.assertEquals("h2 target first on turn 2", h2, b.getBattleLog().get(3).getHeroesTarget().get(0).getHero());
         Assert.assertEquals("-50 dmg on first turn", new Integer(-50), b.getBattleLog().get(3).getBattleEvent().getValue());
 
-        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(4).getBattleEvent().getType());
+        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(4).getBattleEvent().getActionType());
 
     }
 
@@ -361,7 +361,7 @@ public class BasicBattleTests {
 
         Assert.assertEquals("expected f2 win", f2, b.doBattle());
 
-        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
+        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getActionType());
 
         Assert.assertEquals("h1 attack first on first turn", h1, b.getBattleLog().get(1).getHeroOrigin().getHero());
         Assert.assertEquals("h2 target first on first turn", h2, b.getBattleLog().get(1).getHeroesTarget().get(0).getHero());
@@ -379,7 +379,7 @@ public class BasicBattleTests {
         Assert.assertEquals("h1 target second on turn 2", h1, b.getBattleLog().get(4).getHeroesTarget().get(0).getHero());
         Assert.assertEquals("-50 dmg on turn 2", new Integer(-50), b.getBattleLog().get(4).getBattleEvent().getValue());
 
-        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(5).getBattleEvent().getType());
+        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(5).getBattleEvent().getActionType());
 
     }
 
@@ -398,7 +398,7 @@ public class BasicBattleTests {
 
         Assert.assertEquals("expected f1 win", f1, b.doBattle());
 
-        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
+        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getActionType());
 
         Assert.assertEquals("h1 attack first on first turn", h1, b.getBattleLog().get(1).getHeroOrigin().getHero());
         Assert.assertEquals("h2 target first on first turn", h2, b.getBattleLog().get(1).getHeroesTarget().get(0).getHero());
@@ -412,7 +412,7 @@ public class BasicBattleTests {
         Assert.assertEquals("h2 target first on turn 2", h2, b.getBattleLog().get(3).getHeroesTarget().get(0).getHero());
         Assert.assertEquals("-100 dmg on first turn", new Integer(-100), b.getBattleLog().get(3).getBattleEvent().getValue());
 
-        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(4).getBattleEvent().getType());
+        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(4).getBattleEvent().getActionType());
 
     }
 
@@ -431,7 +431,7 @@ public class BasicBattleTests {
 
         Assert.assertEquals("expected f1 win", f1, b.doBattle());
 
-        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
+        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getActionType());
 
         Assert.assertEquals("h1 attack first on first turn", h1, b.getBattleLog().get(1).getHeroOrigin().getHero());
         Assert.assertEquals("h2 target first on first turn", h2, b.getBattleLog().get(1).getHeroesTarget().get(0).getHero());
@@ -445,7 +445,7 @@ public class BasicBattleTests {
         Assert.assertEquals("h2 target first on turn 2", h2, b.getBattleLog().get(3).getHeroesTarget().get(0).getHero());
         Assert.assertEquals("-100 dmg on turn 2", new Integer(-100), b.getBattleLog().get(3).getBattleEvent().getValue());
 
-        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(4).getBattleEvent().getType());
+        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(4).getBattleEvent().getActionType());
 
     }
 
@@ -464,13 +464,13 @@ public class BasicBattleTests {
 
         Assert.assertEquals("expected f1 win", f1, b.doBattle());
 
-        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
+        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getActionType());
 
         Assert.assertEquals("h1 attack first on first turn", h1, b.getBattleLog().get(1).getHeroOrigin().getHero());
         Assert.assertEquals("h2 target first on first turn", h2, b.getBattleLog().get(1).getHeroesTarget().get(0).getHero());
         Assert.assertEquals("-100 dmg on first turn, but h2 only have 50 hp", new Integer(-100), b.getBattleLog().get(1).getBattleEvent().getValue());
 
-        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(2).getBattleEvent().getType());
+        Assert.assertEquals("end of battle", ActionType.BATTLE_END, b.getBattleLog().get(2).getBattleEvent().getActionType());
 
     }
 
@@ -493,7 +493,7 @@ public class BasicBattleTests {
 
         Assert.assertEquals("expected f1 win", f1, b.doBattle());
 
-        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getType());
+        Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getActionType());
 
         Assert.assertEquals("h1 attack first on first turn", h1, b.getBattleLog().get(1).getHeroOrigin().getHero());
         Assert.assertEquals("h2 target first on first turn", h2, b.getBattleLog().get(1).getHeroesTarget().get(0).getHero());
