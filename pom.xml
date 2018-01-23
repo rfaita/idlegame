@@ -16,6 +16,7 @@
         <module>common</module>
         <module>battle</module>
         <module>hero</module>
+        <module>chat</module>
     </modules>
 
 </project>
