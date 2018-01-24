@@ -17,6 +17,7 @@
         <module>battle</module>
         <module>hero</module>
         <module>chat</module>
+        <module>mail</module>
     </modules>
 
 </project>
