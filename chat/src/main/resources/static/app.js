@@ -1,6 +1,7 @@
 var stompClient = null;
 var subs = {};
 var activeChat = null;
+var activePmUser = null;
 
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
@@ -8,31 +9,45 @@ function setConnected(connected) {
     if (connected) {
         $("#conversation").show();
         $("#online").show();
+        $("#pm").show();
+        $("#chatsjoined").show();
     } else {
         $("#conversation").hide();
         $("#online").hide();
+        $("#pm").hide();
+        $("#chatsjoined").hide();
     }
     $("#messages").html("");
+    $("#pms").html("");
+    $("#users").html("");
+    $("#chats").html("");
 }
 
 function connect() {
     //var socket = new SockJS('https://service1.brkambiental.com.br:8083/notificacao');
     //stompClient = Stomp.over(socket);
-    stompClient = Stomp.client('ws://localhost:8083/ws');
-    stompClient.connect({}, function (frame) {
-        setConnected(true);
-        console.log('Connected: ' + frame);
+
+    $.ajax({
+        url: "/loggedUser",
+        success: function (user) {
+
+            stompClient = Stomp.client('ws://localhost:8083/ws');
+            stompClient.connect({}, function (frame) {
+                setConnected(true);
+                console.log('Connected: ' + frame);
 //        stompClient.subscribe('/topic/ping', function (m) {
 //            chatMessage(m.body);
 //        });
-        stompClient.subscribe('/queue/c723fc50-639d-4eec-a449-cebda70599c9#messages.private', function (m) {
-            chatMessage(m.body);
-        });
+                stompClient.subscribe('/queue/' + user + '#messages.private', function (m) {
+                    pmMessage(m.body);
+                });
 
-        stompClient.subscribe('/chat/chats', function (m) {
-            chatsJoined(m.body);
-        });
+                stompClient.subscribe('/chat/chats', function (m) {
+                    chatsJoined(m.body);
+                });
 
+            });
+        }
     });
 }
 
@@ -46,6 +61,10 @@ function disconnect() {
 
 function sendChatMessage() {
     stompClient.send("/chat/sendChatMessage/" + activeChat, {}, JSON.stringify({"text": $("#message").val()}));
+}
+
+function sendPmMessage() {
+    stompClient.send("/chat/sendPrivateMessage/" + activePmUser, {}, JSON.stringify({"text": $("#textpm").val()}));
 }
 
 function joinChat() {
@@ -108,6 +127,11 @@ function chatMessage(message) {
     $("#messages").prepend("<tr><td>" + message.fromNickName + "</td><td>" + new Date(message.date) + "</td><td>" + message.text + "</td></tr>");
 }
 
+function pmMessage(message) {
+    message = JSON.parse(message);
+    $("#pms").prepend("<tr><td>" + message.fromNickName + "</td><td>" + message.toNickName + "</td><td>" + new Date(message.date) + "</td><td>" + message.text + "</td></tr>");
+}
+
 function chatsJoined(chats) {
     chats = JSON.parse(chats);
     $("#chats").empty();
@@ -120,9 +144,9 @@ function chatsJoined(chats) {
             $(e.target).parent().parent().remove();
         });
 
-        $("#" + chats[i].chatRoom).click(function (e) {
+        $("#chatsjoined #" + chats[i].chatRoom).click(function (e) {
             activeChat = $(e.target).text();
-            $("td").removeClass("active");
+            $("#chatsjoined td").removeClass("active");
             $(e.target).addClass('active');
             subChat(activeChat);
         });
@@ -133,7 +157,13 @@ function usersOnLine(users) {
     users = JSON.parse(users);
     $("#users").empty();
     for (var i = 0; i < users.length; i++) {
-        $("#users").prepend("<tr><td>" + users[i].nickName + "</td></tr>");
+        $("#users").prepend("<tr><td idUser='" + users[i].user + "' id='" + users[i].nickName + "'>" + users[i].nickName + "</td></tr>");
+
+        $("#online #" + users[i].nickName).click(function (e) {
+            activePmUser = $(e.target).attr("idUser");
+            $("#online td").removeClass("active");
+            $(e.target).addClass('active');
+        });
     }
 }
 
@@ -149,6 +179,9 @@ $(function () {
     });
     $("#send").click(function () {
         sendChatMessage();
+    });
+    $("#sendpm").click(function () {
+        sendPmMessage();
     });
     $("#joinChat").click(function () {
         joinChat();

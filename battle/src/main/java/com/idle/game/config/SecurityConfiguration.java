@@ -69,18 +69,16 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         //Hacking, set the token inside the context
         AccessToken ret = ksc.getToken();
         ret.setAccessTokenHash(ksc.getTokenString());
-        
+
         return ret;
     }
 
-    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/**").hasRole("user").anyRequest().permitAll();
+                .antMatchers("/**").authenticated();
     }
 
 }

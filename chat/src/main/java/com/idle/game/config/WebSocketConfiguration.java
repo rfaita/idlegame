@@ -1,6 +1,7 @@
 package com.idle.game.config;
 
 import com.idle.game.model.mongo.Message;
+import static com.idle.game.server.util.SystemMessage.PING;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -55,7 +56,7 @@ public class WebSocketConfiguration extends AbstractWebSocketMessageBrokerConfig
     @Scheduled(fixedRate = 10000)
     public void ping() {
         Message m = new Message();
-        m.setText("PING");
+        m.setText(PING.getMessage());
         m.setFromUser("SYSTEM");
         m.setFromAdmin(Boolean.TRUE);
         simpMessagingTemplate.convertAndSend("/topic/ping", m);

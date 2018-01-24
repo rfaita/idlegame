@@ -1,6 +1,7 @@
 package com.idle.game.server.controller;
 
 import com.idle.game.helper.ManualTokenHelper;
+import com.idle.game.helper.TokenHelper;
 import com.idle.game.model.mongo.ChatJoined;
 import com.idle.game.model.mongo.ChatRoom;
 import com.idle.game.model.mongo.ChatRoomUser;
@@ -8,6 +9,8 @@ import com.idle.game.model.mongo.Message;
 import com.idle.game.server.service.ChatJoinedService;
 import com.idle.game.server.service.ChatRoomService;
 import com.idle.game.server.service.MessageService;
+import static com.idle.game.server.util.SystemMessage.JOIN;
+import static com.idle.game.server.util.SystemMessage.LEAVE;
 import java.security.Principal;
 import java.util.List;
 import javax.validation.ValidationException;
@@ -16,7 +19,6 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,42 +33,49 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ChatController {
 
     @Autowired
-    private ManualTokenHelper tokenHelper;
+    private ManualTokenHelper manualTokenHelper;
+    @Autowired
+    private TokenHelper tokenHelper;
 
     @Autowired
     private MessageService messageService;
 
     @Autowired
-    private ChatRoomService chatService;
+    private ChatRoomService chatRoomService;
 
     @Autowired
     private ChatJoinedService chatJoinedService;
 
-    @Secured("ROLE_ADMIN")
+    @RequestMapping(path = "/loggedUser", method = RequestMethod.GET)
+    @ResponseBody
+    public String getUser() throws Exception {
+        return tokenHelper.getUser();
+    }
+
     @RequestMapping(path = "/create", method = RequestMethod.POST)
     @ResponseBody
     public ChatRoom create(@RequestBody ChatRoom chatRoom) throws Exception {
-        return chatService.create(chatRoom);
+        return chatRoomService.create(chatRoom);
     }
 
     @MessageMapping("/join/{chatRoom}")
     public void joinRoom(@DestinationVariable("chatRoom") String chatRoom, Principal principal) throws Exception {
-        tokenHelper.createAccessToken(principal);
+        manualTokenHelper.createAccessToken(principal);
 
-        ChatRoomUser cru = new ChatRoomUser(tokenHelper.getUser(), tokenHelper.getNickName());
+        ChatRoomUser cru = new ChatRoomUser(manualTokenHelper.getUser(), manualTokenHelper.getNickName());
 
-        chatService.join(cru, chatRoom);
+        chatRoomService.join(cru, chatRoom);
 
         Message message = new Message();
         message.setChatRoom(chatRoom);
-        message.setFromUser(tokenHelper.getUser());
-        message.setFromNickName(tokenHelper.getNickName());
-        message.setText("joined to channel.");
+        message.setFromUser(manualTokenHelper.getUser());
+        message.setFromNickName(manualTokenHelper.getNickName());
+        message.setText(JOIN.getMessage());
 
         messageService.sendChatMessage(message);
 
         ChatJoined chatJoined = new ChatJoined();
-        chatJoined.setUser(tokenHelper.getUser());
+        chatJoined.setUser(manualTokenHelper.getUser());
         chatJoined.setChatRoom(chatRoom);
 
         chatJoinedService.save(chatJoined);
@@ -75,21 +84,21 @@ public class ChatController {
 
     @MessageMapping("/leave/{chatRoom}")
     public void leaveRoom(@DestinationVariable("chatRoom") String chatRoom, Principal principal) throws Exception {
-        tokenHelper.createAccessToken(principal);
+        manualTokenHelper.createAccessToken(principal);
 
-        ChatRoomUser cru = new ChatRoomUser(tokenHelper.getUser(), tokenHelper.getNickName());
+        ChatRoomUser cru = new ChatRoomUser(manualTokenHelper.getUser(), manualTokenHelper.getNickName());
 
-        chatService.leave(cru, chatRoom);
+        chatRoomService.leave(cru, chatRoom);
 
         Message message = new Message();
         message.setChatRoom(chatRoom);
-        message.setFromUser(tokenHelper.getUser());
-        message.setFromNickName(tokenHelper.getNickName());
-        message.setText("leaving to channel.");
+        message.setFromUser(manualTokenHelper.getUser());
+        message.setFromNickName(manualTokenHelper.getNickName());
+        message.setText(LEAVE.getMessage());
 
         messageService.sendChatMessage(message);
 
-        chatJoinedService.delete(tokenHelper.getUser(), chatRoom);
+        chatJoinedService.delete(manualTokenHelper.getUser(), chatRoom);
     }
 
     @MessageMapping("/sendChatGlobalMessage")
@@ -99,16 +108,16 @@ public class ChatController {
 
     @MessageMapping("/sendChatMessage/{chatRoom}")
     public void sendChatMessage(@DestinationVariable("chatRoom") String chatRoom, Principal principal, @Payload Message message) throws Exception {
-        tokenHelper.createAccessToken(principal);
+        manualTokenHelper.createAccessToken(principal);
 
         message.setChatRoom(chatRoom);
-        message.setFromUser(tokenHelper.getUser());
-        message.setFromNickName(tokenHelper.getNickName());
+        message.setFromUser(manualTokenHelper.getUser());
+        message.setFromNickName(manualTokenHelper.getNickName());
         message.setToUser(null);
         message.setToNickName(null);
         message.setFromAdmin(Boolean.FALSE);
 
-        if (!chatJoinedService.userCanJoinToChatRoom(tokenHelper.getUser(), chatRoom)) {
+        if (!chatJoinedService.userCanJoinToChatRoom(manualTokenHelper.getUser(), chatRoom)) {
             throw new ValidationException("chat.room.not.joined");
         }
 
@@ -117,11 +126,11 @@ public class ChatController {
 
     @MessageMapping("/sendPrivateMessage/{user}")
     public void sendPrivateMessage(@DestinationVariable("user") String user, Principal principal, @Payload Message message) throws Exception {
-        tokenHelper.createAccessToken(principal);
+        manualTokenHelper.createAccessToken(principal);
 
         message.setChatRoom(null);
-        message.setFromUser(tokenHelper.getUser());
-        message.setFromNickName(tokenHelper.getNickName());
+        message.setFromUser(manualTokenHelper.getUser());
+        message.setFromNickName(manualTokenHelper.getNickName());
         message.setToUser(user);
         message.setToNickName(null);
         message.setFromAdmin(Boolean.FALSE);
@@ -131,12 +140,12 @@ public class ChatController {
 
     @SubscribeMapping("/chats")
     public List<ChatJoined> getChatsJoined() {
-        return chatJoinedService.findAllByUser(tokenHelper.getUser());
+        return chatJoinedService.findAllByUser(manualTokenHelper.getUser());
     }
 
     @SubscribeMapping("/chat.users/{chatRoom}")
     public List<ChatRoomUser> getConnectedUsers(@DestinationVariable("chatRoom") String chatRoom) {
-        return chatService.findById(chatRoom).getConnectedUsers();
+        return chatRoomService.findById(chatRoom).getConnectedUsers();
     }
 
     @SubscribeMapping("/chat.old.messages/{chatRoom}")
@@ -146,9 +155,9 @@ public class ChatController {
 
     @SubscribeMapping("/pm.old.messages")
     public List<Message> findAllByToUser(Principal principal) {
-        tokenHelper.createAccessToken(principal);
+        manualTokenHelper.createAccessToken(principal);
 
-        return messageService.findAllByToUser(tokenHelper.getUser());
+        return messageService.findAllByToUser(manualTokenHelper.getUser());
     }
 
 }

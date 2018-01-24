@@ -42,6 +42,10 @@ public class MessageService {
                 Destination.privateMessages(message.getToUser()),
                 message);
 
+        webSocketMessagingTemplate.convertAndSend(
+                Destination.privateMessages(message.getFromUser()),
+                message);
+
         messageRepository.save(message);
     }
 

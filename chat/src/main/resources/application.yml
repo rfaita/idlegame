@@ -36,7 +36,7 @@ idle:
                 hostname: 172.16.50.24
                 port: 6379
             relay:
-                hostname: 172.16.50.24
+                hostname: localhost
                 port: 61613
                 username: admin
                 password: admin123
