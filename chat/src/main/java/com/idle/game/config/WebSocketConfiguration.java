@@ -1,15 +1,9 @@
 package com.idle.game.config;
 
-import com.idle.game.constant.SystemConstants;
-import com.idle.game.model.mongo.Message;
-import static com.idle.game.server.util.SystemMessage.PING;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
@@ -49,18 +43,6 @@ public class WebSocketConfiguration extends AbstractWebSocketMessageBrokerConfig
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws").setAllowedOrigins("*");
 
-    }
-
-    @Autowired
-    private SimpMessagingTemplate simpMessagingTemplate;
-
-    @Scheduled(fixedRate = 10000)
-    public void ping() {
-        Message m = new Message();
-        m.setText(PING.getMessage());
-        m.setFromUser(SystemConstants.SYSTEM_USER);
-        m.setFromAdmin(Boolean.TRUE);
-        simpMessagingTemplate.convertAndSend("/topic/ping", m);
     }
 
 }

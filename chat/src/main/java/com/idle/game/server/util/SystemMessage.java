@@ -5,9 +5,9 @@ package com.idle.game.server.util;
  * @author rafael
  */
 public enum SystemMessage {
-    
-    JOIN("join.chat.room"), LEAVE("leave.chat.room"), PING("join.to.chat.room");
-    
+
+    JOIN("join.chat.room"), LEAVE("leave.chat.room");
+
     private final String message;
 
     public String getMessage() {
@@ -17,7 +17,5 @@ public enum SystemMessage {
     private SystemMessage(String message) {
         this.message = message;
     }
-    
-    
-    
+
 }

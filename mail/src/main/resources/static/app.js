@@ -61,7 +61,7 @@ function mailMessages(messages) {
         $("#mails").prepend("<tr id='" + message.id + "'><td>" + message.fromNickName
                 + "</td><td>" + new Date(message.date) + "</td><td>" + message.text + "</td><td>" + message.reward
                 + "</td><td>" + (!!message.readed ? "S" : "<button idMsg='" + message.id + "' id='" + message.id + "READ'>Mask as readed</button>")
-                + "</td><td>" + (!!message.collected ? "S" : "N")
+                + "</td><td>" + (!!message.collected ? "S" : "<button idMsg='" + message.id + "' id='" + message.id + "COLLECT'>Collect</button>")
                 + "</td><td><button idMsg='" + message.id + "' id='" + message.id + "DEL'>del</button>"
                 + "</td></tr>");
 
@@ -71,6 +71,9 @@ function mailMessages(messages) {
         $("#mails #" + message.id + "DEL").click(function (e) {
             stompClient.send("/mail/deletePrivateMail/" + $(e.target).attr("idMsg"), {}, null);
         });
+        $("#mails #" + message.id + "COLLECT").click(function (e) {
+            $.get("/collectReward/" + $(e.target).attr("idMsg"));
+        });
     }
 }
 
@@ -79,7 +82,7 @@ function mailMessage(message) {
     $("#mails").prepend("<tr id='" + message.id + "'><td>" + message.fromNickName
             + "</td><td>" + new Date(message.date) + "</td><td>" + message.text + "</td><td>" + message.reward
             + "</td><td>" + (!!message.readed ? "S" : "<button idMsg='" + message.id + "' id='" + message.id + "READ'>Mask as readed</button>")
-            + "</td><td>" + (!!message.collected ? "S" : "N")
+            + "</td><td>" + (!!message.collected ? "S" : "<button idMsg='" + message.id + "' id='" + message.id + "COLLECT'>Collect</button>")
             + "</td><td><button idMsg='" + message.id + "' id='" + message.id + "DEL'>del</button>"
             + "</td></tr>");
 
@@ -89,6 +92,9 @@ function mailMessage(message) {
     $("#mails #" + message.id + "DEL").click(function (e) {
         stompClient.send("/mail/deletePrivateMail/" + $(e.target).attr("idMsg"), {}, null);
     });
+    $("#mails #" + message.id + "COLLECT").click(function (e) {
+        $.get("/collectReward/" + $(e.target).attr("idMsg"));
+    });
 }
 
 function mailMessageUpdate(message) {
@@ -96,7 +102,7 @@ function mailMessageUpdate(message) {
     $("#mails #" + message.id).html("<td>" + message.fromNickName
             + "</td><td>" + new Date(message.date) + "</td><td>" + message.text + "</td><td>" + message.reward
             + "</td><td>" + (!!message.readed ? "S" : "<button idMsg='" + message.id + "' id='" + message.id + "READ'>Mask as readed</button>")
-            + "</td><td>" + (!!message.collected ? "S" : "N")
+            + "</td><td>" + (!!message.collected ? "S" : "<button idMsg='" + message.id + "' id='" + message.id + "COLLECT'>Collect</button>")
             + "</td><td><button idMsg='" + message.id + "' id='" + message.id + "DEL'>del</button>"
             + "</td>");
 
@@ -107,6 +113,11 @@ function mailMessageUpdate(message) {
     $("#mails #" + message.id + "DEL").unbind('click');
     $("#mails #" + message.id + "DEL").click(function (e) {
         stompClient.send("/mail/deletePrivateMail/" + $(e.target).attr("idMsg"), {}, null);
+    });
+
+    $("#mails #" + message.id + "COLLECT").unbind('click');
+    $("#mails #" + message.id + "COLLECT").click(function (e) {
+        $.get("/collectReward/" + $(e.target).attr("idMsg"));
     });
 
 }
