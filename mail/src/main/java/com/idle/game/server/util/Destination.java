@@ -14,4 +14,12 @@ public class Destination {
         return "/queue/" + user + "#mail.private";
     }
 
+    public static String privateMailUpdate(String user) {
+        return "/queue/" + user + "#mail.private.update";
+    }
+
+    public static String privateMailDelete(String user) {
+        return "/queue/" + user + "#mail.private.delete";
+    }
+
 }

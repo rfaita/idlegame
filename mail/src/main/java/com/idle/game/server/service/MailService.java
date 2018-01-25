@@ -54,6 +54,11 @@ public class MailService {
             mail.setReaded(Boolean.TRUE);
 
             mailRepository.save(mail);
+
+            webSocketMessagingTemplate.convertAndSend(
+                    Destination.privateMailUpdate(mail.getToUser()),
+                    mail);
+
         }
     }
 
@@ -65,6 +70,10 @@ public class MailService {
 
             mail = mailRepository.save(mail);
 
+            webSocketMessagingTemplate.convertAndSend(
+                    Destination.privateMailUpdate(mail.getToUser()),
+                    mail);
+
             return mail.getReward();
         }
         return new Reward();
@@ -72,8 +81,12 @@ public class MailService {
 
     public void deletePrivateMail(String user, String id) {
         Mail mail = mailRepository.findByIdAndToUser(id, user);
-        if (mail != null && mail.getCollected()) {
+        if (mail != null && mail.getReaded() && (mail.getReward() == null || mail.getCollected())) {
             mailRepository.delete(mail);
+
+            webSocketMessagingTemplate.convertAndSend(
+                    Destination.privateMailDelete(mail.getToUser()),
+                    mail);
         }
     }
 

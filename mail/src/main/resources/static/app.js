@@ -32,6 +32,13 @@ function connect() {
                     mailMessage(m.body);
                 });
 
+                stompClient.subscribe('/queue/' + user + '#mail.private.update', function (m) {
+                    mailMessageUpdate(m.body);
+                });
+                stompClient.subscribe('/queue/' + user + '#mail.private.delete', function (m) {
+                    mailMessageDelete(m.body);
+                });
+
             });
         }
     });
@@ -51,13 +58,62 @@ function mailMessages(messages) {
     $("#mails").empty();
     for (var i = 0; i < messages.length; i++) {
         var message = messages[i];
-        $("#mails").prepend("<tr><td>" + message.fromNickName + "</td><td>" + new Date(message.date) + "</td><td>" + message.text + "</td><td>" + message.reward + "</td></tr>");
+        $("#mails").prepend("<tr id='" + message.id + "'><td>" + message.fromNickName
+                + "</td><td>" + new Date(message.date) + "</td><td>" + message.text + "</td><td>" + message.reward
+                + "</td><td>" + (!!message.readed ? "S" : "<button idMsg='" + message.id + "' id='" + message.id + "READ'>Mask as readed</button>")
+                + "</td><td>" + (!!message.collected ? "S" : "N")
+                + "</td><td><button idMsg='" + message.id + "' id='" + message.id + "DEL'>del</button>"
+                + "</td></tr>");
+
+        $("#mails #" + message.id + "READ").click(function (e) {
+            stompClient.send("/mail/markAsReadPrivateMail/" + $(e.target).attr("idMsg"), {}, null);
+        });
+        $("#mails #" + message.id + "DEL").click(function (e) {
+            stompClient.send("/mail/deletePrivateMail/" + $(e.target).attr("idMsg"), {}, null);
+        });
     }
 }
 
 function mailMessage(message) {
     message = JSON.parse(message);
-    $("#mails").prepend("<tr><td>" + message.fromNickName + "</td><td>" + new Date(message.date) + "</td><td>" + message.text + "</td><td>" + message.reward + "</td></tr>");
+    $("#mails").prepend("<tr id='" + message.id + "'><td>" + message.fromNickName
+            + "</td><td>" + new Date(message.date) + "</td><td>" + message.text + "</td><td>" + message.reward
+            + "</td><td>" + (!!message.readed ? "S" : "<button idMsg='" + message.id + "' id='" + message.id + "READ'>Mask as readed</button>")
+            + "</td><td>" + (!!message.collected ? "S" : "N")
+            + "</td><td><button idMsg='" + message.id + "' id='" + message.id + "DEL'>del</button>"
+            + "</td></tr>");
+
+    $("#mails #" + message.id + "READ").click(function (e) {
+        stompClient.send("/mail/markAsReadPrivateMail/" + $(e.target).attr("idMsg"), {}, null);
+    });
+    $("#mails #" + message.id + "DEL").click(function (e) {
+        stompClient.send("/mail/deletePrivateMail/" + $(e.target).attr("idMsg"), {}, null);
+    });
+}
+
+function mailMessageUpdate(message) {
+    message = JSON.parse(message);
+    $("#mails #" + message.id).html("<td>" + message.fromNickName
+            + "</td><td>" + new Date(message.date) + "</td><td>" + message.text + "</td><td>" + message.reward
+            + "</td><td>" + (!!message.readed ? "S" : "<button idMsg='" + message.id + "' id='" + message.id + "READ'>Mask as readed</button>")
+            + "</td><td>" + (!!message.collected ? "S" : "N")
+            + "</td><td><button idMsg='" + message.id + "' id='" + message.id + "DEL'>del</button>"
+            + "</td>");
+
+    $("#mails #" + message.id + "READ").unbind('click');
+    $("#mails #" + message.id + "READ").click(function (e) {
+        stompClient.send("/mail/markAsReadPrivateMail/" + $(e.target).attr("idMsg"), {}, null);
+    });
+    $("#mails #" + message.id + "DEL").unbind('click');
+    $("#mails #" + message.id + "DEL").click(function (e) {
+        stompClient.send("/mail/deletePrivateMail/" + $(e.target).attr("idMsg"), {}, null);
+    });
+
+}
+
+function mailMessageDelete(message) {
+    message = JSON.parse(message);
+    $("#mails #" + message.id).remove();
 }
 
 $(function () {
