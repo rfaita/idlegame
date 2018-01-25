@@ -1,6 +1,7 @@
 package com.idle.game.model.mongo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.idle.game.model.mongo.Reward;
 import java.io.Serializable;
 import java.util.Date;
 import org.springframework.data.annotation.Id;

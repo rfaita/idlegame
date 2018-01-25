@@ -16,7 +16,7 @@ function setConnected(connected) {
 
 function connect() {
     $.ajax({
-        url: "/loggedUser",
+        url: "/mail/loggedUser",
         success: function (user) {
 
             stompClient = Stomp.client('ws://localhost:8084/ws');

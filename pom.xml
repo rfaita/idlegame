@@ -18,6 +18,8 @@
         <module>hero</module>
         <module>chat</module>
         <module>mail</module>
+        <module>shop</module>
+        <module>player</module>
     </modules>
 
 </project>

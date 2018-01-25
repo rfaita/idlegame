@@ -5,6 +5,7 @@ import com.idle.game.core.hero.type.HeroQuality;
 import java.io.Serializable;
 import java.util.Objects;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -12,12 +13,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author rafael
  */
 @Document(collection = "hero")
-@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Hero implements Serializable {
 
     @Id
     private String id;
     private String heroType;
+    @Indexed
     private String player;
     private Integer level;
     private HeroQuality quality;

@@ -27,9 +27,7 @@ import static com.idle.game.core.type.DistanceType.MELEE;
 import static com.idle.game.core.type.DistanceType.RANGED;
 import com.idle.game.core.type.TargetType;
 import com.idle.game.model.mongo.HeroType;
-import com.idle.game.model.mongo.Player;
 import com.idle.game.server.repository.HeroTypeRepository;
-import com.idle.game.server.repository.PlayerRepository;
 import com.idle.game.server.service.HeroTypeService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -77,25 +75,18 @@ public class IdleHeroApplication {
     }
 
     @Bean
-    public CommandLineRunner init(PlayerRepository playerRepository,
-            HeroTypeService heroTypeService,
+    public CommandLineRunner init(HeroTypeService heroTypeService,
             HeroTypeRepository heroTypeRepository) {
 
         return args -> {
-
-            Player p = new Player();
-            p.setName("Rafael Faita");
-            p.setUser("rfaita");
-
-            playerRepository.save(p);
 
             ActionEffect ae;
             ActionEffect sae1;
             ActionEffect sae2;
             ActionEffect sae3;
-            
+
             Action specialAction;
-            
+
             HeroType ht = new HeroType();
             ht.setName("Barea");
             ht.setFaction(CHAOS);
@@ -898,17 +889,17 @@ public class IdleHeroApplication {
             ht.setMaxBaseArmor(730);
             ht.setMaxBaseSpeed(624);
             ht.setMaxBaseMagicResist(730);
-            
+
             ae = new ActionEffect(ActionType.DMG, TargetType.RANDOM, 158, MAGIC);
             sae1 = new ActionEffect(ActionType.HEAL, TargetType.LESS_PERC_LIFE, 420, MAGIC, Boolean.TRUE);
-            
+
             specialAction = new Action();
             specialAction.setMainActionEffect(ae);
             specialAction.addSecundaryActionsEffects(sae1);
             specialAction.setSpecial(Boolean.TRUE);
 
             ht.setSpecialAction(specialAction);
-            
+
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -1280,13 +1271,13 @@ public class IdleHeroApplication {
             ht.setMaxBaseArmor(695);
             ht.setMaxBaseSpeed(667);
             ht.setMaxBaseMagicResist(695);
-            
+
             //Attacks the weakest enemy for 207% of Baade’s ATK, and reduces the target’s ATK by 27% for two rounds. Can’t be dodged.
-            BuffEffect b1 = new BuffEffect(BuffEffectType.DECREASE_ATTRIBUTE,27, 0, 2, AttributeType.DMG);
-                    
+            BuffEffect b1 = new BuffEffect(BuffEffectType.DECREASE_ATTRIBUTE, 27, 0, 2, AttributeType.DMG);
+
             ae = new ActionEffect(ActionType.DMG, TargetType.LESS_LIFE, 207, DamageType.PHYSICAL, Boolean.FALSE);
             ae.addBuffEffect(b1);
-            
+
             specialAction = new Action();
             specialAction.setMainActionEffect(ae);
             specialAction.setSpecial(Boolean.TRUE);

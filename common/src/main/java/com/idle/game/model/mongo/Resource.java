@@ -8,25 +8,25 @@ import java.io.Serializable;
  * @author rafael
  */
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-public class RewardValue implements Serializable {
+public class Resource implements Serializable {
 
-    private ResourceType resource;
+    private ResourceType type;
     private Long value;
 
-    public RewardValue(ResourceType resource, Long value) {
-        this.resource = resource;
+    public Resource() {
+    }
+
+    public Resource(ResourceType type, Long value) {
+        this.type = type;
         this.value = value;
     }
 
-    public RewardValue() {
+    public ResourceType getType() {
+        return type;
     }
 
-    public ResourceType getRewardType() {
-        return resource;
-    }
-
-    public void setRewardType(ResourceType rewardType) {
-        this.resource = rewardType;
+    public void setType(ResourceType type) {
+        this.type = type;
     }
 
     public Long getValue() {

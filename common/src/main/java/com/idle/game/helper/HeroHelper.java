@@ -2,6 +2,7 @@ package com.idle.game.helper;
 
 import static com.idle.game.constant.CacheConstants.HERO_FIND_BY_ID;
 import static com.idle.game.constant.URIConstants.HERO__FIND_ALL_BY_PLAYER;
+import static com.idle.game.constant.URIConstants.HERO__ROLL;
 import com.idle.game.model.mongo.Hero;
 import com.idle.game.server.dto.Envelope;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
@@ -84,6 +85,27 @@ public class HeroHelper {
 
         if (ret.getStatusCode() == HttpStatus.OK) {
             Envelope<List<Hero>> data = ret.getBody();
+            if (data.getErrors() == null || data.getErrors().isEmpty()) {
+                return data.getData();
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    public Hero roll(String player) {
+        URI uri = URI.create(urlHero + "/" + HERO__ROLL + "/" + player);
+
+        ResponseEntity<Envelope<Hero>> ret = restTemplate.exchange(uri,
+                HttpMethod.GET,
+                new HttpEntity(HeaderUtil.getAuthHeaders(tokenHelper.getToken())),
+                new ParameterizedTypeReference<Envelope<Hero>>() {
+        });
+
+        if (ret.getStatusCode() == HttpStatus.OK) {
+            Envelope<Hero> data = ret.getBody();
             if (data.getErrors() == null || data.getErrors().isEmpty()) {
                 return data.getData();
             } else {

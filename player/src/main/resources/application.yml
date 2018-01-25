@@ -2,7 +2,7 @@ info:
     version: @pom.version@
     stage: dev
 server:
-    port: 8084
+    port: 8085
 
 management: 
     security: 
@@ -18,7 +18,7 @@ idle:
         formation:
             http://localhost:8081/formation
         player:
-            http://localhost:8085/player     
+            http://localhost:8085/player
         mail:
             http://localhost:8084/mail
     config:
@@ -33,24 +33,26 @@ idle:
             hostname: localhost
             port: 11111
             database: test
-        
-        mail:
-            #Redis
-            redis:
-                hostname: 172.16.50.24
-                port: 6379
-            relay:
-                hostname: localhost
-                port: 61613
-                username: admin
-                password: admin123
-
+    
+        # Oracle settings
+        datasource:
+            url: jdbc:oracle:thin:@172.16.50.5:1521:TSONE
+            username: pferdesenv1
+            password: fozsan
+            driver-class-name: oracle.jdbc.driver.OracleDriver
+            
+        #Redis
+        redis:
+            hostname: 172.16.50.24
+            port: 6379
+            
+            
 keycloak:
     auth-server-url: http://localhost:8180/auth
     realm: idlerealm
     resource: idlegame
     public-client: true
-
+    
 #Spring Boot Config            
 spring:
     profiles:

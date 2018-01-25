@@ -1,6 +1,7 @@
 package com.idle.game.server.rest;
 
 import static com.idle.game.constant.URIConstants.HERO__FIND_ALL_BY_PLAYER;
+import static com.idle.game.constant.URIConstants.HERO__ROLL;
 import com.idle.game.core.hero.type.HeroQuality;
 import com.idle.game.helper.TokenHelper;
 import com.idle.game.model.mongo.Hero;
@@ -35,7 +36,18 @@ public class HeroRest {
 
     }
 
-    @RequestMapping(path = "/roll", method = RequestMethod.GET)
+    @RequestMapping(path = "/" + HERO__ROLL + "/{player}", method = RequestMethod.GET)
+    public @ResponseBody
+    Envelope<Hero> rollHero(@PathVariable("player") String player) {
+
+        Envelope<Hero> ret = new Envelope<>();
+        ret.setData(heroService.rollHero(player));
+
+        return ret;
+
+    }
+
+    @RequestMapping(path = "/" + HERO__ROLL, method = RequestMethod.GET)
     public @ResponseBody
     Envelope<Hero> rollHero() {
 
