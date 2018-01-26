@@ -70,5 +70,40 @@ public class FormationHelper {
             return null;
         }
     }
+    public Formation getFormationByUserAndFormationAllocation(String id) {
+        return this.getFormationById(id, tokenHelper.getToken());
+    }
+
+    @HystrixCommand(fallbackMethod = "getFormationCacheByUserAndFormationAllocation")
+    public Formation getFormationByUserAndFormationAllocation(String id, String token) {
+
+        URI uri = URI.create(urlFormation + "/" + id);
+
+        ResponseEntity<Envelope<Formation>> ret = restTemplate.exchange(uri,
+                HttpMethod.GET,
+                new HttpEntity(HeaderUtil.getAuthHeaders(token)),
+                new ParameterizedTypeReference<Envelope<Formation>>() {
+        });
+
+        if (ret.getStatusCode() == HttpStatus.OK) {
+            Envelope<Formation> data = ret.getBody();
+            if (data.getErrors() == null || data.getErrors().isEmpty()) {
+                return data.getData();
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    public Formation getFormationCacheByUserAndFormationAllocation(String id, String token) {
+        Formation ret = (Formation) redisTemplate.boundValueOps(FORMATION_FIND_BY_ID + id).get();
+        if (ret != null) {
+            return ret;
+        } else {
+            return null;
+        }
+    }
 
 }

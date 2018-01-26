@@ -58,7 +58,7 @@ public class IdlePlayerApplication {
                 Player p = new Player();
                 p.setId("1");
                 p.setLinkedUser("c723fc50-639d-4eec-a449-cebda70599c9");
-                p.setUser("rfaita");
+                p.setName("rfaita");
 
                 Resource r = new Resource();
                 r.setType(ResourceType.RUNE);
@@ -104,7 +104,7 @@ public class IdlePlayerApplication {
                 Player p = new Player();
                 p.setId("2");
                 p.setLinkedUser("60955fdb-6af7-4e02-a088-3fee94086444");
-                p.setUser("joao");
+                p.setName("joao");
 
                 Resource r = new Resource();
                 r.setType(ResourceType.RUNE);
@@ -150,7 +150,7 @@ public class IdlePlayerApplication {
                 Player p = new Player();
                 p.setId("3");
                 p.setLinkedUser("50a5dfce-34ca-4949-8b37-d968231a2247");
-                p.setUser("teste");
+                p.setName("teste");
 
                 Resource r = new Resource();
                 r.setType(ResourceType.RUNE);

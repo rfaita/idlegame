@@ -21,6 +21,8 @@ idle:
             http://localhost:8085/player
         mail:
             http://localhost:8084/mail
+        battle:
+            http://localhost:8081/battle
     config:
         # RabbitMQ Settings
         rabbitmq:

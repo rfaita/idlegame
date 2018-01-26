@@ -1,12 +1,15 @@
 package com.idle.game.server.service;
 
 import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_ID;
+import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_USER_AND_FORMATION_ALLOCATION;
 import com.idle.game.core.battle.BattlePositionedHero;
 import com.idle.game.core.formation.type.FormationAllocation;
 import com.idle.game.helper.BattleHeroHelper;
 import com.idle.game.helper.HeroHelper;
+import com.idle.game.helper.PlayerHelper;
 import com.idle.game.model.mongo.Formation;
 import com.idle.game.model.mongo.Hero;
+import com.idle.game.model.mongo.Player;
 import com.idle.game.server.repository.FormationRepository;
 import java.util.HashSet;
 import java.util.List;
@@ -39,6 +42,9 @@ public class FormationService {
     @Autowired
     private BattleHeroHelper battleHeroHelper;
 
+    @Autowired
+    private PlayerHelper playerHelper;
+
     @Cacheable(value = FORMATION_FIND_BY_ID, key = "'" + FORMATION_FIND_BY_ID + "' + #id")
     public Formation findById(String id) {
 
@@ -49,6 +55,18 @@ public class FormationService {
         });
 
         return ret;
+    }
+
+    @Cacheable(value = FORMATION_FIND_BY_USER_AND_FORMATION_ALLOCATION, key = "'" + FORMATION_FIND_BY_USER_AND_FORMATION_ALLOCATION + "' + #user + #fa")
+    public Formation findByUserAndFormationAllocation(String user, FormationAllocation fa) {
+
+        Player player = playerHelper.getPlayerById(user);
+
+        if (player != null) {
+            return findByPlayerAndFormationAllocation(player.getId(), fa);
+        } else {
+            throw new ValidationException("player.not.found");
+        }
     }
 
     public Formation findByPlayerAndFormationAllocation(String player, FormationAllocation fa) {
@@ -87,19 +105,26 @@ public class FormationService {
     }
 
     @CachePut(value = FORMATION_FIND_BY_ID, key = "'" + FORMATION_FIND_BY_ID + "' + #id")
-    public Formation save(Formation f) {
+    public Formation save(Formation f, String user) {
 
-        validateSave(f);
+        Player player = playerHelper.getPlayerById(user);
 
-        Formation fFind = formationRepository.findByPlayerAndFormationAllocation(f.getPlayer(), f.getFormationAllocation());
+        if (player != null) {
 
-        if (fFind != null) {
-            f.setId(fFind.getId());
+            validateSave(f);
+
+            Formation fFind = formationRepository.findByPlayerAndFormationAllocation(f.getPlayer(), f.getFormationAllocation());
+
+            if (fFind != null) {
+                f.setId(fFind.getId());
+            }
+
+            f = formationRepository.save(f);
+
+            return findById(f.getId());
+        } else {
+            throw new ValidationException("player.not.found");
         }
-
-        f = formationRepository.save(f);
-
-        return findById(f.getId());
 
     }
 

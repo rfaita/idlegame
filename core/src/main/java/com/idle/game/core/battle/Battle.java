@@ -31,6 +31,7 @@ import java.util.stream.Stream;
 import static com.idle.game.core.battle.type.BattleTeamType.ATTACK_TEAM;
 import static com.idle.game.core.battle.type.BattleTeamType.DEFENSE_TEAM;
 import static com.idle.game.core.action.type.SubActionType.DEATH;
+import static com.idle.game.core.formation.type.FormationType.ATTACK;
 
 /**
  *
@@ -72,6 +73,10 @@ public class Battle extends BaseObject {
 
     public BattleFormation getDefenseFormation() {
         return this.defenseFormation;
+    }
+
+    public Boolean isFormationAttackWinner() {
+        return getWinner().getFormationType().equals(ATTACK);
     }
 
     public BattleFormation getWinner() {

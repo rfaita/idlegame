@@ -8,6 +8,7 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
+import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,42 +25,41 @@ public class PlayerService {
     public Player findByLinkedUser(String id) {
         return playerRepository.findByLinkedUser(id);
     }
-    
-    public void addFriend(String userId) {
-        
-    }
-    
+
     public Player useResources(String linkedUser, List<Resource> resources) {
-        
+
         Player player = findByLinkedUser(linkedUser);
-        
+
         player.userResources(resources);
-        
+
         return playerRepository.save(player);
-        
+
     }
 
     public Player computeResources(String linkedUser) {
 
         long seconds = 0l;
 
-        Player player = playerRepository.findByLinkedUser(linkedUser);
+        Player player = findByLinkedUser(linkedUser);
 
-        if (player.getLastTimeResourcesCollected() != null) {
-            LocalDateTime lastTime = LocalDateTime.ofInstant(player.getLastTimeResourcesCollected().toInstant(), ZoneId.systemDefault());
+        if (player != null) {
 
-            seconds = lastTime.until(LocalDateTime.now(), ChronoUnit.SECONDS);
+            if (player.getLastTimeResourcesCollected() != null) {
+                LocalDateTime lastTime = LocalDateTime.ofInstant(player.getLastTimeResourcesCollected().toInstant(), ZoneId.systemDefault());
 
-            player.computeResoucers(seconds);
+                seconds = lastTime.until(LocalDateTime.now(), ChronoUnit.SECONDS);
+            }
 
+            if (player.getLastTimeResourcesCollected() == null || seconds >= 5) {
+                player.setLastTimeResourcesCollected(new Date());
+                player.computeResoucers(seconds);
+                return playerRepository.save(player);
+            }
+
+            return player;
+        } else {
+            throw new ValidationException("player.not.found");
         }
-
-        if (player.getLastTimeResourcesCollected() == null || seconds >= 5) {
-            player.setLastTimeResourcesCollected(new Date());
-            return playerRepository.save(player);
-        }
-
-        return player;
 
     }
 

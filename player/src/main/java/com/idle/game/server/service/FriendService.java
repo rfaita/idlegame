@@ -4,6 +4,7 @@ import com.idle.game.helper.MailHelper;
 import com.idle.game.model.mongo.Friend;
 import com.idle.game.model.mongo.Mail;
 import com.idle.game.server.repository.FriendRepository;
+import java.util.Date;
 import java.util.List;
 import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,12 +59,16 @@ public class FriendService {
 
         if (request != null) {
 
+            Date acceptedDate = new Date();
+            
             request.setAccepted(Boolean.TRUE);
+            request.setSince(acceptedDate);
 
             friendRepository.save(request);
 
             Friend reverse = new Friend(request.getUserFriend(), request.getUser());
             reverse.setAccepted(Boolean.TRUE);
+            reverse.setSince(acceptedDate);
 
             friendRepository.save(reverse);
 

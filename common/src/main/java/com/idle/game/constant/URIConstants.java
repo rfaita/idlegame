@@ -15,5 +15,6 @@ public interface URIConstants {
     final String PLAYER__USE_RESOURCES = "useResources";
     final String PLAYER__FIND_BY_LINKED_USER = "findByLinkedUser";
     final String MAIL__SEND_PRIVATE_MAIL = "sendPrivateMail";
+    final String FORMATION__FIND_BY_FORMATION_ALLOCATION = "findByFormationAllocation";
 
 }

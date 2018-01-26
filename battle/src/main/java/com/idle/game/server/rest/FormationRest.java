@@ -1,5 +1,6 @@
 package com.idle.game.server.rest;
 
+import static com.idle.game.constant.URIConstants.FORMATION__FIND_BY_FORMATION_ALLOCATION;
 import com.idle.game.core.formation.type.FormationAllocation;
 import com.idle.game.helper.TokenHelper;
 import com.idle.game.model.mongo.Formation;
@@ -34,6 +35,17 @@ public class FormationRest {
 
     }
 
+    @RequestMapping(path = "/" + FORMATION__FIND_BY_FORMATION_ALLOCATION + "/{formationAllocation}", method = RequestMethod.GET)
+    public @ResponseBody
+    Envelope<Formation> findByUserAndFormationAllocation(@PathVariable("formationAllocation") String fa) {
+
+        Envelope<Formation> ret = new Envelope<>();
+        ret.setData(formationService.findByUserAndFormationAllocation(tokenHelper.getUser(), FormationAllocation.valueOf(fa)));
+
+        return ret;
+
+    }
+
     @RequestMapping(path = "/{player}/{formationAllocation}", method = RequestMethod.GET)
     public @ResponseBody
     Envelope<Formation> findByPlayerAndFormationAllocation(@PathVariable("formationAllocation") String fa, @PathVariable("player") String player) {
@@ -49,9 +61,7 @@ public class FormationRest {
     public @ResponseBody
     Envelope<Formation> save(@RequestBody Formation f) throws Exception {
 
-        f.setPlayer(tokenHelper.getUser());
-
-        Envelope<Formation> ret = new Envelope<>(formationService.save(f));
+        Envelope<Formation> ret = new Envelope<>(formationService.save(f, tokenHelper.getUser()));
 
         return ret;
 

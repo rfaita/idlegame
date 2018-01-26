@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.ValidationException;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -22,7 +23,7 @@ public class Player implements Serializable {
     @Id
     private String id;
     private Integer level;
-    private String user;
+    private String name;
     private String linkedUser;
     private Date lastTimeResourcesCollected;
 
@@ -50,20 +51,20 @@ public class Player implements Serializable {
 
     public void userResources(List<Resource> resources) {
 
-        resources.stream().forEach((resource) -> {
+        for (Resource resource : resources) {
             Resource compResource = this.getResource(resource.getType());
             if (compResource != null) {
 
                 Long value = Math.abs(resource.getValue()) * -1;
 
-                if ((compResource.getValue() + value) < 0) {
+                if ((compResource.getValue() + value) >= 0) {
                     compResource.setValue(compResource.getValue() + value);
                 } else {
-                    compResource.setValue(0L);
+                    throw new ValidationException("using.more.resource.you.have");
                 }
 
             }
-        });
+        }
 
     }
 
@@ -94,12 +95,12 @@ public class Player implements Serializable {
         this.level = level;
     }
 
-    public String getUser() {
-        return user;
+    public String getName() {
+        return name;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getLinkedUser() {

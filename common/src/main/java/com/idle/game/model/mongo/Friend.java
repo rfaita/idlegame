@@ -2,6 +2,7 @@ package com.idle.game.model.mongo;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
+import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,6 +18,7 @@ public class Friend implements Serializable {
     private String id;
     private String user;
     private String userFriend;
+    private Date since;
     private Boolean accepted = Boolean.FALSE;
 
     public Friend() {
@@ -25,6 +27,14 @@ public class Friend implements Serializable {
     public Friend(String user, String userFriend) {
         this.user = user;
         this.userFriend = userFriend;
+    }
+
+    public Date getSince() {
+        return since;
+    }
+
+    public void setSince(Date since) {
+        this.since = since;
     }
 
     public String getId() {
