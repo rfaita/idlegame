@@ -45,7 +45,7 @@ public class PlayerServiceTest {
     @Test
     public void testFindById1() {
 
-        when(this.playerRepository.findById("1")).thenReturn(createPlayer());
+        when(this.playerRepository.findById("1")).thenReturn(createPlayer("1"));
 
         Player p1Expected = playerService.findById("1");
 
@@ -58,30 +58,30 @@ public class PlayerServiceTest {
     @Test
     public void testFindByLinkedUser1() {
 
-        when(this.playerRepository.findByLinkedUser("1")).thenReturn(createPlayer());
+        when(this.playerRepository.findByLinkedUser("2")).thenReturn(createPlayer("2"));
 
         Player p1Expected = playerService.findByLinkedUser("1");
 
-        Assert.assertEquals("1", p1Expected.getId());
+        Assert.assertEquals("2", p1Expected.getId());
         Assert.assertEquals(new Integer(1), p1Expected.getLevel());
-        Assert.assertEquals("1", p1Expected.getLinkedUser());
+        Assert.assertEquals("2", p1Expected.getLinkedUser());
         Assert.assertEquals("test1", p1Expected.getName());
     }
 
     @Test
     public void testComputeResources1Second() {
 
-        Player p1 = createPlayer();
+        Player p1 = createPlayer("3");
 
         p1.setLastTimeResourcesCollected(Date.from(LocalDateTime.now().minus(1, ChronoUnit.SECONDS).atZone(ZoneId.systemDefault()).toInstant()));
 
-        when(this.playerRepository.findByLinkedUser("1")).thenReturn(p1);
+        when(this.playerRepository.findByLinkedUser("3")).thenReturn(p1);
 
-        Player p1Expected = playerService.computeResources("1");
+        Player p1Expected = playerService.computeResources("3");
 
-        Assert.assertEquals("1", p1Expected.getId());
+        Assert.assertEquals("3", p1Expected.getId());
         Assert.assertEquals(new Integer(1), p1Expected.getLevel());
-        Assert.assertEquals("1", p1Expected.getLinkedUser());
+        Assert.assertEquals("3", p1Expected.getLinkedUser());
         Assert.assertEquals("test1", p1Expected.getName());
 
         Assert.assertEquals(new Long(0L), p1Expected.getResource(ResourceType.RUNE).getValue());
@@ -96,19 +96,19 @@ public class PlayerServiceTest {
     @Test
     public void testComputeResources10Second() {
 
-        Player p1 = createPlayer();
+        Player p1 = createPlayer("4");
 
         p1.setLastTimeResourcesCollected(Date.from(LocalDateTime.now().minus(10, ChronoUnit.SECONDS).atZone(ZoneId.systemDefault()).toInstant()));
 
-        when(this.playerRepository.findByLinkedUser("1")).thenReturn(p1);
+        when(this.playerRepository.findByLinkedUser("4")).thenReturn(p1);
 
         when(this.playerRepository.save(any(Player.class))).thenAnswer(createPlayerAnswerForSomeInput());
 
-        Player p1Expected = playerService.computeResources("1");
+        Player p1Expected = playerService.computeResources("4");
 
-        Assert.assertEquals("1", p1Expected.getId());
+        Assert.assertEquals("4", p1Expected.getId());
         Assert.assertEquals(new Integer(1), p1Expected.getLevel());
-        Assert.assertEquals("1", p1Expected.getLinkedUser());
+        Assert.assertEquals("4", p1Expected.getLinkedUser());
         Assert.assertEquals("test1", p1Expected.getName());
 
         Assert.assertEquals(new Long(100L), p1Expected.getResource(ResourceType.RUNE).getValue());
@@ -123,19 +123,19 @@ public class PlayerServiceTest {
     @Test
     public void testComputeResources5Second() {
 
-        Player p1 = createPlayer();
+        Player p1 = createPlayer("5");
 
         p1.setLastTimeResourcesCollected(Date.from(LocalDateTime.now().minus(5, ChronoUnit.SECONDS).atZone(ZoneId.systemDefault()).toInstant()));
 
-        when(this.playerRepository.findByLinkedUser("1")).thenReturn(p1);
+        when(this.playerRepository.findByLinkedUser("5")).thenReturn(p1);
 
         when(this.playerRepository.save(any(Player.class))).thenAnswer(createPlayerAnswerForSomeInput());
 
-        Player p1Expected = playerService.computeResources("1");
+        Player p1Expected = playerService.computeResources("5");
 
-        Assert.assertEquals("1", p1Expected.getId());
+        Assert.assertEquals("5", p1Expected.getId());
         Assert.assertEquals(new Integer(1), p1Expected.getLevel());
-        Assert.assertEquals("1", p1Expected.getLinkedUser());
+        Assert.assertEquals("5", p1Expected.getLinkedUser());
         Assert.assertEquals("test1", p1Expected.getName());
 
         Assert.assertEquals(new Long(50L), p1Expected.getResource(ResourceType.RUNE).getValue());
@@ -150,15 +150,15 @@ public class PlayerServiceTest {
     @Test
     public void testUserResourcesWithHaveValue() {
 
-        when(this.playerRepository.findByLinkedUser("1")).thenReturn(createPlayerWith100OfEachResources());
+        when(this.playerRepository.findByLinkedUser("6")).thenReturn(createPlayerWith100OfEachResources("6"));
 
         when(this.playerRepository.save(any(Player.class))).thenAnswer(createPlayerAnswerForSomeInput());
 
-        Player p1Expected = playerService.useResources("1", TestHelper.create50OfEachResources());
+        Player p1Expected = playerService.useResources("6", TestHelper.create50OfEachResources());
 
-        Assert.assertEquals("1", p1Expected.getId());
+        Assert.assertEquals("6", p1Expected.getId());
         Assert.assertEquals(new Integer(1), p1Expected.getLevel());
-        Assert.assertEquals("1", p1Expected.getLinkedUser());
+        Assert.assertEquals("6", p1Expected.getLinkedUser());
         Assert.assertEquals("test1", p1Expected.getName());
 
         Assert.assertEquals(new Long(50L), p1Expected.getResource(ResourceType.RUNE).getValue());
@@ -170,15 +170,15 @@ public class PlayerServiceTest {
     @Test
     public void testUserResourcesWithAllHaveValue() {
 
-        when(this.playerRepository.findByLinkedUser("1")).thenReturn(createPlayerWith50OfEachResources());
+        when(this.playerRepository.findByLinkedUser("7")).thenReturn(createPlayerWith50OfEachResources("7"));
 
         when(this.playerRepository.save(any(Player.class))).thenAnswer(createPlayerAnswerForSomeInput());
 
-        Player p1Expected = playerService.useResources("1", TestHelper.create50OfEachResources());
+        Player p1Expected = playerService.useResources("7", TestHelper.create50OfEachResources());
 
-        Assert.assertEquals("1", p1Expected.getId());
+        Assert.assertEquals("7", p1Expected.getId());
         Assert.assertEquals(new Integer(1), p1Expected.getLevel());
-        Assert.assertEquals("1", p1Expected.getLinkedUser());
+        Assert.assertEquals("7", p1Expected.getLinkedUser());
         Assert.assertEquals("test1", p1Expected.getName());
 
         Assert.assertEquals(new Long(0L), p1Expected.getResource(ResourceType.RUNE).getValue());
@@ -190,14 +190,14 @@ public class PlayerServiceTest {
     @Test
     public void testUserResourcesWithMoreHaveValue() {
 
-        when(this.playerRepository.findByLinkedUser("1")).thenReturn(createPlayerWith50OfEachResources());
+        when(this.playerRepository.findByLinkedUser("8")).thenReturn(createPlayerWith50OfEachResources("8"));
 
         when(this.playerRepository.save(any(Player.class))).thenAnswer(createPlayerAnswerForSomeInput());
 
         expcetionExpect.expect(ValidationException.class);
         expcetionExpect.expectMessage("using.more.resource.you.have");
 
-        playerService.useResources("1", TestHelper.create100OfEachResources());
+        playerService.useResources("8", TestHelper.create100OfEachResources());
 
     }
 

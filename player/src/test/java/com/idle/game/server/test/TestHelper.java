@@ -15,11 +15,11 @@ import org.mockito.stubbing.Answer;
  */
 public class TestHelper {
 
-    public static Player createPlayer() {
+    public static Player createPlayer(String id) {
         Player p1 = new Player();
-        p1.setId("1");
+        p1.setId(id);
         p1.setLevel(1);
-        p1.setLinkedUser("1");
+        p1.setLinkedUser(id);
         p1.setName("test1");
 
         p1.setResources(createBasicResources());
@@ -27,11 +27,11 @@ public class TestHelper {
         return p1;
     }
 
-    public static Player createPlayerWith50OfEachResources() {
+    public static Player createPlayerWith50OfEachResources(String id) {
         Player p1 = new Player();
-        p1.setId("1");
+        p1.setId(id);
         p1.setLevel(1);
-        p1.setLinkedUser("1");
+        p1.setLinkedUser(id);
         p1.setName("test1");
 
         p1.setResources(create50OfEachResources());
@@ -39,11 +39,11 @@ public class TestHelper {
         return p1;
     }
 
-    public static Player createPlayerWith100OfEachResources() {
+    public static Player createPlayerWith100OfEachResources(String id) {
         Player p1 = new Player();
-        p1.setId("1");
+        p1.setId(id);
         p1.setLevel(1);
-        p1.setLinkedUser("1");
+        p1.setLinkedUser(id);
         p1.setName("test1");
 
         p1.setResources(create100OfEachResources());
