@@ -43,7 +43,7 @@ public class PlayerServiceTest {
     public ExpectedException expcetionExpect = ExpectedException.none();
 
     @Test
-    public void testFindById1() {
+    public void testFindById() {
 
         when(this.playerRepository.findById("1")).thenReturn(createPlayer("1"));
 
@@ -56,11 +56,11 @@ public class PlayerServiceTest {
     }
 
     @Test
-    public void testFindByLinkedUser1() {
+    public void testFindByLinkedUser() {
 
         when(this.playerRepository.findByLinkedUser("2")).thenReturn(createPlayer("2"));
 
-        Player p1Expected = playerService.findByLinkedUser("1");
+        Player p1Expected = playerService.findByLinkedUser("2");
 
         Assert.assertEquals("2", p1Expected.getId());
         Assert.assertEquals(new Integer(1), p1Expected.getLevel());
