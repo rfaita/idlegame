@@ -2,6 +2,7 @@ package com.idle.game.server.test;
 
 import com.idle.game.core.battle.Battle;
 import static com.idle.game.core.formation.type.FormationAllocation.PVP;
+import static com.idle.game.core.formation.type.FormationAllocation.PVP_DEFENSE;
 import com.idle.game.helper.BattleHelper;
 import com.idle.game.helper.FormationHelper;
 import com.idle.game.helper.PlayerHelper;
@@ -74,10 +75,10 @@ public class PvpServiceTest {
 
         when(this.pvpRatingRepository.findByPlayer("1")).thenReturn(createPvpRating1000("1"));
 
-        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 1500, 1650)).thenReturn(createListPvpRating1550("2"));
-        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 1100, 1210)).thenReturn(createListPvpRating1150("3"));
-        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 1000, 1100)).thenReturn(createListPvpRating1050("4"));
-        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 900, 990)).thenReturn(createListPvpRating950("5"));
+        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 1499, 1651)).thenReturn(createListPvpRating1550("2"));
+        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 1099, 1211)).thenReturn(createListPvpRating1150("3"));
+        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 999, 1101)).thenReturn(createListPvpRating1050("4"));
+        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 899, 991)).thenReturn(createListPvpRating950("5"));
 
         List<PvpRating> ratings = pvpService.findPvpRatings("1");
 
@@ -103,7 +104,7 @@ public class PvpServiceTest {
 
         when(this.pvpRatingRepository.findByPlayer("3")).thenReturn(null);
 
-        when(this.formationHelper.getFormationByPlayerAndFormationAllocation("3", PVP.toString())).thenReturn(null);
+        when(this.formationHelper.getFormationByPlayerAndFormationAllocation("3", PVP_DEFENSE.toString())).thenReturn(null);
 
         expcetionExpect.expect(ValidationException.class);
         expcetionExpect.expectMessage("formation.pvp.not.found");
@@ -119,14 +120,14 @@ public class PvpServiceTest {
 
         when(this.pvpRatingRepository.findByPlayer("1")).thenReturn(null);
 
-        when(this.formationHelper.getFormationByPlayerAndFormationAllocation("1", PVP.toString())).thenReturn(createFormation("123"));
+        when(this.formationHelper.getFormationByPlayerAndFormationAllocation("1", PVP_DEFENSE.toString())).thenReturn(createFormation("123"));
 
         when(this.pvpRatingRepository.save(any(PvpRating.class))).thenAnswer(createPvpRatingAnswerForSomeInput());
 
-        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 1500, 1650)).thenReturn(createListPvpRating1550("2"));
-        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 1100, 1210)).thenReturn(createListPvpRating1150("3"));
-        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 1000, 1100)).thenReturn(createListPvpRating1050("4"));
-        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 900, 990)).thenReturn(createListPvpRating950("5"));
+        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 1499, 1651)).thenReturn(createListPvpRating1550("2"));
+        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 1099, 1211)).thenReturn(createListPvpRating1150("3"));
+        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 999, 1101)).thenReturn(createListPvpRating1050("4"));
+        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 899, 991)).thenReturn(createListPvpRating950("5"));
 
         List<PvpRating> ratings = pvpService.findPvpRatings("1");
 
@@ -182,7 +183,7 @@ public class PvpServiceTest {
         Battle ret = mock(Battle.class);
 
         when(this.battleHelper.doBattle("5432", "4321")).thenReturn(ret);
-        
+
         when(ret.isFormationAttackWinner()).thenReturn(Boolean.TRUE);
 
         when(this.pvpRatingRepository.save(any(PvpRating.class))).thenAnswer(createPvpRatingAnswerForSomeInput());

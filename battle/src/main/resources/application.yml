@@ -36,16 +36,9 @@ idle:
             port: 11111
             database: test
     
-        # Oracle settings
-        datasource:
-            url: jdbc:oracle:thin:@172.16.50.5:1521:TSONE
-            username: pferdesenv1
-            password: fozsan
-            driver-class-name: oracle.jdbc.driver.OracleDriver
-            
         #Redis
         redis:
-            hostname: 172.16.50.24
+            hostname: localhost
             port: 6379
 
 keycloak:

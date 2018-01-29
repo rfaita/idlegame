@@ -11,8 +11,10 @@ import com.idle.game.core.passive.Passive;
 import com.idle.game.core.type.AttributeType;
 import com.idle.game.core.util.DiceUtil;
 import com.idle.game.helper.HeroTypeHelper;
+import com.idle.game.helper.PlayerHelper;
 import com.idle.game.model.mongo.Hero;
 import com.idle.game.model.mongo.HeroType;
+import com.idle.game.model.mongo.Player;
 import com.idle.game.server.repository.HeroRepository;
 import java.util.List;
 import java.util.logging.Level;
@@ -37,6 +39,9 @@ public class HeroService {
     @Autowired
     private HeroRepository heroRepository;
 
+    @Autowired
+    private PlayerHelper playerHelper;
+
     @Cacheable(value = HERO_FIND_BY_ID, key = "'" + HERO_FIND_BY_ID + "' + #id")
     public Hero findById(String id) {
 
@@ -59,16 +64,22 @@ public class HeroService {
             = @CacheEvict(value = BATTLE_HERO_FIND_BY_ID, key = "'" + BATTLE_HERO_FIND_BY_ID + "' + #id")
     )
 
-    public Hero levelUp(String id, String player) {
+    public Hero levelUp(String id, String user) {
 
-        Hero h = heroRepository.findById(id);
+        Player player = playerHelper.getPlayerByLinkedUser(user);
 
-        validateLevelUp(h, player);
+        if (player != null) {
+            Hero h = heroRepository.findById(id);
 
-        h.setLevel(h.getLevel() + 1);
+            validateLevelUp(h, player.getId());
 
-        heroRepository.save(h);
-        return h;
+            h.setLevel(h.getLevel() + 1);
+
+            heroRepository.save(h);
+            return h;
+        } else {
+            throw new ValidationException("player.not.found");
+        }
     }
 
     private void validateLevelUp(Hero h, String player) {
@@ -370,5 +381,4 @@ public class HeroService {
 //        }
 //
 //    }
-
 }

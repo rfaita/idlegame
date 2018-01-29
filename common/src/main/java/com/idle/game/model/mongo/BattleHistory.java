@@ -6,15 +6,17 @@ import com.idle.game.core.battle.BattleLog;
 import com.idle.game.core.formation.BattleFormation;
 import com.idle.game.core.formation.type.FormationType;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
  * @author rafael
  */
-@Document(collection = "battleistory")
+@Document(collection = "battlehistory")
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class BattleHistory implements Serializable {
 
@@ -25,6 +27,12 @@ public class BattleHistory implements Serializable {
     private BattleFormation attackFormation;
     private BattleFormation defenseFormation;
     private FormationType winner;
+    @Indexed(name = "expirationDate", expireAfterSeconds = 432000)
+    private final Date date = new Date();
+
+    public Date getDate() {
+        return date;
+    }
 
     public String getId() {
         return id;

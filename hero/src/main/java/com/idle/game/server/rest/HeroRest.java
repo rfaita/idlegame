@@ -47,17 +47,6 @@ public class HeroRest {
 
     }
 
-    @RequestMapping(path = "/" + HERO__ROLL, method = RequestMethod.GET)
-    public @ResponseBody
-    Envelope<Hero> rollHero() {
-
-        Envelope<Hero> ret = new Envelope<>();
-        ret.setData(heroService.rollHero(tokenHelper.getUser()));
-
-        return ret;
-
-    }
-
     @RequestMapping(path = "/" + HERO__FIND_ALL_BY_PLAYER + "/{player}", method = RequestMethod.GET)
     public @ResponseBody
     Envelope<List<Hero>> findByAllByPlayer(@PathVariable("player") String player) {

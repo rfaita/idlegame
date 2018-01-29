@@ -12,7 +12,6 @@ import com.idle.game.model.mongo.Hero;
 import com.idle.game.model.mongo.Player;
 import com.idle.game.server.repository.FormationRepository;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -21,6 +20,7 @@ import javax.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 /**
@@ -68,7 +68,7 @@ public class FormationService {
         }
     }
 
-    @Cacheable(value = FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION, key = "'" + FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION + "' + #user + #fa")
+    @Cacheable(value = FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION, key = "'" + FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION + "' + #player + #fa")
     public Formation findByPlayerAndFormationAllocation(String player, FormationAllocation fa) {
 
         Formation ret = formationRepository.findByPlayerAndFormationAllocation(player, fa);
@@ -87,29 +87,30 @@ public class FormationService {
             throw new ConstraintViolationException(new HashSet<>(violations));
         }
 
-        List<Hero> heroes = heroHelper.getHeroesByPlayer(f.getPlayer());
-
         for (BattlePositionedHero ph : f.getHeroes()) {
-            Boolean contains = Boolean.FALSE;
-            for (Hero h : heroes) {
-                if (h.getId().equals(ph.getHero().getId())) {
-                    contains = Boolean.TRUE;
-                    break;
-                }
-            }
-            if (!contains) {
+
+            Hero hero = heroHelper.getHeroById(ph.getHero().getId());
+            if (hero == null || !hero.getPlayer().equals(f.getPlayer())) {
                 throw new ValidationException("player.is.not.owner.of.this.hero");
             }
         }
 
     }
 
-    @CachePut(value = FORMATION_FIND_BY_ID, key = "'" + FORMATION_FIND_BY_ID + "' + #id")
+    @Caching(put = {
+        @CachePut(value = FORMATION_FIND_BY_ID,
+                key = "'" + FORMATION_FIND_BY_ID + "' + #result.id")
+        ,
+        @CachePut(value = FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION,
+                key = "'" + FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION + "' + #result.player + #result.formationAllocation")
+    })
     public Formation save(Formation f, String user) {
 
-        Player player = playerHelper.getPlayerById(user);
+        Player player = playerHelper.getPlayerByLinkedUser(user);
 
         if (player != null) {
+
+            f.setPlayer(player.getId());
 
             validateSave(f);
 

@@ -35,7 +35,7 @@ public class BattleHelper {
 
         ResponseEntity<Envelope<Battle>> ret = restTemplate.exchange(uri,
                 HttpMethod.GET,
-                new HttpEntity(HeaderUtil.getAuthHeaders(tokenHelper.getUser())),
+                new HttpEntity(HeaderUtil.getAuthHeaders(tokenHelper.getToken())),
                 new ParameterizedTypeReference<Envelope<Battle>>() {
         });
 

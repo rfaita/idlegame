@@ -12,7 +12,7 @@ import java.util.UUID;
  */
 public class BattleLog extends BaseObject {
 
-    private final Long sysTime;
+    private Long sysTime;
     private Integer turn;
     private BattlePositionedHero heroOrigin;
     private BattleEvent battleEvent;
@@ -57,6 +57,9 @@ public class BattleLog extends BaseObject {
 
     public void setHeroesTarget(List<BattlePositionedHero> heroesTarget) {
         this.heroesTarget = heroesTarget;
+    }
+
+    public BattleLog() {
     }
 
     public BattleLog(Integer turn, BattleEvent battleEvent) {

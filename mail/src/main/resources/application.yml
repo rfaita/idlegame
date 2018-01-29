@@ -39,7 +39,7 @@ idle:
         mail:
             #Redis
             redis:
-                hostname: 172.16.50.24
+                hostname: localhost
                 port: 6379
             relay:
                 hostname: localhost
