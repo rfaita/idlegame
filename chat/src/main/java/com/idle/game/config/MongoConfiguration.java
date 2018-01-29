@@ -16,13 +16,13 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories("com.idle.game.server.repository")
 public class MongoConfiguration extends AbstractMongoConfiguration {
 
-    @Value("${idle.config.mongodb.hostname}")
+    @Value("${idle.config.chat.mongodb.hostname}")
     private String mongoHost;
 
-    @Value("${idle.config.mongodb.port}")
+    @Value("${idle.config.chat.mongodb.port}")
     private String mongoPort;
 
-    @Value("${idle.config.mongodb.database}")
+    @Value("${idle.config.chat.mongodb.database}")
     private String mongoDB;
 
     @Override
