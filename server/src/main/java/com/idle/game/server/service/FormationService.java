@@ -1,6 +1,6 @@
 package com.idle.game.server.service;
 
-import com.idle.game.core.formation.type.FormationAllocation;
+import com.idle.game.type.FormationAllocation;
 import com.idle.game.server.model.Formation;
 import com.idle.game.server.model.Hero;
 import com.idle.game.server.model.Player;

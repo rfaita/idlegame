@@ -1,7 +1,7 @@
 package com.idle.game.server.service;
 
 import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_ID;
-import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_USER_AND_FORMATION_ALLOCATION;
+import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION;
 import com.idle.game.core.battle.BattlePositionedHero;
 import com.idle.game.core.formation.type.FormationAllocation;
 import com.idle.game.helper.BattleHeroHelper;
@@ -57,7 +57,6 @@ public class FormationService {
         return ret;
     }
 
-    @Cacheable(value = FORMATION_FIND_BY_USER_AND_FORMATION_ALLOCATION, key = "'" + FORMATION_FIND_BY_USER_AND_FORMATION_ALLOCATION + "' + #user + #fa")
     public Formation findByUserAndFormationAllocation(String user, FormationAllocation fa) {
 
         Player player = playerHelper.getPlayerById(user);
@@ -69,6 +68,7 @@ public class FormationService {
         }
     }
 
+    @Cacheable(value = FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION, key = "'" + FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION + "' + #user + #fa")
     public Formation findByPlayerAndFormationAllocation(String player, FormationAllocation fa) {
 
         Formation ret = formationRepository.findByPlayerAndFormationAllocation(player, fa);

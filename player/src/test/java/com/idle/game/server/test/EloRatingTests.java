@@ -1,6 +1,5 @@
 package com.idle.game.server.test;
 
-
 import com.idle.game.server.type.EloOutcome;
 import com.idle.game.server.util.EloRating;
 import org.junit.Assert;
@@ -135,6 +134,46 @@ public class EloRatingTests {
         Integer value = EloRating.calculate2PlayersRating(2500, 2500, EloOutcome.LOSE);
 
         Assert.assertEquals("elo expected must be 2492", new Integer(2492), value);
+
+    }
+
+    @Test
+    public void testeVeryHardRating() {
+
+        int[] ret = EloRating.veryHardRatingRange(1000);
+
+        Assert.assertEquals("elo expected must be 1500", new Integer(1500), new Integer(ret[0]));
+        Assert.assertEquals("elo expected must be 1650", new Integer(1650), new Integer(ret[1]));
+
+    }
+
+    @Test
+    public void testeHardRating() {
+
+        int[] ret = EloRating.hardRatingRange(1000);
+
+        Assert.assertEquals("elo expected must be 1100", new Integer(1100), new Integer(ret[0]));
+        Assert.assertEquals("elo expected must be 1210", new Integer(1210), new Integer(ret[1]));
+
+    }
+
+    @Test
+    public void testNormalRating() {
+
+        int[] ret = EloRating.normalRatingRange(1000);
+
+        Assert.assertEquals("elo expected must be 1000", new Integer(1000), new Integer(ret[0]));
+        Assert.assertEquals("elo expected must be 1100", new Integer(1100), new Integer(ret[1]));
+
+    }
+
+    @Test
+    public void testEasyRating() {
+
+        int[] ret = EloRating.easyRatingRange(1000);
+
+        Assert.assertEquals("elo expected must be 900", new Integer(900), new Integer(ret[0]));
+        Assert.assertEquals("elo expected must be 990", new Integer(990), new Integer(ret[1]));
 
     }
 

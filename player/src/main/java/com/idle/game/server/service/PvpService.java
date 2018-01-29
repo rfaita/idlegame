@@ -2,10 +2,12 @@ package com.idle.game.server.service;
 
 import static com.idle.game.constant.CacheConstants.PVPRATING_FIND_PVP_RATINGS;
 import com.idle.game.core.battle.Battle;
+import static com.idle.game.core.formation.type.FormationAllocation.PVP;
 import com.idle.game.core.util.DiceUtil;
 import com.idle.game.helper.BattleHelper;
 import com.idle.game.helper.FormationHelper;
 import com.idle.game.helper.PlayerHelper;
+import com.idle.game.model.mongo.Formation;
 import com.idle.game.model.mongo.Player;
 import com.idle.game.model.mongo.PvpRating;
 import com.idle.game.server.repository.PvpRatingRepository;
@@ -16,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -51,8 +52,13 @@ public class PvpService {
                 playerRating.setPlayerLevel(player.getLevel());
                 playerRating.setPlayerName(player.getName());
 
-                //formationHelper.getFormationById(user)
-                //playerRating.setFormation(formationHelper.get);
+                Formation pvpForm = formationHelper.getFormationByPlayerAndFormationAllocation(player.getId(), PVP.toString());
+
+                if (pvpForm == null) {
+                    throw new ValidationException("formation.pvp.not.found");
+                }
+
+                playerRating.setFormation(pvpForm.getId());
                 playerRating = pvpRatingRepository.save(playerRating);
 
             }
@@ -95,15 +101,14 @@ public class PvpService {
 
     }
 
-    @CacheEvict(value = PVPRATING_FIND_PVP_RATINGS, key = "'" + PVPRATING_FIND_PVP_RATINGS + "' + #user")
-    public Battle battlePvpRattings(String user, String id) {
+    public Battle battlePvpRattings(String user, String idPvpRating) {
 
         Player player = playerHelper.getPlayerByLinkedUser(user);
 
         if (player != null) {
 
             PvpRating ratPlayer = pvpRatingRepository.findByPlayer(player.getId());
-            PvpRating ratTarget = pvpRatingRepository.findById(id);
+            PvpRating ratTarget = pvpRatingRepository.findById(idPvpRating);
 
             if (ratTarget != null) {
 

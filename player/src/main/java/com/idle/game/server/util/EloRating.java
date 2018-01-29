@@ -9,7 +9,7 @@ import com.idle.game.server.type.EloOutcome;
 public class EloRating {
 
     public static final int INITIAL_RATING = 1000;
-    public static final double MIN_RANGE = 0.9;
+    public static final double MIN_RANGE = 1.0;
     public static final double MAX_RANGE = 1.1;
 
     /**

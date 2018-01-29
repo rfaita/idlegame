@@ -1,7 +1,7 @@
 package com.idle.game.server.rest;
 
 import com.idle.game.core.formation.BattleFormation;
-import com.idle.game.core.formation.type.FormationAllocation;
+import com.idle.game.type.FormationAllocation;
 import com.idle.game.server.dto.Envelope;
 import com.idle.game.server.dto.PvpRollRetorno;
 import com.idle.game.server.rest.util.annotations.GZIP;

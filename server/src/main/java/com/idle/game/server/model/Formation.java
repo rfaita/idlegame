@@ -2,7 +2,7 @@ package com.idle.game.server.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.idle.game.model.mongo.HeroType;
-import com.idle.game.core.formation.type.FormationAllocation;
+import com.idle.game.type.FormationAllocation;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

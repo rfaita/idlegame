@@ -46,6 +46,13 @@ public class Battle extends BaseObject {
     private final List<BattlePositionedHero> battlePositionedHeroes;
     private BattleFormation winner;
 
+    public Battle() {
+        this.battleLog = null;
+        this.attackFormation = null;
+        this.defenseFormation = null;
+        this.battlePositionedHeroes = null;
+    }
+
     public Battle(BattleFormation attackForm, BattleFormation defenseForm) {
         assert attackForm != null : "Attack formation can not be null, BUG";
         assert defenseForm != null : "Defense formation can not be null, BUG";

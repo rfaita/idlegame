@@ -1,7 +1,9 @@
 package com.idle.game.server.test;
 
+import com.idle.game.model.mongo.Formation;
 import com.idle.game.model.mongo.Friend;
 import com.idle.game.model.mongo.Player;
+import com.idle.game.model.mongo.PvpRating;
 import com.idle.game.model.mongo.Resource;
 import com.idle.game.model.mongo.ResourceType;
 import java.util.ArrayList;
@@ -126,9 +128,70 @@ public class TestHelper {
         return new Resource(ResourceType.GEM, 50L);
     }
 
+    public static PvpRating createPvpRatingWithId(String id, String playerId, Integer rat, String formId) {
+        PvpRating ret = new PvpRating();
+        ret.setId(id);
+        ret.setPlayer(playerId);
+        ret.setRating(rat);
+        ret.setFormation(formId);
+        return ret;
+    }
+
+    public static PvpRating createPvpRating(String playerId, Integer rat, String formId) {
+        return createPvpRatingWithId(null, playerId, rat, formId);
+    }
+
+    public static PvpRating createPvpRating(String id, Integer rat) {
+        return createPvpRating(id, rat, null);
+    }
+
+    public static PvpRating createPvpRating1000(String id) {
+        return createPvpRating1000(id, null);
+    }
+
+    public static PvpRating createPvpRating1000(String id, String formId) {
+        return createPvpRating(id, 1000, formId);
+    }
+
+    public static List<PvpRating> createListPvpRating1550(String id) {
+        List<PvpRating> ret = new ArrayList<>();
+        ret.add(createPvpRating(id, 1550));
+        return ret;
+    }
+
+    public static List<PvpRating> createListPvpRating1150(String id) {
+        List<PvpRating> ret = new ArrayList<>();
+        ret.add(createPvpRating(id, 1150));
+        return ret;
+    }
+
+    public static List<PvpRating> createListPvpRating1050(String id) {
+        List<PvpRating> ret = new ArrayList<>();
+        ret.add(createPvpRating(id, 1050));
+        return ret;
+    }
+
+    public static List<PvpRating> createListPvpRating950(String id) {
+        List<PvpRating> ret = new ArrayList<>();
+        ret.add(createPvpRating(id, 950));
+        return ret;
+    }
+
+    public static Formation createFormation(String id) {
+        Formation ret = new Formation();
+        ret.setId(id);
+        return ret;
+    }
+    
     public static Answer<Player> createPlayerAnswerForSomeInput() {
         return (InvocationOnMock invocation) -> {
             return (Player) invocation.getArguments()[0];
+        };
+    }
+
+    public static Answer<PvpRating> createPvpRatingAnswerForSomeInput() {
+        return (InvocationOnMock invocation) -> {
+            return (PvpRating) invocation.getArguments()[0];
         };
     }
 

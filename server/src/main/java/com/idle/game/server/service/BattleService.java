@@ -1,7 +1,7 @@
 package com.idle.game.server.service;
 
 import com.idle.game.core.battle.Battle;
-import com.idle.game.core.formation.type.FormationAllocation;
+import com.idle.game.type.FormationAllocation;
 import com.idle.game.core.formation.type.FormationType;
 import com.idle.game.model.mongo.HeroType;
 import com.idle.game.server.model.Formation;

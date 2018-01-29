@@ -1,6 +1,7 @@
 package com.idle.game.helper;
 
 import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_ID;
+import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION;
 import com.idle.game.model.mongo.Formation;
 import com.idle.game.server.dto.Envelope;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
@@ -70,14 +71,15 @@ public class FormationHelper {
             return null;
         }
     }
-    public Formation getFormationByUserAndFormationAllocation(String id) {
-        return this.getFormationById(id, tokenHelper.getToken());
+
+    public Formation getFormationByPlayerAndFormationAllocation(String id, String formationAllocation) {
+        return this.getFormationByPlayerAndFormationAllocation(id, formationAllocation, tokenHelper.getToken());
     }
 
-    @HystrixCommand(fallbackMethod = "getFormationCacheByUserAndFormationAllocation")
-    public Formation getFormationByUserAndFormationAllocation(String id, String token) {
+    @HystrixCommand(fallbackMethod = "getFormationCacheByPlayerAndFormationAllocation")
+    public Formation getFormationByPlayerAndFormationAllocation(String id, String formationAllocation, String token) {
 
-        URI uri = URI.create(urlFormation + "/" + id);
+        URI uri = URI.create(urlFormation + "/" + id + "/" + formationAllocation);
 
         ResponseEntity<Envelope<Formation>> ret = restTemplate.exchange(uri,
                 HttpMethod.GET,
@@ -97,8 +99,8 @@ public class FormationHelper {
         }
     }
 
-    public Formation getFormationCacheByUserAndFormationAllocation(String id, String token) {
-        Formation ret = (Formation) redisTemplate.boundValueOps(FORMATION_FIND_BY_ID + id).get();
+    public Formation getFormationCacheByPlayerAndFormationAllocation(String id, String formationAllocation, String token) {
+        Formation ret = (Formation) redisTemplate.boundValueOps(FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION + id + formationAllocation).get();
         if (ret != null) {
             return ret;
         } else {
