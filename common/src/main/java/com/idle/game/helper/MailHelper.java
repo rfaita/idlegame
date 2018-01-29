@@ -14,6 +14,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -35,14 +37,17 @@ public class MailHelper {
     public void sendPrivateMail(Mail mail) {
 
         URI uri = URI.create(urlMail + "/" + MAIL__SEND_PRIVATE_MAIL);
+        try {
+            ResponseEntity<Envelope<Player>> ret = restTemplate.exchange(uri,
+                    HttpMethod.POST,
+                    new HttpEntity(mail, HeaderUtil.getAuthHeaders(tokenHelper.getToken())),
+                    new ParameterizedTypeReference<Envelope<Player>>() {
+            });
 
-        ResponseEntity<Envelope<Player>> ret = restTemplate.exchange(uri,
-                HttpMethod.POST,
-                new HttpEntity(mail, HeaderUtil.getAuthHeaders(tokenHelper.getToken())),
-                new ParameterizedTypeReference<Envelope<Player>>() {
-        });
-
-        if (ret.getStatusCode() != HttpStatus.OK) {
+            if (ret.getStatusCode() != HttpStatus.OK) {
+                throw new ValidationException("mail.not.send");
+            }
+        } catch (HttpClientErrorException | HttpServerErrorException e) {
             throw new ValidationException("mail.not.send");
         }
     }

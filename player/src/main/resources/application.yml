@@ -35,6 +35,11 @@ idle:
             redis:
                 hostname: localhost
                 port: 6379
+            
+            pvpRating:
+                expire: 1800
+                price: 20
+                
 keycloak:
     auth-server-url: http://localhost:8180/auth
     realm: idlerealm

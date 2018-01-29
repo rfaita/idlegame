@@ -12,7 +12,7 @@ import java.util.List;
 public class Envelope<T> implements Serializable {
 
     private T data;
-    private List<Error> errors;
+    private List<String> errors;
 
     public Envelope(T data) {
         this.data = data;
@@ -29,15 +29,15 @@ public class Envelope<T> implements Serializable {
         this.data = data;
     }
 
-    public List<Error> getErrors() {
+    public List<String> getErrors() {
         return errors;
     }
 
-    public void setErrors(List<Error> errors) {
+    public void setErrors(List<String> errors) {
         this.errors = errors;
     }
 
-    public void setError(Error error) {
+    public void setError(String error) {
         this.errors = new ArrayList<>();
         this.errors.add(error);
     }

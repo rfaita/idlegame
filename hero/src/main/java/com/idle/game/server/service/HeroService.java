@@ -250,7 +250,7 @@ public class HeroService {
         return hero;
     }
 
-    public Hero recalcAttribute(Hero hero, AttributeType d, Integer ratioPercentage, Integer signal) {
+    private Hero recalcAttribute(Hero hero, AttributeType d, Integer ratioPercentage, Integer signal) {
         Double perc = ratioPercentage / 100d * signal;
         LOG.log(Level.INFO, "[recalcAttribute][perc] {0}", perc);
         if (perc > 0) {

@@ -10,6 +10,8 @@ import com.idle.game.helper.PlayerHelper;
 import com.idle.game.model.mongo.Formation;
 import com.idle.game.model.mongo.Player;
 import com.idle.game.model.mongo.PvpRating;
+import com.idle.game.model.mongo.Resource;
+import com.idle.game.model.mongo.ResourceType;
 import com.idle.game.server.repository.PvpRatingRepository;
 import static com.idle.game.server.type.EloOutcome.LOSE;
 import static com.idle.game.server.type.EloOutcome.WIN;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -36,6 +39,9 @@ public class PvpService {
 
     @Autowired
     private BattleHelper battleHelper;
+
+    @Value("${idle.config.player.pvpRating.price}")
+    private Long pvpRatingPrice;
 
     @Cacheable(value = PVPRATING_FIND_PVP_RATINGS, key = "'" + PVPRATING_FIND_PVP_RATINGS + "' + #user")
     public List<PvpRating> findPvpRatings(String user) {
@@ -100,6 +106,15 @@ public class PvpService {
             throw new ValidationException("player.not.found");
         }
 
+    }
+
+    @CacheEvict(value = PVPRATING_FIND_PVP_RATINGS, key = "'" + PVPRATING_FIND_PVP_RATINGS + "' + #user")
+    public void removePvpRatings(String user) {
+
+        List<Resource> useResource = new ArrayList<>();
+        useResource.add(new Resource(ResourceType.GEM, pvpRatingPrice));
+
+        playerHelper.useResources(useResource);
     }
 
     @CacheEvict(value = PVPRATING_FIND_PVP_RATINGS, key = "'" + PVPRATING_FIND_PVP_RATINGS + "' + #user")

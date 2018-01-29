@@ -1,4 +1,4 @@
-package com.idle.game.server.test;
+package com.idle.game.tests;
 
 import com.idle.game.core.battle.Battle;
 import static com.idle.game.core.formation.type.FormationAllocation.PVP;
@@ -9,10 +9,10 @@ import com.idle.game.helper.PlayerHelper;
 import com.idle.game.model.mongo.PvpRating;
 import com.idle.game.server.repository.PvpRatingRepository;
 import com.idle.game.server.service.PvpService;
-import static com.idle.game.server.test.TestHelper.createFormation;
-import static com.idle.game.server.test.TestHelper.createPlayer;
-import static com.idle.game.server.test.TestHelper.createPvpRating1000;
-import static com.idle.game.server.test.TestHelper.createPvpRatingAnswerForSomeInput;
+import static com.idle.game.tests.helper.TestHelper.createFormation;
+import static com.idle.game.tests.helper.TestHelper.createPlayer;
+import static com.idle.game.tests.helper.TestHelper.createPvpRating1000;
+import static com.idle.game.tests.helper.TestHelper.createPvpRatingAnswerForSomeInput;
 import java.util.List;
 import javax.validation.ValidationException;
 import org.junit.Assert;
@@ -26,11 +26,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
-import static com.idle.game.server.test.TestHelper.createListPvpRating1050;
-import static com.idle.game.server.test.TestHelper.createListPvpRating1150;
-import static com.idle.game.server.test.TestHelper.createListPvpRating1550;
-import static com.idle.game.server.test.TestHelper.createListPvpRating950;
-import static com.idle.game.server.test.TestHelper.createPvpRatingWithId;
+import static com.idle.game.tests.helper.TestHelper.createListPvpRating1050;
+import static com.idle.game.tests.helper.TestHelper.createListPvpRating1150;
+import static com.idle.game.tests.helper.TestHelper.createListPvpRating1550;
+import static com.idle.game.tests.helper.TestHelper.createListPvpRating950;
+import static com.idle.game.tests.helper.TestHelper.createPvpRatingWithId;
 import static org.mockito.Mockito.mock;
 
 /**

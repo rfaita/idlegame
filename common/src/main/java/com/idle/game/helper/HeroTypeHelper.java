@@ -21,6 +21,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import static com.idle.game.constant.URIConstants.HEROTYPE__FIND_ALL_BY_QUALITY;
+import com.idle.game.util.EnvelopeUtil;
+import javax.validation.ValidationException;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 
 /**
  *
@@ -34,6 +38,9 @@ public class HeroTypeHelper {
 
     @Autowired
     private RedisTemplate<Object, Object> redisTemplate;
+
+    @Autowired
+    private EnvelopeUtil envelopeUtil;
 
     @Autowired
     private TokenHelper tokenHelper;
@@ -50,22 +57,29 @@ public class HeroTypeHelper {
     public HeroType getHeroTypeById(String id, String token) {
 
         URI uri = URI.create(urlHeroType + "/" + id);
+        try {
+            ResponseEntity<Envelope<HeroType>> ret = restTemplate.exchange(uri,
+                    HttpMethod.GET,
+                    new HttpEntity(HeaderUtil.getAuthHeaders(token)),
+                    new ParameterizedTypeReference<Envelope<HeroType>>() {
+            });
 
-        ResponseEntity<Envelope<HeroType>> ret = restTemplate.exchange(uri,
-                HttpMethod.GET,
-                new HttpEntity(HeaderUtil.getAuthHeaders(token)),
-                new ParameterizedTypeReference<Envelope<HeroType>>() {
-        });
-
-        if (ret.getStatusCode() == HttpStatus.OK) {
-            Envelope<HeroType> data = ret.getBody();
-            if (data.getErrors() == null || data.getErrors().isEmpty()) {
-                return data.getData();
+            if (ret.getStatusCode() == HttpStatus.OK) {
+                Envelope<HeroType> data = ret.getBody();
+                if (data.getErrors() == null || data.getErrors().isEmpty()) {
+                    return data.getData();
+                } else {
+                    return null;
+                }
             } else {
                 return null;
             }
-        } else {
-            return null;
+        } catch (HttpClientErrorException e) {
+            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
+            throw new ValidationException((String) ret.getErrors().get(0));
+        } catch (HttpServerErrorException e) {
+            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
+            throw new ValidationException((String) ret.getErrors().get(0));
         }
     }
 
@@ -82,43 +96,58 @@ public class HeroTypeHelper {
 
         URI uri = URI.create(urlHeroType + "/" + HEROTYPE__FIND_ALL_BY_QUALITY + "/" + quality.toString());
 
-        ResponseEntity<Envelope<List<HeroType>>> ret = restTemplate.exchange(uri,
-                HttpMethod.GET,
-                new HttpEntity(HeaderUtil.getAuthHeaders(tokenHelper.getToken())),
-                new ParameterizedTypeReference<Envelope<List<HeroType>>>() {
-        });
+        try {
+            ResponseEntity<Envelope<List<HeroType>>> ret = restTemplate.exchange(uri,
+                    HttpMethod.GET,
+                    new HttpEntity(HeaderUtil.getAuthHeaders(tokenHelper.getToken())),
+                    new ParameterizedTypeReference<Envelope<List<HeroType>>>() {
+            });
 
-        if (ret.getStatusCode() == HttpStatus.OK) {
-            Envelope<List<HeroType>> data = ret.getBody();
-            if (data.getErrors() == null || data.getErrors().isEmpty()) {
-                return data.getData();
+            if (ret.getStatusCode() == HttpStatus.OK) {
+                Envelope<List<HeroType>> data = ret.getBody();
+                if (data.getErrors() == null || data.getErrors().isEmpty()) {
+                    return data.getData();
+                } else {
+                    return null;
+                }
             } else {
                 return null;
             }
-        } else {
-            return null;
+        } catch (HttpClientErrorException e) {
+            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
+            throw new ValidationException((String) ret.getErrors().get(0));
+        } catch (HttpServerErrorException e) {
+            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
+            throw new ValidationException((String) ret.getErrors().get(0));
         }
     }
 
     public List<HeroType> getHeroTypeByFaction(HeroTypeFaction faction) {
 
         URI uri = URI.create(urlHeroType + "/" + URIConstants.HEROTYPE__FIND_ALL_BY_FACTION + "/" + faction.toString());
+        try {
+            ResponseEntity<Envelope<List<HeroType>>> ret = restTemplate.exchange(uri,
+                    HttpMethod.GET,
+                    new HttpEntity(HeaderUtil.getAuthHeaders(tokenHelper.getToken())),
+                    new ParameterizedTypeReference<Envelope<List<HeroType>>>() {
+            });
 
-        ResponseEntity<Envelope<List<HeroType>>> ret = restTemplate.exchange(uri,
-                HttpMethod.GET,
-                new HttpEntity(HeaderUtil.getAuthHeaders(tokenHelper.getToken())),
-                new ParameterizedTypeReference<Envelope<List<HeroType>>>() {
-        });
-
-        if (ret.getStatusCode() == HttpStatus.OK) {
-            Envelope<List<HeroType>> data = ret.getBody();
-            if (data.getErrors() == null || data.getErrors().isEmpty()) {
-                return data.getData();
+            if (ret.getStatusCode() == HttpStatus.OK) {
+                Envelope<List<HeroType>> data = ret.getBody();
+                if (data.getErrors() == null || data.getErrors().isEmpty()) {
+                    return data.getData();
+                } else {
+                    return null;
+                }
             } else {
                 return null;
             }
-        } else {
-            return null;
+        } catch (HttpClientErrorException e) {
+            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
+            throw new ValidationException((String) ret.getErrors().get(0));
+        } catch (HttpServerErrorException e) {
+            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
+            throw new ValidationException((String) ret.getErrors().get(0));
         }
     }
 
@@ -127,22 +156,29 @@ public class HeroTypeHelper {
         URI uri = URI.create(
                 urlHeroType + "/" + HEROTYPE__FIND_ALL_BY_FACTION_AND_QUALITY + "/" + faction.toString() + "/" + quality.toString()
         );
+        try {
+            ResponseEntity<Envelope<List<HeroType>>> ret = restTemplate.exchange(uri,
+                    HttpMethod.GET,
+                    new HttpEntity(HeaderUtil.getAuthHeaders(tokenHelper.getToken())),
+                    new ParameterizedTypeReference<Envelope<List<HeroType>>>() {
+            });
 
-        ResponseEntity<Envelope<List<HeroType>>> ret = restTemplate.exchange(uri,
-                HttpMethod.GET,
-                new HttpEntity(HeaderUtil.getAuthHeaders(tokenHelper.getToken())),
-                new ParameterizedTypeReference<Envelope<List<HeroType>>>() {
-        });
-
-        if (ret.getStatusCode() == HttpStatus.OK) {
-            Envelope<List<HeroType>> data = ret.getBody();
-            if (data.getErrors() == null || data.getErrors().isEmpty()) {
-                return data.getData();
+            if (ret.getStatusCode() == HttpStatus.OK) {
+                Envelope<List<HeroType>> data = ret.getBody();
+                if (data.getErrors() == null || data.getErrors().isEmpty()) {
+                    return data.getData();
+                } else {
+                    return null;
+                }
             } else {
                 return null;
             }
-        } else {
-            return null;
+        } catch (HttpClientErrorException e) {
+            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
+            throw new ValidationException((String) ret.getErrors().get(0));
+        } catch (HttpServerErrorException e) {
+            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
+            throw new ValidationException((String) ret.getErrors().get(0));
         }
     }
 

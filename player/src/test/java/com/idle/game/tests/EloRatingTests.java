@@ -1,4 +1,4 @@
-package com.idle.game.server.test;
+package com.idle.game.tests;
 
 import com.idle.game.server.type.EloOutcome;
 import com.idle.game.server.util.EloRating;

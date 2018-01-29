@@ -1,5 +1,8 @@
 package com.idle.game.config;
 
+import static com.idle.game.constant.CacheConstants.PVPRATING_FIND_PVP_RATINGS;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +30,9 @@ public class RedisConfiguration {
     @Value("${idle.config.player.redis.port}")
     private int redisPort;
 
+    @Value("${idle.config.player.pvpRating.expire}")
+    private Long pvpRatingCache;
+
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
@@ -53,6 +59,12 @@ public class RedisConfiguration {
     @Bean
     RedisCacheManager cacheManager() {
         RedisCacheManager redisCacheManager = new RedisCacheManager(redisTemplate());
+
+        Map<String, Long> cacheExpiresPolice = new HashMap<>();
+
+        cacheExpiresPolice.put(PVPRATING_FIND_PVP_RATINGS, pvpRatingCache);
+
+        redisCacheManager.setExpires(cacheExpiresPolice);
         return redisCacheManager;
     }
 }

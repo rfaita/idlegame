@@ -1,13 +1,14 @@
-package com.idle.game.server.test;
+package com.idle.game.tests;
 
+import com.idle.game.tests.helper.TestHelper;
 import com.idle.game.model.mongo.Player;
 import com.idle.game.model.mongo.ResourceType;
 import com.idle.game.server.repository.PlayerRepository;
 import com.idle.game.server.service.PlayerService;
-import static com.idle.game.server.test.TestHelper.createPlayer;
-import static com.idle.game.server.test.TestHelper.createPlayerAnswerForSomeInput;
-import static com.idle.game.server.test.TestHelper.createPlayerWith100OfEachResources;
-import static com.idle.game.server.test.TestHelper.createPlayerWith50OfEachResources;
+import static com.idle.game.tests.helper.TestHelper.createPlayer;
+import static com.idle.game.tests.helper.TestHelper.createPlayerAnswerForSomeInput;
+import static com.idle.game.tests.helper.TestHelper.createPlayerWith100OfEachResources;
+import static com.idle.game.tests.helper.TestHelper.createPlayerWith50OfEachResources;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;

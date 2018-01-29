@@ -4,8 +4,10 @@ import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_ID;
 import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION;
 import com.idle.game.model.mongo.Formation;
 import com.idle.game.server.dto.Envelope;
+import com.idle.game.util.EnvelopeUtil;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import java.net.URI;
+import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -15,6 +17,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -31,6 +35,9 @@ public class FormationHelper {
     private RedisTemplate<Object, Object> redisTemplate;
 
     @Autowired
+    private EnvelopeUtil envelopeUtil;
+
+    @Autowired
     private TokenHelper tokenHelper;
 
     @Value("${idle.url.formation}")
@@ -44,22 +51,29 @@ public class FormationHelper {
     public Formation getFormationById(String id, String token) {
 
         URI uri = URI.create(urlFormation + "/" + id);
+        try {
+            ResponseEntity<Envelope<Formation>> ret = restTemplate.exchange(uri,
+                    HttpMethod.GET,
+                    new HttpEntity(HeaderUtil.getAuthHeaders(token)),
+                    new ParameterizedTypeReference<Envelope<Formation>>() {
+            });
 
-        ResponseEntity<Envelope<Formation>> ret = restTemplate.exchange(uri,
-                HttpMethod.GET,
-                new HttpEntity(HeaderUtil.getAuthHeaders(token)),
-                new ParameterizedTypeReference<Envelope<Formation>>() {
-        });
-
-        if (ret.getStatusCode() == HttpStatus.OK) {
-            Envelope<Formation> data = ret.getBody();
-            if (data.getErrors() == null || data.getErrors().isEmpty()) {
-                return data.getData();
+            if (ret.getStatusCode() == HttpStatus.OK) {
+                Envelope<Formation> data = ret.getBody();
+                if (data.getErrors() == null || data.getErrors().isEmpty()) {
+                    return data.getData();
+                } else {
+                    return null;
+                }
             } else {
                 return null;
             }
-        } else {
-            return null;
+        } catch (HttpClientErrorException e) {
+            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
+            throw new ValidationException((String) ret.getErrors().get(0));
+        } catch (HttpServerErrorException e) {
+            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
+            throw new ValidationException((String) ret.getErrors().get(0));
         }
     }
 
@@ -80,22 +94,29 @@ public class FormationHelper {
     public Formation getFormationByPlayerAndFormationAllocation(String id, String formationAllocation, String token) {
 
         URI uri = URI.create(urlFormation + "/" + id + "/" + formationAllocation);
+        try {
+            ResponseEntity<Envelope<Formation>> ret = restTemplate.exchange(uri,
+                    HttpMethod.GET,
+                    new HttpEntity(HeaderUtil.getAuthHeaders(token)),
+                    new ParameterizedTypeReference<Envelope<Formation>>() {
+            });
 
-        ResponseEntity<Envelope<Formation>> ret = restTemplate.exchange(uri,
-                HttpMethod.GET,
-                new HttpEntity(HeaderUtil.getAuthHeaders(token)),
-                new ParameterizedTypeReference<Envelope<Formation>>() {
-        });
-
-        if (ret.getStatusCode() == HttpStatus.OK) {
-            Envelope<Formation> data = ret.getBody();
-            if (data.getErrors() == null || data.getErrors().isEmpty()) {
-                return data.getData();
+            if (ret.getStatusCode() == HttpStatus.OK) {
+                Envelope<Formation> data = ret.getBody();
+                if (data.getErrors() == null || data.getErrors().isEmpty()) {
+                    return data.getData();
+                } else {
+                    return null;
+                }
             } else {
                 return null;
             }
-        } else {
-            return null;
+        } catch (HttpClientErrorException e) {
+            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
+            throw new ValidationException((String) ret.getErrors().get(0));
+        } catch (HttpServerErrorException e) {
+            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
+            throw new ValidationException((String) ret.getErrors().get(0));
         }
     }
 

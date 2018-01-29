@@ -23,6 +23,11 @@ public class PvpRest {
     @Autowired
     private PvpService pvpRatingService;
 
+    @RequestMapping(path = "", method = RequestMethod.DELETE)
+    public void removePvpRatings() {
+        pvpRatingService.removePvpRatings(tokenHelper.getUser());
+    }
+
     @RequestMapping(path = "/roll", method = RequestMethod.GET)
     public @ResponseBody
     Envelope<List<PvpRating>> roll() {

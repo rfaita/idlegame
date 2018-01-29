@@ -1,14 +1,41 @@
 package com.idle.game.tests.helper;
 
+import com.idle.game.core.constant.IdleConstants;
 import com.idle.game.core.type.DamageType;
 import com.idle.game.model.mongo.HeroType;
 import com.idle.game.core.type.DistanceType;
+import com.idle.game.model.mongo.Hero;
+import com.idle.game.model.mongo.Player;
 
 /**
  *
  * @author rafael
  */
 public class TestHelper {
+
+    public static Player createPlayer(String id) {
+        Player p1 = new Player();
+        p1.setId(id);
+        p1.setLevel(1);
+        p1.setLinkedUser(id);
+        p1.setName("test1");
+
+        return p1;
+    }
+
+    public static Hero createHero(String id, String playerId) {
+        Hero ret = new Hero();
+        ret.setId(id);
+        ret.setPlayer(playerId);
+        ret.setLevel(1);
+        return ret;
+    }
+
+    public static Hero createHeroMaxLevel(String id, String playerId) {
+        Hero ret = createHero(id, playerId);
+        ret.setLevel(IdleConstants.HERO_MAX_LEVEL);
+        return ret;
+    }
 
     public static HeroType createGenericHeroType() {
         HeroType ret = new HeroType();
