@@ -88,8 +88,8 @@ public class RandomHeroTests {
             Assert.assertTrue("Value must be lower or equal to 207", h.getBaseMagicResist() <= 207);
             Assert.assertTrue("Value must be greater or equal to 930", h.getBaseSpeed() >= 930);
             Assert.assertTrue("Value must be lower or equal to 965", h.getBaseSpeed() <= 965);
-            
-             Assert.assertTrue("Value must be greater or equal to 11", h.getMaxLevelArmor() >= 11);
+
+            Assert.assertTrue("Value must be greater or equal to 11", h.getMaxLevelArmor() >= 11);
             Assert.assertTrue("Value must be lower or equal to 13", h.getMaxLevelArmor() <= 13);
             Assert.assertTrue("Value must be greater or equal to 11", h.getMaxLevelCritChance() >= 11);
             Assert.assertTrue("Value must be lower or equal to 13", h.getMaxLevelCritChance() <= 13);
@@ -137,7 +137,7 @@ public class RandomHeroTests {
             Assert.assertTrue("Value must be lower or equal to 233", h.getBaseMagicResist() <= 233);
             Assert.assertTrue("Value must be greater or equal to 965", h.getBaseSpeed() >= 965);
             Assert.assertTrue("Value must be lower or equal to 1000", h.getBaseSpeed() <= 1000);
-            
+
             Assert.assertTrue("Value must be greater or equal to 13", h.getMaxLevelArmor() >= 13);
             Assert.assertTrue("Value must be lower or equal to 15", h.getMaxLevelArmor() <= 15);
             Assert.assertTrue("Value must be greater or equal to 13", h.getMaxLevelCritChance() >= 13);
@@ -177,7 +177,7 @@ public class RandomHeroTests {
             Assert.assertTrue("Value must be equal to 2", h.getBaseLuck() == 2);
             Assert.assertTrue("Value must be equal to 233", h.getBaseMagicResist() == 233);
             Assert.assertTrue("Value must be equal to 1000", h.getBaseSpeed() == 1000);
-            
+
             Assert.assertTrue("Value must be equal to 15", h.getMaxLevelArmor() == 15);
             Assert.assertTrue("Value must be equal to 15", h.getMaxLevelCritChance() == 15);
             Assert.assertTrue("Value must be equal to 150", h.getMaxLevelCritDamage() == 150);
@@ -217,8 +217,8 @@ public class RandomHeroTests {
             Assert.assertTrue("Value must be lower or equal to 233", h.getBaseMagicResist() <= 256);
             Assert.assertTrue("Value must be greater or equal to 1000", h.getBaseSpeed() >= 1000);
             Assert.assertTrue("Value must be lower or equal to 1000", h.getBaseSpeed() <= 1100);
-            
-              Assert.assertTrue("Value must be greater or equal to 15", h.getBaseArmor() >= 15);
+
+            Assert.assertTrue("Value must be greater or equal to 15", h.getBaseArmor() >= 15);
             Assert.assertTrue("Value must be lower or equal to 15", h.getMaxLevelArmor() <= 16);
             Assert.assertTrue("Value must be greater or equal to 15", h.getMaxLevelCritChance() >= 15);
             Assert.assertTrue("Value must be lower or equal to 15", h.getMaxLevelCritChance() <= 16);

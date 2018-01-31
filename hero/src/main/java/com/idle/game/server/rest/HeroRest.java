@@ -25,23 +25,24 @@ public class HeroRest {
     @Autowired
     private TokenHelper tokenHelper;
 
-    @RequestMapping(path = "/customRoll/{player}/{heroType}", method = RequestMethod.GET)
+    @RequestMapping(path = "/customRoll/{player}/{heroType}/{heroQuality}", method = RequestMethod.GET)
     public @ResponseBody
-    Envelope<Hero> customRoll(@PathVariable("player") String player, @PathVariable("heroType") String heroType) {
+    Envelope<Hero> customRoll(@PathVariable("player") String player,
+            @PathVariable("heroType") String heroType, @PathVariable("heroQuality") String heroQuality) {
 
         Envelope<Hero> ret = new Envelope<>();
-        ret.setData(heroService.rollHero(player, heroType));
+        ret.setData(heroService.customRollHero(player, heroType, heroQuality));
 
         return ret;
 
     }
 
-    @RequestMapping(path = "/" + HERO__ROLL + "/{player}", method = RequestMethod.GET)
+    @RequestMapping(path = "/" + HERO__ROLL + "/{lootRollId}", method = RequestMethod.GET)
     public @ResponseBody
-    Envelope<Hero> rollHero(@PathVariable("player") String player) {
+    Envelope<Hero> rollHero(@PathVariable("lootRollId") String lootRollId) {
 
         Envelope<Hero> ret = new Envelope<>();
-        ret.setData(heroService.rollHero(player));
+        ret.setData(heroService.rollHero(tokenHelper.getUser(), lootRollId));
 
         return ret;
 

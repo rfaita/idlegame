@@ -19,56 +19,16 @@ public class DiceUtil {
         return ThreadLocalRandom.current().nextInt(minValue, maxValue + 1);
     }
 
-    public static HeroQuality randomHeroQuality() {
-
-        Integer heroTypeQuality = DiceUtil.random(1000);
-
-        if (heroTypeQuality <= 500) {
-            return HeroQuality.POOR;
-        } else if (heroTypeQuality <= 800) {
-            return HeroQuality.AVERAGE;
-        } else if (heroTypeQuality <= 990) {
-            return HeroQuality.BEST;
-        } else if (heroTypeQuality <= 999) {
-            return HeroQuality.SHINE;
-        } else {
-            return HeroQuality.UNIQUE;
-        }
-
+    public static Double randomPercentage() {
+        return random(0.0, 100.0);
     }
 
-    public static HeroTypeFaction randomHeroTypeFaction() {
-
-        Integer heroTypeFaction = DiceUtil.random(100);
-
-        if (heroTypeFaction <= 20) {
-            return HeroTypeFaction.CHAOS;
-        } else if (heroTypeFaction <= 40) {
-            return HeroTypeFaction.FORTIFIED;
-        } else if (heroTypeFaction <= 60) {
-            return HeroTypeFaction.SAVAGE;
-        } else if (heroTypeFaction <= 80) {
-            return HeroTypeFaction.SHADOW;
-        } else if (heroTypeFaction <= 90) {
-            return HeroTypeFaction.DARK;
-        } else {
-            return HeroTypeFaction.LIGHT;
-        }
-
+    public static Double random(Double maxValue) {
+        return random(0.0, maxValue);
     }
 
-    public static HeroTypeQuality randomHeroTypeQuality() {
-
-        Integer heroTypeQuality = DiceUtil.random(100);
-
-        if (heroTypeQuality <= 60) {
-            return HeroTypeQuality.POOR;
-        } else if (heroTypeQuality <= 90) {
-            return HeroTypeQuality.AVERAGE;
-        } else {
-            return HeroTypeQuality.BEST;
-        }
-
+    public static Double random(Double minValue, Double maxValue) {
+        return ThreadLocalRandom.current().nextDouble(minValue, maxValue + 0.0000001);
     }
 
     public static Integer randomAttribute(HeroQuality heroQuality, Integer min, Integer max) {

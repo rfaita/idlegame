@@ -2,7 +2,7 @@ info:
     version: @pom.version@
     stage: dev
 server:
-    port: 8082
+    port: 8086
 
 management: 
     security: 
@@ -23,6 +23,8 @@ idle:
             http://localhost:8084/mail
         battle:
             http://localhost:8081/battle
+        shop:
+            http://localhost:8086/shop
     config:
         shop:
             #Mongo

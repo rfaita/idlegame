@@ -23,6 +23,8 @@ idle:
             http://localhost:8084/mail
         battle:
             http://localhost:8081/battle
+        shop:
+            http://localhost:8086/shop
     config:
         player:
             #Mongo

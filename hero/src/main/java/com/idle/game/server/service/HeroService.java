@@ -11,10 +11,13 @@ import com.idle.game.core.passive.Passive;
 import com.idle.game.core.type.AttributeType;
 import com.idle.game.core.util.DiceUtil;
 import com.idle.game.helper.HeroTypeHelper;
+import com.idle.game.helper.LootRollHelper;
 import com.idle.game.helper.PlayerHelper;
 import com.idle.game.model.mongo.Hero;
 import com.idle.game.model.mongo.HeroType;
 import com.idle.game.model.mongo.Player;
+import com.idle.game.model.mongo.shop.LootRoll;
+import static com.idle.game.model.mongo.shop.LootRollType.HERO;
 import com.idle.game.server.repository.HeroRepository;
 import java.util.List;
 import java.util.logging.Level;
@@ -41,6 +44,9 @@ public class HeroService {
 
     @Autowired
     private PlayerHelper playerHelper;
+
+    @Autowired
+    private LootRollHelper lootRollHelper;
 
     @Cacheable(value = HERO_FIND_BY_ID, key = "'" + HERO_FIND_BY_ID + "' + #id")
     public Hero findById(String id) {
@@ -94,34 +100,61 @@ public class HeroService {
         }
     }
 
-    public Hero rollHero(String player) {
-        return rollHero(player, null);
+    public Hero rollHero(String user, String lootRollId) {
+
+        Player player = playerHelper.getPlayerByLinkedUser(user);
+
+        if (player != null) {
+            return rollHero(player.getId(), null, null, lootRollId);
+        } else {
+            throw new ValidationException("player.not.found");
+        }
+
     }
 
-    public Hero rollHero(String player, String customHeroType) {
+    public Hero customRollHero(String player, String customHeroType, String customHeroQuality) {
+        return rollHero(player, customHeroType, customHeroQuality, null);
+    }
+
+    private Hero rollHero(String player, String customHeroType, String customHeroQuality, String lootRollId) {
 
         HeroType heroType;
+        HeroQuality heroQuality;
 
-        if (customHeroType == null) {
-            HeroTypeFaction faction = DiceUtil.randomHeroTypeFaction();
-            HeroTypeQuality quality = DiceUtil.randomHeroTypeQuality();
+        if (customHeroType == null && customHeroQuality == null) {
 
-            List<HeroType> heroTypes = heroTypeHelper.getHeroTypeByFactionAndQuality(
-                    faction, quality
-            );
+            LootRoll lootRoll = lootRollHelper.buyLootRoll(lootRollId);
 
-            if (heroTypes == null || heroTypes.isEmpty()) {
-                LOG.log(Level.SEVERE, "Hero Type not found for, FACTION: {0}, QUALITY: {1}", new Object[]{faction, quality});
-                throw new ValidationException("hero.type.not.found");
+            if (lootRoll != null) {
+
+                if (lootRoll.getType().equals(HERO)) {
+
+                    HeroTypeFaction faction = HeroTypeFaction.valueOf(lootRoll.roll(HeroTypeFaction.class));
+                    HeroTypeQuality quality = HeroTypeQuality.valueOf(lootRoll.roll(HeroTypeQuality.class));
+
+                    List<HeroType> heroTypes = heroTypeHelper.getHeroTypeByFactionAndQuality(
+                            faction, quality
+                    );
+
+                    if (heroTypes == null || heroTypes.isEmpty()) {
+                        LOG.log(Level.SEVERE, "Hero Type not found for, FACTION: {0}, QUALITY: {1}", new Object[]{faction, quality});
+                        throw new ValidationException("hero.type.not.found");
+                    }
+
+                    heroType = heroTypes.get(DiceUtil.random(heroTypes.size() - 1));
+                    heroQuality = HeroQuality.valueOf(lootRoll.roll(HeroQuality.class));
+                    
+                } else {
+                    throw new ValidationException("loot.roll.type.must.be.hero");
+                }
+            } else {
+                throw new ValidationException("loot.roll.not.found");
             }
-
-            heroType = heroTypes.get(DiceUtil.random(heroTypes.size() - 1));
 
         } else {
             heroType = heroTypeHelper.getHeroTypeById(customHeroType);
+            heroQuality = HeroQuality.valueOf(customHeroQuality);
         }
-
-        HeroQuality heroQuality = DiceUtil.randomHeroQuality();
 
         Hero hero;
 

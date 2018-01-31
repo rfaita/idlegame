@@ -116,8 +116,8 @@ public class HeroHelper {
         }
     }
 
-    public Hero roll(String player) {
-        URI uri = URI.create(urlHero + "/" + HERO__ROLL + "/" + player);
+    public Hero roll(String lootRollId) {
+        URI uri = URI.create(urlHero + "/" + HERO__ROLL + "/" + lootRollId);
         try {
             ResponseEntity<Envelope<Hero>> ret = restTemplate.exchange(uri,
                     HttpMethod.GET,
