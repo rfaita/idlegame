@@ -1,0 +1,55 @@
+info:
+    version: @pom.version@
+    stage: dev
+server:
+    port: 9000
+
+management: 
+    security: 
+        enabled: false
+zuul:
+  prefix: /idle/api
+  routes:
+    heroType:
+        path: /heroType/**
+        sensitiveHeaders:
+        url: http://localhost:8082/heroType
+    hero:
+        path: /hero/**
+        sensitiveHeaders:
+        url: http://localhost:8082/hero
+    battleHero:
+        path: /battleHero/**
+        sensitiveHeaders:
+        url: http://localhost:8081/battleHero
+    formation:
+        path: /formation/**
+        sensitiveHeaders:
+        url: http://localhost:8081/formation
+    player:
+        path: /player/**
+        sensitiveHeaders:
+        url: http://localhost:8085/player
+    playerResource:
+        path: /playerResource/**
+        sensitiveHeaders:
+        url: http://localhost:8085/playerResource
+    mail:
+        path: /mail/**
+        sensitiveHeaders:
+        url: http://localhost:8084/mail
+    battle:
+        path: /battle/**
+        sensitiveHeaders:
+        url: http://localhost:8081/battle
+    shop:
+        path: /shop/**
+        sensitiveHeaders:
+        url: http://localhost:8086/shop
+    
+#Spring Boot Config            
+spring:
+    profiles:
+        active: default
+    application:
+        name: @pom.artifactId@

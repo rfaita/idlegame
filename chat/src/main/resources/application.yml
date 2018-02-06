@@ -19,6 +19,8 @@ idle:
             http://localhost:8081/formation
         player:
             http://localhost:8085/player
+        playerResource:
+            http://localhost:8085/playerResource
         mail:
             http://localhost:8084/mail
         battle:

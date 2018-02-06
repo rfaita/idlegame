@@ -59,7 +59,7 @@ public class FormationService {
 
     public Formation findByUserAndFormationAllocation(String user, FormationAllocation fa) {
 
-        Player player = playerHelper.getPlayerById(user);
+        Player player = playerHelper.getPlayerByLinkedUser(user);
 
         if (player != null) {
             return findByPlayerAndFormationAllocation(player.getId(), fa);

@@ -1,9 +1,11 @@
 package com.idle.game;
 
 import com.idle.game.model.mongo.Player;
+import com.idle.game.model.mongo.PlayerResource;
 import com.idle.game.model.mongo.Resource;
 import com.idle.game.model.mongo.ResourceType;
 import com.idle.game.server.repository.PlayerRepository;
+import com.idle.game.server.repository.PlayerResourceRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -50,7 +52,7 @@ public class IdlePlayerApplication {
     }
 
     @Bean
-    public CommandLineRunner init(PlayerRepository playerRepository) {
+    public CommandLineRunner init(PlayerRepository playerRepository, PlayerResourceRepository playerResourceRepository) {
 
         return args -> {
 
@@ -59,129 +61,144 @@ public class IdlePlayerApplication {
             p.setLinkedUser("c723fc50-639d-4eec-a449-cebda70599c9");
             p.setName("rfaita");
 
+            PlayerResource pr = new PlayerResource();
+
+            pr.setPlayer("1");
+
             Resource r = new Resource();
             r.setType(ResourceType.RUNE);
             r.setValue(0L);
 
-            p.getResources().add(r);
+            pr.getResources().add(r);
 
             r = new Resource();
             r.setType(ResourceType.GOLD);
             r.setValue(0L);
 
-            p.getResources().add(r);
+            pr.getResources().add(r);
 
             r = new Resource();
             r.setType(ResourceType.GEM);
             r.setValue(0L);
 
-            p.getResources().add(r);
+            pr.getResources().add(r);
 
             r = new Resource();
             r.setType(ResourceType.RUNE_PS);
             r.setValue(10000L);
 
-            p.getResources().add(r);
+            pr.getResources().add(r);
 
             r = new Resource();
             r.setType(ResourceType.GOLD_PS);
             r.setValue(10000L);
 
-            p.getResources().add(r);
+            pr.getResources().add(r);
 
             r = new Resource();
             r.setType(ResourceType.GEM_PS);
             r.setValue(10000L);
 
-            p.getResources().add(r);
+            pr.getResources().add(r);
 
             playerRepository.save(p);
+            playerResourceRepository.save(pr);
 
             p = new Player();
             p.setId("2");
             p.setLinkedUser("60955fdb-6af7-4e02-a088-3fee94086444");
             p.setName("joao");
 
+            pr = new PlayerResource();
+
+            pr.setPlayer("2");
+
             r = new Resource();
             r.setType(ResourceType.RUNE);
             r.setValue(0L);
 
-            p.getResources().add(r);
+            pr.getResources().add(r);
 
             r = new Resource();
             r.setType(ResourceType.GOLD);
             r.setValue(0L);
 
-            p.getResources().add(r);
+            pr.getResources().add(r);
 
             r = new Resource();
             r.setType(ResourceType.GEM);
             r.setValue(0L);
 
-            p.getResources().add(r);
+            pr.getResources().add(r);
 
             r = new Resource();
             r.setType(ResourceType.RUNE_PS);
             r.setValue(10000L);
 
-            p.getResources().add(r);
+            pr.getResources().add(r);
 
             r = new Resource();
             r.setType(ResourceType.GOLD_PS);
             r.setValue(10000L);
 
-            p.getResources().add(r);
+            pr.getResources().add(r);
 
             r = new Resource();
             r.setType(ResourceType.GEM_PS);
             r.setValue(10000L);
 
-            p.getResources().add(r);
+            pr.getResources().add(r);
 
             playerRepository.save(p);
+            playerResourceRepository.save(pr);
 
             p = new Player();
             p.setId("3");
             p.setLinkedUser("50a5dfce-34ca-4949-8b37-d968231a2247");
             p.setName("teste");
 
+            pr = new PlayerResource();
+
+            pr.setPlayer("3");
+
             r = new Resource();
             r.setType(ResourceType.RUNE);
             r.setValue(0L);
 
-            p.getResources().add(r);
+            pr.getResources().add(r);
 
             r = new Resource();
             r.setType(ResourceType.GOLD);
             r.setValue(0L);
 
-            p.getResources().add(r);
+            pr.getResources().add(r);
 
             r = new Resource();
             r.setType(ResourceType.GEM);
             r.setValue(0L);
 
-            p.getResources().add(r);
+            pr.getResources().add(r);
 
             r = new Resource();
             r.setType(ResourceType.RUNE_PS);
             r.setValue(10000L);
 
-            p.getResources().add(r);
+            pr.getResources().add(r);
 
             r = new Resource();
             r.setType(ResourceType.GOLD_PS);
             r.setValue(10000L);
 
-            p.getResources().add(r);
+            pr.getResources().add(r);
 
             r = new Resource();
             r.setType(ResourceType.GEM_PS);
             r.setValue(10000L);
 
-            p.getResources().add(r);
+            pr.getResources().add(r);
 
             playerRepository.save(p);
+            playerResourceRepository.save(pr);
 
         };
     }

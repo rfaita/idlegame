@@ -1,6 +1,7 @@
 package com.idle.game.server.service;
 
 import com.idle.game.helper.PlayerHelper;
+import com.idle.game.helper.PlayerResourceHelper;
 import com.idle.game.model.mongo.shop.LootRoll;
 import com.idle.game.server.repository.LootRollRepository;
 import java.util.List;
@@ -19,7 +20,7 @@ public class LootRollService {
     private LootRollRepository lootRollRepository;
 
     @Autowired
-    private PlayerHelper playerHelper;
+    private PlayerResourceHelper playerResourceHelper;
 
     public List<LootRoll> findAll() {
         return lootRollRepository.findAll();
@@ -33,7 +34,7 @@ public class LootRollService {
         LootRoll lootRoll = findById(id);
 
         if (lootRoll != null) {
-            playerHelper.useResources(lootRoll.getCost());
+            playerResourceHelper.useResources(lootRoll.getCost());
             return lootRoll;
         } else {
             throw new ValidationException("loot.roll.not.found");

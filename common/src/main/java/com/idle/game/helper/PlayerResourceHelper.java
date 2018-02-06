@@ -1,12 +1,15 @@
 package com.idle.game.helper;
 
 import static com.idle.game.constant.CacheConstants.PLAYER_FIND_BY_LINKED_USER;
+import com.idle.game.constant.URIConstants;
 import static com.idle.game.constant.URIConstants.PLAYER__FIND_BY_LINKED_USER;
 import com.idle.game.model.mongo.Player;
+import com.idle.game.model.mongo.Resource;
 import com.idle.game.server.dto.Envelope;
 import com.idle.game.util.EnvelopeUtil;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import java.net.URI;
+import java.util.List;
 import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +29,7 @@ import org.springframework.web.client.RestTemplate;
  * @author rafael
  */
 @Service
-public class PlayerHelper {
+public class PlayerResourceHelper {
 
     @Autowired
     private RestTemplate restTemplate;
@@ -36,25 +39,19 @@ public class PlayerHelper {
 
     @Autowired
     private EnvelopeUtil envelopeUtil;
+    
+    @Value("${idle.url.playerResource}")
+    private String urlPlayerResource;
 
-    @Autowired
-    private RedisTemplate<Object, Object> redisTemplate;
+    public Player useResources(List<Resource> resources) {
 
-    @Value("${idle.url.player}")
-    private String urlPlayer;
+        URI uri = URI.create(urlPlayerResource + "/" + URIConstants.PLAYERRESOURCE__USE_RESOURCES);
 
-    public Player getPlayerByLinkedUser(String linkedUser) {
-        return getPlayerByLinkedUser(linkedUser, tokenHelper.getToken());
-    }
-
-    @HystrixCommand(fallbackMethod = "getPlayerCacheByLinkedUser")
-    public Player getPlayerByLinkedUser(String linkedUser, String token) {
-
-        URI uri = URI.create(urlPlayer + "/" + PLAYER__FIND_BY_LINKED_USER + "/" + linkedUser);
         try {
+
             ResponseEntity<Envelope<Player>> ret = restTemplate.exchange(uri,
-                    HttpMethod.GET,
-                    new HttpEntity(HeaderUtil.getAuthHeaders(token)),
+                    HttpMethod.POST,
+                    new HttpEntity(resources, HeaderUtil.getAuthHeaders(tokenHelper.getToken())),
                     new ParameterizedTypeReference<Envelope<Player>>() {
             });
 
@@ -75,15 +72,6 @@ public class PlayerHelper {
             Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
             throw new ValidationException((String) ret.getErrors().get(0));
         }
-    }
 
-    public Player getPlayerCacheByLinkedUser(String linkedUser, String token) {
-        Player ret = (Player) redisTemplate.boundValueOps(PLAYER_FIND_BY_LINKED_USER + linkedUser).get();
-        if (ret != null) {
-            return ret;
-        } else {
-            return null;
-        }
     }
-
 }

@@ -7,6 +7,7 @@ import com.idle.game.core.util.DiceUtil;
 import com.idle.game.helper.BattleHelper;
 import com.idle.game.helper.FormationHelper;
 import com.idle.game.helper.PlayerHelper;
+import com.idle.game.helper.PlayerResourceHelper;
 import com.idle.game.model.mongo.Formation;
 import com.idle.game.model.mongo.Player;
 import com.idle.game.model.mongo.PvpRating;
@@ -33,6 +34,9 @@ public class PvpService {
 
     @Autowired
     private PlayerHelper playerHelper;
+    
+    @Autowired
+    private PlayerResourceHelper playerResourceHelper;
 
     @Autowired
     private FormationHelper formationHelper;
@@ -114,7 +118,7 @@ public class PvpService {
         List<Resource> useResource = new ArrayList<>();
         useResource.add(new Resource(ResourceType.GEM, pvpRatingPrice));
 
-        playerHelper.useResources(useResource);
+        playerResourceHelper.useResources(useResource);
     }
 
     @CacheEvict(value = PVPRATING_FIND_PVP_RATINGS, key = "'" + PVPRATING_FIND_PVP_RATINGS + "' + #user")

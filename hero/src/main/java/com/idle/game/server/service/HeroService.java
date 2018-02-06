@@ -69,7 +69,6 @@ public class HeroService {
             evict
             = @CacheEvict(value = BATTLE_HERO_FIND_BY_ID, key = "'" + BATTLE_HERO_FIND_BY_ID + "' + #id")
     )
-
     public Hero levelUp(String id, String user) {
 
         Player player = playerHelper.getPlayerByLinkedUser(user);
