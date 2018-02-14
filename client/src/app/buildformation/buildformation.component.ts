@@ -58,11 +58,11 @@ export class BuildformationComponent implements OnInit {
         }
       }
       if (dragD.id != null && dragD.id != "") {
-        this.buildFormation.set(dragD.id, new BattlePositionedHero(this.heroes.filter(h => h.id === Number.parseInt(el.id))[0], dragD.id));
+        this.buildFormation.set(dragD.id, new BattlePositionedHero(this.heroes.filter(h => h.id === el.id)[0], dragD.id));
       }
       if (dragO.id != null && dragO.id != "") {
         if (dragO.children.length > 0) {
-          this.buildFormation.set(dragO.id, new BattlePositionedHero(this.heroes.filter(h => h.id === Number.parseInt(dragO.children[0].id))[0], dragO.id));
+          this.buildFormation.set(dragO.id, new BattlePositionedHero(this.heroes.filter(h => h.id === dragO.children[0].id)[0], dragO.id));
         } else {
           this.buildFormation.set(dragO.id, null);
         }

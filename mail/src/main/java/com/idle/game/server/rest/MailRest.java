@@ -6,7 +6,6 @@
 package com.idle.game.server.rest;
 
 import static com.idle.game.constant.URIConstants.MAIL__SEND_PRIVATE_MAIL;
-import com.idle.game.helper.ManualTokenHelper;
 import com.idle.game.helper.TokenHelper;
 import com.idle.game.model.mongo.Mail;
 import com.idle.game.model.mongo.Reward;

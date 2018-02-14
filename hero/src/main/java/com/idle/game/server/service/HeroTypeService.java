@@ -33,7 +33,7 @@ public class HeroTypeService {
     public HeroType findById(String id) {
         return heroTypeRepository.findById(id);
     }
-
+    
     @Caching(put
             = @CachePut(value = HERO_TYPE_FIND_BY_NAME, key = "'" + HERO_TYPE_FIND_BY_NAME + "' + #ht.name"),
             evict
@@ -42,7 +42,12 @@ public class HeroTypeService {
     public HeroType save(HeroType ht) {
         return heroTypeRepository.save(ht);
     }
+    
+    public List<HeroType> findAll() {
 
+        return heroTypeRepository.findAll();
+    }
+    
     public List<HeroType> findAllByQuality(HeroTypeQuality quality) {
 
         return heroTypeRepository.findAllByQuality(quality);

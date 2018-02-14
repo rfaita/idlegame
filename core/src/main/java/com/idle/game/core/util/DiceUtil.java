@@ -1,8 +1,6 @@
 package com.idle.game.core.util;
 
 import com.idle.game.core.hero.type.HeroQuality;
-import com.idle.game.core.hero.type.HeroTypeFaction;
-import com.idle.game.core.hero.type.HeroTypeQuality;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**

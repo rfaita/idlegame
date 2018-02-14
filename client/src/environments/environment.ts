@@ -5,9 +5,9 @@
 
 export const environment = {
   production: false,
-  WS_BASE_URL: "ws://localhost:8080/idle/websocket",
-  API_BASE_URL: "http://localhost:8080/idle/api/",
-  AUTH_URL: "http://localhost:8080/auth",
+  WS_BASE_URL: "ws://localhost:8180/idle/websocket",
+  API_BASE_URL: "http://localhost:9000/idle/api/",
+  AUTH_URL: "http://localhost:8180/auth",
   AUTH_REALM: "idlerealm",
   AUTH_CLIENT: "idlegame",
 };

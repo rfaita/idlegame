@@ -1,0 +1,294 @@
+<div class="main-content" *ngIf="!!heroType">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="card">
+                <div class="card-header" data-background-color="red">
+                    <h4 class="title">Edit Profile</h4>
+                    <p class="category">Complete your profile</p>
+                </div>
+                <div class="card-content">
+                    <form #f="ngForm" (ngSubmit)="save(f.value)">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Name</label>
+                                    <input type="text" name="name" class="form-control" ngModel required [ngModel]="heroType.name">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Quality</label>
+                                    <input type="text" name="quality" class="form-control" ngModel required [ngModel]="heroType.quality">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Role</label>
+                                    <input type="text" name="role" class="form-control" ngModel required [ngModel]="heroType.role">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Faction</label>
+                                    <input type="text" name="faction" class="form-control" ngModel required [ngModel]="heroType.faction">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Damage Type</label>
+                                    <input type="text" name="damageType" class="form-control" ngModel required [ngModel]="heroType.damageType">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Distance Type</label>
+                                    <input type="text" name="distanceType" class="form-control" ngModel required [ngModel]="heroType.distanceType">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Min Base Damage</label>
+                                    <input type="text" name="minBaseDmg" class="form-control" ngModel required [ngModel]="heroType.minBaseDmg">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Min Base Armor</label>
+                                    <input type="text" name="minBaseArmor" class="form-control" ngModel required [ngModel]="heroType.minBaseArmor">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Min Base MR</label>
+                                    <input type="text" name="minBaseMagicResist" class="form-control" ngModel required [ngModel]="heroType.minBaseMagicResist">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Min Base Speed</label>
+                                    <input type="text" name="minBaseSpeed" class="form-control" ngModel required [ngModel]="heroType.minBaseSpeed">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Min Base Luck</label>
+                                    <input type="text" name="minBaseLuck" class="form-control" ngModel required [ngModel]="heroType.minBaseLuck">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Min Base Crit %</label>
+                                    <input type="text" name="minBaseCritChance" class="form-control" ngModel required [ngModel]="heroType.minBaseCritChance">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Min Base Crit Dmg</label>
+                                    <input type="text" name="minBaseCritDamage" class="form-control" ngModel required [ngModel]="heroType.minBaseCritDamage">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Min Base Dodge %</label>
+                                    <input type="text" name="minBaseDodgeChance" class="form-control" ngModel required [ngModel]="heroType.minBaseDodgeChance">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Min Base HP</label>
+                                    <input type="text" name="minBaseHp" class="form-control" ngModel required [ngModel]="heroType.minBaseHp">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Max Base Damage</label>
+                                    <input type="text" name="maxBaseDmg" class="form-control" ngModel required [ngModel]="heroType.maxBaseDmg">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Max Base Armor</label>
+                                    <input type="text" name="maxBaseArmor" class="form-control" ngModel required [ngModel]="heroType.maxBaseArmor">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Max Base MR</label>
+                                    <input type="text" name="maxBaseMagicResist" class="form-control" ngModel required [ngModel]="heroType.maxBaseMagicResist">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Max Base Speed</label>
+                                    <input type="text" name="maxBaseSpeed" class="form-control" ngModel required [ngModel]="heroType.maxBaseSpeed">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Max Base Luck</label>
+                                    <input type="text" name="maxBaseLuck" class="form-control" ngModel required [ngModel]="heroType.maxBaseLuck">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Max Base Crit %</label>
+                                    <input type="text" name="maxBaseCritChance" class="form-control" ngModel required [ngModel]="heroType.maxBaseCritChance">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Max Base Crit Dmg</label>
+                                    <input type="text" name="maxBaseCritDamage" class="form-control" ngModel required [ngModel]="heroType.maxBaseCritDamage">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Max Base Dodge %</label>
+                                    <input type="text" name="maxBaseDodgeChance" class="form-control" ngModel required [ngModel]="heroType.maxBaseDodgeChance">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Max Base HP</label>
+                                    <input type="text" name="maxBaseHp" class="form-control" ngModel required [ngModel]="heroType.maxBaseHp">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Min MaxLevel Damage</label>
+                                    <input type="text" name="minMaxLevelDmg" class="form-control" ngModel required [ngModel]="heroType.minMaxLevelDmg">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Min MaxLevel Armor</label>
+                                    <input type="text" name="minMaxLevelArmor" class="form-control" ngModel required [ngModel]="heroType.minMaxLevelArmor">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Min MaxLevel MR</label>
+                                    <input type="text" name="minMaxLevelMagicResist" class="form-control" ngModel required [ngModel]="heroType.minMaxLevelMagicResist">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Min MaxLevel Speed</label>
+                                    <input type="text" name="minMaxLevelSpeed" class="form-control" ngModel required [ngModel]="heroType.minMaxLevelSpeed">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Min MaxLevel Luck</label>
+                                    <input type="text" name="minMaxLevelLuck" class="form-control" ngModel required [ngModel]="heroType.minMaxLevelLuck">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Min MaxLevel Crit %</label>
+                                    <input type="text" name="minMaxLevelCritChance" class="form-control" ngModel required [ngModel]="heroType.minMaxLevelCritChance">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Min MaxLevel Crit Dmg</label>
+                                    <input type="text" name="minMaxLevelCritDamage" class="form-control" ngModel required [ngModel]="heroType.minMaxLevelCritDamage">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Min MaxLevel Dodge %</label>
+                                    <input type="text" name="minMaxLevelDodgeChance" class="form-control" ngModel required [ngModel]="heroType.minMaxLevelDodgeChance">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Min MaxLevel HP</label>
+                                    <input type="text" name="minMaxLevelHp" class="form-control" ngModel required [ngModel]="heroType.minMaxLevelHp">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Max MaxLevel Damage</label>
+                                    <input type="text" name="maxMaxLevelDmg" class="form-control" ngModel required [ngModel]="heroType.maxMaxLevelDmg">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Max MaxLevel Armor</label>
+                                    <input type="text" name="maxMaxLevelArmor" class="form-control" ngModel required [ngModel]="heroType.maxMaxLevelArmor">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Max MaxLevel MR</label>
+                                    <input type="text" name="maxMaxLevelMagicResist" class="form-control" ngModel required [ngModel]="heroType.maxMaxLevelMagicResist">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Max MaxLevel Speed</label>
+                                    <input type="text" name="maxMaxLevelSpeed" class="form-control" ngModel required [ngModel]="heroType.maxMaxLevelSpeed">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Max MaxLevel Luck</label>
+                                    <input type="text" name="maxMaxLevelLuck" class="form-control" ngModel required [ngModel]="heroType.maxMaxLevelLuck">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Max MaxLevel Crit %</label>
+                                    <input type="text" name="maxMaxLevelCritChance" class="form-control" ngModel required [ngModel]="heroType.maxMaxLevelCritChance">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Max MaxLevel Crit Dmg</label>
+                                    <input type="text" name="maxMaxLevelCritDamage" class="form-control" ngModel required [ngModel]="heroType.maxMaxLevelCritDamage">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Max MaxLevel Dodge %</label>
+                                    <input type="text" name="maxMaxLevelDodgeChance" class="form-control" ngModel required [ngModel]="heroType.maxMaxLevelDodgeChance">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group form-black">
+                                    <label class="control-label">Max MaxLevel HP</label>
+                                    <input type="text" name="maxMaxLevelHp" class="form-control" ngModel required [ngModel]="heroType.maxMaxLevelHp">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <button type="submit" class="btn btn-danger pull-right">Update HeroType</button>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

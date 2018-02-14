@@ -1,9 +1,9 @@
 export class Hero {
-    public id: number;
+    public id: string;
     public level: number;
     public heroTypeId: string;
 
-    constructor(id: number) {
+    constructor(id: string) {
         this.id = id;
     }
 }

@@ -27,14 +27,14 @@ export class HeroesService {
             .catch(this.handleError);
     }
 
-    levelUp(id: number): Observable<Hero> {
-        return this.http.put(environment.API_BASE_URL + "hero/" + id + "/levelUp", null)
+    levelUp(id: string): Observable<Hero> {
+        return this.http.get(environment.API_BASE_URL + "hero/levelUp/" + id, null)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
     getHeroes(): Observable<Hero[]> {
-        return this.http.get(environment.API_BASE_URL + "hero/all")
+        return this.http.get(environment.API_BASE_URL + "hero/all/1")
             .map(this.extractData)
             .catch(this.handleError);
     }
