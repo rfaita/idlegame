@@ -50,11 +50,15 @@ public class FormationService {
 
         Formation ret = formationRepository.findById(id);
 
-        ret.getHeroes().forEach((h) -> {
-            h.setHero(battleHeroHelper.getBattleHeroById(h.getHero().getId()));
-        });
+        if (ret != null) {
+            ret.getHeroes().forEach((h) -> {
+                h.setHero(battleHeroHelper.getBattleHeroById(h.getHero().getId()));
+            });
 
-        return ret;
+            return ret;
+        } else {
+            throw new ValidationException("formation.not.found");
+        }
     }
 
     public Formation findByUserAndFormationAllocation(String user, FormationAllocation fa) {

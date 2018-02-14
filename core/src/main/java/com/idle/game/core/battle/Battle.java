@@ -275,8 +275,8 @@ public class Battle extends BaseObject {
         be.setValue((int) ((aPositionedHero.getHero().getCurrDmg() * ae.getPercentage() / 100f)));
         be.setDamageType(ae.getDamageType());
 
-        aPositionedHero.getHero().setCurrHp(aPositionedHero.getHero().getCurrHp() + be.getValue());
-        LOG.log(Level.INFO, "[event=HEAL, value={0}] HEAL {0} TO HERO {1}", new Object[]{be.getValue(), aPositionedHero.getHero()});
+        tPositionedHero.getHero().setCurrHp(tPositionedHero.getHero().getCurrHp() + be.getValue());
+        LOG.log(Level.INFO, "[event=HEAL, value={0}] HEAL {0} TO HERO {1}", new Object[]{be.getValue(), tPositionedHero.getHero()});
 
     }
 
