@@ -3,6 +3,7 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { initializer } from './utils/initializer';
 
@@ -24,6 +25,11 @@ import { UpgradeComponent } from './upgrade/upgrade.component';
 import { HeroesTypeComponent } from './herotypes/herotypes.component';
 import { HeroTypeService } from './service/herotype.service';
 import { HeroTypeComponent } from './herotype/herotype.component';
+import { HeroTypeTypesService } from './service/herotypetypes.service';
+import { ActionEffectTypesService } from './service/actioneffecttypes.service';
+import { ActionEffectComponent } from './actionEffect/actionEffect.component';
+import { BuffEffectComponent } from './buffEffect/buffEffect.component';
+
 
 @NgModule({
   declarations: [
@@ -36,7 +42,9 @@ import { HeroTypeComponent } from './herotype/herotype.component';
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
-    HeroesTypeComponent, HeroTypeComponent
+    HeroesTypeComponent, HeroTypeComponent,
+    ActionEffectComponent,
+    BuffEffectComponent
 
   ],
   imports: [
@@ -46,7 +54,8 @@ import { HeroTypeComponent } from './herotype/herotype.component';
     HttpModule,
     ComponentsModule,
     RouterModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [
     {
@@ -55,7 +64,9 @@ import { HeroTypeComponent } from './herotype/herotype.component';
       multi: true,
       deps: [KeycloakService]
     },
-    HeroTypeService
+    HeroTypeService,
+    HeroTypeTypesService,
+    ActionEffectTypesService
   ],
   bootstrap: [AppComponent]
 })

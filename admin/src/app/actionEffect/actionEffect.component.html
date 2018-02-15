@@ -1,0 +1,74 @@
+<div class="card cardAction">
+
+    <div class="card-header" data-background-color="blue">
+        <div class="form-check form-black">
+            <input class="form-check-input" type="checkbox" (click)="changeActionEffect()" [ngModel]="actionEffect!=null">
+            <label class="title form-check-label">{{actionEffectName}}</label>
+            <button *ngIf="!!actionEffect" type="button" style="margin: 0px" class="btn btn-outline-secondary btn-sm" (click)="remove()">Remove</button>
+            <button *ngIf="!!actionEffect" type="button" style="margin: 0px" class="btn btn-outline-secondary btn-sm" (click)="addBuffEffectActionEffect()">Add Buff</button>
+        </div>
+    </div>
+    <div class="row" *ngIf="!!actionEffect">
+        <div class="col-md-2">
+            <div class="form-group form-black">
+                <label>Action Type</label>
+                <select class="form-control" [ngModel]="actionEffect.type" (ngModelChange)="actionEffect.type = $event" (change)="refresh()">
+                    <option *ngFor="let v of actionEffectTypes.actionTypes">{{v}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group form-black">
+                <label>Target Type</label>
+                <select class="form-control" [ngModel]="actionEffect.targetType" (ngModelChange)="actionEffect.targetType = $event" (change)="refresh()">
+                    <option *ngFor="let v of actionEffectTypes.targetTypes">{{v}}</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="col-md-2">
+            <div class="form-group form-check form-black">
+                <label class="form-check-label">Can Dodge?</label>
+                <input class="form-check-input" type="checkbox" [ngModel]="actionEffect.canDodge" (ngModelChange)="actionEffect.canDodge = $event"
+                    (change)="refresh()">
+            </div>
+        </div>
+
+
+        <div class="col-md-2">
+            <div class="form-group form-black">
+                <label>Percentage of DMG</label>
+                <input type="text" class="form-control" [ngModel]="actionEffect.percentage" (ngModelChange)="actionEffect.percentage = $event"
+                    (change)="refresh()">
+            </div>
+        </div>
+
+
+        <div class="col-md-2">
+            <div class="form-group form-black">
+                <label>Dmg Type</label>
+                <select class="form-control" [ngModel]="actionEffect.damageType" (ngModelChange)="actionEffect.damageType = $event" (change)="refresh()">
+                    <option *ngFor="let v of actionEffectTypes.damageTypes">{{v}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group form-check form-black">
+                <label class="form-check-label">Over Same Team?</label>
+                <input class="form-check-input" type="checkbox" [ngModel]="actionEffect.overSameTeam" (ngModelChange)="actionEffect.overSameTeam = $event"
+                    (change)="refresh()">
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row" *ngIf="!!actionEffect">
+        <app-buffeffect *ngFor="let buffEffect of actionEffect.buffEffects; let i = index" (result)="changeBuffEffectActionEffect($event, i)"
+            [buffEffectName]="'Buff - ' + (i + 1)" [buffEffect]="buffEffect" [actionEffectTypes]="actionEffectTypes">
+            </app-buffeffect>
+    </div>
+</div>

@@ -10,6 +10,14 @@ management:
 zuul:
   prefix: /idle/api
   routes:
+    actionEffectTypes:
+        path: /actionEffectTypes/**
+        sensitiveHeaders:
+        url: http://localhost:8082/actionEffectTypes
+    heroTypeTypes:
+        path: /heroTypeTypes/**
+        sensitiveHeaders:
+        url: http://localhost:8082/heroTypeTypes
     heroType:
         path: /heroType/**
         sensitiveHeaders:

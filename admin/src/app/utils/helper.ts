@@ -1,20 +1,43 @@
-import { Http, Response } from '@angular/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
-export function extractData(res: Response): any {
-    let body = res.json();
-    return body.data || {};
+declare var $: any;
+
+export function showNotification(type, msg) {
+
+    $.notify({
+        icon: "notifications",
+        message: msg
+
+    }, {
+            type: type,
+            timer: 4000,
+            placement: {
+                from: 'top',
+                align: 'center'
+            }
+        });
 }
 
-export function handleError(error: Response | any) {
+export function handleError(error: HttpErrorResponse | any) {
     // In a real world app, you might use a remote logging infrastructure
-    let errMsg: string;
-    if (error instanceof Response) {
-        const body = error.json() || '';
-        const err = body.error || JSON.stringify(body);
-        errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+        
+    if (error instanceof HttpErrorResponse) {
+        if(error.status == 403) {
+            showNotification('danger', 'You do not have authorization to that action.');
+        } else {
+            showNotification('danger', error.message);
+        }
+      
     } else {
-        errMsg = error.message ? error.message : error.toString();
+        showNotification('danger', error.message ? error.message : error.toString());
     }
-    return Observable.throw(errMsg);
+    return Observable.throw(error);
+}
+
+export function clone(obj:any) {
+    if (obj == null) {
+        return null;
+    }
+    return JSON.parse(JSON.stringify(obj));
 }

@@ -1,3 +1,4 @@
+import { Action } from './action';
 export class HeroType {
 
     public id: String;
@@ -5,8 +6,8 @@ export class HeroType {
     public faction: String;
     public role: String;
     public name: String;
-    //public Action specialAction;
-    //public Action defaultAction;
+    public specialAction: Action;
+    public defaultAction: Action;
     public damageType: String;
     public distanceType: String;
     //public List<Passive> passives;

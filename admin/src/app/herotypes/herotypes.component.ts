@@ -20,10 +20,7 @@ export class HeroesTypeComponent implements OnInit {
   }
 
   public findAll() {
-    this.heroTypeService.findAll()
-      .subscribe(
-      heroesType => this.heroesType = heroesType,
-      error => console.log(error));
+    this.heroTypeService.findAll().subscribe(env => this.heroesType = env.data);
   }
 
 }
