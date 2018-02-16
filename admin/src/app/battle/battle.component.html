@@ -1,0 +1,163 @@
+<div class="main-content" *ngIf="!!heroTypes">
+    <div class="container-fluid">
+        <form #f="ngForm" (ngSubmit)="runSimulation(f.value)">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="card">
+                        <div class="card-header" data-background-color="red">
+                            <h4>Attack Formation</h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="col-md-12">
+                                <div class="form-group form-black is-empty">
+                                    <input type="text" class="form-control" placeholder="Name" name="playerAttack" ngModel (ngModelChange)="playerAttack = $event"
+                                        (keydown)="keyDownFindAllByPlayerAttack($event)">
+                                    <span class="material-input"></span>
+                                    <button type="button" class="btn btn-white btn-round btn-just-icon" (click)="findAllByPlayerAttack()">
+                                        <i class="material-icons">search</i>
+                                        <div class="ripple-container"></div>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group form-black">
+                                    <label>ATT_FRONT_1</label>
+                                    <select name="ATT_FRONT_1" class="form-control" required ngModel>
+                                        <option value="">EMPTY</option>
+                                        <option *ngFor="let v of heroesAttack" [value]="v.id">Type: {{v.heroTypeName}} - Quality: {{v.quality}} - Level: {{v.level}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group form-black">
+                                    <label>ATT_FRONT_2</label>
+                                    <select name="ATT_FRONT_2" class="form-control" required ngModel>
+                                        <option value="">EMPTY</option>
+                                        <option *ngFor="let v of heroesAttack" [value]="v.id">Type: {{v.heroTypeName}} - Quality: {{v.quality}} - Level: {{v.level}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group form-black">
+                                    <label>ATT_BACK_1</label>
+                                    <select name="ATT_BACK_1" class="form-control" required ngModel>
+                                        <option value="">EMPTY</option>
+                                        <option *ngFor="let v of heroesAttack" [value]="v.id">Type: {{v.heroTypeName}} - Quality: {{v.quality}} - Level: {{v.level}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group form-black">
+                                    <label>ATT_BACK_2</label>
+                                    <select name="ATT_BACK_2" class="form-control" required ngModel>
+                                        <option value="">EMPTY</option>
+                                        <option *ngFor="let v of heroesAttack" [value]="v.id">Type: {{v.heroTypeName}} - Quality: {{v.quality}} - Level: {{v.level}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group form-black">
+                                    <label>ATT_BACK_3</label>
+                                    <select name="ATT_BACK_3" class="form-control" required ngModel>
+                                        <option value="">EMPTY</option>
+                                        <option *ngFor="let v of heroesAttack" [value]="v.id">Type: {{v.heroTypeName}} - Quality: {{v.quality}} - Level: {{v.level}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group form-black">
+                                    <label>ATT_BACK_4</label>
+                                    <select name="ATT_BACK_4" class="form-control" required ngModel>
+                                        <option value="">EMPTY</option>
+                                        <option *ngFor="let v of heroesAttack" [value]="v.id">Type: {{v.heroTypeName}} - Quality: {{v.quality}} - Level: {{v.level}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="card">
+                        <div class="card-header" data-background-color="blue">
+                            <h4>Defense Formation</h4>
+                        </div>
+                        <div class="card-content">
+                            <div class="col-md-12">
+                                <div class="form-group form-black is-empty">
+                                    <input type="text" class="form-control" placeholder="Name" name="playerDefense" ngModel (ngModelChange)="playerDefense = $event"
+                                        (keydown)="keyDownFindAllByPlayerDefense($event)">
+                                    <span class="material-input"></span>
+                                    <button type="button" class="btn btn-white btn-round btn-just-icon" (click)="findAllByPlayerDefense()">
+                                        <i class="material-icons">search</i>
+                                        <div class="ripple-container"></div>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group form-black">
+                                    <label>DEF_FRONT_1</label>
+                                    <select name="DEF_FRONT_1" class="form-control" required ngModel>
+                                        <option value="">EMPTY</option>
+                                        <option *ngFor="let v of heroesDefense" [value]="v.id">Type: {{v.heroTypeName}} - Quality: {{v.quality}} - Level: {{v.level}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group form-black">
+                                    <label>DEF_FRONT_2</label>
+                                    <select name="DEF_FRONT_2" class="form-control" required ngModel>
+                                        <option value="">EMPTY</option>
+                                        <option *ngFor="let v of heroesDefense" [value]="v.id">Type: {{v.heroTypeName}} - Quality: {{v.quality}} - Level: {{v.level}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group form-black">
+                                    <label>DEF_BACK_1</label>
+                                    <select name="DEF_BACK_1" class="form-control" required ngModel>
+                                        <option value="">EMPTY</option>
+                                        <option *ngFor="let v of heroesDefense" [value]="v.id">Type: {{v.heroTypeName}} - Quality: {{v.quality}} - Level: {{v.level}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group form-black">
+                                    <label>DEF_BACK_2</label>
+                                    <select name="DEF_BACK_2" class="form-control" required ngModel>
+                                        <option value="">EMPTY</option>
+                                        <option *ngFor="let v of heroesDefense" [value]="v.id">Type: {{v.heroTypeName}} - Quality: {{v.quality}} - Level: {{v.level}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group form-black">
+                                    <label>DEF_BACK_3</label>
+                                    <select name="DEF_BACK_3" class="form-control" required ngModel>
+                                        <option value="">EMPTY</option>
+                                        <option *ngFor="let v of heroesDefense" [value]="v.id">Type: {{v.heroTypeName}} - Quality: {{v.quality}} - Level: {{v.level}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group form-black">
+                                    <label>DEF_BACK_4</label>
+                                    <select name="DEF_BACK_4" class="form-control" required ngModel>
+                                        <option value="">EMPTY</option>
+                                        <option *ngFor="let v of heroesDefense" [value]="v.id">Type: {{v.heroTypeName}} - Quality: {{v.quality}} - Level: {{v.level}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-info pull-right">
+                <i class="material-icons">save</i>
+                Simulate
+            </button>
+            <div class="clearfix"></div>
+        </form>
+    </div>
+</div>

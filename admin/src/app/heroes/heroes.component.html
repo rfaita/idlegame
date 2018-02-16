@@ -5,7 +5,7 @@
             <div class="collapse navbar-collapse">
                 <form class="navbar-form navbar-right" role="search">
                     <div class="form-group form-black is-empty">
-                        <input type="text" class="form-control" placeholder="Player" name="player" ngModel (ngModelChange)="player = $event" (keydown)="keyDownFindAllByPlayer($event)">
+                        <input type="text" class="form-control" placeholder="Player Name" name="player" ngModel (ngModelChange)="player = $event" (keydown)="keyDownFindAllByPlayer($event)">
                         <span class="material-input"></span>
                     </div>
                     <button type="button" class="btn btn-white btn-round btn-just-icon" (click)="findAllByPlayer()">

@@ -14,8 +14,10 @@ import { HeroTypesComponent } from './herotypes/herotypes.component';
 import { HeroTypeComponent } from './herotype/herotype.component';
 import { HeroesComponent } from './heroes/heroes.component';
 import { HeroComponent } from './hero/hero.component';
+import { BattleComponent } from './battle/battle.component';
 
 const routes: Routes = [
+  { path: 'battle', component: BattleComponent },
   { path: 'heroes', component: HeroesComponent },
   { path: 'hero/:id', component: HeroComponent },
   { path: 'heroTypes', component: HeroTypesComponent },

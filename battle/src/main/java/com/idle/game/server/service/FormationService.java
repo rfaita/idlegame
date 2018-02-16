@@ -108,7 +108,7 @@ public class FormationService {
         @CachePut(value = FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION,
                 key = "'" + FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION + "' + #result.player + #result.formationAllocation")
     })
-    public Formation save(Formation f, String user) {
+    public Formation save(Formation f, String user, Boolean admin) {
 
         Player player = playerHelper.getPlayerByLinkedUser(user);
 
@@ -116,7 +116,9 @@ public class FormationService {
 
             f.setPlayer(player.getId());
 
-            validateSave(f);
+            if (!admin) {
+                validateSave(f);
+            }
 
             Formation fFind = formationRepository.findByPlayerAndFormationAllocation(f.getPlayer(), f.getFormationAllocation());
 

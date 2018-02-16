@@ -33,6 +33,9 @@ import { HeroesComponent } from './heroes/heroes.component';
 import { PlayerService } from './service/player.service';
 import { HeroComponent } from './hero/hero.component';
 import { HeroTypesService } from './service/herotypes.service';
+import { BattleComponent } from './battle/battle.component';
+import { BattleService } from './service/battle.service';
+import { FormationService } from './service/formation.service';
 
 
 @NgModule({
@@ -48,7 +51,8 @@ import { HeroTypesService } from './service/herotypes.service';
     HeroTypesComponent, HeroTypeComponent,
     HeroesComponent, HeroComponent,
     ActionEffectComponent,
-    BuffEffectComponent
+    BuffEffectComponent,
+    BattleComponent
 
   ],
   imports: [
@@ -73,7 +77,9 @@ import { HeroTypesService } from './service/herotypes.service';
     HeroTypeTypesService,
     HeroTypesService,
     ActionEffectTypesService,
-    PlayerService
+    PlayerService,
+    BattleService,
+    FormationService
   ],
   bootstrap: [AppComponent]
 })

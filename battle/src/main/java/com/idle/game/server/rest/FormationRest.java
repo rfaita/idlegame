@@ -61,10 +61,8 @@ public class FormationRest {
     public @ResponseBody
     Envelope<Formation> save(@RequestBody Formation f) throws Exception {
 
-        Envelope<Formation> ret = new Envelope<>(formationService.save(f, tokenHelper.getUser()));
+        Envelope<Formation> ret = new Envelope<>(formationService.save(f, tokenHelper.getUser(), tokenHelper.isAdmin()));
 
         return ret;
-
     }
-
 }

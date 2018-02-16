@@ -1,6 +1,9 @@
 export class Hero {
     public id: String;
     public heroType: String;
+
+    public heroTypeName: String;
+
     public player: String;
     public level: Number;
     public quality: String;

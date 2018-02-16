@@ -28,6 +28,13 @@ public class BattleService {
         Formation attFormation = formationHelper.getFormationById(idAttackFormation);
         Formation defFormation = formationHelper.getFormationById(idDefenseFormation);
         
+        return doBattle(attFormation, defFormation);
+    }
+    
+     public Battle doBattle(Formation attFormation, Formation defFormation) {
+        
+        
+        
         BattleFormation battleAttackFormation = new BattleFormation(attFormation.getHeroes());
         battleAttackFormation.setFormationType(FormationType.ATTACK);
         

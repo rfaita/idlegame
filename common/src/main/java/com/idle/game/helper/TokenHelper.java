@@ -1,5 +1,6 @@
 package com.idle.game.helper;
 
+import java.util.Set;
 import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,14 @@ public class TokenHelper {
 
     public String getLocale() {
         return accessToken.getLocale();
+    }
+    
+    public Boolean isAdmin() {
+        return this.getRoles().contains("ADMIN");
+    }
+    
+    public Set<String> getRoles() {
+        return accessToken.getRealmAccess().getRoles();
     }
 
 }

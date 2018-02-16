@@ -1,20 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common';
-import { HeroTypeService } from '../service/herotype.service';
-import { HeroType } from '../model/herotype';
-import { ActivatedRouteSnapshot } from '@angular/router';
-import { HeroTypeTypesService } from '../service/herotypetypes.service';
-import { HeroTypeTypes } from '../model/herotypetypes';
-import { ActionEffectTypesService } from '../service/actioneffecttypes.service';
-import { ActionEffectTypes } from '../model/actionEffectTypes';
-import { Action } from '../model/action';
-import { ActionEffect } from '../model/actionEffect';
-import { clone, showNotification } from '../utils/helper';
 import { Hero } from '../model/hero';
+import { HeroTypes } from '../model/herotypes';
+import { HeroType } from '../model/herotype';
 import { HeroService } from '../service/hero.service';
 import { HeroTypesService } from '../service/herotypes.service';
-import { HeroTypes } from '../model/herotypes';
+import { HeroTypeService } from '../service/herotype.service';
+import { showNotification } from '../utils/helper';
 
 @Component({
   selector: 'app-hero',
