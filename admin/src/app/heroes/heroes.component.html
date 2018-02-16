@@ -1,17 +1,18 @@
 <div class="main-content">
     <div class="container-fluid">
+
         <nav class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
             <div class="collapse navbar-collapse">
                 <form class="navbar-form navbar-right" role="search">
                     <div class="form-group form-black is-empty">
-                        <input type="text" class="form-control" placeholder="Hero Type">
+                        <input type="text" class="form-control" placeholder="Player" name="player" ngModel (ngModelChange)="player = $event" (keydown)="keyDownFindAllByPlayer($event)">
                         <span class="material-input"></span>
                     </div>
-                    <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                    <button type="button" class="btn btn-white btn-round btn-just-icon" (click)="findAllByPlayer()">
                         <i class="material-icons">search</i>
                         <div class="ripple-container"></div>
                     </button>
-                    <button type="button" class="btn btn-white btn-round btn-just-icon" [routerLink]="['/heroType', 'new']">
+                    <button type="button" class="btn btn-white btn-round btn-just-icon" [routerLink]="['/hero', 'new']">
                         <i class="material-icons">add</i>
                         <div class="ripple-container"></div>
                     </button>
@@ -26,21 +27,20 @@
                         <table class="table table-hover">
                             <thead class="text-info">
                                 <tr>
-                                    <th>Name</th>
+                                    <th>Id</th>
                                     <th>Quality</th>
-                                    <th>Role</th>
-                                    <th>Faction</th>
-                                    <th>Actions</th>
+                                    <th>Level</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let heroType of heroesType">
-                                    <td>{{heroType.name}}</td>
-                                    <td>{{heroType.quality}}</td>
-                                    <td>{{heroType.role}}</td>
-                                    <td>{{heroType.faction}}</td>
+                                <tr *ngFor="let hero of heroes">
+                                    <td>{{hero.id}}</td>
+                                    <td>{{hero.quality}}</td>
+                                    <td>{{hero.level}}</td>
+
                                     <td class="td-actions text-right">
-                                        <button type="button" rel="tooltip" [routerLink]="['/heroType', heroType.id]" title="Edit Hero Type" class="btn btn-primary btn-simple btn-xs">
+                                        <button type="button" rel="tooltip" [routerLink]="['/hero', hero.id]" title="Edit Hero" class="btn btn-primary btn-simple btn-xs">
                                             <i class="material-icons">edit</i>
                                         </button>
                                     </td>

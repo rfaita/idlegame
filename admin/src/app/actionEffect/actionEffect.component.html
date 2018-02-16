@@ -4,8 +4,14 @@
         <div class="form-check form-black">
             <input class="form-check-input" type="checkbox" (click)="changeActionEffect()" [ngModel]="actionEffect!=null">
             <label class="title form-check-label">{{actionEffectName}}</label>
-            <button *ngIf="!!actionEffect" type="button" style="margin: 0px" class="btn btn-outline-secondary btn-sm" (click)="remove()">Remove</button>
-            <button *ngIf="!!actionEffect" type="button" style="margin: 0px" class="btn btn-outline-secondary btn-sm" (click)="addBuffEffectActionEffect()">Add Buff</button>
+            <button *ngIf="!!actionEffect" type="button" class="btn btn-outline-secondary btn-sm space" (click)="remove()">
+                <i class="material-icons">delete</i>
+                Remove
+            </button>
+            <button *ngIf="!!actionEffect" type="button" class="btn btn-outline-secondary btn-sm space" (click)="addBuffEffectActionEffect()">
+                <i class="material-icons">add</i>
+                Add Buff
+            </button>
         </div>
     </div>
     <div class="row" *ngIf="!!actionEffect">
@@ -69,6 +75,6 @@
     <div class="row" *ngIf="!!actionEffect">
         <app-buffeffect *ngFor="let buffEffect of actionEffect.buffEffects; let i = index" (result)="changeBuffEffectActionEffect($event, i)"
             [buffEffectName]="'Buff - ' + (i + 1)" [buffEffect]="buffEffect" [actionEffectTypes]="actionEffectTypes">
-            </app-buffeffect>
+        </app-buffeffect>
     </div>
 </div>

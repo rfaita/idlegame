@@ -13,6 +13,8 @@ public interface PlayerRepository extends MongoRepository<Player, String> {
 
     Player findById(String id);
 
+    Player findByName(String name);
+
     Player findByLinkedUser(String linkedUser);
 
 }

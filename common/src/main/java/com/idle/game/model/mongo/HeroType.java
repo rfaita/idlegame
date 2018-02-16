@@ -76,7 +76,7 @@ public class HeroType implements Serializable {
     private Integer maxMaxLevelCritDamage = 0;
     private Integer maxMaxLevelDodgeChance = 0;
     private Integer maxMaxLevelHp = 0;
-
+    
     public HeroType() {
     }
 

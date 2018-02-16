@@ -22,13 +22,18 @@ import { IconsComponent } from './icons/icons.component';
 import { MapsComponent } from './maps/maps.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { UpgradeComponent } from './upgrade/upgrade.component';
-import { HeroesTypeComponent } from './herotypes/herotypes.component';
+import { HeroTypesComponent } from './herotypes/herotypes.component';
 import { HeroTypeService } from './service/herotype.service';
 import { HeroTypeComponent } from './herotype/herotype.component';
 import { HeroTypeTypesService } from './service/herotypetypes.service';
 import { ActionEffectTypesService } from './service/actioneffecttypes.service';
 import { ActionEffectComponent } from './actionEffect/actionEffect.component';
 import { BuffEffectComponent } from './buffEffect/buffEffect.component';
+import { HeroService } from './service/hero.service';
+import { HeroesComponent } from './heroes/heroes.component';
+import { PlayerService } from './service/player.service';
+import { HeroComponent } from './hero/hero.component';
+import { HeroTypesService } from './service/herotypes.service';
 
 
 @NgModule({
@@ -42,7 +47,8 @@ import { BuffEffectComponent } from './buffEffect/buffEffect.component';
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
-    HeroesTypeComponent, HeroTypeComponent,
+    HeroTypesComponent, HeroTypeComponent,
+    HeroesComponent, HeroComponent,
     ActionEffectComponent,
     BuffEffectComponent
 
@@ -64,9 +70,12 @@ import { BuffEffectComponent } from './buffEffect/buffEffect.component';
       multi: true,
       deps: [KeycloakService]
     },
+    HeroService,
     HeroTypeService,
     HeroTypeTypesService,
-    ActionEffectTypesService
+    HeroTypesService,
+    ActionEffectTypesService,
+    PlayerService
   ],
   bootstrap: [AppComponent]
 })

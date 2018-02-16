@@ -15,5 +15,6 @@ public interface CacheConstants {
     final String BATTLE_HERO_FIND_BY_ID = "battleHeroFindById";
     final String HERO_TYPE_FIND_BY_ID = "heroTypeFindById";
     final String HERO_TYPE_FIND_BY_NAME = "heroTypeFindByName";
+    final String HERO_TYPE_FIND_ALL = "heroTypeFindAll";
 
 }

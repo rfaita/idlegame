@@ -50,7 +50,7 @@ public class HeroRest {
 
     @RequestMapping(path = "/" + HERO__FIND_ALL_BY_PLAYER + "/{player}", method = RequestMethod.GET)
     public @ResponseBody
-    Envelope<List<Hero>> findByAllByPlayer(@PathVariable("player") String player) {
+    Envelope<List<Hero>> findAllByPlayer(@PathVariable("player") String player) {
 
         Envelope<List<Hero>> ret = new Envelope<>();
         ret.setData(heroService.findAllByPlayer(player));

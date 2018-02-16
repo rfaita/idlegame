@@ -13,6 +13,10 @@ public class PlayerService {
     @Autowired
     private PlayerRepository playerRepository;
 
+    public Player findByName(String name) {
+        return playerRepository.findByName(name);
+    }
+
     public Player findById(String id) {
         return playerRepository.findById(id);
     }

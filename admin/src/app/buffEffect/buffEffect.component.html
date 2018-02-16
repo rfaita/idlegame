@@ -4,7 +4,10 @@
         <div class="form-check form-black">
             <input class="form-check-input" type="checkbox" (click)="changeBuffEffect()" [ngModel]="buffEffect!=null">
             <label class="title form-check-label">{{buffEffectName}}</label>
-            <button *ngIf="!!buffEffect" type="button" style="margin: 0px" class="btn btn-outline-secondary btn-sm" (click)="remove()">Remove</button>
+            <button *ngIf="!!buffEffect" type="button" class="btn btn-outline-secondary btn-sm space" (click)="remove()">
+                <i class="material-icons">delete</i>
+                Remove
+            </button>
         </div>
     </div>
     <div class="row" *ngIf="!!buffEffect">
@@ -57,5 +60,5 @@
 
     </div>
 
-   
+
 </div>

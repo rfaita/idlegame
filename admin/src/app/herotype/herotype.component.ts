@@ -10,7 +10,7 @@ import { ActionEffectTypesService } from '../service/actioneffecttypes.service';
 import { ActionEffectTypes } from '../model/actionEffectTypes';
 import { Action } from '../model/action';
 import { ActionEffect } from '../model/actionEffect';
-import { clone } from '../utils/helper';
+import { clone, showNotification } from '../utils/helper';
 
 @Component({
   selector: 'app-herotype',
@@ -48,7 +48,11 @@ export class HeroTypeComponent implements OnInit, OnDestroy {
         this.heroTypeTypes = env.data;
         this.actionEffectTypesService.get().subscribe(env => {
           this.actionEffectTypes = env.data;
-          this.heroTypeService.findById(id).subscribe(env => { this.heroType = env.data });
+          if (id !== "new") {
+            this.heroTypeService.findById(id).subscribe(env => { this.heroType = env.data });
+          } else {
+            this.heroType = new HeroType();
+          }
         });
       });
     });
@@ -59,7 +63,10 @@ export class HeroTypeComponent implements OnInit, OnDestroy {
     data.id = this.heroType.id;
     data.defaultAction = this.heroType.defaultAction;
     data.specialAction = this.heroType.specialAction;
-    this.heroTypeService.save(data).subscribe(env => this.heroType = env.data);
+    this.heroTypeService.save(data).subscribe(env => {
+      this.heroType = env.data;
+      showNotification("info", "Hero Type saved.");
+    });
   }
 
 

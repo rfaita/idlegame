@@ -54,7 +54,5 @@ export class HeroType {
     public maxMaxLevelDodgeChance: Number = 0;
     public maxMaxLevelHp: Number = 0;
 
-    constructor(id: string) {
-        this.id = id;
-    }
+    
 }

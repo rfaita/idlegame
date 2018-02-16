@@ -11,11 +11,15 @@ import { IconsComponent } from './icons/icons.component';
 import { MapsComponent } from './maps/maps.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { UpgradeComponent } from './upgrade/upgrade.component';
-import { HeroesTypeComponent } from './herotypes/herotypes.component';
+import { HeroTypesComponent } from './herotypes/herotypes.component';
 import { HeroTypeComponent } from './herotype/herotype.component';
+import { HeroesComponent } from './heroes/heroes.component';
+import { HeroComponent } from './hero/hero.component';
 
 const routes: Routes = [
-  { path: 'heroesType', component: HeroesTypeComponent },
+  { path: 'heroes', component: HeroesComponent },
+  { path: 'hero/:id', component: HeroComponent },
+  { path: 'heroTypes', component: HeroTypesComponent },
   { path: 'heroType/:id', component: HeroTypeComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'user-profile', component: UserProfileComponent },

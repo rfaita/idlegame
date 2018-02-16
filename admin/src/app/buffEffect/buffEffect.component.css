@@ -1,5 +1,11 @@
 .cardAction {
     padding: 10px;
-    margin: 20px 10px 10px 10px;
-    width: 99%;
+    margin: 20px;
+    width: 97%;
+    min-height: 100px;
+}
+
+.space {
+    margin: 0 5px;
+    padding: 5px;
 }

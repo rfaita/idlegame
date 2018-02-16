@@ -1,5 +1,6 @@
 package com.idle.game.server.service;
 
+import static com.idle.game.constant.CacheConstants.HERO_TYPE_FIND_ALL;
 import static com.idle.game.constant.CacheConstants.HERO_TYPE_FIND_BY_ID;
 import static com.idle.game.constant.CacheConstants.HERO_TYPE_FIND_BY_NAME;
 import com.idle.game.core.hero.type.HeroTypeFaction;
@@ -33,21 +34,26 @@ public class HeroTypeService {
     public HeroType findById(String id) {
         return heroTypeRepository.findById(id);
     }
-    
+
     @Caching(put
             = @CachePut(value = HERO_TYPE_FIND_BY_NAME, key = "'" + HERO_TYPE_FIND_BY_NAME + "' + #ht.name"),
             evict
-            = @CacheEvict(value = HERO_TYPE_FIND_BY_ID, key = "'" + HERO_TYPE_FIND_BY_ID + "' + #ht.id")
+            = {
+                @CacheEvict(value = HERO_TYPE_FIND_BY_ID, key = "'" + HERO_TYPE_FIND_BY_ID + "' + #ht.id")
+                ,
+                @CacheEvict(value = HERO_TYPE_FIND_ALL, key = "'" + HERO_TYPE_FIND_ALL + "'")
+            }
     )
     public HeroType save(HeroType ht) {
         return heroTypeRepository.save(ht);
     }
-    
+
+    @Cacheable(value = HERO_TYPE_FIND_ALL, key = "'" + HERO_TYPE_FIND_ALL + "'")
     public List<HeroType> findAll() {
 
         return heroTypeRepository.findAll();
     }
-    
+
     public List<HeroType> findAllByQuality(HeroTypeQuality quality) {
 
         return heroTypeRepository.findAllByQuality(quality);

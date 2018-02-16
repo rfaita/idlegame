@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import static com.idle.game.constant.URIConstants.PLAYER__FIND_BY_LINKED_USER;
+import static com.idle.game.constant.URIConstants.PLAYER__FIND_BY_NAME;
 import com.idle.game.model.mongo.Player;
 import com.idle.game.server.service.PlayerService;
 
@@ -18,6 +19,16 @@ public class PlayerRest {
     @Autowired
     private PlayerService playerService;
 
+    @RequestMapping(path = "/" + PLAYER__FIND_BY_NAME + "/{name}", method = RequestMethod.GET)
+    public @ResponseBody
+    Envelope<Player> findByName(@PathVariable("name") String name) {
+
+        Envelope<Player> ret = new Envelope<>();
+        ret.setData(playerService.findByName(name));
+
+        return ret;
+
+    }
     @RequestMapping(path = "/" + PLAYER__FIND_BY_LINKED_USER + "/{linkedUser}", method = RequestMethod.GET)
     public @ResponseBody
     Envelope<Player> findByLinkedUser(@PathVariable("linkedUser") String linkedUser) {

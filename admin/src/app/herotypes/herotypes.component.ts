@@ -7,7 +7,7 @@ import { HeroType } from '../model/herotype';
   templateUrl: './herotypes.component.html',
   styleUrls: ['./herotypes.component.css']
 })
-export class HeroesTypeComponent implements OnInit {
+export class HeroTypesComponent implements OnInit {
 
   public heroesType: HeroType[];
 
