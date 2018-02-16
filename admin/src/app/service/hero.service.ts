@@ -24,5 +24,17 @@ export class HeroService {
         return this.http.get(environment.API_BASE_URL + "hero/" + id)
             .catch(handleError);
     }
+
+    save(hero: Hero): Observable<Envelope<Hero>> {
+        return this.http.post(environment.API_BASE_URL + "hero", hero)
+            .catch(handleError);
+    }
+
+    delete(id: String): Observable<Envelope<void>> {
+        return this.http.delete(environment.API_BASE_URL + "hero/" + id)
+            .catch(handleError);
+    }
 }
+
+
 

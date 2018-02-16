@@ -10,6 +10,7 @@ import com.idle.game.server.dto.Envelope;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -65,6 +66,27 @@ public class HeroRest {
 
         Envelope<List<Hero>> ret = new Envelope<>();
         ret.setData(heroService.findAllByPlayerAndQuality(player, HeroQuality.valueOf(quality)));
+
+        return ret;
+
+    }
+    
+    
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    public @ResponseBody
+    Envelope<Void> delete(@PathVariable("id") String id) {
+
+        heroService.delete(id);
+        return new Envelope<>();
+
+    }
+    
+    @RequestMapping(path = "", method = RequestMethod.POST)
+    public @ResponseBody
+    Envelope<Hero> save(@RequestBody Hero hero) {
+
+        Envelope<Hero> ret = new Envelope<>();
+        ret.setData(heroService.save(hero));
 
         return ret;
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Hero } from '../model/hero';
 import { HeroService } from '../service/hero.service';
 import { PlayerService } from '../service/player.service';
+import { showNotification } from '../utils/helper';
 
 @Component({
   selector: 'app-heroes',
@@ -30,6 +31,13 @@ export class HeroesComponent implements OnInit {
   public findAllByPlayer() {
     this.playerService.findByName(this.player).subscribe(env => {
       this.heroService.findAllByPlayer(env.data.id).subscribe(env => this.heroes = env.data);
+    });
+  }
+
+  public delete(id: String) {
+    this.heroService.delete(id).subscribe(env => {
+      this.findAllByPlayer();
+      showNotification("info", "Hero deleted.");
     });
   }
 

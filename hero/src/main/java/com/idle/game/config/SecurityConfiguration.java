@@ -81,7 +81,8 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers("/hero/customRoll/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/heroType**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/hero/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/heroType**", "/hero**").hasRole("ADMIN")
                 .anyRequest().authenticated();
     }
 

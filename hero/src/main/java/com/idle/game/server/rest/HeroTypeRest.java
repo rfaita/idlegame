@@ -58,7 +58,7 @@ public class HeroTypeRest {
     
     @RequestMapping(path = "", method = RequestMethod.POST)
     public @ResponseBody
-    Envelope<HeroType> findAll(@RequestBody HeroType heroType) {
+    Envelope<HeroType> save(@RequestBody HeroType heroType) {
 
         Envelope<HeroType> ret = new Envelope<>();
         ret.setData(heroTypeService.save(heroType));

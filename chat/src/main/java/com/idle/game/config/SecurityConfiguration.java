@@ -79,8 +79,8 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                .anyRequest().authenticated()                
-                .antMatchers("/create").hasRole("ADMIN").anyRequest().permitAll();
+                .antMatchers("/create").hasRole("ADMIN")
+                .anyRequest().authenticated();
     }
 
 }

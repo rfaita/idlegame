@@ -65,6 +65,27 @@ public class HeroService {
     }
 
     @Caching(put
+            = @CachePut(value = HERO_FIND_BY_ID, key = "'" + HERO_FIND_BY_ID + "' + #hero.id"),
+            evict
+            = @CacheEvict(value = BATTLE_HERO_FIND_BY_ID, key = "'" + BATTLE_HERO_FIND_BY_ID + "' + #hero.id")
+    )
+    public Hero save(Hero hero) {
+        return heroRepository.save(hero);
+    }
+
+    @Caching(
+            evict
+            = {
+                @CacheEvict(value = BATTLE_HERO_FIND_BY_ID, key = "'" + BATTLE_HERO_FIND_BY_ID + "' + #id")
+                ,
+                @CacheEvict(value = HERO_FIND_BY_ID, key = "'" + HERO_FIND_BY_ID + "' + #id")
+            }
+    )
+    public void delete(String id) {
+        heroRepository.delete(id);
+    }
+
+    @Caching(put
             = @CachePut(value = HERO_FIND_BY_ID, key = "'" + HERO_FIND_BY_ID + "' + #id"),
             evict
             = @CacheEvict(value = BATTLE_HERO_FIND_BY_ID, key = "'" + BATTLE_HERO_FIND_BY_ID + "' + #id")
@@ -142,7 +163,7 @@ public class HeroService {
 
                     heroType = heroTypes.get(DiceUtil.random(heroTypes.size() - 1));
                     heroQuality = HeroQuality.valueOf(lootRoll.roll(HeroQuality.class));
-                    
+
                 } else {
                     throw new ValidationException("loot.roll.type.must.be.hero");
                 }

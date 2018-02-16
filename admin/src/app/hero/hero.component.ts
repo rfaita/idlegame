@@ -64,10 +64,10 @@ export class HeroComponent implements OnInit, OnDestroy {
   public save(data: any) {
     data.id = this.hero.id;
 
-    /*this.heroTypeService.save(data).subscribe(env => {
-      this.heroType = env.data;
-      showNotification("info", "Hero Type saved.");
-    });*/
+    this.heroService.save(data).subscribe(env => {
+      this.hero = env.data;
+      showNotification("info", "Hero saved.");
+    });
   }
 
 

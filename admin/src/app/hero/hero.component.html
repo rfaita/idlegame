@@ -7,7 +7,7 @@
                     <div class="card-content">
                         <form #f="ngForm" (ngSubmit)="save(f.value)">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group form-black">
                                         <label>Hero Type</label>
                                         <select name="heroType" class="form-control" required [ngModel]="hero.heroType">
@@ -15,13 +15,13 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group form-black">
                                         <label>Level</label>
                                         <input type="text" name="level" class="form-control" required [ngModel]="hero.level">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group form-black">
                                         <label>Quality</label>
                                         <select name="quality" class="form-control" required [ngModel]="hero.quality">
@@ -30,12 +30,15 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-3">
+                                    <div class="form-group form-black">
+                                        <label>Player</label>
+                                        <input type="text" name="player" class="form-control" required [ngModel]="hero.player">
+                                    </div>
+                                </div>
+
 
                             </div>
-                            <div class="row">
-
-                            </div>
-
                             <div class="row">
                                 <div class="col-md-1">
                                     <div class="form-group form-black">

@@ -43,6 +43,9 @@
                                         <button type="button" rel="tooltip" [routerLink]="['/hero', hero.id]" title="Edit Hero" class="btn btn-primary btn-simple btn-xs">
                                             <i class="material-icons">edit</i>
                                         </button>
+                                        <button type="button" rel="tooltip" title="Delete Hero" class="btn btn-primary btn-simple btn-xs" (click)="delete(hero.id)">
+                                            <i class="material-icons">delete</i>
+                                        </button>
                                     </td>
                                 </tr>
 
