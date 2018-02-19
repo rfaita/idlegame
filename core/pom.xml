@@ -31,6 +31,13 @@
         </dependency>
     </dependencies>
     
+    <distributionManagement>
+        <snapshotRepository>
+            <id>releases</id>
+            <url>http://51.15.222.98:9083/nexus/content/repositories/releases</url>
+        </snapshotRepository>
+    </distributionManagement>
+    
     <build>
         <plugins>
             <plugin>

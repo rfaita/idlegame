@@ -1,0 +1,22 @@
+node {
+    stage('Git Clone') {
+        sh 'svn export https://github.com/rfaita/idlegame.git/trunk/core --force .'
+    }
+    stage('Build') {
+        def mvnHome = tool 'M3'
+        env.PATH = "${mvnHome}/bin:${env.PATH}"
+        sh 'mvn clean install -DskipTests=true'
+    }
+    stage('Test') {
+        def mvnHome = tool 'M3'
+        env.PATH = "${mvnHome}/bin:${env.PATH}"
+        sh 'mvn test'
+    }
+
+    stage('Deploy') {
+        def mvnHome = tool 'M3'
+        env.PATH = "${mvnHome}/bin:${env.PATH}"
+        sh 'mvn deploy'
+    }
+}
+
