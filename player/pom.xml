@@ -7,12 +7,13 @@
     <packaging>jar</packaging>
     
     <parent>
-        <groupId>com.idle.game</groupId>
-        <artifactId>idlegame</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.10.RELEASE</version>
     </parent>
-    
+   
     <properties>
+        <docker.image.prefix>idlegame01:5000</docker.image.prefix>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -100,6 +101,25 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            
+            <!-- tag::plugin[] -->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.3.6</version>
+                <configuration>
+                    <repository>${docker.image.prefix}/${project.artifactId}</repository>
+                    <buildArgs>
+                        <JAR_FILE>./target/${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
+                    <imageTags>
+                        <imageTag>${project.version}</imageTag>
+                        <imageTag>latest</imageTag>
+                    </imageTags>
+                    <forceTags>true</forceTags>
+                </configuration>
+            </plugin>
+            <!-- end::plugin[] -->
         </plugins>
     </build>
 </project>

@@ -1,6 +1,6 @@
 node {
     stage('Git Clone') {
-        sh 'svn export https://github.com/rfaita/idlegame.git/trunk/admin'
+        sh 'svn export https://github.com/rfaita/idlegame.git/trunk/admin --force .'
     }
     stage('Download Dependecies') {
         def nodeHome = tool 'NODE'
