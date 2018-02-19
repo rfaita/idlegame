@@ -15,7 +15,7 @@ export class NavbarComponent implements OnInit {
     private toggleButton: any;
     private sidebarVisible: boolean;
 
-    private userDetails: KeycloakProfile;
+    public userDetails: KeycloakProfile;
 
     constructor(location: Location,
         private element: ElementRef,

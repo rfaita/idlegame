@@ -6,7 +6,6 @@ keycloak*.db
 node_modules/
 www/
 platforms/
-plugins/
 dist/
 .vscode/
 *.log
