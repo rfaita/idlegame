@@ -11,9 +11,9 @@ node {
     stage('Test Core') {
         def mvnHome = tool 'M3'
         env.PATH = "${mvnHome}/bin:${env.PATH}"
-        //sh 'mvn test'
+        sh 'mvn test'
     }
-stage('Git Clone Common') {
+    stage('Git Clone Common') {
         sh 'rm -rf *'
         sh 'svn export https://github.com/rfaita/idlegame.git/trunk/common --force .'
     }
