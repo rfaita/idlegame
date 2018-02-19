@@ -1,17 +1,4 @@
 node {
-    stage('Git Clone Common') {
-        sh 'svn export https://github.com/rfaita/idlegame.git/trunk/common --force .'
-    }
-    stage('Build Common') {
-        def mvnHome = tool 'M3'
-        env.PATH = "${mvnHome}/bin:${env.PATH}"
-        sh 'mvn clean install -DskipTests=true'
-    }
-    stage('Test Common') {
-        def mvnHome = tool 'M3'
-        env.PATH = "${mvnHome}/bin:${env.PATH}"
-        sh 'mvn test'
-    }
     stage('Git Clone Core') {
         sh 'svn export https://github.com/rfaita/idlegame.git/trunk/core --force .'
     }
@@ -21,6 +8,19 @@ node {
         sh 'mvn clean install -DskipTests=true'
     }
     stage('Test Core') {
+        def mvnHome = tool 'M3'
+        env.PATH = "${mvnHome}/bin:${env.PATH}"
+        sh 'mvn test'
+    }
+stage('Git Clone Common') {
+        sh 'svn export https://github.com/rfaita/idlegame.git/trunk/common --force .'
+    }
+    stage('Build Common') {
+        def mvnHome = tool 'M3'
+        env.PATH = "${mvnHome}/bin:${env.PATH}"
+        sh 'mvn clean install -DskipTests=true'
+    }
+    stage('Test Common') {
         def mvnHome = tool 'M3'
         env.PATH = "${mvnHome}/bin:${env.PATH}"
         sh 'mvn test'
