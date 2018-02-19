@@ -274,7 +274,7 @@ public class BattleHero implements Serializable {
         this.currBuffs = currBuffs;
     }
 
-    public void addBuff(Buff buff) {
+    public void addCurrBuff(Buff buff) {
         this.currBuffs.add(buff);
     }
 
@@ -437,21 +437,6 @@ public class BattleHero implements Serializable {
             this.setDmg(this.getDmg() + i.getDmg());
             this.setSpeed(this.getSpeed() + i.getSpeed());
         }
-    }
-
-    public BattleHero duplicate() {
-        try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(this);
-
-            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-            ObjectInputStream ois = new ObjectInputStream(bais);
-            return (BattleHero) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            LOG.log(Level.SEVERE, e.getMessage(), e);
-        }
-        return null;
     }
 
     @Override

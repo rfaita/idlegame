@@ -12,11 +12,15 @@ import com.idle.game.core.action.type.SubActionType;
 import com.idle.game.core.buff.Buff;
 import com.idle.game.core.action.ActionEffect;
 import com.idle.game.core.action.Action;
+import com.idle.game.core.action.type.ActionType;
 import static com.idle.game.core.constant.IdleConstants.DEFAULT_ACTION;
 import static com.idle.game.core.constant.IdleConstants.LOG;
 import static com.idle.game.core.action.type.ActionType.BATTLE_END;
 import static com.idle.game.core.action.type.ActionType.BATTLE_START;
 import static com.idle.game.core.action.type.ActionType.BUFF_DONE;
+import static com.idle.game.core.action.type.ActionType.COMPUTE_BUFF_START;
+import static com.idle.game.core.action.type.ActionType.TURN_END;
+import static com.idle.game.core.action.type.ActionType.TURN_START;
 import static com.idle.game.core.formation.type.FormationPositionType.BACK;
 import static com.idle.game.core.formation.type.FormationPositionType.FRONT;
 import com.idle.game.core.util.DiceUtil;
@@ -114,9 +118,10 @@ public class Battle extends BaseObject {
 
         LOG.log(Level.INFO, "[battleLog] INIT");
         LOG.log(Level.INFO, "[battleLog] {0}", this);
-        getBattleLog().forEach((BattleLog t) -> {
-            LOG.log(Level.INFO, "[battleLog] {0}", t);
-        });
+
+        for (int i = 0; i < battleLog.size(); i++) {
+            LOG.log(Level.INFO, "[battleLog][index={0}] {1}", new Object[]{i, battleLog.get(i)});
+        }
         LOG.log(Level.INFO, "[battleLog] END");
 
         return winner;
@@ -128,6 +133,7 @@ public class Battle extends BaseObject {
         Boolean lastTurn = Boolean.FALSE;
 
         LOG.log(Level.INFO, "[turn] INIT {0}", turn);
+        addBattleLog(new BattleLog(this.turn, new BattleEvent(TURN_START)));
 
         List<BattlePositionedHero> turnActionRated = getTurnActionRated();
         LOG.log(Level.INFO, "[turnActionRated] {0}", turnActionRated);
@@ -139,8 +145,10 @@ public class Battle extends BaseObject {
         LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
 
         LOG.log(Level.INFO, "[buffs] INIT");
+        addBattleLog(new BattleLog(this.turn, new BattleEvent(COMPUTE_BUFF_START)));
         computeBuffs(turnActionRated);
         LOG.log(Level.INFO, "[buffs] END");
+        addBattleLog(new BattleLog(this.turn, new BattleEvent(ActionType.COMPUTE_BUFF_END)));
         LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
 
         LOG.log(Level.INFO, "[actions] INIT");
@@ -158,6 +166,8 @@ public class Battle extends BaseObject {
 
         LOG.log(Level.INFO, "[turn] {0} END", turn);
         LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
+
+        addBattleLog(new BattleLog(this.turn, new BattleEvent(TURN_END)));
 
         LOG.log(Level.INFO, "[event=VERIFY_WINNER] INIT");
         this.winner = verifyWinner();
@@ -357,44 +367,65 @@ public class Battle extends BaseObject {
                         || be.getChance() == 0
                         || DiceUtil.random(100) <= be.getChance()) {
 
+                    Buff buff = null;
                     switch (be.getEffectType()) {
                         case DMG:
-                            tPositionedHero.getHero().addBuff(
-                                    new Buff(
-                                            be.getDuration(),
-                                            (int) (aPositionedHero.getHero().getCurrDmg() * be.getPercentage() / 100d),
-                                            be.getEffectType(), ae.getDamageType()
-                                    )
+                            buff = new Buff(
+                                    be.getDuration(),
+                                    (int) (aPositionedHero.getHero().getCurrDmg() * be.getPercentage() / -100d),
+                                    be.getEffectType(), ae.getDamageType()
                             );
                             break;
                         case HEAL:
-                            tPositionedHero.getHero().addBuff(
-                                    new Buff(
-                                            be.getDuration(),
-                                            (int) (aPositionedHero.getHero().getCurrDmg() * be.getPercentage() / 100d),
-                                            be.getEffectType()
-                                    )
+                            buff = new Buff(
+                                    be.getDuration(),
+                                    (int) (aPositionedHero.getHero().getCurrDmg() * be.getPercentage() / 100d),
+                                    be.getEffectType()
                             );
                             break;
                         case FROZEN:
                         case STUN:
                         case SILENCE:
-                            tPositionedHero.getHero().addBuff(
-                                    new Buff(
-                                            be.getDuration(), be.getEffectType()
-                                    )
+                            buff = new Buff(
+                                    be.getDuration(), be.getEffectType()
                             );
                             break;
                         case DECREASE_ATTRIBUTE:
                         case INCREASE_ATTRIBUTE:
-                            tPositionedHero.getHero().addBuff(
-                                    new Buff(
-                                            be.getDuration(), be.getPercentage(),
-                                            be.getEffectType(), be.getAttributeType()
-                                    ));
+                            buff = new Buff(
+                                    be.getDuration(), be.getPercentage(),
+                                    be.getEffectType(), be.getAttributeType()
+                            );
                             break;
                         default:
                             break;
+                    }
+
+                    if (buff != null) {
+                        Integer index = tPositionedHero.getHero().getCurrBuffs().indexOf(buff);
+                        if (index > -1) {
+                            Buff currBuff = tPositionedHero.getHero().getCurrBuffs().get(index);
+                            currBuff.setCurrTurn(0);
+                            currBuff.setTurnDuration(buff.getTurnDuration());
+                            currBuff.setValue(currBuff.getValue() + buff.getValue());
+
+                            BattleEvent battleEvent = new BattleEvent(ActionType.BUFF_REFRESH);
+                            battleEvent.setBuff(currBuff.duplicate());
+
+                            addBattleLog(new BattleLog(this.turn,
+                                    aPositionedHero.duplicate(),
+                                    battleEvent, tPositionedHero.duplicate()));
+                        } else {
+
+                            tPositionedHero.getHero().addCurrBuff(buff);
+                            BattleEvent battleEvent = new BattleEvent(ActionType.BUFF_START);
+                            battleEvent.setBuff(buff);
+
+                            addBattleLog(new BattleLog(this.turn,
+                                    aPositionedHero.duplicate(),
+                                    battleEvent, tPositionedHero.duplicate()));
+                        }
+
                     }
                 }
             });
@@ -414,6 +445,9 @@ public class Battle extends BaseObject {
         List<BattlePositionedHero> targets = new ArrayList<>();
         BattlePositionedHero t;
         switch (targetType) {
+            case ALL:
+                targets.addAll(getPositionedHeroes(battleTeamTypeTarget));
+                break;
             case BACK_LINE:
                 targets.addAll(getBackLinePositionedHeroes(battleTeamTypeTarget));
                 break;
@@ -558,6 +592,10 @@ public class Battle extends BaseObject {
         }
     }
 
+    private List<BattlePositionedHero> getPositionedHeroes(BattleTeamType battleTeamType) {
+        return this.getHeroesByBattleTeamTypeCanDoAction(battleTeamType).collect(Collectors.toList());
+    }
+
     private List<BattlePositionedHero> getBackLinePositionedHeroes(BattleTeamType battleTeamType) {
         return this.getHeroesByBattleTeamTypeCanDoAction(battleTeamType).filter((ph) -> {
             return ph.getPosition().getType().equals(BACK);
@@ -615,12 +653,22 @@ public class Battle extends BaseObject {
 
         for (int i = bphs.size() - 1; i >= 0; i--) {
 
-            BattlePositionedHero battlePositionedHero = bphs.get(i);
-            BattleHero hero = battlePositionedHero.getHero();
-
             if ((this.winner = this.verifyWinner()) != null) {
                 return;
             }
+            
+            BattlePositionedHero battlePositionedHero = bphs.get(i);
+
+            BattleHero hero = battlePositionedHero.getHero();
+
+            if (hero.getCurrHp() <= 0) {
+                LOG.log(Level.INFO, "[event=HERO_HEAD] HERO DEAD! SKIPPING");
+                hero.setCurrBuffs(new ArrayList<>());
+                return;
+            }
+            
+            BattlePositionedHero battlePositionedHeroBackUp = battlePositionedHero.duplicate();
+            
 
             Iterator<Buff> it = hero.getCurrBuffs().iterator();
 
@@ -633,7 +681,7 @@ public class Battle extends BaseObject {
                         ret.setValue(buff.getValue());
                         break;
                     case DMG:
-                        hero.setCurrHp(hero.getCurrHp() - buff.getValue());
+                        hero.setCurrHp(hero.getCurrHp() + buff.getValue());
                         ret.setDamageType(buff.getDamageType());
                         ret.setValue(buff.getValue());
                         break;
@@ -657,12 +705,15 @@ public class Battle extends BaseObject {
 
                 }
                 buff.setCurrTurn(buff.getCurrTurn() + 1);
-                addBattleLog(new BattleLog(this.turn, battlePositionedHero.duplicate(), ret, battlePositionedHero.duplicate()));
+                addBattleLog(new BattleLog(this.turn, battlePositionedHeroBackUp, ret, battlePositionedHero.duplicate()));
 
                 //Remove expired buffs
                 if (buff.getCurrTurn() >= buff.getTurnDuration()) {
                     it.remove();
-                    addBattleLog(new BattleLog(this.turn, battlePositionedHero.duplicate(), new BattleEvent(BUFF_DONE), buff));
+
+                    BattleEvent battleEvent = new BattleEvent(BUFF_DONE);
+                    battleEvent.setBuff(buff);
+                    addBattleLog(new BattleLog(this.turn, battlePositionedHero.duplicate(), battleEvent, battlePositionedHero.duplicate()));
                 }
 
             }

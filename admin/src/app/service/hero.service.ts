@@ -25,6 +25,11 @@ export class HeroService {
             .catch(handleError);
     }
 
+    customRoll(player: String, heroType: String, heroQuality: String): Observable<Envelope<Hero>> {
+        return this.http.get(environment.API_BASE_URL + "hero/customRoll/" + player + "/" + heroType + "/" + heroQuality)
+            .catch(handleError);
+    }
+
     save(hero: Hero): Observable<Envelope<Hero>> {
         return this.http.post(environment.API_BASE_URL + "hero", hero)
             .catch(handleError);

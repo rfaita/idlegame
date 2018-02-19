@@ -36,17 +36,17 @@ public class HealBattleTests {
 
         Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getActionType());
 
-        Assert.assertEquals("h1 heal on turn 2", h1, b.getBattleLog().get(1).getHeroOrigin().getHero());
-        Assert.assertEquals("h1 target himself to heal on turn 2", h1, b.getBattleLog().get(1).getHeroesTarget().get(0).getHero());
-        Assert.assertEquals("100 heal on turn 2", new Integer(100), b.getBattleLog().get(1).getBattleEvent().getValue());
-        Assert.assertEquals("special skill", ActionType.HEAL, b.getBattleLog().get(1).getBattleEvent().getActionType());
-        Assert.assertEquals("life expected 200", new Integer(200), b.getBattleLog().get(1).getHeroesTarget().get(0).getHero().getCurrHp());
+        Assert.assertEquals("h1 heal on turn 2", h1, b.getBattleLog().get(4).getHeroOrigin().getHero());
+        Assert.assertEquals("h1 target himself to heal on turn 2", h1, b.getBattleLog().get(4).getHeroesTarget().get(0).getHero());
+        Assert.assertEquals("100 heal on turn 2", new Integer(100), b.getBattleLog().get(4).getBattleEvent().getValue());
+        Assert.assertEquals("special skill", ActionType.HEAL, b.getBattleLog().get(4).getBattleEvent().getActionType());
+        Assert.assertEquals("life expected 200", new Integer(200), b.getBattleLog().get(4).getHeroesTarget().get(0).getHero().getCurrHp());
 
-        Assert.assertEquals("h2 heal on turn 2", h2, b.getBattleLog().get(2).getHeroOrigin().getHero());
-        Assert.assertEquals("h2 target himself to heal on turn 2", h2, b.getBattleLog().get(2).getHeroesTarget().get(0).getHero());
-        Assert.assertEquals("100 heal on turn 2", new Integer(100), b.getBattleLog().get(2).getBattleEvent().getValue());
-        Assert.assertEquals("special skill", ActionType.HEAL, b.getBattleLog().get(2).getBattleEvent().getActionType());
-        Assert.assertEquals("life expected 200", new Integer(200), b.getBattleLog().get(2).getHeroesTarget().get(0).getHero().getCurrHp());
+        Assert.assertEquals("h2 heal on turn 2", h2, b.getBattleLog().get(5).getHeroOrigin().getHero());
+        Assert.assertEquals("h2 target himself to heal on turn 2", h2, b.getBattleLog().get(5).getHeroesTarget().get(0).getHero());
+        Assert.assertEquals("100 heal on turn 2", new Integer(100), b.getBattleLog().get(5).getBattleEvent().getValue());
+        Assert.assertEquals("special skill", ActionType.HEAL, b.getBattleLog().get(5).getBattleEvent().getActionType());
+        Assert.assertEquals("life expected 200", new Integer(200), b.getBattleLog().get(5).getHeroesTarget().get(0).getHero().getCurrHp());
 
     }
 
@@ -69,19 +69,19 @@ public class HealBattleTests {
 
         Assert.assertEquals("start of battle", ActionType.BATTLE_START, b.getBattleLog().get(0).getBattleEvent().getActionType());
 
-        Assert.assertEquals("h1 heal on turn 2", h1, b.getBattleLog().get(1).getHeroOrigin().getHero());
-        Assert.assertEquals("h1 target himself to heal on turn 2", h1, b.getBattleLog().get(1).getHeroesTarget().get(0).getHero());
-        Assert.assertEquals("100 heal on turn 2", new Integer(100), b.getBattleLog().get(1).getBattleEvent().getValue());
-        Assert.assertEquals("special skill", ActionType.HEAL, b.getBattleLog().get(1).getBattleEvent().getActionType());
-        Assert.assertEquals("buff effect type must be null", null, b.getBattleLog().get(1).getBattleEvent().getBuffEffectType());
-        Assert.assertEquals("life expected 200", new Integer(200), b.getBattleLog().get(1).getHeroesTarget().get(0).getHero().getCurrHp());
+        Assert.assertEquals("h1 heal on turn 2", h1, b.getBattleLog().get(5).getHeroOrigin().getHero());
+        Assert.assertEquals("h1 target himself to heal on turn 2", h1, b.getBattleLog().get(5).getHeroesTarget().get(0).getHero());
+        Assert.assertEquals("100 heal on turn 2", new Integer(100), b.getBattleLog().get(5).getBattleEvent().getValue());
+        Assert.assertEquals("special skill", ActionType.HEAL, b.getBattleLog().get(5).getBattleEvent().getActionType());
+        Assert.assertEquals("buff effect type must be null", null, b.getBattleLog().get(5).getBattleEvent().getBuffEffectType());
+        Assert.assertEquals("life expected 200", new Integer(200), b.getBattleLog().get(5).getHeroesTarget().get(0).getHero().getCurrHp());
 
-        Assert.assertEquals("h2 heal on turn 2", h2, b.getBattleLog().get(2).getHeroOrigin().getHero());
-        Assert.assertEquals("h2 target himself to heal on turn 2", h2, b.getBattleLog().get(2).getHeroesTarget().get(0).getHero());
-        Assert.assertEquals("100 heal on turn 2", new Integer(100), b.getBattleLog().get(2).getBattleEvent().getValue());
-        Assert.assertEquals("special skill", ActionType.HEAL, b.getBattleLog().get(2).getBattleEvent().getActionType());
-        Assert.assertEquals("buff effect type must be null", null, b.getBattleLog().get(2).getBattleEvent().getBuffEffectType());
-        Assert.assertEquals("life expected 200", new Integer(200), b.getBattleLog().get(2).getHeroesTarget().get(0).getHero().getCurrHp());
+        Assert.assertEquals("h2 heal on turn 2", h2, b.getBattleLog().get(7).getHeroOrigin().getHero());
+        Assert.assertEquals("h2 target himself to heal on turn 2", h2, b.getBattleLog().get(7).getHeroesTarget().get(0).getHero());
+        Assert.assertEquals("100 heal on turn 2", new Integer(100), b.getBattleLog().get(7).getBattleEvent().getValue());
+        Assert.assertEquals("special skill", ActionType.HEAL, b.getBattleLog().get(7).getBattleEvent().getActionType());
+        Assert.assertEquals("buff effect type must be null", null, b.getBattleLog().get(7).getBattleEvent().getBuffEffectType());
+        Assert.assertEquals("life expected 200", new Integer(200), b.getBattleLog().get(7).getHeroesTarget().get(0).getHero().getCurrHp());
 
         Assert.assertEquals("h2 heal with buff on turn 3", h2, b.getBattleLog().get(3).getHeroOrigin().getHero());
         Assert.assertEquals("h2 target himself to heal with buff  on turn 3", h2, b.getBattleLog().get(3).getHeroesTarget().get(0).getHero());

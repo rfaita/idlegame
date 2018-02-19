@@ -9,8 +9,8 @@
                         </div>
                         <div class="card-content">
                             <div class="col-md-12">
-                                <div class="form-group form-black is-empty">
-                                    <input type="text" class="form-control" placeholder="Name" name="playerAttack" ngModel (ngModelChange)="playerAttack = $event"
+                                <div class="form-group form-black is-empty playerSearch">
+                                    <input type="text" class="form-control" placeholder="Name" name="playerAttack" [ngModel]="playerAttack" (ngModelChange)="playerAttack = $event"
                                         (keydown)="keyDownFindAllByPlayerAttack($event)">
                                     <span class="material-input"></span>
                                     <button type="button" class="btn btn-white btn-round btn-just-icon" (click)="findAllByPlayerAttack()">
@@ -77,7 +77,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 defPanel">
                 <div class="row">
                     <div class="card">
                         <div class="card-header" data-background-color="blue">
@@ -85,8 +85,8 @@
                         </div>
                         <div class="card-content">
                             <div class="col-md-12">
-                                <div class="form-group form-black is-empty">
-                                    <input type="text" class="form-control" placeholder="Name" name="playerDefense" ngModel (ngModelChange)="playerDefense = $event"
+                                <div class="form-group form-black is-empty playerSearch">
+                                    <input type="text" class="form-control" placeholder="Name" name="playerDefense" [ngModel]="playerDefense" (ngModelChange)="playerDefense = $event"
                                         (keydown)="keyDownFindAllByPlayerDefense($event)">
                                     <span class="material-input"></span>
                                     <button type="button" class="btn btn-white btn-round btn-just-icon" (click)="findAllByPlayerDefense()">
@@ -153,11 +153,79 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-info pull-right">
-                <i class="material-icons">save</i>
+            <button type="submit" class="btn btn-info pull-right" [disabled]="simulating">
+                <i *ngIf="!simulating" class="material-icons">play_circle_filled</i>
+                <i *ngIf="simulating" class="material-icons">refresh</i>
                 Simulate
             </button>
             <div class="clearfix"></div>
         </form>
+
+        <div class="row" *ngIf="!!battle">
+            <div class="col-md-12">
+                <div class="card">
+
+                    <div class="card-content table-responsive">
+                        <table class="table">
+                            <thead class="text-info">
+                                <tr>
+                                    <th>Line</th>
+                                    <th>Turn</th>
+                                    <th>Event</th>
+                                    <th>Dmg Type</th>
+                                    <th>Value</th>
+                                    <th>Team</th>
+                                    <th>Position</th>
+                                    <th>HP</th>
+                                    <th>Energy</th>
+                                    <th>Team Target</th>
+                                    <th>Position Target</th>
+                                    <th>HP Target</th>
+                                    <th>Energy Target</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let battleLog of battle.battleLog; let i = index; trackBy: trackByIndex">
+                                    <tr *ngIf="!battleLog.heroOrigin">
+                                        <td>{{i}}</td>
+                                        <td>{{battleLog.turn}}</td>
+                                        <td *ngIf="!!battleLog.battleEvent.actionType">{{battleLog.battleEvent.actionType}} {{battleLog.battleEvent.subType}}</td>
+                                        <td *ngIf="!!battleLog.battleEvent.buffEffectType">BUFF {{battleLog.battleEvent.buffEffectType}}</td>
+                                        <td *ngIf="!!battleLog.battleEvent">{{battleLog.battleEvent.damageType}}</td>
+                                        <td *ngIf="!!battleLog.battleEvent">{{battleLog.battleEvent.value}}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr *ngIf="!!battleLog.heroOrigin" [class]="battleLog.heroOrigin.battleTeamType == 'ATTACK_TEAM'?'att':'def'">
+                                        <ng-container *ngFor="let target of battleLog.heroesTarget">
+                                            <td>{{i}}</td>
+                                            <td>{{battleLog.turn}}</td>
+                                            <td *ngIf="!!battleLog.battleEvent.actionType">{{battleLog.battleEvent.actionType}} {{battleLog.battleEvent.subType}}</td>
+                                            <td *ngIf="!!battleLog.battleEvent.buffEffectType">BUFF {{battleLog.battleEvent.buffEffectType}}</td>
+                                            <td *ngIf="!!battleLog.battleEvent">{{battleLog.battleEvent.damageType}}</td>
+                                            <td *ngIf="!!battleLog.battleEvent">{{battleLog.battleEvent.value}}</td>
+                                            <td *ngIf="!!battleLog.heroOrigin">{{battleLog.heroOrigin.battleTeamType}}</td>
+                                            <td *ngIf="!!battleLog.heroOrigin">{{battleLog.heroOrigin.position}}</td>
+                                            <td *ngIf="!!battleLog.heroOrigin">{{battleLog.heroOrigin.hero.currHp}}</td>
+                                            <td *ngIf="!!battleLog.heroOrigin">{{battleLog.heroOrigin.energy}}</td>
+                                            <td *ngIf="!!target ">{{target.battleTeamType}}</td>
+                                            <td *ngIf="!!target ">{{target.position}}</td>
+                                            <td *ngIf="!!target ">{{target.hero.currHp}}</td>
+                                            <td *ngIf="!!target ">{{target.energy}}</td>
+                                        </ng-container>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>

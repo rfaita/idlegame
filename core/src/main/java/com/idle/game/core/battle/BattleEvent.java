@@ -3,6 +3,7 @@ package com.idle.game.core.battle;
 import com.idle.game.core.type.DamageType;
 import com.idle.game.core.action.type.SubActionType;
 import com.idle.game.core.action.type.ActionType;
+import com.idle.game.core.buff.Buff;
 import com.idle.game.core.buff.type.BuffEffectType;
 import com.idle.game.core.type.AttributeType;
 import java.io.Serializable;
@@ -21,6 +22,16 @@ public class BattleEvent implements Serializable {
 
     private DamageType damageType;
     private AttributeType attributeType;
+
+    private Buff buff;
+
+    public Buff getBuff() {
+        return buff;
+    }
+
+    public void setBuff(Buff buff) {
+        this.buff = buff;
+    }
 
     public AttributeType getAttributeType() {
         return attributeType;

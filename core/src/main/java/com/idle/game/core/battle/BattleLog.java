@@ -1,31 +1,19 @@
 package com.idle.game.core.battle;
 
-import com.idle.game.core.BaseObject;
-import com.idle.game.core.buff.Buff;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  *
  * @author rafael
  */
-public class BattleLog extends BaseObject {
+public class BattleLog implements Serializable {
 
-    private Long sysTime;
     private Integer turn;
     private BattlePositionedHero heroOrigin;
     private BattleEvent battleEvent;
     private List<BattlePositionedHero> heroesTarget;
-    private Buff buffDone;
-
-    public Buff getBuffDone() {
-        return buffDone;
-    }
-
-    public void setBuffDone(Buff buffDone) {
-        this.buffDone = buffDone;
-    }
 
     public Integer getTurn() {
         return turn;
@@ -63,43 +51,28 @@ public class BattleLog extends BaseObject {
     }
 
     public BattleLog(Integer turn, BattleEvent battleEvent) {
-        this.uuid = UUID.randomUUID();
         this.turn = turn;
         this.battleEvent = battleEvent;
-        this.sysTime = System.currentTimeMillis();
     }
 
     public BattleLog(Integer turn, BattlePositionedHero heroOrigin, BattleEvent battleEvent, BattlePositionedHero heroTarget) {
-        this.uuid = UUID.randomUUID();
         this.turn = turn;
         this.heroOrigin = heroOrigin;
         this.battleEvent = battleEvent;
         this.heroesTarget = new ArrayList<>();
         this.heroesTarget.add(heroTarget);
-        this.sysTime = System.currentTimeMillis();
     }
 
     public BattleLog(Integer turn, BattlePositionedHero heroOrigin, BattleEvent battleEvent, List<BattlePositionedHero> heroesTarget) {
-        this.uuid = UUID.randomUUID();
         this.turn = turn;
         this.heroOrigin = heroOrigin;
         this.battleEvent = battleEvent;
         this.heroesTarget = heroesTarget;
-        this.sysTime = System.currentTimeMillis();
-    }
-
-    public BattleLog(Integer turn, BattlePositionedHero heroOrigin, BattleEvent battleEvent, Buff buffDone) {
-        this.uuid = UUID.randomUUID();
-        this.turn = turn;
-        this.heroOrigin = heroOrigin;
-        this.battleEvent = battleEvent;
-        this.buffDone = buffDone;
-        this.sysTime = System.currentTimeMillis();
     }
 
     @Override
     public String toString() {
-        return "BL{" + "st=" + sysTime + ", turn=" + turn + ", ho=" + heroOrigin + ", be=" + battleEvent + ", t=" + (heroesTarget != null ? heroesTarget : buffDone) + '}';
+        return "BL{turn=" + turn + ", ho=" + heroOrigin + ", be=" + battleEvent + ", t=" + (heroesTarget != null ? heroesTarget : "") + '}';
     }
 
 }

@@ -3,6 +3,9 @@ info:
     stage: dev
 server:
     port: 8081
+    compression:
+        enabled: true
+        mime-types: application/json
 
 management: 
     security: 
@@ -53,3 +56,7 @@ spring:
         name: @pom.artifactId@
     jackson:
         default-property-inclusion: non_null
+        
+logging:
+    level:
+        com.idle.game.core: WARN

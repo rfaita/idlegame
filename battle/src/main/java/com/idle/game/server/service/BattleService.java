@@ -33,8 +33,6 @@ public class BattleService {
     
      public Battle doBattle(Formation attFormation, Formation defFormation) {
         
-        
-        
         BattleFormation battleAttackFormation = new BattleFormation(attFormation.getHeroes());
         battleAttackFormation.setFormationType(FormationType.ATTACK);
         

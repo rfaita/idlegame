@@ -1,5 +1,8 @@
 package com.idle.game.server.service;
 
+import static com.idle.game.constant.CacheConstants.BATTLE_HERO_FIND_BY_ID;
+import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_ID;
+import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION;
 import static com.idle.game.constant.CacheConstants.HERO_TYPE_FIND_ALL;
 import static com.idle.game.constant.CacheConstants.HERO_TYPE_FIND_BY_ID;
 import static com.idle.game.constant.CacheConstants.HERO_TYPE_FIND_BY_NAME;
@@ -41,7 +44,14 @@ public class HeroTypeService {
             = {
                 @CacheEvict(value = HERO_TYPE_FIND_BY_ID, key = "'" + HERO_TYPE_FIND_BY_ID + "' + #ht.id")
                 ,
-                @CacheEvict(value = HERO_TYPE_FIND_ALL, key = "'" + HERO_TYPE_FIND_ALL + "'")
+                @CacheEvict(value = HERO_TYPE_FIND_ALL, allEntries = true)
+                ,
+                @CacheEvict(value = BATTLE_HERO_FIND_BY_ID, allEntries = true)
+                ,
+                @CacheEvict(value = FORMATION_FIND_BY_ID, allEntries = true)
+                ,
+                @CacheEvict(value = FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION, allEntries = true)
+                
             }
     )
     public HeroType save(HeroType ht) {

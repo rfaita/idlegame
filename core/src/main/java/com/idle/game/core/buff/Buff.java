@@ -1,17 +1,23 @@
 package com.idle.game.core.buff;
 
-import com.idle.game.core.BaseObject;
 import com.idle.game.core.type.DamageType;
 import com.idle.game.core.buff.type.BuffEffectType;
+import static com.idle.game.core.constant.IdleConstants.LOG;
 import com.idle.game.core.type.AttributeType;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Objects;
-import java.util.UUID;
+import java.util.logging.Level;
 
 /**
  *
  * @author rafael
  */
-public class Buff extends BaseObject {
+public class Buff implements Serializable {
 
     private Integer turnDuration;
     private Integer currTurn;
@@ -72,7 +78,6 @@ public class Buff extends BaseObject {
     }
 
     private Buff(Integer turnDuration, Integer value, DamageType damageType, BuffEffectType effectType, AttributeType attributeType) {
-        this.uuid = UUID.randomUUID();
         this.turnDuration = turnDuration;
         this.value = value;
         this.damageType = damageType;
@@ -99,8 +104,10 @@ public class Buff extends BaseObject {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 79 * hash + Objects.hashCode(this.uuid);
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.damageType);
+        hash = 97 * hash + Objects.hashCode(this.effectType);
+        hash = 97 * hash + Objects.hashCode(this.attributeType);
         return hash;
     }
 
@@ -116,10 +123,29 @@ public class Buff extends BaseObject {
             return false;
         }
         final Buff other = (Buff) obj;
-        if (!Objects.equals(this.uuid, other.uuid)) {
+        if (this.damageType != other.damageType) {
             return false;
         }
-        return true;
+        if (this.effectType != other.effectType) {
+            return false;
+        }
+        return this.attributeType == other.attributeType;
+    }
+
+    public Buff duplicate() {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(this);
+
+            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            Buff ret = (Buff) ois.readObject();
+            return ret;
+        } catch (IOException | ClassNotFoundException e) {
+            LOG.log(Level.SEVERE, e.getMessage(), e);
+        }
+        return null;
     }
 
     @Override

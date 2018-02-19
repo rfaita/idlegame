@@ -12,6 +12,9 @@ import { Formation } from '../model/formation';
 import { BattlePositionedHero } from '../model/battlePositionedHero';
 import { BattleHero } from '../model/battleHero';
 import { FormationService } from '../service/formation.service';
+import { Battle } from '../model/battle';
+import { KeycloakProfile } from 'keycloak-js';
+import { KeycloakService } from 'keycloak-angular';
 
 
 @Component({
@@ -30,7 +33,11 @@ export class BattleComponent implements OnInit, OnDestroy {
 
   public heroTypes: HeroType[];
 
+  public battle: Battle;
 
+  public simulating: Boolean = false;
+
+  private userDetails: KeycloakProfile;
 
   constructor(private route: ActivatedRoute,
     private location: Location,
@@ -38,20 +45,33 @@ export class BattleComponent implements OnInit, OnDestroy {
     private heroTypeService: HeroTypeService,
     private playerService: PlayerService,
     private formationService: FormationService,
-    private battleService: BattleService) { }
+    private battleService: BattleService,
+    private keycloakService: KeycloakService) { }
 
   ngOnInit() {
+    this.keycloakService.loadUserProfile().then(profile => {
+      this.userDetails = profile;
+      this.playerAttack = this.userDetails.username;
+      this.playerDefense = this.userDetails.username;
+      this.findAll();
 
-    this.findById();
+    });
+
+
 
   }
 
-  public findById() {
-
+  public findAll() {
 
     this.heroTypeService.findAll().subscribe(env => {
       this.heroTypes = env.data;
+      if (this.playerAttack != null) {
+        this.findAllByPlayerAttack()
+      }
 
+      if (this.playerDefense != null) {
+        this.findAllByPlayerDefense()
+      }
     });
 
 
@@ -96,7 +116,8 @@ export class BattleComponent implements OnInit, OnDestroy {
 
   public runSimulation(data: any) {
 
-
+    this.simulating = true;
+    this.battle = null;
 
     let attFormation: Formation = new Formation();
     attFormation.formationAllocation = "PVP";
@@ -133,14 +154,21 @@ export class BattleComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.formationService.doBattle(attFormation).subscribe(env => {
+    this.formationService.save(attFormation).subscribe(env => {
       attFormation = env.data;
-      this.formationService.doBattle(defFormation).subscribe(env => {
+      this.formationService.save(defFormation).subscribe(env => {
         defFormation = env.data;
-        this.battleService.doBattle(attFormation.id, defFormation.id).subscribe(ret => { console.log(ret) });
-      });
-    });
+        this.battleService.doBattle(attFormation.id, defFormation.id).subscribe(env => {
+          this.battle = env.data;
+          this.simulating = false;
+        }, err => this.simulating = false);
+      }, err => this.simulating = false);
+    }, err => this.simulating = false);
 
+  }
+
+  trackByIndex(index) {
+    return index;
   }
 
   ngOnDestroy() {

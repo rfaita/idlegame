@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map';
 import { environment } from '../../environments/environment';
 import { handleError } from '../utils/helper';
 import { Envelope } from '../model/envelope';
+import { Battle } from '../model/battle';
 
 @Injectable()
 export class BattleService {
@@ -14,7 +15,7 @@ export class BattleService {
 
     }
 
-    doBattle(attFormation: String, defFormation: String): Observable<Envelope<any>> {
+    doBattle(attFormation: String, defFormation: String): Observable<Envelope<Battle>> {
         return this.http.get(environment.API_BASE_URL + "battle/" + attFormation + "/" + defFormation)
             .catch(handleError);
     }

@@ -15,7 +15,7 @@ export class FormationService {
 
     }
 
-    doBattle(formation: Formation): Observable<Envelope<Formation>> {
+    save(formation: Formation): Observable<Envelope<Formation>> {
         return this.http.post(environment.API_BASE_URL + "formation", formation)
             .catch(handleError);
     }
