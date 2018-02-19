@@ -86,6 +86,7 @@
     </dependencies>
     
     <build>
+        <finalName>app</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
