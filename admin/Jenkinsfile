@@ -1,0 +1,40 @@
+node {
+    stage('Git Clone') {
+        sh 'svn export https://github.com/rfaita/idlegame.git/trunk/admin'
+    }
+    stage('Download Dependecies') {
+        def nodeHome = tool 'NODE'
+        env.PATH = "${nodeHome}/bin:${env.PATH}"
+        sh 'npm install'
+    }
+    stage('Build') {
+        def nodeHome = tool 'NODE'
+        env.PATH = "${nodeHome}/bin:${env.PATH}"
+        sh 'ng build --prod --build-optimizer'
+    }
+
+    stage('Test') {
+    }
+
+    stage('Build Image') {
+        withEnv(['DOCKER_HOST=unix:///var/run/docker.sock']) {
+            tool 'DOCKER'
+            sh 'docker build . -t idlegame01:5000/admin:latest'
+        }
+    }
+    stage('Push Image') {
+        withEnv(['DOCKER_HOST=unix:///var/run/docker.sock']) {
+            tool 'DOCKER'
+            withDockerRegistry([credentialsId: 'jenkins_registry', url: 'https://idlegame01:5000']) {
+                sh 'docker push idlegame01:5000/admin:latest'
+            }
+        }
+    }
+    stage('Promote') {
+        withEnv(['DOCKER_HOST=unix:///var/run/docker.sock']) {
+            withDockerRegistry([credentialsId: 'jenkins_registry', url: 'https://idlegame01:5000']) {
+                sh 'docker service update --force --with-registry-auth --image idlegame01:5000/admin:latest --update-parallelism=2 ig_admin'
+            }
+        }
+    }
+}
