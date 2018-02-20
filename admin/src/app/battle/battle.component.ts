@@ -37,7 +37,6 @@ export class BattleComponent implements OnInit, OnDestroy {
 
   public simulating: Boolean = false;
 
-  private userDetails: KeycloakProfile;
 
   constructor(private route: ActivatedRoute,
     private location: Location,
@@ -49,16 +48,9 @@ export class BattleComponent implements OnInit, OnDestroy {
     private keycloakService: KeycloakService) { }
 
   ngOnInit() {
-    this.keycloakService.loadUserProfile().then(profile => {
-      this.userDetails = profile;
-      this.playerAttack = this.userDetails.username;
-      this.playerDefense = this.userDetails.username;
-      this.findAll();
-
-    });
-
-
-
+    this.playerAttack = this.keycloakService.getUsername();
+    this.playerDefense = this.keycloakService.getUsername();
+    this.findAll();
   }
 
   public findAll() {

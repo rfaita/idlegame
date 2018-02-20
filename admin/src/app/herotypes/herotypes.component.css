@@ -1,11 +1,6 @@
-.main-content {
-    margin-top: 80px;
-    padding: 0px; 
-}
-
 nav {
     position: sticky;
-    top: 80px;
+    top: 0px;
     z-index: 90;
     margin: 0px;
 }

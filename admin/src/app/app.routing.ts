@@ -15,8 +15,10 @@ import { HeroTypeComponent } from './herotype/herotype.component';
 import { HeroesComponent } from './heroes/heroes.component';
 import { HeroComponent } from './hero/hero.component';
 import { BattleComponent } from './battle/battle.component';
+import { ChatComponent } from './chat/chat.component';
 
 const routes: Routes = [
+  { path: 'chat', component: ChatComponent },
   { path: 'battle', component: BattleComponent },
   { path: 'heroes', component: HeroesComponent },
   { path: 'hero/:id', component: HeroComponent },

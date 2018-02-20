@@ -41,8 +41,12 @@ function connect() {
                 stompClient.subscribe('/queue/' + user + '#messages.private', function (m) {
                     pmMessage(m.body);
                 });
+                
+                stompClient.subscribe('/queue/' + user + '#messages.private.error', function (m) {
+                    console.log(m.body);
+                });
 
-                stompClient.subscribe('/chat/chats', function (m) {
+                stompClient.subscribe('/chat/findAllChatsJoined', function (m) {
                     chatsJoined(m.body);
                 });
 

@@ -6,6 +6,7 @@ import com.idle.game.model.mongo.ChatJoined;
 import com.idle.game.model.mongo.ChatRoom;
 import com.idle.game.model.mongo.ChatRoomUser;
 import com.idle.game.model.mongo.Message;
+import com.idle.game.server.dto.Envelope;
 import com.idle.game.server.service.ChatJoinedService;
 import com.idle.game.server.service.ChatRoomService;
 import com.idle.game.server.service.MessageService;
@@ -16,6 +17,7 @@ import java.util.List;
 import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
@@ -138,26 +140,35 @@ public class ChatController {
         messageService.sendPrivateMessage(message);
     }
 
-    @SubscribeMapping("/chats")
+    @SubscribeMapping("/findAllChatsJoined")
     public List<ChatJoined> getChatsJoined() {
         return chatJoinedService.findAllByUser(manualTokenHelper.getUser());
     }
 
-    @SubscribeMapping("/chat.users/{chatRoom}")
+    @SubscribeMapping("/findAllChatRoomUsers/{chatRoom}")
     public List<ChatRoomUser> getConnectedUsers(@DestinationVariable("chatRoom") String chatRoom) {
         return chatRoomService.findById(chatRoom).getConnectedUsers();
     }
 
-    @SubscribeMapping("/chat.old.messages/{chatRoom}")
+    @SubscribeMapping("/findAllChatRoomMessages/{chatRoom}")
     public List<Message> findAllByChatRoom(@DestinationVariable("chatRoom") String chatRoom) {
         return messageService.findAllByChatRoom(chatRoom);
     }
 
-    @SubscribeMapping("/pm.old.messages")
+    @SubscribeMapping("/findAllOldPrivateMessages")
     public List<Message> findAllByToUser(Principal principal) {
         manualTokenHelper.createAccessToken(principal);
 
         return messageService.findAllByToUser(manualTokenHelper.getUser());
+    }
+
+    @MessageExceptionHandler
+    public void handleException(Throwable exception) {
+        
+        Envelope<Void> ret = new Envelope<>();
+        ret.setError(exception.getMessage());
+        
+        messageService.sendPrivateErrorMessage(manualTokenHelper.getUser(), ret);
     }
 
 }

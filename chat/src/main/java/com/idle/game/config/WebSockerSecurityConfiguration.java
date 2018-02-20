@@ -15,8 +15,8 @@ public class WebSockerSecurityConfiguration extends AbstractSecurityWebSocketMes
     protected void configureInbound(MessageSecurityMetadataSourceRegistry messages) {
         messages
                 // users cannot send to these broker destinations, only the application can
-                .simpDestMatchers("/chat/**").authenticated()
                 .simpMessageDestMatchers("/topic/**", "/queue/**").denyAll()
+                .simpDestMatchers("/chat/**").authenticated()
                 .simpSubscribeDestMatchers("/topic/ping").authenticated()
                 .simpSubscribeDestMatchers("/queue/**").access("@webSocketSecurity.checkUser(authentication, message)")
                 .simpSubscribeDestMatchers("/topic/**").access("@webSocketSecurity.checkUserChatRoom(authentication, message)")

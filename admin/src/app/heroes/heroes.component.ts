@@ -19,23 +19,20 @@ export class HeroesComponent implements OnInit {
   public heroType: String;
   public heroes: Hero[];
   public heroTypes: HeroType[];
-
-  private userDetails: KeycloakProfile;
-
+  
   constructor(private heroService: HeroService,
     private heroTypeService: HeroTypeService,
     private playerService: PlayerService,
     private keycloakService: KeycloakService) { }
 
   ngOnInit() {
-    this.keycloakService.loadUserProfile().then(profile => {
-      this.userDetails = profile;
-      this.player = this.userDetails.username;
-      this.heroTypeService.findAll().subscribe(env => {
-        this.heroTypes = env.data;
-        this.findAllByPlayer();
-      });
+
+    this.player = this.keycloakService.getUsername()
+    this.heroTypeService.findAll().subscribe(env => {
+      this.heroTypes = env.data;
+      this.findAllByPlayer();
     });
+
 
   }
 

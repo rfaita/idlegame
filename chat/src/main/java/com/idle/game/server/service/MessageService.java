@@ -5,6 +5,7 @@ package com.idle.game.server.service;
  * @author rafael
  */
 import com.idle.game.model.mongo.Message;
+import com.idle.game.server.dto.Envelope;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +48,12 @@ public class MessageService {
                 message);
 
         messageRepository.save(message);
+    }
+
+    public void sendPrivateErrorMessage(String user, Envelope<?> env) {
+        webSocketMessagingTemplate.convertAndSend(
+                Destination.privateErrorMessages(user), env);
+
     }
 
 }

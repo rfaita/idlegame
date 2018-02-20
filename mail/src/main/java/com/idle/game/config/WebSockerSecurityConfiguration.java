@@ -15,9 +15,9 @@ public class WebSockerSecurityConfiguration extends AbstractSecurityWebSocketMes
     protected void configureInbound(MessageSecurityMetadataSourceRegistry messages) {
         messages
                 // users cannot send to these broker destinations, only the application can
-                .simpDestMatchers("/mail/sendPrivateMailSystem/**").hasRole("ADMIN").anyMessage().permitAll()
-                .simpDestMatchers("/mail/**").authenticated()
                 .simpMessageDestMatchers("/topic/**", "/queue/**").denyAll()
+                .simpDestMatchers("/mail/**").authenticated()
+                .simpDestMatchers("/mail/sendPrivateMailSystem/**").hasRole("ADMIN").anyMessage().permitAll()
                 .simpSubscribeDestMatchers("/queue/**").access("@webSocketSecurity.checkUser(authentication, message)")
                 .simpSubscribeDestMatchers("/topic/public").permitAll()
                 .anyMessage().authenticated();

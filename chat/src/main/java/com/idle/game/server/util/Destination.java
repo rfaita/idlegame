@@ -10,6 +10,10 @@ public class Destination {
         return "/topic/" + chatRoom + "#messages.public";
     }
 
+    public static String privateErrorMessages(String user) {
+        return "/queue/" + user + "#messages.private.error";
+    }
+    
     public static String privateMessages(String user) {
         return "/queue/" + user + "#messages.private";
     }

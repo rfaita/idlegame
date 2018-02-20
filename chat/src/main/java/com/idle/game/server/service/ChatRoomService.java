@@ -39,6 +39,16 @@ public class ChatRoomService {
     public ChatRoom create(ChatRoom chatRoom) {
         return chatRoomRepository.save(chatRoom);
     }
+    
+    public void refresh(String chatRoomId) {
+        ChatRoom chatRoom = findById(chatRoomId);
+
+        if (chatRoom == null) {
+            throw new ValidationException("chat.room.not.found");
+        }
+
+        updateConnectedUsersViaWebSocket(chatRoom);
+    }
 
     public ChatRoom join(ChatRoomUser joiningUser, String chatRoomId) {
         ChatRoom chatRoom = findById(chatRoomId);
