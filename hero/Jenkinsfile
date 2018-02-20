@@ -59,7 +59,7 @@ node {
     stage('Promote') {
         withEnv(['DOCKER_HOST=unix:///var/run/docker.sock']) {
 	    withDockerRegistry([credentialsId: 'jenkins_registry', url: 'https://idlegame01:5000']) {
-                sh 'docker service update --detach=false --force --with-registry-auth --image idlegame01:5000/hero:latest --update-parallelism=2 ig_hero'
+                sh 'docker service update --detach=false --force --with-registry-auth --image idlegame01:5000/hero:latest --update-parallelism=1 ig_hero'
 	    }
         }
     }

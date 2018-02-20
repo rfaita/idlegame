@@ -17,13 +17,13 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 @EnableScheduling
 public class WebSocketConfiguration extends AbstractWebSocketMessageBrokerConfigurer {
 
-    @Value("${idle.config.chat.relay.hostname}")
+    @Value("${idle.config.relay.hostname}")
     private String hostRelay;
-    @Value("${idle.config.chat.relay.port}")
+    @Value("${idle.config.relay.port}")
     private Integer portRelay;
-    @Value("${idle.config.chat.relay.username}")
+    @Value("${idle.config.relay.username}")
     private String userRelay;
-    @Value("${idle.config.chat.relay.password}")
+    @Value("${idle.config.relay.password}")
     private String passRelay;
 
     @Override

@@ -24,13 +24,13 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Profile({"default"})
 public class RedisConfiguration {
 
-    @Value("${idle.config.player.redis.hostname}")
+    @Value("${idle.config.redis.hostname}")
     private String redisHostName;
 
-    @Value("${idle.config.player.redis.port}")
+    @Value("${idle.config.redis.port}")
     private int redisPort;
 
-    @Value("${idle.config.player.pvpRating.expire}")
+    @Value("${idle.config.pvpRating.expire}")
     private Long pvpRatingCache;
 
     @Bean

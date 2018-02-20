@@ -18,7 +18,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories("com.idle.game.server.repository")
 public class MongoEmbeddedConfiguration extends AbstractMongoConfiguration {
 
-    @Value("${idle.config.player.mongodb.database}")
+    @Value("${idle.config.mongodb.database}")
     private String mongoDB;
 
     @Override

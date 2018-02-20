@@ -21,10 +21,10 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Profile({"default"})
 public class RedisConfiguration {
 
-    @Value("${idle.config.shop.redis.hostname}")
+    @Value("${idle.config.redis.hostname}")
     private String redisHostName;
 
-    @Value("${idle.config.shop.redis.port}")
+    @Value("${idle.config.redis.port}")
     private int redisPort;
 
     @Bean

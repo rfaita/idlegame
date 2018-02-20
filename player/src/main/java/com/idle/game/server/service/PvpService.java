@@ -44,7 +44,7 @@ public class PvpService {
     @Autowired
     private BattleHelper battleHelper;
 
-    @Value("${idle.config.player.pvpRating.price}")
+    @Value("${idle.config.pvpRating.price}")
     private Long pvpRatingPrice;
 
     @Cacheable(value = PVPRATING_FIND_PVP_RATINGS, key = "'" + PVPRATING_FIND_PVP_RATINGS + "' + #user")
