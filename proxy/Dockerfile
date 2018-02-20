@@ -5,7 +5,7 @@ RUN apk add --no-cache curl
 
 ARG JAR_FILE
 ENV JAVA_OPTS "-Xmx256m -Xms128m"
-ENV SPRING_CONFIG_NAME ""
+ENV SPRING_CONFIG_LOCATION ""
 
 ADD ${JAR_FILE} app.jar
 ADD ./entrypoint.sh /entrypoint.sh
