@@ -43,7 +43,7 @@ public class HeroRest {
     Envelope<Hero> rollHero(@PathVariable("lootRollId") String lootRollId) {
 
         Envelope<Hero> ret = new Envelope<>();
-        ret.setData(heroService.rollHero(tokenHelper.getUser(), lootRollId));
+        ret.setData(heroService.rollHero(tokenHelper.getSubject(), lootRollId));
 
         return ret;
 
@@ -108,7 +108,7 @@ public class HeroRest {
     Envelope<Hero> levelUp(@PathVariable("id") String id) {
 
         Envelope<Hero> ret = new Envelope<>();
-        ret.setData(heroService.levelUp(id, tokenHelper.getUser()));
+        ret.setData(heroService.levelUp(id, tokenHelper.getSubject()));
 
         return ret;
 

@@ -29,8 +29,12 @@ public class ManualTokenHelper {
     public String getNickName() {
         return accessToken.getPreferredUsername();
     }
+    
+    public String getEmail() {
+        return accessToken.getEmail();
+    }
 
-    public String getUser() {
+    public String getSubject() {
         return accessToken.getSubject();
     }
 

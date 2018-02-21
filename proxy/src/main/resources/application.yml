@@ -58,6 +58,10 @@ zuul:
         path: /shop/**
         sensitiveHeaders:
         url: http://localhost:8086/shop
+    chat:
+        path: /chat/**
+        sensitiveHeaders:
+        url: http://localhost:8083/chat
     
 #Spring Boot Config            
 spring:

@@ -1,9 +1,9 @@
-#custom-search-input {
+#custom-join-input, #custom-create-input {
     background: #e8e6e7 none repeat scroll 0 0;
     margin: 0;
     padding: 10px;
 }
-#custom-search-input .search-query {
+#custom-join-input .chat-query, #custom-create-input .chat-query {
     background: #fff none repeat scroll 0 0 !important;
     border-radius: 4px;
     height: 33px;
@@ -11,20 +11,23 @@
     padding-left: 7px;
     padding-right: 7px;
 }
-#custom-search-input button {
+#custom-join-input button, #custom-create-input button {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-    border: 0 none;
-    border-radius: 3px;
+    border: none;
     color: #666666;
     left: auto;
-    margin-bottom: 0;
-    margin-top: 7px;
-    padding: 2px 5px;
     position: absolute;
     right: 0;
-    z-index: 9999;
+    z-index: 120;
+    height: 33px;
+    width: 33px;
 }
-.search-query:focus + button {
+
+#custom-join-input > div, #custom-create-input > div {
+    margin: 0;
+}
+
+.chat-query:focus + button {
     z-index: 3;
 }
 .all_conversation button {
@@ -102,7 +105,7 @@
     border-bottom:none;
 }
 .member_list {
-    height: calc(100vh - 220px);
+    height: calc(100vh - 260px);
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -142,7 +145,7 @@
 
 .chat_area {
     float: left;
-    height: calc(100vh - 370px);
+    height: calc(100vh - 270px);
     overflow-x: hidden;
     overflow-y: auto;
     width: 100%;
@@ -194,4 +197,34 @@
     background: #428bca none repeat scroll 0 0;
     color: #fff;
     cursor:pointer;
+}
+
+.online {
+    color: #fff;
+    background-color: #4caf50;
+    padding: 5px;
+    display: block;
+}
+
+.offline {
+    color: #fff;
+    background-color: #f44336;
+    padding: 5px;
+    display: block;
+}
+
+.chat_text {
+    display: flex;
+}
+
+.chat_text button {
+    margin: 0 0 0 10px;
+}
+
+.join_controll {
+    display: flex;
+}
+
+.join_controll button {
+    margin: 0 0 0 10px;
 }

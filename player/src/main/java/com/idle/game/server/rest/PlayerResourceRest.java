@@ -31,7 +31,7 @@ public class PlayerResourceRest {
     Envelope<PlayerResource> computeResources() {
 
         Envelope<PlayerResource> ret = new Envelope<>();
-        ret.setData(playerResourceService.computeResources(tokenHelper.getUser()));
+        ret.setData(playerResourceService.computeResources(tokenHelper.getSubject()));
 
         return ret;
 
@@ -42,7 +42,7 @@ public class PlayerResourceRest {
     Envelope<PlayerResource> useResources(@RequestBody List<Resource> resources) {
 
         Envelope<PlayerResource> ret = new Envelope<>();
-        ret.setData(playerResourceService.useResources(tokenHelper.getUser(), resources));
+        ret.setData(playerResourceService.useResources(tokenHelper.getSubject(), resources));
 
         return ret;
 

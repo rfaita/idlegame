@@ -26,11 +26,20 @@ public class Message implements Serializable {
 
     private String fromUser;
     private String fromNickName;
+    private String fromEmail;
     private String toUser;
     private String toNickName;
     private String text;
 
     private Boolean fromAdmin;
+
+    public String getFromEmail() {
+        return fromEmail;
+    }
+
+    public void setFromEmail(String fromEmail) {
+        this.fromEmail = fromEmail;
+    }
 
     public String getFromNickName() {
         return fromNickName;

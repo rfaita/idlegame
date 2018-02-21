@@ -29,7 +29,7 @@ public class WebSocketSecurity {
         
         manualTokenHelper.createAccessToken(authentication);
         
-        return manualTokenHelper.getUser().equalsIgnoreCase(user);
+        return manualTokenHelper.getSubject().equalsIgnoreCase(user);
     }
     
     public boolean checkUserChatRoom(Authentication authentication, Message<?> message) {
@@ -40,6 +40,6 @@ public class WebSocketSecurity {
         
         manualTokenHelper.createAccessToken(authentication);
         
-        return chatJoinedService.userCanJoinToChatRoom(manualTokenHelper.getUser(), chatRoom);
+        return chatJoinedService.userCanJoinToChatRoom(manualTokenHelper.getSubject(), chatRoom);
     }
 }

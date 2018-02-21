@@ -23,8 +23,12 @@ public class TokenHelper {
         return accessToken.getAccessTokenHash();
     }
 
-    public String getUser() {
+    public String getSubject() {
         return accessToken.getSubject();
+    }
+    
+    public String getEmail() {
+        return accessToken.getEmail();
     }
 
     public String getLocale() {

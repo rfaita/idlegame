@@ -25,7 +25,7 @@ public class PvpRest {
 
     @RequestMapping(path = "", method = RequestMethod.DELETE)
     public void removePvpRatings() {
-        pvpRatingService.removePvpRatings(tokenHelper.getUser());
+        pvpRatingService.removePvpRatings(tokenHelper.getSubject());
     }
 
     @RequestMapping(path = "/roll", method = RequestMethod.GET)
@@ -33,7 +33,7 @@ public class PvpRest {
     Envelope<List<PvpRating>> roll() {
 
         Envelope<List<PvpRating>> ret = new Envelope<>();
-        ret.setData(pvpRatingService.findPvpRatings(tokenHelper.getUser()));
+        ret.setData(pvpRatingService.findPvpRatings(tokenHelper.getSubject()));
 
         return ret;
 
@@ -44,7 +44,7 @@ public class PvpRest {
     Envelope<Battle> battlePvpRattings(@PathVariable("id") String id) {
 
         Envelope<Battle> ret = new Envelope<>();
-        ret.setData(pvpRatingService.battlePvpRattings(tokenHelper.getUser(), id));
+        ret.setData(pvpRatingService.battlePvpRattings(tokenHelper.getSubject(), id));
 
         return ret;
 

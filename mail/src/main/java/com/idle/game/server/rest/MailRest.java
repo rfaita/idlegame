@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.idle.game.server.rest;
 
 import static com.idle.game.constant.URIConstants.MAIL__SEND_PRIVATE_MAIL;
@@ -34,19 +29,19 @@ public class MailRest {
     @RequestMapping(path = "/loggedUser", method = RequestMethod.GET)
     @ResponseBody
     public String getUser() throws Exception {
-        return tokenHelper.getUser();
+        return tokenHelper.getSubject();
     }
 
     @RequestMapping(path = "/collectReward/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Reward collectReward(@PathVariable("id") String id) throws Exception {
-        return mailService.collectReward(tokenHelper.getUser(), id);
+        return mailService.collectReward(tokenHelper.getSubject(), id);
     }
 
     @RequestMapping(path = "/" + MAIL__SEND_PRIVATE_MAIL, method = RequestMethod.POST)
     public void sendPrivateMail(@RequestBody Mail mail) throws Exception {
 
-        mail.setFromUser(tokenHelper.getUser());
+        mail.setFromUser(tokenHelper.getSubject());
         mail.setFromNickName(tokenHelper.getNickName());
         mail.setFromAdmin(Boolean.FALSE);
         mail.setReward(null);

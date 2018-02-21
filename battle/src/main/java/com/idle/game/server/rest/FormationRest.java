@@ -40,7 +40,7 @@ public class FormationRest {
     Envelope<Formation> findByUserAndFormationAllocation(@PathVariable("formationAllocation") String fa) {
 
         Envelope<Formation> ret = new Envelope<>();
-        ret.setData(formationService.findByUserAndFormationAllocation(tokenHelper.getUser(), FormationAllocation.valueOf(fa)));
+        ret.setData(formationService.findByUserAndFormationAllocation(tokenHelper.getSubject(), FormationAllocation.valueOf(fa)));
 
         return ret;
 
@@ -61,7 +61,7 @@ public class FormationRest {
     public @ResponseBody
     Envelope<Formation> save(@RequestBody Formation f) throws Exception {
 
-        Envelope<Formation> ret = new Envelope<>(formationService.save(f, tokenHelper.getUser(), tokenHelper.isAdmin()));
+        Envelope<Formation> ret = new Envelope<>(formationService.save(f, tokenHelper.getSubject(), tokenHelper.isAdmin()));
 
         return ret;
     }

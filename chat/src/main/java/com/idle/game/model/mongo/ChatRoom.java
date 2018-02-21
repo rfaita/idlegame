@@ -62,6 +62,10 @@ public class ChatRoom implements Serializable {
     public void removeUser(ChatRoomUser user) {
         this.connectedUsers.remove(user);
     }
+    
+    public void removeAllUsers() {
+        this.connectedUsers.clear();
+    }
 
     public int getNumberOfConnectedUsers() {
         return this.connectedUsers.size();

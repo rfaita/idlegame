@@ -1,6 +1,5 @@
 package com.idle.game.server.service;
 
-import com.idle.game.model.mongo.Message;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -28,6 +27,10 @@ public class ChatRoomService {
         return chatRoomRepository.save(chatRoom);
     }
 
+    public ChatRoom findByName(String chatRoom) {
+        return chatRoomRepository.findByName(chatRoom);
+    }
+
     public ChatRoom findById(String chatRoom) {
         return chatRoomRepository.findById(chatRoom);
     }
@@ -37,11 +40,16 @@ public class ChatRoomService {
     }
 
     public ChatRoom create(ChatRoom chatRoom) {
+        ChatRoom chatRoomExist = findByName(chatRoom.getName());
+
+        if (chatRoomExist != null) {
+            throw new ValidationException("chat.room.already.created");
+        }
         return chatRoomRepository.save(chatRoom);
     }
-    
-    public void refresh(String chatRoomId) {
-        ChatRoom chatRoom = findById(chatRoomId);
+
+    public void refresh(String name) {
+        ChatRoom chatRoom = findByName(name);
 
         if (chatRoom == null) {
             throw new ValidationException("chat.room.not.found");
@@ -50,8 +58,39 @@ public class ChatRoomService {
         updateConnectedUsersViaWebSocket(chatRoom);
     }
 
-    public ChatRoom join(ChatRoomUser joiningUser, String chatRoomId) {
-        ChatRoom chatRoom = findById(chatRoomId);
+    public ChatRoom changeUserStatusToOnline(ChatRoomUser onlineUser, String name) {
+        return changeUserStatus(onlineUser, name, Boolean.TRUE);
+    }
+
+    public ChatRoom changeUserStatusToOffline(ChatRoomUser onlineUser, String name) {
+        return changeUserStatus(onlineUser, name, Boolean.FALSE);
+    }
+
+    private ChatRoom changeUserStatus(ChatRoomUser onlineUser, String name, Boolean online) {
+        ChatRoom chatRoom = findByName(name);
+
+        if (chatRoom == null) {
+            throw new ValidationException("chat.room.not.found");
+        }
+
+        if (!chatRoom.getConnectedUsers().contains(onlineUser)) {
+            throw new ValidationException("chat.room.not.joined");
+        }
+
+        chatRoom.removeUser(onlineUser);
+
+        onlineUser.setOnline(online);
+
+        chatRoom.addUser(onlineUser);
+
+        chatRoomRepository.save(chatRoom);
+
+        updateConnectedUsersViaWebSocket(chatRoom);
+        return chatRoom;
+    }
+
+    public ChatRoom join(ChatRoomUser joiningUser, String name) {
+        ChatRoom chatRoom = findByName(name);
 
         if (chatRoom == null) {
             throw new ValidationException("chat.room.not.found");
@@ -61,15 +100,17 @@ public class ChatRoomService {
             throw new ValidationException("chat.room.already.join");
         }
 
+        joiningUser.setOnline(Boolean.TRUE);
+
         chatRoom.addUser(joiningUser);
-        chatRoomRepository.save(chatRoom);
+        chatRoom = chatRoomRepository.save(chatRoom);
 
         updateConnectedUsersViaWebSocket(chatRoom);
         return chatRoom;
     }
 
-    public ChatRoom leave(ChatRoomUser leavingUser, String chatRoomId) {
-        ChatRoom chatRoom = findById(chatRoomId);
+    public ChatRoom leave(ChatRoomUser leavingUser, String name) {
+        ChatRoom chatRoom = findByName(name);
 
         if (chatRoom == null) {
             throw new ValidationException("chat.room.not.found");
@@ -80,12 +121,12 @@ public class ChatRoomService {
         }
 
         chatRoom.removeUser(leavingUser);
-        chatRoomRepository.save(chatRoom);
+        chatRoom = chatRoomRepository.save(chatRoom);
 
         updateConnectedUsersViaWebSocket(chatRoom);
         return chatRoom;
     }
-    
+
     private void updateConnectedUsersViaWebSocket(ChatRoom chatRoom) {
         webSocketMessagingTemplate.convertAndSend(
                 Destination.connectedUsers(chatRoom.getId()),

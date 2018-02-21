@@ -11,15 +11,35 @@ public class ChatRoomUser implements Comparable<ChatRoomUser> {
 
     private String user;
     private String nickName;
+    private String email;
+    private Boolean online;
     private final Date joinedAt = new Date();
 
     public ChatRoomUser() {
 
     }
 
-    public ChatRoomUser(String user, String nickName) {
+    public ChatRoomUser(String user, String nickName, String email) {
         this.user = user;
         this.nickName = nickName;
+        this.email = email;
+        this.online = Boolean.FALSE;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Boolean getOnline() {
+        return online;
+    }
+
+    public void setOnline(Boolean online) {
+        this.online = online;
     }
 
     public String getUser() {
@@ -54,9 +74,10 @@ public class ChatRoomUser implements Comparable<ChatRoomUser> {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 41 * hash + Objects.hashCode(this.user);
-        hash = 41 * hash + Objects.hashCode(this.nickName);
+        int hash = 3;
+        hash = 13 * hash + Objects.hashCode(this.user);
+        hash = 13 * hash + Objects.hashCode(this.nickName);
+        hash = 13 * hash + Objects.hashCode(this.email);
         return hash;
     }
 
@@ -75,7 +96,13 @@ public class ChatRoomUser implements Comparable<ChatRoomUser> {
         if (!Objects.equals(this.user, other.user)) {
             return false;
         }
-        return Objects.equals(this.nickName, other.nickName);
+        if (!Objects.equals(this.nickName, other.nickName)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        return true;
     }
 
 }

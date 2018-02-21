@@ -11,6 +11,8 @@ import { Observable } from 'rxjs/Observable';
 import { Envelope } from '../model/envelope';
 import { ChatRoomUser } from '../model/chatRoomUser';
 import { Subscription } from 'rxjs/Subscription';
+import { Message } from '../model/message';
+import { ChatRoom } from '../model/chatRoom';
 
 @Component({
   selector: 'app-chat',
@@ -19,12 +21,21 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class ChatComponent implements OnInit, OnDestroy {
 
-  private sub: any;
-  private chatJoined: ChatJoined;
-  private chatsJoined: Observable<ChatJoined[]>;
-  private chatUsers: ChatRoomUser[] = [];
-  private chatMessages: any[] = [];
+  public state: Number;
+  public text: String;
+  public chatToJoin: String;
+  public chatToCreate: String;
 
+  public chatJoined: ChatJoined;
+  public chatsJoined: ChatJoined[];
+  public chatUsers: ChatRoomUser[] = [];
+  public chatMessages: any[] = [];
+
+  private subscribeMonitor: Subscription;
+  private subscribeChatUsers: Subscription;
+  private subscribeChatMessage: Subscription;
+  private subscribePrivateErrorMessages: Subscription;
+  private subscribePrivateMessages: Subscription;
 
   constructor(private keycloakService: KeycloakService,
     private chatService: ChatService) { }
@@ -32,40 +43,121 @@ export class ChatComponent implements OnInit, OnDestroy {
   ngOnInit() {
     let subject = this.keycloakService.getKeycloakInstance().subject;
 
-    this.chatService.subscribePrivateErrorMessages(subject).subscribe(message => {
-      let env: Envelope<void> = JSON.parse(message.body);
+    this.subscribeMonitor = this.chatService.subscribeMonitor().subscribe(state => {
+      this.state = state;
+    });
+
+    this.subscribePrivateErrorMessages = this.chatService.subscribePrivateErrorMessages(subject).subscribe(env => {
       showNotification("danger", env.errors[0]);
     });
 
-    this.chatService.subscribePrivateMessages(subject).subscribe(message => {
-      showNotification("info", message.body);
+    this.subscribePrivateMessages = this.chatService.subscribePrivateMessages(subject).subscribe(message => {
+      showNotification("info", message);
     });
 
-    this.chatsJoined = this.chatService.subscribeChatList();
+    this.loadChatsJoined();
   }
 
-  public joinChat(chatJoined: ChatJoined) {
+  private loadChatsJoined() {
+    this.chatService.subscribeChatList().subscribe(chatsJoined => {
+      this.chatsJoined = chatsJoined;
+      let chatJoinedGlobal: ChatJoined[] = chatsJoined.filter(chatJoined => chatJoined.chatRoom === "global")
+      if (chatJoinedGlobal.length > 0) {
+        this.openChat(chatJoinedGlobal[0]);
+      }
+    });
+  }
+
+  public openChat(chatJoined: ChatJoined) {
     this.chatJoined = chatJoined;
     this.chatUsers = [];
     this.chatMessages = [];
 
     this.chatService.findAllChatRoomUsers(chatJoined.chatRoom).subscribe(chatUsers => {
       this.chatUsers = chatUsers;
-      this.chatService.subscribeChatUsers(chatJoined.chatRoom).subscribe(chatUsers => {
+      if (this.subscribeChatUsers != null) {
+        this.subscribeChatUsers.unsubscribe();
+      }
+      this.subscribeChatUsers = this.chatService.subscribeChatUsers(chatJoined.chatRoom).subscribe(chatUsers => {
         this.chatUsers = chatUsers;
       });
     });
 
     this.chatService.findAllChatRoomMessages(chatJoined.chatRoom).subscribe(messages => {
       this.chatMessages = messages;
-      this.chatService.subscribeChatMessage(chatJoined.chatRoom).subscribe(message => {
+      if (this.subscribeChatMessage != null) {
+        this.subscribeChatMessage.unsubscribe();
+      }
+      this.subscribeChatMessage = this.chatService.subscribeChatMessage(chatJoined.chatRoom).subscribe(message => {
         this.chatMessages.push(message);
       });
     });
   }
 
+  public sendChatMessage() {
+    if (this.text != null && this.text != "") {
+      let message: Message = new Message();
+      message.text = this.text;
+      this.chatService.sendChatMessage(this.chatJoined.chatRoom, message);
+      this.text = "";
+    }
+  }
+
+  public createChat() {
+    if (this.chatToCreate != null && this.chatToCreate != "") {
+
+      let chatRoom: ChatRoom = new ChatRoom();
+      chatRoom.name = this.chatToCreate;
+
+      this.chatService.createChat(chatRoom).subscribe(env => {
+        this.chatToCreate = "";
+        showNotification("info", "Chat created.");
+      });
+    }
+  }
+
+  public joinChat() {
+    if (this.chatToJoin != null && this.chatToJoin != "") {
+      this.chatService.joinChat(this.chatToJoin).subscribe(env => {
+
+        let chatJoined: ChatJoined = new ChatJoined();
+        chatJoined.chatRoom = this.chatToJoin;
+
+        this.chatsJoined.push(chatJoined);
+
+        this.openChat(chatJoined);
+
+        this.chatToJoin = "";
+      });
+    }
+  }
+
+  public leaveChat() {
+    if (this.subscribeChatUsers != null) {
+      this.subscribeChatUsers.unsubscribe();
+    }
+    if (this.subscribeChatMessage != null) {
+      this.subscribeChatMessage.unsubscribe();
+    }
+    this.chatService.leaveChat(this.chatJoined.chatRoom).subscribe(env => {
+      this.chatsJoined = this.chatsJoined.filter(chatJoined => chatJoined.chatRoom != this.chatJoined.chatRoom);
+      this.chatJoined = null;
+      this.chatUsers = [];
+      this.chatMessages = [];
+    });
+
+  }
+
   ngOnDestroy() {
-    //this.sub.unsubscribe();
+    if (this.subscribeMonitor != null) {
+      this.subscribeMonitor.unsubscribe();
+    }
+    if (this.subscribePrivateErrorMessages != null) {
+      this.subscribePrivateErrorMessages.unsubscribe();
+    }
+    if (this.subscribePrivateMessages != null) {
+      this.subscribePrivateMessages.unsubscribe();
+    }
   }
 
 

@@ -27,7 +27,7 @@ public class FriendRest {
     Envelope<List<Friend>> getFriends() {
 
         Envelope<List<Friend>> ret = new Envelope<>();
-        ret.setData(friendService.getFriends(tokenHelper.getUser()));
+        ret.setData(friendService.getFriends(tokenHelper.getSubject()));
 
         return ret;
 
@@ -38,7 +38,7 @@ public class FriendRest {
     Envelope<List<Friend>> getFriendsRequest() {
 
         Envelope<List<Friend>> ret = new Envelope<>();
-        ret.setData(friendService.getFriendsRequest(tokenHelper.getUser()));
+        ret.setData(friendService.getFriendsRequest(tokenHelper.getSubject()));
 
         return ret;
 
@@ -47,19 +47,19 @@ public class FriendRest {
     @RequestMapping(path = "/{userFriend}", method = RequestMethod.POST)
     public void sendFriendRequest(@PathVariable("userFriend") String userFriend) {
 
-        friendService.sendFriendRequest(tokenHelper.getUser(), userFriend);
+        friendService.sendFriendRequest(tokenHelper.getSubject(), userFriend);
     }
 
     @RequestMapping(path = "/{friendId}", method = RequestMethod.DELETE)
     public void removeFriend(@PathVariable("friendId") String friendId) {
 
-        friendService.removeFriend(tokenHelper.getUser(), friendId);
+        friendService.removeFriend(tokenHelper.getSubject(), friendId);
     }
 
     @RequestMapping(path = "/{friendId}", method = RequestMethod.PUT)
     public void acceptFriendRequest(@PathVariable("friendId") String friendId) {
 
-        friendService.acceptFriendRequest(tokenHelper.getUser(), friendId);
+        friendService.acceptFriendRequest(tokenHelper.getSubject(), friendId);
     }
 
 }

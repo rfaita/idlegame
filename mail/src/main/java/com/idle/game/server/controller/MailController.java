@@ -41,7 +41,7 @@ public class MailController {
     public void sendPrivateMail(Principal principal, @Payload Mail mail) throws Exception {
         manualTokenHelper.createAccessToken(principal);
 
-        mail.setFromUser(manualTokenHelper.getUser());
+        mail.setFromUser(manualTokenHelper.getSubject());
         mail.setFromNickName(manualTokenHelper.getNickName());
         mail.setFromAdmin(Boolean.FALSE);
         mail.setReward(null);
@@ -53,21 +53,21 @@ public class MailController {
     public void deletePrivateMail(@DestinationVariable("id") String id, Principal principal) throws Exception {
         manualTokenHelper.createAccessToken(principal);
 
-        mailService.deletePrivateMail(manualTokenHelper.getUser(), id);
+        mailService.deletePrivateMail(manualTokenHelper.getSubject(), id);
     }
 
     @MessageMapping("/markAsReadPrivateMail/{id}")
     public void markAsReadPrivateMail(@DestinationVariable("id") String id, Principal principal) throws Exception {
         manualTokenHelper.createAccessToken(principal);
 
-        mailService.markAsReadPrivateMail(manualTokenHelper.getUser(), id);
+        mailService.markAsReadPrivateMail(manualTokenHelper.getSubject(), id);
     }
 
     @SubscribeMapping("/mail.old.messages")
     public List<Mail> findAllByToUser(Principal principal) {
         manualTokenHelper.createAccessToken(principal);
 
-        return mailService.findAllByToUser(manualTokenHelper.getUser());
+        return mailService.findAllByToUser(manualTokenHelper.getSubject());
     }
 
 }
