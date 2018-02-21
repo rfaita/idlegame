@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="row chat-window col-xs-5 col-md-2" id="chat_window_1" [ngStyle]="calcPosition()">
+    <div class="row chat-window col-xs-5 col-md-2" [ngStyle]="calcPosition()">
         <div class="col-xs-12 col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading top-bar">
@@ -20,7 +20,7 @@
                     <ng-container *ngFor="let message of messages">
                         <div class="row msg_container base_receive" *ngIf="!!message.text && message.fromNickName != username">
                             <div class="col-md-2 col-xs-2">
-                                <ngx-avatar [gravatarId]="message.fromEmail" size=40 round=true [name]="message.fromNickName"></ngx-avatar>
+                                <ngx-avatar [gravatarId]="message.fromEmail" size=30 round=true [name]="message.fromNickName"></ngx-avatar>
                             </div>
                             <div class="col-xs-10 col-md-10">
                                 <div class="messages msg_receive">
@@ -37,7 +37,7 @@
                                 </div>
                             </div>
                             <div class="col-md-2 col-xs-2">
-                                <ngx-avatar [gravatarId]="message.fromEmail" size=40 round=true [name]="message.fromNickName"></ngx-avatar>
+                                <ngx-avatar [gravatarId]="message.fromEmail" size=30 round=true [name]="message.fromNickName"></ngx-avatar>
                             </div>
 
                         </div>

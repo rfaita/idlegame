@@ -27,7 +27,7 @@ export class ChatPmComponent implements OnInit, OnDestroy {
 
   public calcPosition() {
     let styles = {
-      'right': (this.index * 300) + "px"
+      'right': (this.index * 240) + "px"
     };
     return styles;
 
@@ -55,7 +55,7 @@ export class ChatPmComponent implements OnInit, OnDestroy {
   }
 
   public close() {
-    
+
   }
 
   ngOnInit() {
