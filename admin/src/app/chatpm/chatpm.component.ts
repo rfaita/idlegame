@@ -54,6 +54,10 @@ export class ChatPmComponent implements OnInit, OnDestroy {
     }
   }
 
+  public close() {
+    
+  }
+
   ngOnInit() {
     this.username = this.keycloakService.getUsername();
   }
