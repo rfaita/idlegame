@@ -51,7 +51,9 @@
                                     <div class="chat-body clearfix">
                                         <div class="header_sec">
                                             <strong class="primary-font">{{chatUser.nickName}}</strong>
-                                            <button *ngIf="chatUser.nickName != username" (click)="openPrivateChat(chatUser)">tcer</button>
+                                            <button class="open_private_chat pull-right" *ngIf="chatUser.nickName != username" (click)="openPrivateChat(chatUser)">
+                                                <i class="material-icons">chat</i>
+                                            </button>
                                         </div>
                                         <div class="contact_sec">
                                             <span *ngIf="chatUser.online" class="badge online pull-right"></span>

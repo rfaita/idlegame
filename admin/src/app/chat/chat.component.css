@@ -27,6 +27,14 @@
     margin: 0;
 }
 
+.open_private_chat {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: none;
+    color: #666666;
+    height: 24px;
+    width: 24px;
+}
+
 .chat-query:focus + button {
     z-index: 3;
 }
