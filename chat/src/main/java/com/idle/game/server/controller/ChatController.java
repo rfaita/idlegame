@@ -105,10 +105,10 @@ public class ChatController {
     }
 
     @SubscribeMapping("/findAllOldPrivateMessages")
-    public List<Message> findAllByToUserOrFromUser(Principal principal) {
+    public List<Message> findAllByToUserOrFromUserAndChatRoomIsNull(Principal principal) {
         manualTokenHelper.createAccessToken(principal);
 
-        return messageService.findAllByToUserOrFromUser(manualTokenHelper.getSubject());
+        return messageService.findAllByToUserOrFromUserAndChatRoomIsNull(manualTokenHelper.getSubject());
     }
 
     @MessageExceptionHandler
