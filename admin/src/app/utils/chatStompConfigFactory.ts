@@ -3,9 +3,9 @@ import { StompConfig } from '@stomp/ng2-stompjs';
 import { KeycloakService } from 'keycloak-angular';
 import { environment } from '../../environments/environment';
 
-export function stompConfigFactory(keycloakService: KeycloakService): StompConfig {
+export function chatStompConfigFactory(keycloakService: KeycloakService): ChatStompConfig {
 
-  const stompConfig: StompConfig = {
+  const stompConfig: ChatStompConfig = {
     // Which server?
     url: environment.WS_CHAT_BASE_URL + "?access_token=" + keycloakService.getKeycloakInstance().token,
 
@@ -29,4 +29,8 @@ export function stompConfigFactory(keycloakService: KeycloakService): StompConfi
   };
 
   return stompConfig;
+}
+
+export class ChatStompConfig extends StompConfig {
+
 }

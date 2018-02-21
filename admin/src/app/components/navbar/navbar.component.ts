@@ -3,6 +3,7 @@ import { ROUTES } from '../sidebar/sidebar.component';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { KeycloakService } from 'keycloak-angular';
 import { KeycloakProfile } from 'keycloak-js';
+import { MailService } from '../../service/mail.service';
 
 @Component({
     selector: 'app-navbar',
@@ -19,7 +20,8 @@ export class NavbarComponent implements OnInit {
 
     constructor(location: Location,
         private element: ElementRef,
-        private keycloakService: KeycloakService) {
+        private keycloakService: KeycloakService,
+        private mailService: MailService) {
         this.location = location;
         this.sidebarVisible = false;
     }
@@ -30,6 +32,13 @@ export class NavbarComponent implements OnInit {
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
 
         this.keycloakService.loadUserProfile().then(profile => { this.userDetails = profile });
+
+        let subject = this.keycloakService.getKeycloakInstance().subject;
+
+        this.mailService.subscribePrivateMail(subject).subscribe(mail => {
+            console.log(mail);
+        });
+
     }
 
     logout() {

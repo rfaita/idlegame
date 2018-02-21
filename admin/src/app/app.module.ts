@@ -39,9 +39,11 @@ import { BattleService } from './service/battle.service';
 import { FormationService } from './service/formation.service';
 import { ChatComponent } from './chat/chat.component';
 import { StompConfig, StompService } from '@stomp/ng2-stompjs';
-import { stompConfigFactory } from './utils/stompConfigFactory';
+import { chatStompConfigFactory, ChatStompConfig } from './utils/chatStompConfigFactory';
 import { AvatarModule } from 'ngx-avatar';
 import { ChatPmComponent } from './chatpm/chatpm.component';
+import { MailService } from './service/mail.service';
+import { mailStompConfigFactory, MailStompConfig } from './utils/mailStompConfigFactory';
 
 
 @NgModule({
@@ -79,12 +81,19 @@ import { ChatPmComponent } from './chatpm/chatpm.component';
       multi: true,
       deps: [KeycloakService]
     },
-    StompService,
+    
     {
-      provide: StompConfig,
-      useFactory: stompConfigFactory,
+      provide: ChatStompConfig,
+      useFactory: chatStompConfigFactory,
       deps: [KeycloakService]
     },
+    {
+      provide: MailStompConfig,
+      useFactory: mailStompConfigFactory,
+      deps: [KeycloakService]
+    },
+    ChatService,
+    MailService,
     HeroService,
     HeroTypeService,
     HeroTypeTypesService,
@@ -93,7 +102,8 @@ import { ChatPmComponent } from './chatpm/chatpm.component';
     PlayerService,
     BattleService,
     FormationService,
-    ChatService
+    ChatService,
+    MailService
   ],
   bootstrap: [AppComponent]
 })

@@ -8,6 +8,7 @@ export const environment = {
   API_BASE_URL: "http://localhost:9000/idle/api/",
   AUTH_URL: "http://localhost:8180/auth",
   WS_CHAT_BASE_URL: "ws://localhost:8083/ws",
+  WS_MAIL_BASE_URL: "ws://localhost:8084/ws",
   AUTH_REALM: "idlerealm",
   AUTH_CLIENT: "idlegame",
 };

@@ -21,6 +21,17 @@ public class PlayerService {
         return playerRepository.findById(id);
     }
 
+    public Player create(Player player) {
+
+        Player playerRet = findByLinkedUser(player.getLinkedUser());
+
+        if (playerRet != null) {
+            return playerRet;
+        } else {
+            return this.playerRepository.save(player);
+        }
+    }
+
     @Cacheable(value = PLAYER_FIND_BY_LINKED_USER, key = "'" + PLAYER_FIND_BY_LINKED_USER + "' + #linkedUser")
     public Player findByLinkedUser(String linkedUser) {
         return playerRepository.findByLinkedUser(linkedUser);

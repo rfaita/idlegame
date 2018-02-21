@@ -63,7 +63,7 @@ public class MailController {
         mailService.markAsReadPrivateMail(manualTokenHelper.getSubject(), id);
     }
 
-    @SubscribeMapping("/mail.old.messages")
+    @SubscribeMapping("/findAllOldMail")
     public List<Mail> findAllByToUser(Principal principal) {
         manualTokenHelper.createAccessToken(principal);
 

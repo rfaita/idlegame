@@ -17,8 +17,13 @@ export class PlayerService {
 
     }
 
-    findByName(name:String): Observable<Envelope<Player>> {
+    findByName(name: String): Observable<Envelope<Player>> {
         return this.http.get(environment.API_BASE_URL + "player/findByName/" + name)
+            .catch(handleError);
+    }
+
+    create(): Observable<Envelope<Player>> {
+        return this.http.post(environment.API_BASE_URL + "player", null)
             .catch(handleError);
     }
 

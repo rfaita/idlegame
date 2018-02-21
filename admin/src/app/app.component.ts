@@ -5,6 +5,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import PerfectScrollbar from 'perfect-scrollbar';
+import { PlayerService } from './service/player.service';
 
 declare const $: any;
 
@@ -18,14 +19,18 @@ export class AppComponent implements OnInit {
     private lastPoppedUrl: string;
     private yScrollStack: number[] = [];
 
-    
+
 
     @ViewChild(NavbarComponent) navbar: NavbarComponent;
 
     constructor(public location: Location,
-        private router: Router) { }
+        private router: Router,
+        private playerService: PlayerService) { }
 
     ngOnInit() {
+
+        this.playerService.create().subscribe();
+
         $.material.init();
         const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
         const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
@@ -54,12 +59,12 @@ export class AppComponent implements OnInit {
             let ps = new PerfectScrollbar(elemMainPanel);
             ps = new PerfectScrollbar(elemSidebar);
         }
-        
+
     }
     ngAfterViewInit() {
         this.runOnRouteChange();
     }
-   
+
     runOnRouteChange(): void {
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
             const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');

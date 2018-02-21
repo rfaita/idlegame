@@ -26,12 +26,6 @@ public class MailRest {
     @Autowired
     private MailService mailService;
 
-    @RequestMapping(path = "/loggedUser", method = RequestMethod.GET)
-    @ResponseBody
-    public String getUser() throws Exception {
-        return tokenHelper.getSubject();
-    }
-
     @RequestMapping(path = "/collectReward/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Reward collectReward(@PathVariable("id") String id) throws Exception {
