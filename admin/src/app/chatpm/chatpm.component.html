@@ -1,0 +1,63 @@
+<div class="container">
+    <div class="row chat-window col-xs-5 col-md-2" id="chat_window_1" [ngStyle]="calcPosition()">
+        <div class="col-xs-12 col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading top-bar">
+                    <div class="col-md-8 col-xs-8">
+                        <p *ngIf="messages[0].fromNickName == username" class="panel-title">{{messages[0].toNickName}}</p>
+                        <p *ngIf="messages[0].toNickName == username" class="panel-title">{{messages[0].fromNickName}}</p>
+                    </div>
+                    <div class="col-md-4 col-xs-4">
+                        <a (click)="changeMinimized()">
+                            <i class="material-icons">remove</i>
+                        </a>
+                        <a (click)="close()">
+                            <i class="material-icons">close</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="panel-body msg_container_base" #scrollMe [scrollTop]="scrollMe.scrollHeight" *ngIf="!minimized">
+                    <ng-container *ngFor="let message of messages">
+                        <div class="row msg_container base_receive" *ngIf="!!message.text && message.fromNickName != username">
+                            <div class="col-md-2 col-xs-2">
+                                <ngx-avatar [gravatarId]="message.fromEmail" size=40 round=true [name]="message.fromNickName"></ngx-avatar>
+                            </div>
+                            <div class="col-xs-10 col-md-10">
+                                <div class="messages msg_receive">
+                                    <p>{{message.text}}</p>
+                                    <time>{{message.fromNickName}} • {{message.date | date: 'MM/dd/yyyy hh:mm:ss'}}</time>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row msg_container base_sent" *ngIf="!!message.text && message.fromNickName == username">
+                            <div class="col-md-10 col-xs-10">
+                                <div class="messages msg_sent">
+                                    <p>{{message.text}}</p>
+                                    <time>{{message.fromNickName}} • {{message.date | date: 'MM/dd/yyyy hh:mm:ss'}}</time>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-xs-2">
+                                <ngx-avatar [gravatarId]="message.fromEmail" size=40 round=true [name]="message.fromNickName"></ngx-avatar>
+                            </div>
+
+                        </div>
+                    </ng-container>
+
+                </div>
+                <div class="panel-footer msg_container_footer" *ngIf="!minimized">
+                    <form #f="ngForm" (ngSubmit)="sendPrivateMessage()">
+                        <div class="form-group form-black is-empty chat_text">
+                            <input maxlength="500" class="form-control input-sm" placeholder="type a message" name="chatText" [ngModel]="text" (ngModelChange)="text = $event">
+                            <button type="submit" class="btn btn-success btn-just-icon btn-sm">
+                                <i class="material-icons">send</i>
+                                <div class="ripple-container"></div>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

@@ -19,22 +19,26 @@ export function showNotification(type, msg) {
         });
 }
 
-export function handleError(error: HttpErrorResponse | any) {
+export function handleError(httpError: HttpErrorResponse | any) {
     // In a real world app, you might use a remote logging infrastructure
 
-    if (error instanceof HttpErrorResponse) {
-        if (error.status == 403) {
+    if (httpError instanceof HttpErrorResponse) {
+        if (httpError.status == 403) {
             showNotification('danger', 'You do not have authorization to that action.');
-        } else if (error.status == 400) {            
-            showNotification('warning', 'ARRUMAR ISSO');
+        } else if (httpError.status == 400) {
+            if (httpError.error.errors != null) {
+                for (let i in httpError.error.errors) {
+                    showNotification('warning', httpError.error.errors[i]);
+                }
+            }
         } else {
-            showNotification('danger', error.message);
+            showNotification('danger', httpError.message);
         }
 
     } else {
-        showNotification('danger', error.message ? error.message : error.toString());
+        showNotification('danger', httpError.message ? httpError.message : httpError.toString());
     }
-    return Observable.throw(error);
+    return Observable.throw(httpError);
 }
 
 export function clone(obj: any) {

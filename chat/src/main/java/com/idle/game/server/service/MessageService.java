@@ -26,8 +26,8 @@ public class MessageService {
         return messageRepository.findAllByChatRoom(chatRoom);
     }
 
-    public List<Message> findAllByToUser(String toUser) {
-        return messageRepository.findAllByToUser(toUser);
+    public List<Message> findAllByToUserOrFromUser(String user) {
+        return messageRepository.findAllByToUserOrFromUser(user, user);
     }
 
     public void sendChatMessage(Message chatMessage) {

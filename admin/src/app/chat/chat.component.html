@@ -51,6 +51,7 @@
                                     <div class="chat-body clearfix">
                                         <div class="header_sec">
                                             <strong class="primary-font">{{chatUser.nickName}}</strong>
+                                            <button *ngIf="chatUser.nickName != username" (click)="openPrivateChat(chatUser)">tcer</button>
                                         </div>
                                         <div class="contact_sec">
                                             <span *ngIf="chatUser.online" class="badge online pull-right"></span>
@@ -112,7 +113,7 @@
                         <div class="message_write">
                             <form #f="ngForm" (ngSubmit)="sendChatMessage()">
                                 <div class="form-group form-black is-empty chat_text">
-                                    <input [disabled]="!chatJoined" class="form-control chat_text" placeholder="type a message" name="chatText" [ngModel]="text"
+                                    <input [disabled]="!chatJoined" maxlength="500" class="form-control" placeholder="type a message" name="chatText" [ngModel]="text"
                                         (ngModelChange)="text = $event">
                                     <button type="submit" [disabled]="!chatJoined" class="btn btn-success btn-just-icon">
                                         <i class="material-icons">send</i>
@@ -132,3 +133,4 @@
         </div>
     </div>
 </div>
+<app-chatpm *ngFor="let user of privateMessagesKeys; let i = index" [index]="i" [messages]="privateMessages.get(user)"></app-chatpm>

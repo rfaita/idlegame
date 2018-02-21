@@ -14,6 +14,6 @@ public interface MessageRepository extends MongoRepository<Message, String> {
 
     public List<Message> findAllByChatRoom(String chatRoom);
 
-    public List<Message> findAllByToUser(String toUser);
+    public List<Message> findAllByToUserOrFromUser(String toUser, String fromUser);
 
 }

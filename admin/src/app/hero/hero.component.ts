@@ -44,8 +44,7 @@ export class HeroComponent implements OnInit, OnDestroy {
         this.heroTypesService.get().subscribe(env => {
           this.heroTypes = env.data;
           if (id !== "new") {
-
-            this.heroService.findById(id).subscribe(env => { this.hero = env.data; console.log(env.data); });
+            this.heroService.findById(id).subscribe(env => { this.hero = env.data;});
           } else {
             this.hero = new Hero();
           }

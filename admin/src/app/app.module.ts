@@ -41,6 +41,7 @@ import { ChatComponent } from './chat/chat.component';
 import { StompConfig, StompService } from '@stomp/ng2-stompjs';
 import { stompConfigFactory } from './utils/stompConfigFactory';
 import { AvatarModule } from 'ngx-avatar';
+import { ChatPmComponent } from './chatpm/chatpm.component';
 
 
 @NgModule({
@@ -58,8 +59,7 @@ import { AvatarModule } from 'ngx-avatar';
     ActionEffectComponent,
     BuffEffectComponent,
     BattleComponent,
-    ChatComponent
-
+    ChatComponent, ChatPmComponent
   ],
   imports: [
     AvatarModule,

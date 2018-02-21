@@ -54,9 +54,18 @@ export class ChatService {
         return this.stompService.subscribe("/chat/findAllChatRoomMessages/" + chat).map(message => JSON.parse(message.body));
     }
 
+    findAllOldPrivateMessages(): Observable<Message[]> {
+        return this.stompService.subscribe("/chat/findAllOldPrivateMessages").map(message => JSON.parse(message.body));
+    }
+
     sendChatMessage(chat: String, message: Message) {
         this.stompService.publish("/chat/sendChatMessage/" + chat, JSON.stringify(message));
-        
+
+    }
+
+    sendPrivateMessage(chat: String, message: Message) {
+        this.stompService.publish("/chat/sendPrivateMessage/" + chat, JSON.stringify(message));
+
     }
 
     createChat(chatRoom: ChatRoom): Observable<Envelope<ChatRoom>> {
@@ -74,6 +83,8 @@ export class ChatService {
             .catch(handleError);
 
     }
+
+
 
 
 

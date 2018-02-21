@@ -31,31 +31,54 @@ export class ChatComponent implements OnInit, OnDestroy {
   public chatUsers: ChatRoomUser[] = [];
   public chatMessages: any[] = [];
 
+  public privateMessages: Map<String, Message[]> = new Map();
+  public privateMessagesKeys: String[] = [];
+
   private subscribeMonitor: Subscription;
   private subscribeChatUsers: Subscription;
   private subscribeChatMessage: Subscription;
   private subscribePrivateErrorMessages: Subscription;
   private subscribePrivateMessages: Subscription;
 
+  private subject: String;
+  private username: String;
+
   constructor(private keycloakService: KeycloakService,
     private chatService: ChatService) { }
 
   ngOnInit() {
-    let subject = this.keycloakService.getKeycloakInstance().subject;
+    this.subject = this.keycloakService.getKeycloakInstance().subject;
+    this.username = this.keycloakService.getUsername();
 
     this.subscribeMonitor = this.chatService.subscribeMonitor().subscribe(state => {
       this.state = state;
     });
 
-    this.subscribePrivateErrorMessages = this.chatService.subscribePrivateErrorMessages(subject).subscribe(env => {
+    this.subscribePrivateErrorMessages = this.chatService.subscribePrivateErrorMessages(this.subject).subscribe(env => {
       showNotification("danger", env.errors[0]);
     });
 
-    this.subscribePrivateMessages = this.chatService.subscribePrivateMessages(subject).subscribe(message => {
-      showNotification("info", message);
+    this.chatService.findAllOldPrivateMessages().subscribe(messages => {
+      messages.forEach(message => this.handleMessage(message));
+      this.subscribePrivateMessages = this.chatService.subscribePrivateMessages(this.subject).subscribe(message => {
+        this.handleMessage(message);
+      });
     });
 
     this.loadChatsJoined();
+
+  }
+
+  private handleMessage(message: Message) {
+    let index: String = this.username == message.toNickName ? message.fromUser : message.toUser;
+
+    if (!this.privateMessages.has(index)) {
+      this.privateMessages.set(index, []);
+      this.privateMessagesKeys.push(index);
+    }
+    this.privateMessages.get(index).push(message);
+
+
   }
 
   private loadChatsJoined() {
@@ -92,6 +115,23 @@ export class ChatComponent implements OnInit, OnDestroy {
         this.chatMessages.push(message);
       });
     });
+  }
+
+  public openPrivateChat(user: ChatRoomUser) {
+    if (!this.privateMessages.has(user.user)) {
+      this.privateMessages.set(user.user, []);
+      this.privateMessagesKeys.push(user.user);
+
+      let message: Message = new Message();
+
+      message.fromUser = this.subject;
+      message.fromNickName = this.username;
+      message.toUser = user.user;
+      message.toNickName = user.nickName;
+      message.text = null;
+
+      this.privateMessages.get(user.user).push(message);
+    }
   }
 
   public sendChatMessage() {

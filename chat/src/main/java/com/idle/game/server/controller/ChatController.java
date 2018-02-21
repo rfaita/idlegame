@@ -1,9 +1,11 @@
 package com.idle.game.server.controller;
 
 import com.idle.game.helper.ManualTokenHelper;
+import com.idle.game.helper.PlayerHelper;
 import com.idle.game.model.mongo.ChatJoined;
 import com.idle.game.model.mongo.ChatRoomUser;
 import com.idle.game.model.mongo.Message;
+import com.idle.game.model.mongo.Player;
 import com.idle.game.server.dto.Envelope;
 import com.idle.game.server.service.ChatJoinedService;
 import com.idle.game.server.service.ChatRoomService;
@@ -38,6 +40,9 @@ public class ChatController {
     @Autowired
     private ChatJoinedService chatJoinedService;
 
+    @Autowired
+    private PlayerHelper playerHelper;
+
     @MessageMapping("/sendChatGlobalMessage")
     public void sendChatGlobalMessage(Principal principal, @Payload Message message) throws Exception {
         this.sendChatMessage("global", principal, message);
@@ -66,12 +71,19 @@ public class ChatController {
     public void sendPrivateMessage(@DestinationVariable("user") String user, Principal principal, @Payload Message message) throws Exception {
         manualTokenHelper.createAccessToken(principal);
 
+        Player player = playerHelper.getPlayerByLinkedUser(user, manualTokenHelper.getToken());
+
+        if (player == null) {
+            throw new ValidationException("player.not.found");
+        }
+
         message.setChatRoom(null);
         message.setFromUser(manualTokenHelper.getSubject());
         message.setFromNickName(manualTokenHelper.getNickName());
         message.setFromEmail(manualTokenHelper.getEmail());
         message.setToUser(user);
-        message.setToNickName(null);
+
+        message.setToNickName(player.getName());
         message.setFromAdmin(Boolean.FALSE);
 
         messageService.sendPrivateMessage(message);
@@ -93,10 +105,10 @@ public class ChatController {
     }
 
     @SubscribeMapping("/findAllOldPrivateMessages")
-    public List<Message> findAllByToUser(Principal principal) {
+    public List<Message> findAllByToUserOrFromUser(Principal principal) {
         manualTokenHelper.createAccessToken(principal);
 
-        return messageService.findAllByToUser(manualTokenHelper.getSubject());
+        return messageService.findAllByToUserOrFromUser(manualTokenHelper.getSubject());
     }
 
     @MessageExceptionHandler
