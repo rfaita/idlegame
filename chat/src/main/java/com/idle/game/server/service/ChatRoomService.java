@@ -129,7 +129,7 @@ public class ChatRoomService {
 
     private void updateConnectedUsersViaWebSocket(ChatRoom chatRoom) {
         webSocketMessagingTemplate.convertAndSend(
-                Destination.connectedUsers(chatRoom.getId()),
+                Destination.connectedUsers(chatRoom.getName()),
                 chatRoom.getConnectedUsers());
     }
 

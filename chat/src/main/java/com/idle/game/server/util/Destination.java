@@ -19,6 +19,6 @@ public class Destination {
     }
 
     public static String connectedUsers(String chatRoom) {
-        return "/topic/" + chatRoom + "#users.connected";
+        return "/topic/" + chatRoom + "#users";
     }
 }

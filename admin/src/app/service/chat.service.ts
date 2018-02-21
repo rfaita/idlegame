@@ -43,7 +43,7 @@ export class ChatService {
     }
 
     subscribeChatUsers(chat: String): Observable<ChatRoomUser[]> {
-        return this.stompService.subscribe("/topic/" + chat + "#users.connected").map(message => JSON.parse(message.body));
+        return this.stompService.subscribe("/topic/" + chat + "#users").map(message => JSON.parse(message.body));
     }
 
     findAllChatRoomUsers(chat: String): Observable<ChatRoomUser[]> {
