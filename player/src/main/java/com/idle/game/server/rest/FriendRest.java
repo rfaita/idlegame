@@ -33,17 +33,6 @@ public class FriendRest {
 
     }
 
-    @RequestMapping(path = "/friendsRequest", method = RequestMethod.GET)
-    public @ResponseBody
-    Envelope<List<Friend>> getFriendsRequest() {
-
-        Envelope<List<Friend>> ret = new Envelope<>();
-        ret.setData(friendService.getFriendsRequest(tokenHelper.getSubject()));
-
-        return ret;
-
-    }
-
     @RequestMapping(path = "/{userFriend}", method = RequestMethod.POST)
     public void sendFriendRequest(@PathVariable("userFriend") String userFriend) {
 

@@ -44,6 +44,8 @@ import { AvatarModule } from 'ngx-avatar';
 import { ChatPmComponent } from './chatpm/chatpm.component';
 import { MailService } from './service/mail.service';
 import { mailStompConfigFactory, MailStompConfig } from './utils/mailStompConfigFactory';
+import { FriendService } from './service/friend.service';
+import { FriendsComponent } from './friends/friends.component';
 
 
 @NgModule({
@@ -61,7 +63,8 @@ import { mailStompConfigFactory, MailStompConfig } from './utils/mailStompConfig
     ActionEffectComponent,
     BuffEffectComponent,
     BattleComponent,
-    ChatComponent, ChatPmComponent
+    ChatComponent, ChatPmComponent,
+    FriendsComponent
   ],
   imports: [
     AvatarModule,
@@ -103,7 +106,8 @@ import { mailStompConfigFactory, MailStompConfig } from './utils/mailStompConfig
     BattleService,
     FormationService,
     ChatService,
-    MailService
+    MailService,
+    FriendService
   ],
   bootstrap: [AppComponent]
 })

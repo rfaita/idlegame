@@ -4,6 +4,8 @@ import { Location, LocationStrategy, PathLocationStrategy } from '@angular/commo
 import { KeycloakService } from 'keycloak-angular';
 import { KeycloakProfile } from 'keycloak-js';
 import { MailService } from '../../service/mail.service';
+import { Mail } from '../../model/mail';
+import { showMailNotification } from '../../utils/helper';
 
 @Component({
     selector: 'app-navbar',
@@ -17,6 +19,9 @@ export class NavbarComponent implements OnInit {
     private sidebarVisible: boolean;
 
     public userDetails: KeycloakProfile;
+
+    public mails: Mail[];
+    public mail: Mail;
 
     constructor(location: Location,
         private element: ElementRef,
@@ -35,10 +40,47 @@ export class NavbarComponent implements OnInit {
 
         let subject = this.keycloakService.getKeycloakInstance().subject;
 
-        this.mailService.subscribePrivateMail(subject).subscribe(mail => {
-            console.log(mail);
+
+        this.mailService.findAllOldMail().subscribe(mails => {
+            this.mails = mails;
+            this.mailService.subscribePrivateMail(subject).subscribe(mail => {
+                showMailNotification("New Mail from: " + mail.fromNickName);
+                this.mails.push(mail);
+            });
         });
 
+        this.mailService.subscribePrivateMailDelete(subject).subscribe(mailDeleted => {
+            for (let i = 0; i < this.mails.length; i++) {
+                if (this.mails[i].id === mailDeleted.id) {
+                    this.mails.splice(i, 1);
+                }
+            }
+        });
+
+        this.mailService.subscribePrivateMailUpdate(subject).subscribe(mailUpdated => {
+            for (let i = 0; i < this.mails.length; i++) {
+                if (this.mails[i].id === mailUpdated.id) {
+                    this.mails[i] = mailUpdated;
+                }
+            }
+        });
+
+    }
+
+    unreadLength(): number {
+        return this.mails.filter(mail => !mail.readed).length;
+    }
+
+
+    deletePrivateMail(mail: Mail) {
+        this.mailService.deletePrivateMail(mail.id);
+    }
+
+    markAsReadPrivateMail(mail: Mail) {
+        this.mail = mail;
+        if (!this.mail.readed) {
+            this.mailService.markAsReadPrivateMail(mail.id);
+        }
     }
 
     logout() {

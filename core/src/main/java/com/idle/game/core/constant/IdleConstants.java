@@ -27,7 +27,8 @@ public interface IdleConstants {
     final Integer MAX_SIZE_FORMATION = MAX_SIZE_FRONT_LINE + MAX_SIZE_BACK_LINE;
     final Integer TURN_LIMIT = 25;
 
-    final String LOG_DELIMITER = "---------------------------------------------------------------";
+    final String LOG_DELIMITER_BATTLE = "###############################################################";
+    //final String LOG_DELIMITER = "---------------------------------------------------------------";
     final String LOG_NAME = "com.idle.game.core";
     final String LOG_NAME_SERVER = "com.idle.game.server";
 

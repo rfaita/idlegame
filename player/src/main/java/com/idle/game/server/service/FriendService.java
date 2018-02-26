@@ -1,8 +1,10 @@
 package com.idle.game.server.service;
 
 import com.idle.game.helper.MailHelper;
+import com.idle.game.helper.PlayerHelper;
 import com.idle.game.model.mongo.Friend;
 import com.idle.game.model.mongo.Mail;
+import com.idle.game.model.mongo.Player;
 import com.idle.game.server.repository.FriendRepository;
 import java.util.Date;
 import java.util.List;
@@ -17,16 +19,13 @@ public class FriendService {
     private FriendRepository friendRepository;
 
     @Autowired
+    private PlayerHelper playerHelper;
+
+    @Autowired
     private MailHelper mailHelper;
 
     public List<Friend> getFriends(String user) {
-
-        return friendRepository.findAllByUserAndAccepted(user, Boolean.TRUE);
-    }
-
-    public List<Friend> getFriendsRequest(String user) {
-
-        return friendRepository.findAllByUserAndAccepted(user, Boolean.FALSE);
+        return friendRepository.findAllByUser(user);
     }
 
     public void sendFriendRequest(String user, String userFriend) {
@@ -41,9 +40,24 @@ public class FriendService {
             throw new ValidationException("user.already.your.friend");
         }
 
-        Friend friend = new Friend(user, userFriend);
+        Player player = playerHelper.getPlayerByLinkedUser(userFriend);
+        if (player == null) {
+            throw new ValidationException("player.not.found");
+        }
+
+        Friend friend = new Friend(user, userFriend, player.getName());
 
         friendRepository.save(friend);
+
+        player = playerHelper.getPlayerByLinkedUser(user);
+        if (player == null) {
+            throw new ValidationException("player.not.found");
+        }
+
+        Friend friendReverse = new Friend(userFriend, user, player.getName());
+        friendReverse.setReverse(Boolean.TRUE);
+
+        friendRepository.save(friendReverse);
 
         Mail mail = new Mail();
         mail.setToUser(userFriend);
@@ -55,25 +69,25 @@ public class FriendService {
 
     public void acceptFriendRequest(String user, String friendRequestId) {
 
-        Friend request = friendRepository.findByUserFriendAndIdAndAccepted(user, friendRequestId, Boolean.FALSE);
+        Friend request = friendRepository.findByUserAndIdAndAcceptedAndReverse(user, friendRequestId, Boolean.FALSE, Boolean.TRUE);
 
         if (request != null) {
 
             Date acceptedDate = new Date();
-            
+
             request.setAccepted(Boolean.TRUE);
             request.setSince(acceptedDate);
 
             friendRepository.save(request);
 
-            Friend reverse = new Friend(request.getUserFriend(), request.getUser());
+            Friend reverse = friendRepository.findByUserAndUserFriend(request.getUserFriend(), user);
             reverse.setAccepted(Boolean.TRUE);
             reverse.setSince(acceptedDate);
 
             friendRepository.save(reverse);
 
             Mail mail = new Mail();
-            mail.setToUser(request.getUser());
+            mail.setToUser(request.getUserFriend());
             mail.setText("friend.request.accepted");
 
             mailHelper.sendPrivateMail(mail);
@@ -86,10 +100,14 @@ public class FriendService {
 
     public void removeFriend(String user, String friendId) {
 
-        Friend friend = friendRepository.findByUserAndIdAndAccepted(user, friendId, Boolean.TRUE);
+        Friend friend = friendRepository.findByUserAndId(user, friendId);
 
         if (friend != null) {
+
+            Friend friendReverse = friendRepository.findByUserAndUserFriend(friend.getUserFriend(), user);
+
             friendRepository.delete(friend);
+            friendRepository.delete(friendReverse);
         } else {
             throw new ValidationException("friend.not.found");
         }

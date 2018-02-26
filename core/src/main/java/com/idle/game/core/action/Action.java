@@ -11,6 +11,7 @@ import java.util.List;
 public class Action extends BaseObject {
 
     private Boolean special = Boolean.FALSE;
+    private Boolean passive = Boolean.FALSE;
     private ActionEffect mainActionEffect;
     private List<ActionEffect> secundaryActionsEffects = new ArrayList<>();
 
@@ -55,9 +56,17 @@ public class Action extends BaseObject {
         this.secundaryActionsEffects.add(se);
     }
 
+    public Boolean getPassive() {
+        return passive;
+    }
+
+    public void setPassive(Boolean passive) {
+        this.passive = passive;
+    }
+
     @Override
     public String toString() {
-        return (special ? "AS" : "A") + "{" + "ma=" + mainActionEffect + ", sas=" + secundaryActionsEffects + '}';
+        return (special ? "AS" : passive ? "PA" : "A") + "{" + "ma=" + mainActionEffect + ", sas=" + secundaryActionsEffects + '}';
     }
 
 }

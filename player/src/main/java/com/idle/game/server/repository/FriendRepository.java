@@ -12,16 +12,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FriendRepository extends MongoRepository<Friend, String> {
 
-    Friend findById(String id);
+    Friend findByUserAndId(String user, String id);
 
-    Friend findByUserAndIdAndAccepted(String user, String id, Boolean accepted);
-
-    Friend findByUserFriendAndIdAndAccepted(String userFriend, String id, Boolean accepted);
+    Friend findByUserAndIdAndAcceptedAndReverse(String user, String id, Boolean accepted, Boolean reverse);
 
     Friend findByUserAndUserFriend(String user, String userFriend);
 
     List<Friend> findAllByUser(String user);
-
-    List<Friend> findAllByUserAndAccepted(String user, Boolean accepted);
 
 }

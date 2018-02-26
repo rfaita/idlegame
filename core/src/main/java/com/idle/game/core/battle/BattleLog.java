@@ -55,6 +55,12 @@ public class BattleLog implements Serializable {
         this.battleEvent = battleEvent;
     }
 
+    public BattleLog(Integer turn, BattlePositionedHero heroOrigin, BattleEvent battleEvent) {
+        this.turn = turn;
+        this.heroOrigin = heroOrigin;
+        this.battleEvent = battleEvent;
+    }
+
     public BattleLog(Integer turn, BattlePositionedHero heroOrigin, BattleEvent battleEvent, BattlePositionedHero heroTarget) {
         this.turn = turn;
         this.heroOrigin = heroOrigin;

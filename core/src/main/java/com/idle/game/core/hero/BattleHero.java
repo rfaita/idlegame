@@ -8,11 +8,6 @@ import com.idle.game.core.constant.IdleConstants;
 import static com.idle.game.core.constant.IdleConstants.LOG;
 import com.idle.game.core.type.AttributeType;
 import com.idle.game.core.type.BattleHeroType;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +62,7 @@ public class BattleHero implements Serializable {
     public BattleHero(String id, BattleHeroType heroType, Integer level) {
         this.id = id;
         this.heroType = heroType;
-        this.calcAtributtes();
+        this.calcAtributtesItems();
     }
 
     public Boolean getCanDoSpecialAction() {
@@ -299,69 +294,58 @@ public class BattleHero implements Serializable {
     public void setBoot(Item i) throws Exception {
         assert i.getItemType().equals(ItemType.BOOT) : "Item must be a boot, BUG";
         this.boot = i;
-        calcAtributtes();
+        calcAtributtesItems();
     }
 
     public void setChest(Item i) throws Exception {
         assert i.getItemType().equals(ItemType.CHEST) : "Item must be a chest, BUG";
         this.chest = i;
-        calcAtributtes();
+        calcAtributtesItems();
     }
 
     public void setWeapon(Item i) throws Exception {
         assert i.getItemType().equals(ItemType.WEAPON) : "Item must be a weapon, BUG";
         this.weapon = i;
-        calcAtributtes();
+        calcAtributtesItems();
     }
 
     public void setRing(Item i) throws Exception {
         assert i.getItemType().equals(ItemType.RING) : "Item must be a ring, BUG";
         this.ring = i;
-        calcAtributtes();
+        calcAtributtesItems();
     }
 
     public void setAmmulet(Item i) throws Exception {
         assert i.getItemType().equals(ItemType.AMMULET) : "Item must be a ammulet, BUG";
         this.ammulet = i;
-        calcAtributtes();
+        calcAtributtesItems();
     }
 
     public void setJewel(Item i) throws Exception {
         assert i.getItemType().equals(ItemType.JEWEL) : "Item must be a jewel, BUG";
         this.jewel = i;
-        calcAtributtes();
+        calcAtributtesItems();
     }
 
     public void prepareToBattle() {
-        LOG.log(Level.INFO, "[prepareToBattle]");
         this.prepareToTurn();
         this.setCurrHp(this.getHp());
         this.setCurrBuffs(new ArrayList<>());
+        LOG.log(Level.INFO, "[PREPARE_TO_BATTLE] {0}", this.toStringComplete());
     }
 
     public void prepareToTurn() {
-        LOG.log(Level.INFO, "[prepareToTurn][hero] {0}", this);
         this.setCurrArmor(this.getArmor());
-        LOG.log(Level.INFO, "[prepareToTurn][armor] {0}", this.getCurrArmor());
         this.setCurrCritChance(this.getCritChance());
-        LOG.log(Level.INFO, "[prepareToTurn][critChance] {0}", this.getCurrCritChance());
         this.setCurrCritDamage(this.getCritDamage());
-        LOG.log(Level.INFO, "[prepareToTurn][critDmg] {0}", this.getCurrCritDamage());
         this.setCurrDodgeChance(this.getDodgeChance());
-        LOG.log(Level.INFO, "[prepareToTurn][dodgeChange] {0}", this.getCurrDodgeChance());
         this.setCurrLuck(this.getLuck());
-        LOG.log(Level.INFO, "[prepareToTurn][luck] {0}", this.getCurrLuck());
         this.setCurrMagicResist(this.getMagicResist());
-        LOG.log(Level.INFO, "[prepareToTurn][magicResist] {0}", this.getCurrMagicResist());
         this.setCurrDmg(this.getDmg());
-        LOG.log(Level.INFO, "[prepareToTurn][dmg] {0}", this.getCurrDmg());
         this.setCurrSpeed(this.getSpeed());
-        LOG.log(Level.INFO, "[prepareToTurn][speed] {0}", this.getCurrSpeed());
         this.setCanDoAction(Boolean.TRUE);
-        LOG.log(Level.INFO, "[prepareToTurn][canDoAction] {0}", this.getCanDoAction());
         this.setCanDoSpecialAction(Boolean.TRUE);
-        LOG.log(Level.INFO, "[prepareToTurn][canDoSpecialAction] {0}", this.getCanDoSpecialAction());
-        LOG.log(Level.INFO, IdleConstants.LOG_DELIMITER);
+        LOG.log(Level.INFO, "[PREPARE_TO_TURN] {0}", this.toStringComplete());
     }
 
     public void recalcAttribute(AttributeType d, Integer ratioPercentage, Integer signal) {
@@ -413,7 +397,7 @@ public class BattleHero implements Serializable {
 
     }
 
-    private void calcAtributtes() {
+    private void calcAtributtesItems() {
         LOG.log(Level.INFO, "[calcAtributtes]");
 
         this.calcAtributtesItem(this.getAmmulet());
@@ -439,10 +423,81 @@ public class BattleHero implements Serializable {
         }
     }
 
+    public void calcTradeAttribute(AttributeType o, AttributeType d, Integer ratioPercentage) {
+        Double perc = this.getMissingAttributePercentage(o) / 100d * ratioPercentage / 100d;
+        LOG.log(Level.INFO, "[calcTradeAttribute][perc] {0}", perc);
+        if (perc > 0) {
+            switch (d) {
+                case LUCK:
+                    this.setCurrLuck(this.getCurrLuck() + (int) (this.getCurrLuck() * perc));
+                    LOG.log(Level.INFO, "[calcTradeAttribute][luck] {0}", this.getCurrLuck());
+                    break;
+                case SPEED:
+                    this.setCurrSpeed(this.getCurrSpeed() + (int) (this.getCurrSpeed() * perc));
+                    LOG.log(Level.INFO, "[calcTradeAttribute][speed] {0}", this.getCurrSpeed());
+                    break;
+                case DODGE:
+                    this.setCurrDodgeChance(this.getCurrDodgeChance() + (int) (this.getCurrDodgeChance() * perc));
+                    LOG.log(Level.INFO, "[calcTradeAttribute][dodgeChance] {0}", this.getCurrDodgeChance());
+                    break;
+                case CRIT_DMG:
+                    this.setCurrCritDamage(this.getCurrCritDamage() + (int) (this.getCurrCritDamage() * perc));
+                    LOG.log(Level.INFO, "[calcTradeAttribute][critDmg] {0}", this.getCurrCritDamage());
+                    break;
+                case CRIT_CHANCE:
+                    this.setCurrCritChance(this.getCurrCritChance() + (int) (this.getCurrCritChance() * perc));
+                    LOG.log(Level.INFO, "[calcTradeAttribute][critChance] {0}", this.getCurrCritChance());
+                    break;
+                case DMG:
+                    this.setCurrDmg(this.getCurrDmg() + (int) (this.getCurrDmg() * perc));
+                    LOG.log(Level.INFO, "[calcTradeAttribute][dmg] {0}", this.getCurrDmg());
+                    break;
+                case ARMOR:
+                    this.setCurrArmor(this.getCurrArmor() + (int) (this.getCurrArmor() * perc));
+                    LOG.log(Level.INFO, "[calcTradeAttribute][armor] {0}", this.getCurrArmor());
+                    break;
+                case MAGIC_RESIST:
+                    this.setCurrMagicResist(this.getCurrMagicResist() + (int) (this.getCurrMagicResist() * perc));
+                    LOG.log(Level.INFO, "[calcTradeAttribute][magicResist] {0}", this.getCurrMagicResist());
+                    break;
+                case DEFENSE:
+                    this.setCurrArmor(this.getCurrArmor() + (int) (this.getCurrArmor() * perc));
+                    this.setCurrMagicResist(this.getCurrMagicResist() + (int) (this.getCurrMagicResist() * perc));
+                    LOG.log(Level.INFO, "[calcTradeAttribute][armor] {0}", this.getCurrArmor());
+                    LOG.log(Level.INFO, "[calcTradeAttribute][magicResist] {0}", this.getCurrMagicResist());
+                    break;
+            }
+        }
+    }
+
+    public Integer getMissingAttributePercentage(AttributeType at) {
+        switch (at) {
+            case HP:
+                return (int) ((this.getHp() - this.getCurrHp()) * 1d / this.getHp() * 100);
+            default:
+                return 0;
+        }
+
+    }
+
     @Override
     public String toString() {
         return "H{" + "id=" + this.id.substring(this.id.length() - 5, this.id.length() - 1)
                 + ",currHp=" + this.currHp + ",type=" + this.heroType + '}';
+    }
+
+    public String toStringComplete() {
+        return "H{" + "id=" + this.id.substring(this.id.length() - 5, this.id.length() - 1) + ", ht=" + heroType + ", l=" + level
+                + ", d=" + dmg + ", a=" + armor + ", mr=" + magicResist
+                + ", s=" + speed + ", l=" + luck + ", cc=" + critChance
+                + ", cd=" + critDamage + ", dc=" + dodgeChance
+                + ", hp=" + hp + ", currD=" + currDmg + ", currA=" + currArmor
+                + ", currMR=" + currMagicResist + ", currS=" + currSpeed
+                + ", currL=" + currLuck + ", currCcc=" + currCritChance
+                + ", currCd=" + currCritDamage + ", currDc=" + currDodgeChance
+                + ", currHp=" + currHp + ", canDoAction=" + canDoAction + ", canDoSpecialAction=" + canDoSpecialAction
+                + ", currBuffs=" + currBuffs + ", chest=" + chest + ", weapon=" + weapon + ", boot=" + boot
+                + ", ring=" + ring + ", ammulet=" + ammulet + ", jewel=" + jewel + '}';
     }
 
     @Override

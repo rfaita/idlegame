@@ -6,3 +6,27 @@
         width: calc(100% - 260px);
     }
 }
+
+.mail {
+    max-height: 350px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.mail-message {
+    width: 250px;
+    padding: 10px
+}
+
+.mail-message > div {
+    margin-left: 50px;
+}
+
+.mail-message-readed {
+    background: #EEE;
+}
+
+.mail-message-sub {
+    font-size: 11px;
+    color: #666;
+}

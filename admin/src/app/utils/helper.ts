@@ -19,6 +19,22 @@ export function showNotification(type, msg) {
         });
 }
 
+export function showMailNotification(msg) {
+
+    $.notify({
+        icon: "notifications",
+        message: msg
+
+    }, {
+            type: "info",
+            timer: 2000,
+            placement: {
+                from: 'top',
+                align: 'right'
+            }
+        });
+}
+
 export function handleError(httpError: HttpErrorResponse | any) {
     // In a real world app, you might use a remote logging infrastructure
 

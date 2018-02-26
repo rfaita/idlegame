@@ -18,15 +18,34 @@ public class Friend implements Serializable {
     private String id;
     private String user;
     private String userFriend;
+    private String nameFriend;
     private Date since;
+    private Boolean reverse = Boolean.FALSE;
     private Boolean accepted = Boolean.FALSE;
 
     public Friend() {
     }
 
-    public Friend(String user, String userFriend) {
+    public Friend(String user, String userFriend, String nameFriend) {
         this.user = user;
         this.userFriend = userFriend;
+        this.nameFriend = nameFriend;
+    }
+
+    public Boolean getReverse() {
+        return reverse;
+    }
+
+    public void setReverse(Boolean reverse) {
+        this.reverse = reverse;
+    }
+
+    public String getNameFriend() {
+        return nameFriend;
+    }
+
+    public void setNameFriend(String nameFriend) {
+        this.nameFriend = nameFriend;
     }
 
     public Date getSince() {

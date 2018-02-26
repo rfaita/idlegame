@@ -10,6 +10,10 @@ management:
 zuul:
   prefix: /idle/api
   routes:
+    friend:
+        path: /friend/**
+        sensitiveHeaders:
+        url: http://localhost:8085/friend
     actionEffectTypes:
         path: /actionEffectTypes/**
         sensitiveHeaders:

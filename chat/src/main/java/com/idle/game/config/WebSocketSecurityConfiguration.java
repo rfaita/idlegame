@@ -9,17 +9,16 @@ import org.springframework.security.config.annotation.web.socket.AbstractSecurit
  * @author rafael
  */
 @Configuration
-public class WebSockerSecurityConfiguration extends AbstractSecurityWebSocketMessageBrokerConfigurer {
+public class WebSocketSecurityConfiguration extends AbstractSecurityWebSocketMessageBrokerConfigurer {
 
     @Override
     protected void configureInbound(MessageSecurityMetadataSourceRegistry messages) {
         messages
                 // users cannot send to these broker destinations, only the application can
                 .simpMessageDestMatchers("/topic/**", "/queue/**").denyAll()
-                .simpDestMatchers("/mail/**").authenticated()
-                .simpDestMatchers("/mail/sendPrivateMailSystem/**").hasRole("ADMIN").anyMessage().permitAll()
+                .simpDestMatchers("/chat/**").authenticated()
                 .simpSubscribeDestMatchers("/queue/**").access("@webSocketSecurity.checkUser(authentication, message)")
-                .simpSubscribeDestMatchers("/topic/public").permitAll()
+                .simpSubscribeDestMatchers("/topic/**").access("@webSocketSecurity.checkUserChatRoom(authentication, message)")
                 .anyMessage().authenticated();
     }
 

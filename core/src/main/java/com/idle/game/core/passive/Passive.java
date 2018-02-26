@@ -1,8 +1,8 @@
 package com.idle.game.core.passive;
 
-import com.idle.game.core.type.PassiveType;
-import com.idle.game.core.type.AttributeType;
+import com.idle.game.core.passive.type.PassiveType;
 import com.idle.game.core.BaseObject;
+import com.idle.game.core.action.Action;
 
 /**
  *
@@ -11,19 +11,51 @@ import com.idle.game.core.BaseObject;
 public class Passive extends BaseObject {
 
     private PassiveType passiveType;
-    private AttributeType attributeTypeLost;
-    private AttributeType attributeTypeGain;
-    private Integer ratioPercentage;
+    private Condiction condiction;
+    private Action action;
+    private Result result;
+
+    public Passive() {
+    }
+
+    public Passive(PassiveType passiveType, Condiction condiction, Action action) {
+        this.passiveType = passiveType;
+        this.condiction = condiction;
+        this.action = action;
+    }
+
+    public Passive(PassiveType passiveType, Condiction condiction, Result result) {
+        this.passiveType = passiveType;
+        this.condiction = condiction;
+        this.result = result;
+    }
+
+    public Result getResult() {
+        return result;
+    }
+
+    public void setResult(Result result) {
+        this.result = result;
+    }
+
+    public Condiction getCondiction() {
+        return condiction;
+    }
+
+    public void setCondiction(Condiction condiction) {
+        this.condiction = condiction;
+    }
+
+    public Action getAction() {
+        return action;
+    }
+
+    public void setAction(Action action) {
+        this.action = action;
+    }
 
     public Passive(PassiveType passiveType) {
         this.passiveType = passiveType;
-    }
-
-    public Passive(PassiveType passiveType, AttributeType atributteTypeLost, AttributeType atributteTypeGain, Integer ratioPercentage) {
-        this.passiveType = passiveType;
-        this.attributeTypeLost = atributteTypeLost;
-        this.attributeTypeGain = atributteTypeGain;
-        this.ratioPercentage = ratioPercentage;
     }
 
     public PassiveType getPassiveType() {
@@ -34,33 +66,13 @@ public class Passive extends BaseObject {
         this.passiveType = passiveType;
     }
 
-    public AttributeType getAttributeTypeLost() {
-        return attributeTypeLost;
-    }
-
-    public void setAttributeTypeLost(AttributeType attributeTypeLost) {
-        this.attributeTypeLost = attributeTypeLost;
-    }
-
-    public AttributeType getAttributeTypeGain() {
-        return attributeTypeGain;
-    }
-
-    public void setAttributeTypeGain(AttributeType attributeTypeGain) {
-        this.attributeTypeGain = attributeTypeGain;
-    }
-
-    public Integer getRatioPercentage() {
-        return ratioPercentage;
-    }
-
-    public void setRatioPercentage(Integer ratioPercentage) {
-        this.ratioPercentage = ratioPercentage;
-    }
-
     @Override
     public String toString() {
-        return "P{" + "pt=" + passiveType + ", atl=" + attributeTypeLost + ", atg=" + attributeTypeGain + ", rp=" + ratioPercentage + '}';
+        if (action != null) {
+            return "P{" + "pt=" + passiveType + ", c=" + condiction + ", a=" + action + '}';
+        } else {
+            return "P{" + "pt=" + passiveType + ", c=" + condiction + ", r=" + result + '}';
+        }
     }
 
 }

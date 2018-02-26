@@ -87,13 +87,14 @@ public class BattleEvent implements Serializable {
     public BattleEvent(ActionType type) {
         this.actionType = type;
     }
-
-    public BattleEvent(BuffEffectType buffEffectType) {
+    
+    public BattleEvent(ActionType type, BuffEffectType buffEffectType) {
         this.buffEffectType = buffEffectType;
     }
 
     @Override
     public String toString() {
+        //TODO
         if (actionType != null) {
             return "BE{" + "t=" + actionType + ", st=" + subType + ", value=" + value + ", dt=" + damageType + '}';
         } else if (damageType != null) {
