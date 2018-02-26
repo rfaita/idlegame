@@ -30,3 +30,7 @@
     font-size: 11px;
     color: #666;
 }
+
+a:hover .mail-message-sub {
+    color: #FFF;
+}

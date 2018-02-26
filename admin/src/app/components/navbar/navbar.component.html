@@ -25,7 +25,9 @@
                                     <ngx-avatar size=40 round=true [name]="m.fromNickName"></ngx-avatar>
                                 </span>
                                 <div class="clearfix">
-                                    <p>{{ (m.text.length > 28)? (m.text | slice:0:25)+'...':(m.text) }}</p>
+                                    <p>{{ (m.text.length > 20)? (m.text | slice:0:17)+'...':(m.text) }}
+                                        <i *ngIf="!!m.reward" class="material-icons pull-right">card_giftcard</i>
+                                    </p>
                                     <div class="mail-message-sub pull-left">{{m.fromNickName}}</div>
                                     <div class="mail-message-sub pull-right">{{m.date | date: 'MM/dd/yyyy'}}</div>
                                 </div>
@@ -86,7 +88,9 @@
             </div>
             <div class="modal-body">
                 <p>{{mail.text}}</p>
-                <p *ngIf="!!mail.reward">{{mail.reward}}</p>
+                <div *ngIf="!!mail.reward">
+                    <p *ngFor="let reward of mail.reward.rewards">{{reward.resource}} - {{reward.value}}</p>
+                </div>
             </div>
             <div class="modal-footer">
                 <button *ngIf="!!mail.reward" type="button" class="btn btn-primary">Collect</button>
