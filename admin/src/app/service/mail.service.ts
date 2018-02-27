@@ -4,18 +4,16 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { environment } from '../../environments/environment';
-import { handleError } from '../utils/helper';
 import { Envelope } from '../model/envelope';
 import { StompService } from '@stomp/ng2-stompjs';
 import { Mail } from '../model/mail';
 import { MailStompConfig } from '../utils/mailStompConfigFactory';
 
-
-
 @Injectable()
 export class MailService extends StompService {
 
-    constructor(config: MailStompConfig, private http: HttpClient) {
+    constructor(config: MailStompConfig, 
+        private http: HttpClient) {
         super(config);
 
     }
@@ -49,8 +47,7 @@ export class MailService extends StompService {
     }
 
     sendPrivateMail(mail: Mail) {
-        return this.http.post(environment.API_BASE_URL + "mail/sendPrivateMail", mail)
-            .catch(handleError);
+        return this.http.post(environment.API_BASE_URL + "mail/sendPrivateMail", mail);
     }
 }
 

@@ -3,13 +3,6 @@ import { CommonModule, } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
-import { TableListComponent } from './table-list/table-list.component';
-import { TypographyComponent } from './typography/typography.component';
-import { IconsComponent } from './icons/icons.component';
-import { NotificationsComponent } from './notifications/notifications.component';
-import { UpgradeComponent } from './upgrade/upgrade.component';
 import { HeroTypesComponent } from './herotypes/herotypes.component';
 import { HeroTypeComponent } from './herotype/herotype.component';
 import { HeroesComponent } from './heroes/heroes.component';
@@ -26,14 +19,7 @@ const routes: Routes = [
   { path: 'hero/:id', component: HeroComponent },
   { path: 'heroTypes', component: HeroTypesComponent },
   { path: 'heroType/:id', component: HeroTypeComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'user-profile', component: UserProfileComponent },
-  { path: 'table-list', component: TableListComponent },
-  { path: 'typography', component: TypographyComponent },
-  { path: 'icons', component: IconsComponent },
-  { path: 'notifications', component: NotificationsComponent },
-  { path: 'upgrade', component: UpgradeComponent },
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+  { path: '', redirectTo: 'heroes', pathMatch: 'full' }
 ];
 
 @NgModule({

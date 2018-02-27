@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { ActivatedRoute } from "@angular/router";
 import { Location } from '@angular/common';
-import { showNotification } from '../utils/helper';
 import { KeycloakService } from 'keycloak-angular';
 import { ChatService } from '../service/chat.service';
 import { KeycloakProfile } from 'keycloak-js';
@@ -13,6 +12,8 @@ import { ChatRoomUser } from '../model/chatRoomUser';
 import { Subscription } from 'rxjs/Subscription';
 import { Message } from '../model/message';
 import { ChatRoom } from '../model/chatRoom';
+import { SnotifyService } from 'ng-snotify';
+import { notificationConfig } from '../utils/helper';
 
 @Component({
   selector: 'app-chat',
@@ -44,7 +45,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   private username: String;
 
   constructor(private keycloakService: KeycloakService,
-    private chatService: ChatService) { }
+    private chatService: ChatService,
+    private snotifyService: SnotifyService) { }
 
   ngOnInit() {
     this.subject = this.keycloakService.getKeycloakInstance().subject;
@@ -55,7 +57,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     });
 
     this.subscribePrivateErrorMessages = this.chatService.subscribePrivateErrorMessages(this.subject).subscribe(env => {
-      showNotification("danger", env.errors[0]);
+      this.snotifyService.error(env.errors[0].toString(), '', notificationConfig());
     });
 
     this.chatService.findAllOldPrivateMessages().subscribe(messages => {
@@ -151,7 +153,8 @@ export class ChatComponent implements OnInit, OnDestroy {
 
       this.chatService.createChat(chatRoom).subscribe(env => {
         this.chatToCreate = "";
-        showNotification("info", "Chat created.");
+        this.snotifyService.info("Chat created.", '', notificationConfig());
+        
       });
     }
   }

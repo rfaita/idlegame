@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Hero } from '../model/hero';
 import { HeroService } from '../service/hero.service';
 import { PlayerService } from '../service/player.service';
-import { showNotification } from '../utils/helper';
 import { HeroTypeService } from '../service/herotype.service';
 import { HeroType } from '../model/herotype';
 import { KeycloakService } from 'keycloak-angular';
 import { KeycloakProfile } from 'keycloak-js';
+import { SnotifyService } from 'ng-snotify';
+import { notificationConfig } from '../utils/helper';
+
 
 @Component({
   selector: 'app-heroes',
@@ -19,11 +21,12 @@ export class HeroesComponent implements OnInit {
   public heroType: String;
   public heroes: Hero[];
   public heroTypes: HeroType[];
-  
+
   constructor(private heroService: HeroService,
     private heroTypeService: HeroTypeService,
     private playerService: PlayerService,
-    private keycloakService: KeycloakService) { }
+    private keycloakService: KeycloakService,
+    private snotifyService: SnotifyService) { }
 
   ngOnInit() {
 
@@ -65,7 +68,8 @@ export class HeroesComponent implements OnInit {
   public delete(id: String) {
     this.heroService.delete(id).subscribe(env => {
       this.findAllByPlayer();
-      showNotification("info", "Hero deleted.");
+      this.snotifyService.info("Hero deleted.", '', notificationConfig());
+      
     });
   }
 

@@ -1,11 +1,13 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { KeycloakService } from 'keycloak-angular';
 import { KeycloakProfile } from 'keycloak-js';
-import { MailService } from '../../service/mail.service';
 import { Mail } from '../../model/mail';
-import { showMailNotification } from '../../utils/helper';
+import { Subscription } from 'rxjs/Subscription';
+import { KeycloakService } from 'keycloak-angular';
+import { MailService } from '../../service/mail.service';
+import { SnotifyService } from 'ng-snotify';
+import { notificationConfig } from '../../utils/helper';
 
 @Component({
     selector: 'app-navbar',
@@ -18,15 +20,23 @@ export class NavbarComponent implements OnInit {
     private toggleButton: any;
     private sidebarVisible: boolean;
 
-    public userDetails: KeycloakProfile;
-
     public mails: Mail[];
     public mail: Mail;
+
+    public profile: KeycloakProfile;
+    public subject: String;
+
+    private subscribePrivateMail: Subscription;
+    private subscribePrivateMailDelete: Subscription;
+    private subscribePrivateMailUpdate: Subscription;
+
 
     constructor(location: Location,
         private element: ElementRef,
         private keycloakService: KeycloakService,
-        private mailService: MailService) {
+        private mailService: MailService,
+        private snotifyService: SnotifyService) {
+
         this.location = location;
         this.sidebarVisible = false;
     }
@@ -36,20 +46,20 @@ export class NavbarComponent implements OnInit {
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
 
-        this.keycloakService.loadUserProfile().then(profile => { this.userDetails = profile });
 
-        let subject = this.keycloakService.getKeycloakInstance().subject;
+        this.keycloakService.loadUserProfile().then(profile => { this.profile = profile });
 
+        this.subject = this.keycloakService.getKeycloakInstance().subject;
 
         this.mailService.findAllOldMail().subscribe(mails => {
             this.mails = mails;
-            this.mailService.subscribePrivateMail(subject).subscribe(mail => {
-                showMailNotification("New Mail from: " + mail.fromNickName);
+            this.subscribePrivateMail = this.mailService.subscribePrivateMail(this.subject).subscribe(mail => {
+                this.snotifyService.info("from: " + mail.fromNickName, "New mail", notificationConfig());
                 this.mails.push(mail);
             });
         });
 
-        this.mailService.subscribePrivateMailDelete(subject).subscribe(mailDeleted => {
+        this.subscribePrivateMailDelete = this.mailService.subscribePrivateMailDelete(this.subject).subscribe(mailDeleted => {
             for (let i = 0; i < this.mails.length; i++) {
                 if (this.mails[i].id === mailDeleted.id) {
                     this.mails.splice(i, 1);
@@ -57,7 +67,7 @@ export class NavbarComponent implements OnInit {
             }
         });
 
-        this.mailService.subscribePrivateMailUpdate(subject).subscribe(mailUpdated => {
+        this.subscribePrivateMailUpdate = this.mailService.subscribePrivateMailUpdate(this.subject).subscribe(mailUpdated => {
             for (let i = 0; i < this.mails.length; i++) {
                 if (this.mails[i].id === mailUpdated.id) {
                     this.mails[i] = mailUpdated;
@@ -67,8 +77,25 @@ export class NavbarComponent implements OnInit {
 
     }
 
+    ngOnDestroy() {
+        if (this.subscribePrivateMail != null) {
+            this.subscribePrivateMail.unsubscribe()
+        };
+        if (this.subscribePrivateMailDelete != null) {
+            this.subscribePrivateMailDelete.unsubscribe()
+        };
+        if (this.subscribePrivateMailUpdate != null) {
+            this.subscribePrivateMailUpdate.unsubscribe()
+        };
+
+    }
+
+    logout() {
+        this.keycloakService.logout();
+    }
+
     unreadLength(): number {
-        return this.mails.filter(mail => !mail.readed).length;
+        return this.mails != null ? this.mails.filter(mail => !mail.readed).length : 0;
     }
 
 
@@ -83,9 +110,6 @@ export class NavbarComponent implements OnInit {
         }
     }
 
-    logout() {
-        this.keycloakService.logout();
-    }
 
     sidebarOpen() {
         const toggleButton = this.toggleButton;

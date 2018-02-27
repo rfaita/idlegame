@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { environment } from '../../environments/environment';
-import { handleError } from '../utils/helper';
 import { Envelope } from '../model/envelope';
 import { ActionEffectTypes } from '../model/actionEffectTypes';
 
@@ -17,8 +16,7 @@ export class ActionEffectTypesService {
     }
 
     get(): Observable<Envelope<ActionEffectTypes>> {
-        return this.http.get(environment.API_BASE_URL + "actionEffectTypes")
-            .catch(handleError);
+        return <Observable<Envelope<ActionEffectTypes>>>this.http.get(environment.API_BASE_URL + "actionEffectTypes");
     }
 
 }

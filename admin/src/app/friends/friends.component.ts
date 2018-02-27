@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Hero } from '../model/hero';
 import { HeroService } from '../service/hero.service';
 import { PlayerService } from '../service/player.service';
-import { showNotification } from '../utils/helper';
 import { HeroTypeService } from '../service/herotype.service';
 import { HeroType } from '../model/herotype';
 import { KeycloakService } from 'keycloak-angular';

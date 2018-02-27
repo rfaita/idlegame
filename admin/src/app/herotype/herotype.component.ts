@@ -10,7 +10,8 @@ import { ActionEffectTypesService } from '../service/actioneffecttypes.service';
 import { ActionEffectTypes } from '../model/actionEffectTypes';
 import { Action } from '../model/action';
 import { ActionEffect } from '../model/actionEffect';
-import { clone, showNotification } from '../utils/helper';
+import { clone, notificationConfig } from '../utils/helper';
+import { SnotifyService } from 'ng-snotify';
 
 @Component({
   selector: 'app-herotype',
@@ -32,7 +33,8 @@ export class HeroTypeComponent implements OnInit, OnDestroy {
     private location: Location,
     private heroTypeService: HeroTypeService,
     private heroTypeTypesService: HeroTypeTypesService,
-    private actionEffectTypesService: ActionEffectTypesService) { }
+    private actionEffectTypesService: ActionEffectTypesService,
+    private snotifyService: SnotifyService) { }
 
   ngOnInit() {
 
@@ -65,7 +67,7 @@ export class HeroTypeComponent implements OnInit, OnDestroy {
     data.specialAction = this.heroType.specialAction;
     this.heroTypeService.save(data).subscribe(env => {
       this.heroType = env.data;
-      showNotification("info", "Hero Type saved.");
+      this.snotifyService.info("Hero Type saved.", '', notificationConfig());
     });
   }
 

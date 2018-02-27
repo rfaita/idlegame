@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "material-dashboard-angular"
+    "name": "idlegame-admin"
   },
   "apps": [
     {
@@ -22,7 +22,7 @@
           "../node_modules/bootstrap/dist/css/bootstrap.css",
           "../node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
           "./assets/sass/material-dashboard.scss",
-          "./assets/css/demo.css"
+          "./styles.scss"
       ],
       "scripts": [
           "../node_modules/jquery/dist/jquery.js",

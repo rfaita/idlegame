@@ -4,23 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-
-import { initializer } from './utils/initializer';
-
-import { KeycloakService, KeycloakAngularModule } from 'keycloak-angular';
-
+import { SnotifyModule, ToastDefaults, SnotifyService } from 'ng-snotify';
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 
-import { AppComponent } from './app.component';
+import { initializer } from './utils/initializer';
+import { KeycloakService, KeycloakAngularModule } from 'keycloak-angular';
 
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
-import { TableListComponent } from './table-list/table-list.component';
-import { TypographyComponent } from './typography/typography.component';
-import { IconsComponent } from './icons/icons.component';
-import { NotificationsComponent } from './notifications/notifications.component';
-import { UpgradeComponent } from './upgrade/upgrade.component';
+import { errorInterceptorProvider } from './utils/error.interceptor';
+
+import { AppComponent } from './app.component';
 import { HeroTypesComponent } from './herotypes/herotypes.component';
 import { HeroTypeService } from './service/herotype.service';
 import { HeroTypeComponent } from './herotype/herotype.component';
@@ -47,17 +40,9 @@ import { mailStompConfigFactory, MailStompConfig } from './utils/mailStompConfig
 import { FriendService } from './service/friend.service';
 import { FriendsComponent } from './friends/friends.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
-    UserProfileComponent,
-    TableListComponent,
-    TypographyComponent,
-    IconsComponent,
-    NotificationsComponent,
-    UpgradeComponent,
     HeroTypesComponent, HeroTypeComponent,
     HeroesComponent, HeroComponent,
     ActionEffectComponent,
@@ -69,6 +54,7 @@ import { FriendsComponent } from './friends/friends.component';
   imports: [
     AvatarModule,
     KeycloakAngularModule,
+    SnotifyModule,
     BrowserModule,
     FormsModule,
     HttpModule,
@@ -84,7 +70,7 @@ import { FriendsComponent } from './friends/friends.component';
       multi: true,
       deps: [KeycloakService]
     },
-    
+
     {
       provide: ChatStompConfig,
       useFactory: chatStompConfigFactory,
@@ -95,6 +81,12 @@ import { FriendsComponent } from './friends/friends.component';
       useFactory: mailStompConfigFactory,
       deps: [KeycloakService]
     },
+    {
+      provide: 'SnotifyToastConfig',
+      useValue: ToastDefaults
+    },
+    errorInterceptorProvider,
+    SnotifyService,
     ChatService,
     MailService,
     HeroService,

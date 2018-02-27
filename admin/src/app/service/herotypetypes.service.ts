@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { environment } from '../../environments/environment';
-import { handleError } from '../utils/helper';
 import { Envelope } from '../model/envelope';
 import { HeroTypeTypes } from '../model/herotypetypes';
 
@@ -17,8 +16,7 @@ export class HeroTypeTypesService {
     }
 
     get(): Observable<Envelope<HeroTypeTypes>> {
-        return this.http.get(environment.API_BASE_URL + "heroTypeTypes")
-            .catch(handleError);
+        return <Observable<Envelope<HeroTypeTypes>>>this.http.get(environment.API_BASE_URL + "heroTypeTypes");
     }
 
 }

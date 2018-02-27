@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.material {
+    @import "~ng-snotify/styles/material";
+}
+
+.material .snotifyToast__title {
+    font-size: 18px;
+}
+
+.material .snotifyToast__inner{
+    font-size: 14px;
+}
+
+.material .snotify-icon {
+    object-fit: cover;
+    object-position: center;
+    width: 32px;
+    height: 32px;
+}

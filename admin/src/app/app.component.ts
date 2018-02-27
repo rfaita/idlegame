@@ -5,7 +5,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import PerfectScrollbar from 'perfect-scrollbar';
-import { PlayerService } from './service/player.service';
+import { SnotifyService } from 'ng-snotify';
 
 declare const $: any;
 
@@ -19,17 +19,21 @@ export class AppComponent implements OnInit {
     private lastPoppedUrl: string;
     private yScrollStack: number[] = [];
 
-
-
     @ViewChild(NavbarComponent) navbar: NavbarComponent;
 
     constructor(public location: Location,
         private router: Router,
-        private playerService: PlayerService) { }
+        private snotifyService: SnotifyService) { }
 
     ngOnInit() {
 
-        this.playerService.create().subscribe();
+        this.snotifyService.setDefaults({
+            global: {
+                newOnTop: true,
+                maxAtPosition: 6,
+                maxOnScreen: 8
+            }
+        });
 
         $.material.init();
         const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');

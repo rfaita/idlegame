@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { environment } from '../../environments/environment';
-import { handleError } from '../utils/helper';
 import { Envelope } from '../model/envelope';
 import { StompService } from '@stomp/ng2-stompjs';
 
@@ -19,7 +18,8 @@ import { ChatStompConfig } from '../utils/chatStompConfigFactory';
 @Injectable()
 export class ChatService extends StompService {
 
-    constructor(config: ChatStompConfig, private http: HttpClient) {
+    constructor(config: ChatStompConfig,
+        private http: HttpClient) {
         super(config)
     }
 
@@ -69,18 +69,15 @@ export class ChatService extends StompService {
     }
 
     createChat(chatRoom: ChatRoom): Observable<Envelope<ChatRoom>> {
-        return this.http.post(environment.API_BASE_URL + "chat/create", chatRoom)
-            .catch(handleError);
+        return <Observable<Envelope<ChatRoom>>>this.http.post(environment.API_BASE_URL + "chat/create", chatRoom);
     }
 
     joinChat(chat: String): Observable<Envelope<void>> {
-        return this.http.post(environment.API_BASE_URL + "chat/join/" + chat, null)
-            .catch(handleError);
+        return <Observable<Envelope<void>>>this.http.post(environment.API_BASE_URL + "chat/join/" + chat, null);
     }
 
     leaveChat(chat: String): Observable<Envelope<void>> {
-        return this.http.delete(environment.API_BASE_URL + "chat/leave/" + chat)
-            .catch(handleError);
+        return <Observable<Envelope<void>>>this.http.delete(environment.API_BASE_URL + "chat/leave/" + chat);
 
     }
 

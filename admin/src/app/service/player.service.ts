@@ -5,7 +5,6 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { environment } from '../../environments/environment';
 import { HeroType } from '../model/herotype';
-import { handleError } from '../utils/helper';
 import { Envelope } from '../model/envelope';
 import { Player } from '../model/player';
 
@@ -14,17 +13,14 @@ export class PlayerService {
 
 
     constructor(private http: HttpClient) {
-
     }
 
     findByName(name: String): Observable<Envelope<Player>> {
-        return this.http.get(environment.API_BASE_URL + "player/findByName/" + name)
-            .catch(handleError);
+        return <Observable<Envelope<Player>>>this.http.get(environment.API_BASE_URL + "player/findByName/" + name);
     }
 
     create(): Observable<Envelope<Player>> {
-        return this.http.post(environment.API_BASE_URL + "player", null)
-            .catch(handleError);
+        return <Observable<Envelope<Player>>>this.http.post(environment.API_BASE_URL + "player", null);
     }
 
 }

@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { environment } from '../../environments/environment';
-import { handleError } from '../utils/helper';
 import { Envelope } from '../model/envelope';
 import { Battle } from '../model/battle';
 
@@ -16,8 +15,7 @@ export class BattleService {
     }
 
     doBattle(attFormation: String, defFormation: String): Observable<Envelope<Battle>> {
-        return this.http.get(environment.API_BASE_URL + "battle/" + attFormation + "/" + defFormation)
-            .catch(handleError);
+        return <Observable<Envelope<Battle>>>this.http.get(environment.API_BASE_URL + "battle/" + attFormation + "/" + defFormation);
     }
 
 

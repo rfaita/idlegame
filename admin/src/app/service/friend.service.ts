@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { environment } from '../../environments/environment';
-import { handleError } from '../utils/helper';
 import { Envelope } from '../model/envelope';
 import { Friend } from '../model/friend';
 
@@ -12,28 +11,23 @@ import { Friend } from '../model/friend';
 export class FriendService {
 
     constructor(private http: HttpClient) {
-
     }
 
     friends(): Observable<Envelope<Friend[]>> {
-        return this.http.get(environment.API_BASE_URL + "friend")
-            .catch(handleError);
+        return <Observable<Envelope<Friend[]>>>this.http.get(environment.API_BASE_URL + "friend");
     }
 
     sendFriendRequest(userFriend: String): Observable<Envelope<void>> {
-        return this.http.post(environment.API_BASE_URL + "friend/" + userFriend, null)
-            .catch(handleError);
+        return <Observable<Envelope<void>>>this.http.post(environment.API_BASE_URL + "friend/" + userFriend, null);
     }
 
     removeFriend(friendId: String): Observable<Envelope<void>> {
-        return this.http.delete(environment.API_BASE_URL + "friend/" + friendId)
-            .catch(handleError);
+        return <Observable<Envelope<void>>>this.http.delete(environment.API_BASE_URL + "friend/" + friendId);
     }
 
 
     acceptFriendRequest(friendId: String): Observable<Envelope<void>> {
-        return this.http.put(environment.API_BASE_URL + "friend/" + friendId, null)
-            .catch(handleError);
+        return <Observable<Envelope<void>>>this.http.put(environment.API_BASE_URL + "friend/" + friendId, null);
     }
 
 }

@@ -8,7 +8,8 @@ import { HeroType } from '../model/herotype';
 import { HeroService } from '../service/hero.service';
 import { HeroTypesService } from '../service/herotypes.service';
 import { HeroTypeService } from '../service/herotype.service';
-import { showNotification } from '../utils/helper';
+import { SnotifyService } from 'ng-snotify';
+import { notificationConfig } from '../utils/helper';
 
 @Component({
   selector: 'app-hero',
@@ -27,7 +28,8 @@ export class HeroComponent implements OnInit, OnDestroy {
     private location: Location,
     private heroService: HeroService,
     private heroTypesService: HeroTypesService,
-    private heroTypeService: HeroTypeService) { }
+    private heroTypeService: HeroTypeService,
+    private snotifyService: SnotifyService) { }
 
   ngOnInit() {
 
@@ -44,7 +46,7 @@ export class HeroComponent implements OnInit, OnDestroy {
         this.heroTypesService.get().subscribe(env => {
           this.heroTypes = env.data;
           if (id !== "new") {
-            this.heroService.findById(id).subscribe(env => { this.hero = env.data;});
+            this.heroService.findById(id).subscribe(env => { this.hero = env.data; });
           } else {
             this.hero = new Hero();
           }
@@ -59,7 +61,8 @@ export class HeroComponent implements OnInit, OnDestroy {
 
     this.heroService.save(data).subscribe(env => {
       this.hero = env.data;
-      showNotification("info", "Hero saved.");
+      this.snotifyService.info("Hero saved.", '', notificationConfig());
+      
     });
   }
 
