@@ -6,6 +6,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 
 import { AvatarModule } from 'ngx-avatar';
+import { NumberPipe } from '../utils/pipe/number.pipe';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { AvatarModule } from 'ngx-avatar';
   ],
   declarations: [
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    NumberPipe
   ],
   exports: [
     NavbarComponent,

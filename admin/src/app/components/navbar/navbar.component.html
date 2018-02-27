@@ -11,6 +11,16 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
+                <li *ngFor="let resource of playerResource.resources">
+                    <a href="#">
+                        {{resource.type}} - {{resource.value | simpleNumber}}
+                    </a>
+                </li>
+                <li>
+                    <a (click)="loadResources()">
+                        <i class="material-icons">refresh</i>
+                    </a>
+                </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="material-icons">mail</i>

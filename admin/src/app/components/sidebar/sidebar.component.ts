@@ -9,6 +9,7 @@ declare interface RouteInfo {
 }
 export const ROUTES: RouteInfo[] = [
     { path: 'friends', title: 'Friends', icon: 'supervisor_account', class: '' },
+    { path: 'pvp', title: 'Pvp', icon: 'games', class: '' },    
     { path: 'chat', title: 'Chat', icon: 'chat', class: '' },
     { path: 'battle', title: 'Battle Simulator', icon: 'content_paste', class: '' },
     { path: 'heroes', title: 'Heroes', icon: 'content_paste', class: '' },

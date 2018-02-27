@@ -8,6 +8,8 @@ import { KeycloakService } from 'keycloak-angular';
 import { MailService } from '../../service/mail.service';
 import { SnotifyService } from 'ng-snotify';
 import { notificationConfig } from '../../utils/helper';
+import { PlayerResourceService } from '../../service/playerresource.service';
+import { PlayerResource } from '../../model/playerResource';
 
 @Component({
     selector: 'app-navbar',
@@ -19,6 +21,8 @@ export class NavbarComponent implements OnInit {
     location: Location;
     private toggleButton: any;
     private sidebarVisible: boolean;
+
+    public playerResource: PlayerResource;
 
     public mails: Mail[];
     public mail: Mail;
@@ -35,7 +39,8 @@ export class NavbarComponent implements OnInit {
         private element: ElementRef,
         private keycloakService: KeycloakService,
         private mailService: MailService,
-        private snotifyService: SnotifyService) {
+        private snotifyService: SnotifyService,
+        private playerResourceService: PlayerResourceService) {
 
         this.location = location;
         this.sidebarVisible = false;
@@ -75,6 +80,14 @@ export class NavbarComponent implements OnInit {
             }
         });
 
+        this.loadResources();
+
+    }
+
+    loadResources() {
+        this.playerResourceService.computeResources().subscribe(env => {
+            this.playerResource = env.data;
+        });
     }
 
     ngOnDestroy() {

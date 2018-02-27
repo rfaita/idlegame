@@ -39,6 +39,9 @@ import { MailService } from './service/mail.service';
 import { mailStompConfigFactory, MailStompConfig } from './utils/mailStompConfigFactory';
 import { FriendService } from './service/friend.service';
 import { FriendsComponent } from './friends/friends.component';
+import { PvpService } from './service/pvp.service';
+import { PvpComponent } from './pvp/pvp.component';
+import { PlayerResourceService } from './service/playerresource.service';
 
 @NgModule({
   declarations: [
@@ -49,7 +52,8 @@ import { FriendsComponent } from './friends/friends.component';
     BuffEffectComponent,
     BattleComponent,
     ChatComponent, ChatPmComponent,
-    FriendsComponent
+    FriendsComponent,
+    PvpComponent,
   ],
   imports: [
     AvatarModule,
@@ -99,7 +103,9 @@ import { FriendsComponent } from './friends/friends.component';
     FormationService,
     ChatService,
     MailService,
-    FriendService
+    FriendService,
+    PvpService,
+    PlayerResourceService
   ],
   bootstrap: [AppComponent]
 })

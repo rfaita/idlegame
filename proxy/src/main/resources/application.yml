@@ -66,6 +66,10 @@ zuul:
         path: /chat/**
         sensitiveHeaders:
         url: http://localhost:8083/chat
+    pvp:
+        path: /pvp/**
+        sensitiveHeaders:
+        url: http://localhost:8085/pvp
     
 #Spring Boot Config            
 spring:

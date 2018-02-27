@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,7 +35,7 @@ public class PvpService {
 
     @Autowired
     private PlayerHelper playerHelper;
-    
+
     @Autowired
     private PlayerResourceHelper playerResourceHelper;
 
@@ -47,7 +48,13 @@ public class PvpService {
     @Value("${idle.config.pvpRating.price}")
     private Long pvpRatingPrice;
 
-    @Cacheable(value = PVPRATING_FIND_PVP_RATINGS, key = "'" + PVPRATING_FIND_PVP_RATINGS + "' + #user")
+    public List<PvpRating> findAllByOrderByRatingDescLimit50() {
+        return pvpRatingRepository.findAllByOrderByRatingDesc(new PageRequest(0, 50));
+    }
+
+    @Cacheable(value = PVPRATING_FIND_PVP_RATINGS,
+            key = "'" + PVPRATING_FIND_PVP_RATINGS + "' + #user",
+            unless = "#result.isEmpty()")
     public List<PvpRating> findPvpRatings(String user) {
 
         Player player = playerHelper.getPlayerByLinkedUser(user);

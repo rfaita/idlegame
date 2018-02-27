@@ -52,13 +52,18 @@ public class PlayerResourceService {
 
             PlayerResource playerResource = playerRepositoryRepository.findByPlayer(player.getId());
 
+            long seconds;
             if (playerResource == null) {
                 playerResource = new PlayerResource(player.getId(), defaultResources());
+                seconds = 5;
+            } else {
+                seconds = DateUtil.secondsFrom(playerResource.getLastTimeResourcesCollected());
             }
 
-            long seconds = DateUtil.secondsFrom(playerResource.getLastTimeResourcesCollected());
-
             if (seconds >= 5) {
+                if (seconds > 60 * 60 * 8) {
+                    seconds = 60 * 60 * 8;
+                }
                 playerResource.setLastTimeResourcesCollected(new Date());
                 playerResource.computeResoucers(seconds);
                 return playerRepositoryRepository.save(playerResource);

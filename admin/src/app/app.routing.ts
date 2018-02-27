@@ -10,10 +10,12 @@ import { HeroComponent } from './hero/hero.component';
 import { BattleComponent } from './battle/battle.component';
 import { ChatComponent } from './chat/chat.component';
 import { FriendsComponent } from './friends/friends.component';
+import { PvpComponent } from './pvp/pvp.component';
 
 const routes: Routes = [
   { path: 'friends', component: FriendsComponent },
   { path: 'chat', component: ChatComponent },
+  { path: 'pvp', component: PvpComponent },
   { path: 'battle', component: BattleComponent },
   { path: 'heroes', component: HeroesComponent },
   { path: 'hero/:id', component: HeroComponent },

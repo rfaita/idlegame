@@ -28,6 +28,17 @@ public class PvpRest {
         pvpRatingService.removePvpRatings(tokenHelper.getSubject());
     }
 
+    @RequestMapping(path = "", method = RequestMethod.GET)
+    public @ResponseBody
+    Envelope<List<PvpRating>> findAllByOrderByRatingDescLimit50() {
+
+        Envelope<List<PvpRating>> ret = new Envelope<>();
+        ret.setData(pvpRatingService.findAllByOrderByRatingDescLimit50());
+
+        return ret;
+
+    }
+    
     @RequestMapping(path = "/roll", method = RequestMethod.GET)
     public @ResponseBody
     Envelope<List<PvpRating>> roll() {

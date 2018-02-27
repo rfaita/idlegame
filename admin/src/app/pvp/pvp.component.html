@@ -1,0 +1,64 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+            <div class="collapse navbar-collapse">
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="form-group form-black is-empty">
+                        <input type="text" class="form-control" placeholder="Player Name" name="player" [ngModel]="player" (ngModelChange)="player = $event"
+                            (keydown)="keyDownFindAllByPlayer($event)">
+                        <span class="material-input"></span>
+                    </div>
+                    <button type="button" class="btn btn-white btn-round btn-just-icon" (click)="findAllByPlayer()">
+                        <i class="material-icons">search</i>
+                        <div class="ripple-container"></div>
+                    </button>
+
+                    <button type="button" class="btn btn-white btn-round btn-just-icon" (click)="paidRoll()">
+                        <i class="material-icons">refresh</i>
+                        <div class="ripple-container"></div>
+                    </button>
+
+                </form>
+            </div>
+        </nav>
+        <div class="row">
+            <div class="col-md-12">
+                <h5>Battle</h5>
+                <button type="button" class="btn btn-danger btn-round" *ngFor="let pvpRatingRoll of pvpRatingsRoll" (click)="battle(pvpRatingRoll.id)">
+                    <i class="material-icons">games</i>
+                    {{pvpRatingRoll.playerName}} - {{pvpRatingRoll.rating}}
+                    <div class="ripple-container"></div>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h5>Ranking</h5>
+                <div class="card">
+
+                    <div class="card-content table-responsive">
+                        <table class="table table-hover">
+                            <thead class="text-info">
+                                <tr>
+                                    <th>Player</th>
+                                    <th>Level</th>
+                                    <th>Rating</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let pvpRating of pvpRatings">
+                                    <td>{{pvpRating.playerName}}</td>
+                                    <td>{{pvpRating.playerLevel}}</td>
+                                    <td>{{pvpRating.rating}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
