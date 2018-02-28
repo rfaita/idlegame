@@ -6,6 +6,7 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { SnotifyService } from 'ng-snotify';
+import { PlayerService } from './service/player.service';
 
 declare const $: any;
 
@@ -23,9 +24,12 @@ export class AppComponent implements OnInit {
 
     constructor(public location: Location,
         private router: Router,
+        private playerService: PlayerService,
         private snotifyService: SnotifyService) { }
 
     ngOnInit() {
+
+        this.playerService.create().subscribe();
 
         this.snotifyService.setDefaults({
             global: {
