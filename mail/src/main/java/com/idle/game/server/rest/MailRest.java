@@ -26,12 +26,6 @@ public class MailRest {
     @Autowired
     private MailService mailService;
 
-    @RequestMapping(path = "/collectReward/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public Reward collectReward(@PathVariable("id") String id) throws Exception {
-        return mailService.collectReward(tokenHelper.getSubject(), id);
-    }
-
     @RequestMapping(path = "/" + MAIL__SEND_PRIVATE_MAIL, method = RequestMethod.POST)
     public void sendPrivateMail(@RequestBody Mail mail) throws Exception {
 

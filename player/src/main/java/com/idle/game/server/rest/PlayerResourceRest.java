@@ -1,5 +1,6 @@
 package com.idle.game.server.rest;
 
+import static com.idle.game.constant.URIConstants.PLAYERRESOURCE__ADD_RESOURCES;
 import com.idle.game.server.dto.Envelope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,6 @@ public class PlayerResourceRest {
     @Autowired
     private PlayerResourceService playerResourceService;
 
-
     @RequestMapping(path = "/" + PLAYERRESOURCE__COMPUTE_RESOURCES, method = RequestMethod.GET)
     public @ResponseBody
     Envelope<PlayerResource> computeResources() {
@@ -43,6 +43,17 @@ public class PlayerResourceRest {
 
         Envelope<PlayerResource> ret = new Envelope<>();
         ret.setData(playerResourceService.useResources(tokenHelper.getSubject(), resources));
+
+        return ret;
+
+    }
+
+    @RequestMapping(path = "/" + PLAYERRESOURCE__ADD_RESOURCES, method = RequestMethod.POST)
+    public @ResponseBody
+    Envelope<PlayerResource> addResources(@RequestBody List<Resource> resources) {
+
+        Envelope<PlayerResource> ret = new Envelope<>();
+        ret.setData(playerResourceService.addResources(tokenHelper.getSubject(), resources));
 
         return ret;
 

@@ -7,16 +7,28 @@ import { environment } from '../../environments/environment';
 import { Envelope } from '../model/envelope';
 import { Battle } from '../model/battle';
 import { PlayerResource } from '../model/playerResource';
+import { StompService } from '@stomp/ng2-stompjs';
+import { PlayerStompConfig } from '../utils/playerStompConfigFactory';
 
 @Injectable()
-export class PlayerResourceService {
+export class PlayerResourceService extends StompService {
 
-    constructor(private http: HttpClient) {
+    constructor(config: PlayerStompConfig,
+        private http: HttpClient) {
+        super(config)
 
     }
 
     computeResources(): Observable<Envelope<PlayerResource>> {
         return <Observable<Envelope<PlayerResource>>>this.http.get(environment.API_BASE_URL + "playerResource/computeResources");
+    }
+
+    subscribeMonitor() {
+        return this.state;
+    }
+
+    subscribeResourceRefresh(user: String): Observable<PlayerResource> {
+        return this.subscribe("/queue/" + user + "#resource.refresh").map(message => JSON.parse(message.body));
     }
 
 

@@ -40,9 +40,6 @@ public class ChatController {
     @Autowired
     private ChatJoinedService chatJoinedService;
 
-    @Autowired
-    private PlayerHelper playerHelper;
-
     @MessageMapping("/sendChatGlobalMessage")
     public void sendChatGlobalMessage(Principal principal, @Payload Message message) throws Exception {
         this.sendChatMessage("global", principal, message);
@@ -71,22 +68,15 @@ public class ChatController {
     public void sendPrivateMessage(@DestinationVariable("user") String user, Principal principal, @Payload Message message) throws Exception {
         manualTokenHelper.createAccessToken(principal);
 
-        Player player = playerHelper.getPlayerByLinkedUser(user, manualTokenHelper.getToken());
-
-        if (player == null) {
-            throw new ValidationException("player.not.found");
-        }
-
         message.setChatRoom(null);
         message.setFromUser(manualTokenHelper.getSubject());
         message.setFromNickName(manualTokenHelper.getNickName());
         message.setFromEmail(manualTokenHelper.getEmail());
         message.setToUser(user);
 
-        message.setToNickName(player.getName());
         message.setFromAdmin(Boolean.FALSE);
 
-        messageService.sendPrivateMessage(message);
+        messageService.sendPrivateMessage(message, manualTokenHelper.getToken());
     }
 
     @SubscribeMapping("/findAllChatsJoined")

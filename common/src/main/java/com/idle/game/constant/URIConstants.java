@@ -13,6 +13,7 @@ public interface URIConstants {
     final String HERO__ROLL = "roll";
     final String PLAYERRESOURCE__COMPUTE_RESOURCES = "computeResources";
     final String PLAYERRESOURCE__USE_RESOURCES = "useResources";
+    final String PLAYERRESOURCE__ADD_RESOURCES = "addResources";
     final String PLAYER__FIND_BY_LINKED_USER = "findByLinkedUser";
     final String PLAYER__FIND_BY_NAME = "findByName";
     final String MAIL__SEND_PRIVATE_MAIL = "sendPrivateMail";

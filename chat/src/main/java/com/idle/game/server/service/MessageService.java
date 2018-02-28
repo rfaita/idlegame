@@ -4,13 +4,16 @@ package com.idle.game.server.service;
  *
  * @author rafael
  */
+import com.idle.game.helper.PlayerHelper;
 import com.idle.game.model.mongo.Message;
+import com.idle.game.model.mongo.Player;
 import com.idle.game.server.dto.Envelope;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.idle.game.server.repository.MessageRepository;
 import com.idle.game.server.util.Destination;
+import javax.validation.ValidationException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 @Service
@@ -21,6 +24,9 @@ public class MessageService {
 
     @Autowired
     private MessageRepository messageRepository;
+
+    @Autowired
+    private PlayerHelper playerHelper;
 
     public List<Message> findAllByChatRoom(String chatRoom) {
         return messageRepository.findAllByChatRoom(chatRoom);
@@ -38,7 +44,16 @@ public class MessageService {
         messageRepository.save(chatMessage);
     }
 
-    public void sendPrivateMessage(Message message) {
+    public void sendPrivateMessage(Message message, String token) {
+        
+        Player player = playerHelper.getPlayerByLinkedUser(message.getToUser(), token);
+
+        if (player == null) {
+            throw new ValidationException("player.not.found");
+        }
+
+        message.setToNickName(player.getName());
+
         webSocketMessagingTemplate.convertAndSend(
                 Destination.privateMessages(message.getToUser()),
                 message);

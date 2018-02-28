@@ -21,12 +21,12 @@ public class RewardValue implements Serializable {
     public RewardValue() {
     }
 
-    public ResourceType getRewardType() {
+    public ResourceType getResource() {
         return resource;
     }
 
-    public void setRewardType(ResourceType rewardType) {
-        this.resource = rewardType;
+    public void setResource(ResourceType resource) {
+        this.resource = resource;
     }
 
     public Long getValue() {

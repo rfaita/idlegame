@@ -3,6 +3,7 @@ export const environment = {
   API_BASE_URL: "http://51.15.222.98:9000/idle/api/",
   WS_CHAT_BASE_URL: "ws://51.15.222.98:8083/ws",
   WS_MAIL_BASE_URL: "ws://51.15.222.98:8084/ws",
+  WS_PLAYER_BASE_URL: "ws://51.15.222.98:8085/ws",
   AUTH_URL: "http://51.15.222.98:8180/auth",
   AUTH_REALM: "idlerealm",
   AUTH_CLIENT: "idlegame",

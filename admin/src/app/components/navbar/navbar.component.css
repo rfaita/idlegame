@@ -26,6 +26,10 @@
     background: #EEE;
 }
 
+.mail-message-collected {
+    opacity: .1;
+}
+
 .mail-message-sub {
     font-size: 11px;
     color: #666;

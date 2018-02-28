@@ -9,6 +9,7 @@ export const environment = {
   AUTH_URL: "http://localhost:8180/auth",
   WS_CHAT_BASE_URL: "ws://localhost:8083/ws",
   WS_MAIL_BASE_URL: "ws://localhost:8084/ws",
+  WS_PLAYER_BASE_URL: "ws://localhost:8085/ws",
   AUTH_REALM: "idlerealm",
   AUTH_CLIENT: "idlegame",
 };

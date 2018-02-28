@@ -6,11 +6,13 @@ import com.idle.game.model.mongo.Player;
 import com.idle.game.model.mongo.PlayerResource;
 import com.idle.game.model.mongo.Resource;
 import com.idle.game.server.repository.PlayerResourceRepository;
+import com.idle.game.server.util.Destination;
 import com.idle.game.util.DateUtil;
 import java.util.Date;
 import java.util.List;
 import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,7 +22,35 @@ public class PlayerResourceService {
     private PlayerResourceRepository playerRepositoryRepository;
 
     @Autowired
+    private SimpMessagingTemplate webSocketMessagingTemplate;
+
+    @Autowired
     private PlayerHelper playerHelper;
+
+    public PlayerResource addResources(String linkedUser, List<Resource> resources) {
+
+        Player player = playerHelper.getPlayerByLinkedUser(linkedUser);
+
+        if (player != null) {
+
+            PlayerResource playerResource = playerRepositoryRepository.findByPlayer(player.getId());
+
+            if (playerResource == null) {
+                playerResource = new PlayerResource(player.getId(), defaultResources());
+            }
+
+            playerResource.addResources(resources);
+
+            webSocketMessagingTemplate.convertAndSend(
+                    Destination.resourceRefresh(linkedUser), playerResource);
+
+            return playerRepositoryRepository.save(playerResource);
+
+        } else {
+            throw new ValidationException("player.not.found");
+        }
+
+    }
 
     public PlayerResource useResources(String linkedUser, List<Resource> resources) {
 
@@ -34,7 +64,10 @@ public class PlayerResourceService {
                 playerResource = new PlayerResource(player.getId(), defaultResources());
             }
 
-            playerResource.userResources(resources);
+            playerResource.useResources(resources);
+
+            webSocketMessagingTemplate.convertAndSend(
+                    Destination.resourceRefresh(linkedUser), playerResource);
 
             return playerRepositoryRepository.save(playerResource);
 

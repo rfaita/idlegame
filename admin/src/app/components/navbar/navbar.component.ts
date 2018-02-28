@@ -33,7 +33,8 @@ export class NavbarComponent implements OnInit {
     private subscribePrivateMail: Subscription;
     private subscribePrivateMailDelete: Subscription;
     private subscribePrivateMailUpdate: Subscription;
-
+    private subscribePrivateMailError: Subscription;
+    private subscribeResourceRefresh: Subscription;
 
     constructor(location: Location,
         private element: ElementRef,
@@ -69,6 +70,9 @@ export class NavbarComponent implements OnInit {
                 if (this.mails[i].id === mailDeleted.id) {
                     this.mails.splice(i, 1);
                 }
+                if (this.mail != null && this.mail.id === mailDeleted.id) {
+                    this.mail = null;
+                }
             }
         });
 
@@ -77,7 +81,18 @@ export class NavbarComponent implements OnInit {
                 if (this.mails[i].id === mailUpdated.id) {
                     this.mails[i] = mailUpdated;
                 }
+                if (this.mail != null && this.mail.id === mailUpdated.id) {
+                    this.mail = mailUpdated;
+                }
             }
+        });
+
+        this.subscribePrivateMailError = this.mailService.subscribePrivateMailError(this.subject).subscribe(env => {
+            this.snotifyService.error(env.errors[0].toString(), '', notificationConfig());
+        });
+
+        this.subscribeResourceRefresh = this.playerResourceService.subscribeResourceRefresh(this.subject).subscribe(playerResource => {
+            this.playerResource = playerResource;
         });
 
         this.loadResources();
@@ -100,6 +115,12 @@ export class NavbarComponent implements OnInit {
         if (this.subscribePrivateMailUpdate != null) {
             this.subscribePrivateMailUpdate.unsubscribe()
         };
+        if (this.subscribePrivateMailError != null) {
+            this.subscribePrivateMailError.unsubscribe()
+        };
+        if (this.subscribeResourceRefresh != null) {
+            this.subscribeResourceRefresh.unsubscribe()
+        };
 
     }
 
@@ -111,6 +132,9 @@ export class NavbarComponent implements OnInit {
         return this.mails != null ? this.mails.filter(mail => !mail.readed).length : 0;
     }
 
+    collectReward(mail: Mail) {
+        this.mailService.collectReward(mail.id);
+    }
 
     deletePrivateMail(mail: Mail) {
         this.mailService.deletePrivateMail(mail.id);

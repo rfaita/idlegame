@@ -12,7 +12,7 @@ import { MailStompConfig } from '../utils/mailStompConfigFactory';
 @Injectable()
 export class MailService extends StompService {
 
-    constructor(config: MailStompConfig, 
+    constructor(config: MailStompConfig,
         private http: HttpClient) {
         super(config);
 
@@ -34,8 +34,15 @@ export class MailService extends StompService {
         return this.subscribe("/queue/" + user + "#mail.private.update").map(message => JSON.parse(message.body));
     }
 
+    subscribePrivateMailError(user: String): Observable<Envelope<void>> {
+        return this.subscribe("/queue/" + user + "#mail.private.error").map(message => JSON.parse(message.body));
+    }
     findAllOldMail(): Observable<Mail[]> {
         return this.subscribe("/mail/findAllOldMail").map(message => JSON.parse(message.body));
+    }
+
+    collectReward(id: String) {
+        this.publish("/mail/collectReward/" + id, null);
     }
 
     markAsReadPrivateMail(id: String) {

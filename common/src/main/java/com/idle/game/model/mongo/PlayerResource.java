@@ -56,13 +56,22 @@ public class PlayerResource implements Serializable {
         }
     }
 
-    public void userResources(List<Resource> resources) {
+    public void useResources(List<Resource> resources) {
+        changeResources(resources, Boolean.FALSE);
+
+    }
+
+    public void addResources(List<Resource> resources) {
+        changeResources(resources, Boolean.TRUE);
+    }
+
+    private void changeResources(List<Resource> resources, Boolean add) {
 
         for (Resource resource : resources) {
             Resource compResource = this.getResource(resource.getType());
             if (compResource != null) {
 
-                Long value = Math.abs(resource.getValue()) * -1;
+                Long value = Math.abs(resource.getValue()) * (add ? 1 : -1);
 
                 if ((compResource.getValue() + value) >= 0) {
                     compResource.setValue(compResource.getValue() + value);
@@ -70,6 +79,11 @@ public class PlayerResource implements Serializable {
                     throw new ValidationException("using.more.resource.you.have");
                 }
 
+            } else if (add) {
+
+                Long value = Math.abs(resource.getValue()) * 1;
+
+                this.getResources().add(new Resource(resource.getType(), value));
             }
         }
 

@@ -9,7 +9,7 @@ public class Destination {
     public static String publicMail() {
         return "/topic/public";
     }
-
+    
     public static String privateMail(String user) {
         return "/queue/" + user + "#mail.private";
     }
@@ -20,6 +20,10 @@ public class Destination {
 
     public static String privateMailDelete(String user) {
         return "/queue/" + user + "#mail.private.delete";
+    }
+    
+    public static String privateMailError(String user) {
+        return "/queue/" + user + "#mail.private.error";
     }
 
 }
