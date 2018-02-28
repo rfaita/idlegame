@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'hero/:id', component: HeroComponent },
   { path: 'heroTypes', component: HeroTypesComponent },
   { path: 'heroType/:id', component: HeroTypeComponent },
-  { path: '', redirectTo: 'heroes', pathMatch: 'full' }
+  { path: '', redirectTo: 'friends', pathMatch: 'full' }
 ];
 
 @NgModule({
