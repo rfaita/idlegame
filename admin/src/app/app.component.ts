@@ -28,9 +28,6 @@ export class AppComponent implements OnInit {
         private snotifyService: SnotifyService) { }
 
     ngOnInit() {
-
-        this.playerService.create().subscribe();
-
         this.snotifyService.setDefaults({
             global: {
                 newOnTop: true,
@@ -71,6 +68,8 @@ export class AppComponent implements OnInit {
     }
     ngAfterViewInit() {
         this.runOnRouteChange();
+
+        this.playerService.create().subscribe();
     }
 
     runOnRouteChange(): void {
