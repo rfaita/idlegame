@@ -1,11 +1,9 @@
 package com.idle.game.tests;
 
 import com.idle.game.helper.PlayerHelper;
-import com.idle.game.tests.helper.TestHelper;
-import com.idle.game.model.mongo.Player;
+import com.idle.game.model.mongo.Mail;
 import com.idle.game.model.mongo.PlayerResource;
 import com.idle.game.model.mongo.ResourceType;
-import com.idle.game.server.repository.PlayerRepository;
 import com.idle.game.server.repository.PlayerResourceRepository;
 import com.idle.game.server.service.PlayerResourceService;
 import static com.idle.game.tests.helper.TestHelper.*;
@@ -20,10 +18,12 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -39,6 +39,9 @@ public class PlayerResourceTest {
 
     @MockBean
     private PlayerResourceRepository playerResourceRepository;
+    
+    @MockBean
+    private SimpMessagingTemplate simpMessagingTemplate;
 
     @Autowired
     private PlayerResourceService playerResourceService;
@@ -123,8 +126,10 @@ public class PlayerResourceTest {
     }
 
     @Test
-    public void testUserResourcesWithHaveValue() {
+    public void testUseResourcesWithHaveValue() {
 
+        doNothing().when(this.simpMessagingTemplate).convertAndSend(any(String.class), any(PlayerResource.class));
+        
         when(this.playerHelper.getPlayerByLinkedUser("6")).thenReturn(createPlayer("6"));
         when(this.playerResourceRepository.findByPlayer("6")).thenReturn(createPlayerResourceWith100OfEachResources("6"));
 
@@ -141,7 +146,9 @@ public class PlayerResourceTest {
     }
 
     @Test
-    public void testUserResourcesWithAllHaveValue() {
+    public void testUseResourcesWithAllHaveValue() {
+        
+        doNothing().when(this.simpMessagingTemplate).convertAndSend(any(String.class), any(PlayerResource.class));
 
         when(this.playerHelper.getPlayerByLinkedUser("7")).thenReturn(createPlayer("7"));
         when(this.playerResourceRepository.findByPlayer("7")).thenReturn(createPlayerResourceWith50OfEachResources("7"));
@@ -159,7 +166,9 @@ public class PlayerResourceTest {
     }
 
     @Test
-    public void testUserResourcesWithMoreHaveValue() {
+    public void testUseResourcesWithMoreHaveValue() {
+        
+        doNothing().when(this.simpMessagingTemplate).convertAndSend(any(String.class), any(PlayerResource.class));
 
         when(this.playerHelper.getPlayerByLinkedUser("8")).thenReturn(createPlayer("8"));
         when(this.playerResourceRepository.findByPlayer("8")).thenReturn(createPlayerResourceWith50OfEachResources("8"));
