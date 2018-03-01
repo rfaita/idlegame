@@ -42,7 +42,7 @@ import { FriendsComponent } from './friends/friends.component';
 import { PvpService } from './service/pvp.service';
 import { PvpComponent } from './pvp/pvp.component';
 import { PlayerResourceService } from './service/playerresource.service';
-import { PlayerStompConfig, playerStompConfigFactory } from './utils/playerStompConfigFactory';
+import { PlayerResourceStompConfig, playerResourceStompConfigFactory } from './utils/playerStompConfigFactory';
 
 @NgModule({
   declarations: [
@@ -86,8 +86,8 @@ import { PlayerStompConfig, playerStompConfigFactory } from './utils/playerStomp
       deps: [KeycloakService]
     },
     {
-      provide: PlayerStompConfig,
-      useFactory: playerStompConfigFactory,
+      provide: PlayerResourceStompConfig,
+      useFactory: playerResourceStompConfigFactory,
       deps: [KeycloakService]
     },
     {

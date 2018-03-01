@@ -8,12 +8,12 @@ import { Envelope } from '../model/envelope';
 import { Battle } from '../model/battle';
 import { PlayerResource } from '../model/playerResource';
 import { StompService } from '@stomp/ng2-stompjs';
-import { PlayerStompConfig } from '../utils/playerStompConfigFactory';
+import { PlayerResourceStompConfig } from '../utils/playerStompConfigFactory';
 
 @Injectable()
 export class PlayerResourceService extends StompService {
 
-    constructor(config: PlayerStompConfig,
+    constructor(config: PlayerResourceStompConfig,
         private http: HttpClient) {
         super(config)
 

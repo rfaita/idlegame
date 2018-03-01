@@ -30,7 +30,7 @@
                         <p class="hidden-lg hidden-md">Mails</p>
                     </a>
                     <ul class="dropdown-menu mail" *ngIf="!!mails">
-                        <li *ngFor="let m of mails.reverse()" [className]="m.readed?'mail-message-readed':''">
+                        <li *ngFor="let m of mails" [className]="m.readed?'mail-message-readed':''">
                             <a class="dropdown-item left clearfix mail-message" data-toggle="modal" data-target="#mailModal" (click)="markAsReadPrivateMail(m)">
                                 <span class="pull-left">
                                     <ngx-avatar size=40 round=true [name]="m.fromNickName"></ngx-avatar>

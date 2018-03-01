@@ -10,6 +10,7 @@ import { SnotifyService } from 'ng-snotify';
 import { notificationConfig } from '../../utils/helper';
 import { PlayerResourceService } from '../../service/playerresource.service';
 import { PlayerResource } from '../../model/playerResource';
+import { PlayerService } from '../../service/player.service';
 
 @Component({
     selector: 'app-navbar',
@@ -41,6 +42,7 @@ export class NavbarComponent implements OnInit {
         private keycloakService: KeycloakService,
         private mailService: MailService,
         private snotifyService: SnotifyService,
+        private playerService: PlayerService,
         private playerResourceService: PlayerResourceService) {
 
         this.location = location;
@@ -52,17 +54,21 @@ export class NavbarComponent implements OnInit {
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
 
-
         this.keycloakService.loadUserProfile().then(profile => { this.profile = profile });
+
+        this.playerService.create().subscribe();
 
         this.subject = this.keycloakService.getKeycloakInstance().subject;
 
+        
         this.mailService.findAllOldMail().subscribe(mails => {
-            this.mails = mails;
-            this.subscribePrivateMail = this.mailService.subscribePrivateMail(this.subject).subscribe(mail => {
-                this.snotifyService.info("from: " + mail.fromNickName, "New mail", notificationConfig());
-                this.mails.push(mail);
-            });
+            this.mails = mails.reverse();
+            if (this.subscribePrivateMail == null) {
+                this.subscribePrivateMail = this.mailService.subscribePrivateMail(this.subject).subscribe(mail => {
+                    this.snotifyService.info("from: " + mail.fromNickName, "New mail", notificationConfig());
+                    this.mails.push(mail);
+                });
+            }
         });
 
         this.subscribePrivateMailDelete = this.mailService.subscribePrivateMailDelete(this.subject).subscribe(mailDeleted => {
@@ -91,10 +97,6 @@ export class NavbarComponent implements OnInit {
             this.snotifyService.error(env.errors[0].toString(), '', notificationConfig());
         });
 
-        this.subscribeResourceRefresh = this.playerResourceService.subscribeResourceRefresh(this.subject).subscribe(playerResource => {
-            this.playerResource = playerResource;
-        });
-
         this.loadResources();
 
     }
@@ -102,6 +104,12 @@ export class NavbarComponent implements OnInit {
     loadResources() {
         this.playerResourceService.computeResources().subscribe(env => {
             this.playerResource = env.data;
+            if (this.subscribeResourceRefresh == null) {
+                this.subscribeResourceRefresh = this.playerResourceService.subscribeResourceRefresh(this.subject).subscribe(playerResource => {
+                    this.playerResource = playerResource;
+                });
+            }
+
         });
     }
 

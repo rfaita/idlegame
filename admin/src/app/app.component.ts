@@ -24,7 +24,6 @@ export class AppComponent implements OnInit {
 
     constructor(public location: Location,
         private router: Router,
-        private playerService: PlayerService,
         private snotifyService: SnotifyService) { }
 
     ngOnInit() {
@@ -69,7 +68,7 @@ export class AppComponent implements OnInit {
     ngAfterViewInit() {
         this.runOnRouteChange();
 
-        this.playerService.create().subscribe();
+        
     }
 
     runOnRouteChange(): void {
