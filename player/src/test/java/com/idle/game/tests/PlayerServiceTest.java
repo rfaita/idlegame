@@ -1,6 +1,6 @@
 package com.idle.game.tests;
 
-import com.idle.game.model.mongo.Player;
+import com.idle.game.model.Player;
 import com.idle.game.server.repository.PlayerRepository;
 import com.idle.game.server.service.PlayerService;
 import static com.idle.game.tests.helper.TestHelper.createPlayer;

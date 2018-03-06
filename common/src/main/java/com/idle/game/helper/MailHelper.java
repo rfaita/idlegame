@@ -1,8 +1,8 @@
 package com.idle.game.helper;
 
 import static com.idle.game.constant.URIConstants.MAIL__SEND_PRIVATE_MAIL;
-import com.idle.game.model.mongo.Mail;
-import com.idle.game.model.mongo.Player;
+import com.idle.game.model.Mail;
+import com.idle.game.model.Player;
 import com.idle.game.server.dto.Envelope;
 import java.net.URI;
 import javax.validation.ValidationException;

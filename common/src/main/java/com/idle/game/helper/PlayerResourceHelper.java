@@ -1,8 +1,8 @@
 package com.idle.game.helper;
 
 import com.idle.game.constant.URIConstants;
-import com.idle.game.model.mongo.PlayerResource;
-import com.idle.game.model.mongo.Resource;
+import com.idle.game.model.PlayerResource;
+import com.idle.game.model.Resource;
 import com.idle.game.server.dto.Envelope;
 import com.idle.game.util.EnvelopeUtil;
 import java.net.URI;

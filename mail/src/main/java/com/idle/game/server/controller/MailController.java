@@ -3,7 +3,7 @@ package com.idle.game.server.controller;
 import com.idle.game.constant.SystemConstants;
 import static com.idle.game.constant.URIConstants.MAIL__SEND_PRIVATE_MAIL;
 import com.idle.game.helper.ManualTokenHelper;
-import com.idle.game.model.mongo.Mail;
+import com.idle.game.model.Mail;
 import com.idle.game.server.dto.Envelope;
 import com.idle.game.server.service.MailService;
 import java.security.Principal;

@@ -2,7 +2,7 @@ package com.idle.game.helper;
 
 import static com.idle.game.constant.CacheConstants.PLAYER_FIND_BY_LINKED_USER;
 import static com.idle.game.constant.URIConstants.PLAYER__FIND_BY_LINKED_USER;
-import com.idle.game.model.mongo.Player;
+import com.idle.game.model.Player;
 import com.idle.game.server.dto.Envelope;
 import com.idle.game.util.EnvelopeUtil;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;

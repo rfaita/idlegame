@@ -6,6 +6,6 @@ package com.idle.game.core.formation.type;
  */
 public enum FormationPositionType {
 
-    FRONT, BACK
+    F, M, B
 
 }

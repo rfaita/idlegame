@@ -4,7 +4,6 @@ import com.idle.game.core.action.type.ActionType;
 import com.idle.game.core.BaseObject;
 import com.idle.game.core.buff.BuffEffect;
 import com.idle.game.core.type.DamageType;
-import static com.idle.game.core.type.DamageType.PHYSICAL;
 import com.idle.game.core.type.TargetType;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,10 +85,6 @@ public class ActionEffect extends BaseObject {
 
     public void setBuffEffects(List<BuffEffect> buffEffects) {
         this.buffEffects = buffEffects;
-    }
-
-    public ActionEffect(ActionType type, TargetType targetType, Integer percentage) {
-        this(type, targetType, percentage, PHYSICAL);
     }
 
     public ActionEffect(ActionType type, TargetType targetType, Integer percentage, DamageType damageType) {

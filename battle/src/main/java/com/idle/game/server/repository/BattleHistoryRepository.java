@@ -1,6 +1,6 @@
 package com.idle.game.server.repository;
 
-import com.idle.game.model.mongo.BattleHistory;
+import com.idle.game.model.BattleHistory;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

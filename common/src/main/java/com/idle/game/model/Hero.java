@@ -1,8 +1,11 @@
-package com.idle.game.model.mongo;
+package com.idle.game.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.idle.game.core.hero.type.HeroQuality;
+import com.idle.game.core.type.DefenseType;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -25,20 +28,18 @@ public class Hero implements Serializable {
     private HeroQuality quality;
 
     private Integer baseDmg;
-    private Integer baseArmor;
-    private Integer baseMagicResist;
+    private Integer baseAp;
+    private Map<DefenseType, Integer> baseDefenses = new HashMap<>();
     private Integer baseSpeed;
-    private Integer baseLuck;
     private Integer baseCritChance;
     private Integer baseCritDamage;
     private Integer baseDodgeChance;
     private Integer baseHp;
 
     private Integer maxLevelDmg;
-    private Integer maxLevelArmor;
-    private Integer maxLevelMagicResist;
+    private Integer maxLevelAp;
+    private Map<DefenseType, Integer> maxLevelDefenses = new HashMap<>();
     private Integer maxLevelSpeed;
-    private Integer maxLevelLuck;
     private Integer maxLevelCritChance;
     private Integer maxLevelCritDamage;
     private Integer maxLevelDodgeChance;
@@ -50,6 +51,22 @@ public class Hero implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Integer getBaseAp() {
+        return baseAp;
+    }
+
+    public void setBaseAp(Integer baseAp) {
+        this.baseAp = baseAp;
+    }
+
+    public Integer getMaxLevelAp() {
+        return maxLevelAp;
+    }
+
+    public void setMaxLevelAp(Integer maxLevelAp) {
+        this.maxLevelAp = maxLevelAp;
     }
 
     public HeroQuality getQuality() {
@@ -92,36 +109,12 @@ public class Hero implements Serializable {
         this.baseDmg = baseDmg;
     }
 
-    public Integer getBaseArmor() {
-        return baseArmor;
-    }
-
-    public void setBaseArmor(Integer baseArmor) {
-        this.baseArmor = baseArmor;
-    }
-
-    public Integer getBaseMagicResist() {
-        return baseMagicResist;
-    }
-
-    public void setBaseMagicResist(Integer baseMagicResist) {
-        this.baseMagicResist = baseMagicResist;
-    }
-
     public Integer getBaseSpeed() {
         return baseSpeed;
     }
 
     public void setBaseSpeed(Integer baseSpeed) {
         this.baseSpeed = baseSpeed;
-    }
-
-    public Integer getBaseLuck() {
-        return baseLuck;
-    }
-
-    public void setBaseLuck(Integer baseLuck) {
-        this.baseLuck = baseLuck;
     }
 
     public Integer getBaseCritChance() {
@@ -164,36 +157,12 @@ public class Hero implements Serializable {
         this.maxLevelDmg = maxLevelDmg;
     }
 
-    public Integer getMaxLevelArmor() {
-        return maxLevelArmor;
-    }
-
-    public void setMaxLevelArmor(Integer maxLevelArmor) {
-        this.maxLevelArmor = maxLevelArmor;
-    }
-
-    public Integer getMaxLevelMagicResist() {
-        return maxLevelMagicResist;
-    }
-
-    public void setMaxLevelMagicResist(Integer maxLevelMagicResist) {
-        this.maxLevelMagicResist = maxLevelMagicResist;
-    }
-
     public Integer getMaxLevelSpeed() {
         return maxLevelSpeed;
     }
 
     public void setMaxLevelSpeed(Integer maxLevelSpeed) {
         this.maxLevelSpeed = maxLevelSpeed;
-    }
-
-    public Integer getMaxLevelLuck() {
-        return maxLevelLuck;
-    }
-
-    public void setMaxLevelLuck(Integer maxLevelLuck) {
-        this.maxLevelLuck = maxLevelLuck;
     }
 
     public Integer getMaxLevelCritChance() {
@@ -226,6 +195,22 @@ public class Hero implements Serializable {
 
     public void setMaxLevelHp(Integer maxLevelHp) {
         this.maxLevelHp = maxLevelHp;
+    }
+
+    public Map<DefenseType, Integer> getBaseDefenses() {
+        return baseDefenses;
+    }
+
+    public void setBaseDefenses(Map<DefenseType, Integer> baseDefenses) {
+        this.baseDefenses = baseDefenses;
+    }
+
+    public Map<DefenseType, Integer> getMaxLevelDefenses() {
+        return maxLevelDefenses;
+    }
+
+    public void setMaxLevelDefenses(Map<DefenseType, Integer> maxLevelDefenses) {
+        this.maxLevelDefenses = maxLevelDefenses;
     }
 
     @Override

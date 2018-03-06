@@ -5,7 +5,7 @@ import com.idle.game.helper.PlayerHelper;
 import com.idle.game.model.mongo.ChatJoined;
 import com.idle.game.model.mongo.ChatRoomUser;
 import com.idle.game.model.mongo.Message;
-import com.idle.game.model.mongo.Player;
+import com.idle.game.model.Player;
 import com.idle.game.server.dto.Envelope;
 import com.idle.game.server.service.ChatJoinedService;
 import com.idle.game.server.service.ChatRoomService;

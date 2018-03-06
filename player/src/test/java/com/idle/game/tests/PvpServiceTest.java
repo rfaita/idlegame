@@ -6,7 +6,7 @@ import static com.idle.game.core.formation.type.FormationAllocation.PVP_DEFENSE;
 import com.idle.game.helper.BattleHelper;
 import com.idle.game.helper.FormationHelper;
 import com.idle.game.helper.PlayerHelper;
-import com.idle.game.model.mongo.PvpRating;
+import com.idle.game.model.PvpRating;
 import com.idle.game.server.repository.PvpRatingRepository;
 import com.idle.game.server.service.PvpService;
 import static com.idle.game.tests.helper.TestHelper.createFormation;

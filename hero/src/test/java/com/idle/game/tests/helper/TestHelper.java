@@ -1,11 +1,11 @@
 package com.idle.game.tests.helper;
 
 import com.idle.game.core.constant.IdleConstants;
-import com.idle.game.core.type.DamageType;
-import com.idle.game.model.mongo.HeroType;
+import com.idle.game.core.type.DefenseType;
+import com.idle.game.model.HeroType;
 import com.idle.game.core.type.DistanceType;
-import com.idle.game.model.mongo.Hero;
-import com.idle.game.model.mongo.Player;
+import com.idle.game.model.Hero;
+import com.idle.game.model.Player;
 
 /**
  *
@@ -39,10 +39,7 @@ public class TestHelper {
 
     public static HeroType createGenericHeroType() {
         HeroType ret = new HeroType();
-        ret.setDamageType(DamageType.MAGIC);
         ret.setDistanceType(DistanceType.MELEE);
-        ret.setMinBaseArmor(10);
-        ret.setMaxBaseArmor(15);
         ret.setMinBaseCritChance(10);
         ret.setMaxBaseCritChance(15);
         ret.setMinBaseCritDamage(100);
@@ -53,15 +50,9 @@ public class TestHelper {
         ret.setMaxBaseDodgeChance(15);
         ret.setMinBaseHp(10000);
         ret.setMaxBaseHp(16500);
-        ret.setMinBaseLuck(1);
-        ret.setMaxBaseLuck(2);
-        ret.setMinBaseMagicResist(155);
-        ret.setMaxBaseMagicResist(233);
         ret.setMinBaseSpeed(895);
         ret.setMaxBaseSpeed(1000);
 
-        ret.setMinMaxLevelArmor(10);
-        ret.setMaxMaxLevelArmor(15);
         ret.setMinMaxLevelCritChance(10);
         ret.setMaxMaxLevelCritChance(15);
         ret.setMinMaxLevelCritDamage(100);
@@ -72,12 +63,15 @@ public class TestHelper {
         ret.setMaxMaxLevelDodgeChance(15);
         ret.setMinMaxLevelHp(10000);
         ret.setMaxMaxLevelHp(16500);
-        ret.setMinMaxLevelLuck(1);
-        ret.setMaxMaxLevelLuck(2);
-        ret.setMinMaxLevelMagicResist(155);
-        ret.setMaxMaxLevelMagicResist(233);
         ret.setMinMaxLevelSpeed(895);
         ret.setMaxMaxLevelSpeed(1000);
+
+        for (DefenseType dt : DefenseType.values()) {
+            ret.getMinBaseDefenses().put(dt, 10);
+            ret.getMaxBaseDefenses().put(dt, 15);
+            ret.getMinMaxLevelDefenses().put(dt, 10);
+            ret.getMaxMaxLevelDefenses().put(dt, 15);
+        }
 
         return ret;
     }

@@ -3,7 +3,7 @@ package com.idle.game.helper;
 import static com.idle.game.constant.CacheConstants.HERO_FIND_BY_ID;
 import static com.idle.game.constant.URIConstants.HERO__FIND_ALL_BY_PLAYER;
 import static com.idle.game.constant.URIConstants.HERO__ROLL;
-import com.idle.game.model.mongo.Hero;
+import com.idle.game.model.Hero;
 import com.idle.game.server.dto.Envelope;
 import com.idle.game.util.EnvelopeUtil;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;

@@ -4,7 +4,7 @@ import static com.idle.game.constant.CacheConstants.HERO_TYPE_FIND_BY_ID;
 import com.idle.game.constant.URIConstants;
 import static com.idle.game.constant.URIConstants.HEROTYPE__FIND_ALL_BY_FACTION_AND_QUALITY;
 import com.idle.game.core.hero.type.HeroTypeQuality;
-import com.idle.game.model.mongo.HeroType;
+import com.idle.game.model.HeroType;
 import com.idle.game.server.dto.Envelope;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import java.net.URI;

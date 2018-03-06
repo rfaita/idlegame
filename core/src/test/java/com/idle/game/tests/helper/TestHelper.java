@@ -4,17 +4,18 @@ import com.idle.game.core.formation.type.FormationPosition;
 import com.idle.game.core.type.DamageType;
 import com.idle.game.core.formation.BattleFormation;
 import com.idle.game.core.hero.BattleHero;
-import com.idle.game.core.item.Item;
-import com.idle.game.core.item.ItemQuality;
-import com.idle.game.core.item.ItemType;
 import com.idle.game.core.action.Action;
 import com.idle.game.core.action.ActionEffect;
 import com.idle.game.core.action.type.ActionType;
+import com.idle.game.core.battle.Battle;
 import com.idle.game.core.battle.BattlePositionedHero;
+import com.idle.game.core.battle.type.BattleTeamType;
 import com.idle.game.core.buff.BuffEffect;
 import com.idle.game.core.buff.type.BuffEffectType;
+import static com.idle.game.core.formation.type.FormationPosition.*;
 import com.idle.game.core.type.DistanceType;
 import com.idle.game.core.type.BattleHeroType;
+import com.idle.game.core.type.DefenseType;
 import com.idle.game.core.type.TargetType;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,43 +29,40 @@ public class TestHelper {
 
     private static BattleHeroType createHeroTypePhysicalMelee() {
         BattleHeroType ret = new BattleHeroType();
-        ret.setDamageType(DamageType.PHYSICAL);
         ret.setDistanceType(DistanceType.MELEE);
-        ret.setDefaultAction(createBasicDmgAction());
+        ret.setDefaultAction(createBasicDmgBluntAction());
         return ret;
     }
 
     private static BattleHeroType createHeroTypePhysicalRanged() {
         BattleHeroType ret = new BattleHeroType();
-        ret.setDamageType(DamageType.PHYSICAL);
         ret.setDistanceType(DistanceType.RANGED);
-        ret.setDefaultAction(createBasicDmgAction());
+        ret.setDefaultAction(createBasicDmgBluntAction());
         return ret;
     }
 
     private static BattleHeroType createHeroTypeMagicMelee() {
         BattleHeroType ret = new BattleHeroType();
-        ret.setDamageType(DamageType.MAGIC);
         ret.setDistanceType(DistanceType.MELEE);
-        ret.setDefaultAction(createBasicDmgAction());
+        ret.setDefaultAction(createBasicDmgBluntAction());
         return ret;
     }
 
     private static BattleHeroType createHeroTypeMagicRanged() {
         BattleHeroType ret = new BattleHeroType();
-        ret.setDamageType(DamageType.MAGIC);
         ret.setDistanceType(DistanceType.RANGED);
-        ret.setDefaultAction(createBasicDmgAction());
+        ret.setDefaultAction(createBasicDmgBluntAction());
         return ret;
     }
 
     public static BattleHero createBasicMeleePhysicalNoCritNoDodge100HpHero() {
         BattleHero ret = new BattleHero(UUID.randomUUID().toString(), createHeroTypePhysicalMelee(), 1);
         ret.setDmg(100);
-        ret.setArmor(6000);
-        ret.setMagicResist(6000);
+        ret.setAp(100);
+        for (DefenseType dt : DefenseType.values()) {
+            ret.getDefenses().put(dt, 6000);
+        }
         ret.setSpeed(1);
-        ret.setLuck(1);
         ret.setCritChance(0);
         ret.setCritDamage(-1);
         ret.setDodgeChance(0);
@@ -112,10 +110,11 @@ public class TestHelper {
     public static BattleHero createBasicRangedPhysicalNoCritNoDodge100HpHero() {
         BattleHero ret = new BattleHero(UUID.randomUUID().toString(), createHeroTypePhysicalRanged(), 1);
         ret.setDmg(100);
-        ret.setArmor(6000);
-        ret.setMagicResist(6000);
+        ret.setAp(100);
+        for (DefenseType dt : DefenseType.values()) {
+            ret.getDefenses().put(dt, 6000);
+        }
         ret.setSpeed(1);
-        ret.setLuck(1);
         ret.setCritChance(0);
         ret.setCritDamage(-1);
         ret.setDodgeChance(0);
@@ -134,10 +133,11 @@ public class TestHelper {
     public static BattleHero createBasicMeleeMagicNoCritNoDodge100HpHero() {
         BattleHero ret = new BattleHero(UUID.randomUUID().toString(), createHeroTypeMagicMelee(), 1);
         ret.setDmg(100);
-        ret.setArmor(6000);
-        ret.setMagicResist(6000);
+        ret.setAp(100);
+        for (DefenseType dt : DefenseType.values()) {
+            ret.getDefenses().put(dt, 6000);
+        }
         ret.setSpeed(1);
-        ret.setLuck(1);
         ret.setCritChance(0);
         ret.setCritDamage(-1);
         ret.setDodgeChance(0);
@@ -156,10 +156,11 @@ public class TestHelper {
     public static BattleHero createBasicRangedMagicNoCritNoDodge100HpHero() {
         BattleHero ret = new BattleHero(UUID.randomUUID().toString(), createHeroTypeMagicRanged(), 1);
         ret.setDmg(100);
-        ret.setArmor(6000);
-        ret.setMagicResist(6000);
+        ret.setAp(100);
+        for (DefenseType dt : DefenseType.values()) {
+            ret.getDefenses().put(dt, 6000);
+        }
         ret.setSpeed(1);
-        ret.setLuck(1);
         ret.setCritChance(0);
         ret.setCritDamage(-1);
         ret.setDodgeChance(0);
@@ -291,6 +292,14 @@ public class TestHelper {
         return ret;
     }
 
+    public static BattlePositionedHero createBasicAttackPositionedHero(FormationPosition battlePositionType, BattleHero hero) {
+        return new BattlePositionedHero(BattleTeamType.ATTACK_TEAM, battlePositionType, hero);
+    }
+
+    public static BattlePositionedHero createBasicDefensePositionedHero(FormationPosition battlePositionType, BattleHero hero) {
+        return new BattlePositionedHero(BattleTeamType.DEFENSE_TEAM, battlePositionType, hero);
+    }
+
     public static BattlePositionedHero createBasicPositionedHero(FormationPosition battlePositionType, BattleHero hero) {
         return new BattlePositionedHero(battlePositionType, hero);
     }
@@ -299,26 +308,18 @@ public class TestHelper {
         return new BattleFormation(heroes);
     }
 
-    public static Item createBasicChest() {
-        return new Item("", ItemQuality.NORMAL, ItemType.CHEST, 0, 10, 10, 0, 0, 0, 0, 0, 0, 50);
-    }
+    public static Action createBasicDmgBluntAction() {
+        Action ret = new Action();
+        ret.setMainActionEffect(new ActionEffect(ActionType.DMG, TargetType.RANDOM, 100, DamageType.BLUNT, Boolean.FALSE));
 
-    public static Item createBasicBoot() {
-        return new Item("", ItemQuality.NORMAL, ItemType.BOOT, 0, 10, 10, 0, 0, 0, 0, 0, 0, 50);
-    }
-
-    public static Action createBasicDmgAction() {
-        Action healSkill = new Action();
-        healSkill.setMainActionEffect(new ActionEffect(ActionType.DMG, TargetType.LESS_LIFE, 100, DamageType.PHYSICAL, Boolean.FALSE));
-
-        return healSkill;
+        return ret;
     }
 
     public static Action createBasicHealSpell() {
-        Action healSkill = new Action();
-        healSkill.setMainActionEffect(new ActionEffect(ActionType.HEAL, TargetType.LESS_LIFE, 100, DamageType.MAGIC, Boolean.TRUE));
+        Action ret = new Action();
+        ret.setMainActionEffect(new ActionEffect(ActionType.HEAL, TargetType.RANDOM, 100, DamageType.HOLY, Boolean.TRUE));
 
-        return healSkill;
+        return ret;
     }
 
     public static Action createHealSpellWithBuff() {
@@ -327,9 +328,79 @@ public class TestHelper {
         List<BuffEffect> bes = new ArrayList<>();
         bes.add(new BuffEffect(BuffEffectType.HEAL, 25, 0, 3));
 
-        healSkill.setMainActionEffect(new ActionEffect(ActionType.HEAL, TargetType.LESS_LIFE, 100, DamageType.MAGIC, Boolean.TRUE, bes));
+        healSkill.setMainActionEffect(new ActionEffect(ActionType.HEAL, TargetType.RANDOM, 100, DamageType.HOLY, Boolean.TRUE, bes));
 
         return healSkill;
     }
 
+    private static Battle createBasicBattle(FormationPosition[] attForms, FormationPosition[] defForms) {
+        BattleFormation attForm = createBasicFormation();
+        for (FormationPosition fp : attForms) {
+            attForm.addBattlePositionedHero(createBasicPositionedHero(fp, createBasicMeleePhysicalNoCritNoDodge100HpHero()));
+        }
+
+        BattleFormation defForm = createBasicFormation();
+        for (FormationPosition fp : defForms) {
+            defForm.addBattlePositionedHero(createBasicPositionedHero(fp, createBasicMeleePhysicalNoCritNoDodge100HpHero()));
+        }
+
+        return new Battle(attForm, defForm);
+    }
+
+    public static Battle createBasicBattleWithPositionsBiggerAndLowerHp(FormationPosition[] attForms, FormationPosition[] defForms) {
+        Battle ret = createBasicBattle(attForms, defForms);
+
+        ret.prepareToBattle();
+
+        List<BattlePositionedHero> tAll
+                = ret.getTargetsOfActionEffect(
+                        createBasicActionEffect(TargetType.ALL),
+                        createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero())
+                );
+
+        tAll.forEach((t) -> {
+            t.getHero().setCurrHp(90);
+        });
+
+        List<BattlePositionedHero> tBigger
+                = ret.getTargetsOfActionEffect(
+                        createBasicActionEffect(TargetType.IN_FRONT),
+                        createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero())
+                );
+
+        tBigger.get(0).getHero().setCurrHp(100);
+
+        List<BattlePositionedHero> tLower
+                = ret.getTargetsOfActionEffect(
+                        createBasicActionEffect(TargetType.IN_FRONT),
+                        createBasicAttackPositionedHero(F_1, createBasicMeleeMagicNoCritNoDodge100HpHero())
+                );
+
+        tLower.get(0).getHero().setCurrHp(80);
+
+        return ret;
+    }
+
+    public static Battle createBasicBattleWithPositions(FormationPosition[] attForms, FormationPosition[] defForms) {
+
+        Battle ret = createBasicBattle(attForms, defForms);
+        ret.prepareToBattle();
+        return ret;
+    }
+
+    public static ActionEffect createBasicActionEffectOverSameTeam(TargetType tt) {
+        ActionEffect ae = new ActionEffect();
+        ae.setOverSameTeam(Boolean.TRUE);
+        ae.setTargetType(tt);
+
+        return ae;
+    }
+
+    public static ActionEffect createBasicActionEffect(TargetType tt) {
+        ActionEffect ae = new ActionEffect();
+        ae.setOverSameTeam(Boolean.FALSE);
+        ae.setTargetType(tt);
+
+        return ae;
+    }
 }

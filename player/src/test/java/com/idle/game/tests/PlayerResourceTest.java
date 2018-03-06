@@ -1,9 +1,9 @@
 package com.idle.game.tests;
 
 import com.idle.game.helper.PlayerHelper;
-import com.idle.game.model.mongo.Mail;
-import com.idle.game.model.mongo.PlayerResource;
-import com.idle.game.model.mongo.ResourceType;
+import com.idle.game.model.Mail;
+import com.idle.game.model.PlayerResource;
+import com.idle.game.model.ResourceType;
 import com.idle.game.server.repository.PlayerResourceRepository;
 import com.idle.game.server.service.PlayerResourceService;
 import static com.idle.game.tests.helper.TestHelper.*;

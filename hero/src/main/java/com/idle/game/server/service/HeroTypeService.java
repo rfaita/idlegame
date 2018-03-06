@@ -8,7 +8,7 @@ import static com.idle.game.constant.CacheConstants.HERO_TYPE_FIND_BY_ID;
 import static com.idle.game.constant.CacheConstants.HERO_TYPE_FIND_BY_NAME;
 import com.idle.game.core.hero.type.HeroTypeFaction;
 import com.idle.game.core.hero.type.HeroTypeQuality;
-import com.idle.game.model.mongo.HeroType;
+import com.idle.game.model.HeroType;
 import com.idle.game.server.repository.HeroTypeRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

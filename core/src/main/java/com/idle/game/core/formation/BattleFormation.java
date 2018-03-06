@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -22,7 +21,7 @@ public class BattleFormation implements Serializable {
     private FormationAllocation formationAllocation;
     private FormationType formationType;
     private Integer size = 0;
-    private final List<BattlePositionedHero> heroes = new ArrayList<>(IdleConstants.MAX_SIZE_BACK_LINE + IdleConstants.MAX_SIZE_FRONT_LINE);
+    private final List<BattlePositionedHero> heroes = new ArrayList<>(IdleConstants.MAX_SIZE_FORMATION);
 
     public BattleFormation() {
     }
@@ -49,9 +48,9 @@ public class BattleFormation implements Serializable {
         this.size = this.heroes.size();
     }
 
-    public void addBattlePositionedHero(BattlePositionedHero hero) throws Exception {
+    public void addBattlePositionedHero(BattlePositionedHero hero) {
 
-        assert this.size + 1 < IdleConstants.MAX_SIZE_FORMATION : "Formation max size reached, BUG";
+        assert this.size + 1 <= IdleConstants.MAX_SIZE_FORMATION : "Formation max size reached, BUG";
         this.size++;
         this.heroes.add(hero);
     }
@@ -64,23 +63,6 @@ public class BattleFormation implements Serializable {
             this.size--;
             this.heroes.remove(ret.get());
         }
-    }
-
-    public List<BattlePositionedHero> returnBackLineBattlePositionedHeroes() {
-        return heroes.stream().filter((ph) -> {
-            return ph.getPosition().equals(FormationPosition.BACK_4)
-                    || ph.getPosition().equals(FormationPosition.FRONT_2)
-                    || ph.getPosition().equals(FormationPosition.FRONT_1);
-        }).collect(Collectors.toList());
-
-    }
-
-    public List<BattlePositionedHero> returnFrontLineBattlePositionedHeroes() {
-        return heroes.stream().filter((ph) -> {
-            return (ph.getPosition().equals(FormationPosition.BACK_3)
-                    || ph.getPosition().equals(FormationPosition.BACK_2)
-                    || ph.getPosition().equals(FormationPosition.BACK_1));
-        }).collect(Collectors.toList());
     }
 
     public List<BattlePositionedHero> getHeroes() {

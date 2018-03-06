@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.idle.game.helper.TokenHelper;
-import com.idle.game.model.mongo.Friend;
+import com.idle.game.model.Friend;
 import com.idle.game.server.service.FriendService;
 import java.util.List;
 

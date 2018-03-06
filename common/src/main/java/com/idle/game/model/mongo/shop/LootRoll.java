@@ -2,7 +2,7 @@ package com.idle.game.model.mongo.shop;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.idle.game.core.util.DiceUtil;
-import com.idle.game.model.mongo.Resource;
+import com.idle.game.model.Resource;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -6,6 +6,6 @@ package com.idle.game.core.type;
  */
 public enum AttributeType {
 
-    DMG, ARMOR, MAGIC_RESIST, SPEED, LUCK, CRIT_CHANCE, CRIT_DMG, DODGE, HP, DEFENSE
+    DMG, AP, SPEED, CRIT_CHANCE, CRIT_DMG, DODGE, HP, DEFENSE
 
 }

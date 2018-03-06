@@ -4,7 +4,7 @@ import static com.idle.game.constant.URIConstants.HERO__FIND_ALL_BY_PLAYER;
 import static com.idle.game.constant.URIConstants.HERO__ROLL;
 import com.idle.game.core.hero.type.HeroQuality;
 import com.idle.game.helper.TokenHelper;
-import com.idle.game.model.mongo.Hero;
+import com.idle.game.model.Hero;
 import com.idle.game.server.service.*;
 import com.idle.game.server.dto.Envelope;
 import java.util.List;

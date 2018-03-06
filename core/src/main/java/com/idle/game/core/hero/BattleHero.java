@@ -1,18 +1,22 @@
 package com.idle.game.core.hero;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.idle.game.core.item.ItemType;
-import com.idle.game.core.item.Item;
-import com.idle.game.core.buff.Buff;
-import com.idle.game.core.constant.IdleConstants;
 import static com.idle.game.core.constant.IdleConstants.LOG;
-import com.idle.game.core.type.AttributeType;
-import com.idle.game.core.type.BattleHeroType;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.idle.game.core.buff.Buff;
+import com.idle.game.core.item.Item;
+import com.idle.game.core.item.ItemType;
+import com.idle.game.core.type.AttributeType;
+import com.idle.game.core.type.BattleHeroType;
+import com.idle.game.core.type.DefenseType;
+import java.util.HashMap;
 
 /**
  *
@@ -26,20 +30,18 @@ public class BattleHero implements Serializable {
     private Integer level;
 
     private Integer dmg;
-    private Integer armor;
-    private Integer magicResist;
+    private Integer ap;
+    private Map<DefenseType, Integer> defenses = new HashMap<>();
     private Integer speed;
-    private Integer luck;
     private Integer critChance;
     private Integer critDamage;
     private Integer dodgeChance;
     private Integer hp;
 
     private Integer currDmg;
-    private Integer currArmor;
-    private Integer currMagicResist;
+    private Integer currAp;
+    private Map<DefenseType, Integer> currDefenses = new HashMap<>();
     private Integer currSpeed;
-    private Integer currLuck;
     private Integer currCritChance;
     private Integer currCritDamage;
     private Integer currDodgeChance;
@@ -63,6 +65,38 @@ public class BattleHero implements Serializable {
         this.id = id;
         this.heroType = heroType;
         this.calcAtributtesItems();
+    }
+
+    public Integer getAp() {
+        return ap;
+    }
+
+    public void setAp(Integer ap) {
+        this.ap = ap;
+    }
+
+    public Integer getCurrAp() {
+        return currAp;
+    }
+
+    public void setCurrAp(Integer currAp) {
+        this.currAp = currAp;
+    }
+
+    public Map<DefenseType, Integer> getDefenses() {
+        return defenses;
+    }
+
+    public void setDefenses(Map<DefenseType, Integer> defenses) {
+        this.defenses = defenses;
+    }
+
+    public Map<DefenseType, Integer> getCurrDefenses() {
+        return currDefenses;
+    }
+
+    public void setCurrDefenses(Map<DefenseType, Integer> currDefenses) {
+        this.currDefenses = currDefenses;
     }
 
     public Boolean getCanDoSpecialAction() {
@@ -129,36 +163,12 @@ public class BattleHero implements Serializable {
         this.dmg = dmg;
     }
 
-    public Integer getArmor() {
-        return armor;
-    }
-
-    public void setArmor(Integer armor) {
-        this.armor = armor;
-    }
-
-    public Integer getMagicResist() {
-        return magicResist;
-    }
-
-    public void setMagicResist(Integer nagicResist) {
-        this.magicResist = nagicResist;
-    }
-
     public Integer getSpeed() {
         return speed;
     }
 
     public void setSpeed(Integer speed) {
         this.speed = speed;
-    }
-
-    public Integer getLuck() {
-        return luck;
-    }
-
-    public void setLuck(Integer luck) {
-        this.luck = luck;
     }
 
     public Integer getCritChance() {
@@ -193,22 +203,6 @@ public class BattleHero implements Serializable {
         this.hp = hp;
     }
 
-    public Integer getCurrArmor() {
-        return currArmor;
-    }
-
-    public void setCurrArmor(Integer currArmor) {
-        this.currArmor = currArmor;
-    }
-
-    public Integer getCurrMagicResist() {
-        return currMagicResist;
-    }
-
-    public void setCurrMagicResist(Integer currMagicResist) {
-        this.currMagicResist = currMagicResist;
-    }
-
     public Integer getCurrSpeed() {
         return currSpeed;
     }
@@ -217,20 +211,12 @@ public class BattleHero implements Serializable {
         this.currSpeed = currSpeed;
     }
 
-    public Integer getCurrLuck() {
-        return currLuck;
-    }
-
     public Boolean getCanDoAction() {
         return canDoAction;
     }
 
     public void setCanDoAction(Boolean canDoAction) {
         this.canDoAction = canDoAction;
-    }
-
-    public void setCurrLuck(Integer currLuck) {
-        this.currLuck = currLuck;
     }
 
     public Integer getCurrCritChance() {
@@ -335,13 +321,12 @@ public class BattleHero implements Serializable {
     }
 
     public void prepareToTurn() {
-        this.setCurrArmor(this.getArmor());
+        this.setCurrDefenses(this.getDefenses());
         this.setCurrCritChance(this.getCritChance());
         this.setCurrCritDamage(this.getCritDamage());
         this.setCurrDodgeChance(this.getDodgeChance());
-        this.setCurrLuck(this.getLuck());
-        this.setCurrMagicResist(this.getMagicResist());
         this.setCurrDmg(this.getDmg());
+        this.setCurrAp(this.getAp());
         this.setCurrSpeed(this.getSpeed());
         this.setCanDoAction(Boolean.TRUE);
         this.setCanDoSpecialAction(Boolean.TRUE);
@@ -353,10 +338,6 @@ public class BattleHero implements Serializable {
         LOG.log(Level.INFO, "[recalcAttribute][perc] {0}", perc);
         if (perc > 0) {
             switch (d) {
-                case LUCK:
-                    this.setCurrLuck(this.getCurrLuck() + (int) (this.getCurrLuck() * perc));
-                    LOG.log(Level.INFO, "[recalcAttribute][luck] {0}", this.getCurrLuck());
-                    break;
                 case SPEED:
                     this.setCurrSpeed(this.getCurrSpeed() + (int) (this.getCurrSpeed() * perc));
                     LOG.log(Level.INFO, "[recalcAttribute][speed] {0}", this.getCurrSpeed());
@@ -377,19 +358,15 @@ public class BattleHero implements Serializable {
                     this.setCurrDmg(this.getCurrDmg() + (int) (this.getCurrDmg() * perc));
                     LOG.log(Level.INFO, "[recalcAttribute][dmg] {0}", this.getCurrDmg());
                     break;
-                case ARMOR:
-                    this.setCurrArmor(this.getCurrArmor() + (int) (this.getCurrArmor() * perc));
-                    LOG.log(Level.INFO, "[recalcAttribute][armor] {0}", this.getCurrArmor());
-                    break;
-                case MAGIC_RESIST:
-                    this.setCurrMagicResist(this.getCurrMagicResist() + (int) (this.getCurrMagicResist() * perc));
-                    LOG.log(Level.INFO, "[recalcAttribute][magicResist] {0}", this.getCurrMagicResist());
+                case AP:
+                    this.setCurrAp(this.getCurrAp() + (int) (this.getCurrAp() * perc));
+                    LOG.log(Level.INFO, "[recalcAttribute][ap] {0}", this.getCurrAp());
                     break;
                 case DEFENSE:
-                    this.setCurrArmor(this.getCurrArmor() + (int) (this.getCurrArmor() * perc));
-                    this.setCurrMagicResist(this.getCurrMagicResist() + (int) (this.getCurrMagicResist() * perc));
-                    LOG.log(Level.INFO, "[recalcAttribute][armor] {0}", this.getCurrArmor());
-                    LOG.log(Level.INFO, "[recalcAttribute][magicResist] {0}", this.getCurrMagicResist());
+                    this.getCurrDefenses().keySet().forEach((dt) -> {
+                        this.getCurrDefenses().put(dt, this.getCurrDefenses().get(dt) + (int) (this.getCurrDefenses().get(dt) * perc));
+                        LOG.log(Level.INFO, "[calcTradeAttribute][{0}] {1}", new Object[]{dt, this.getCurrDefenses().get(dt)});
+                    });
                     break;
 
             }
@@ -411,62 +388,24 @@ public class BattleHero implements Serializable {
 
     private void calcAtributtesItem(Item i) {
         if (i != null) {
-            this.setArmor(this.getArmor() + i.getArmor());
             this.setCritChance(this.getCritChance() + i.getCritChance());
             this.setCritDamage(this.getCritDamage() + i.getCritDamage());
             this.setDodgeChance(this.getDodgeChance() + i.getDodgeChance());
             this.setHp(this.getHp() + i.getHp());
-            this.setLuck(this.getLuck() + i.getLuck());
-            this.setMagicResist(this.getMagicResist() + i.getMagicResist());
+            this.setAp(this.getAp() + i.getAp());
             this.setDmg(this.getDmg() + i.getDmg());
             this.setSpeed(this.getSpeed() + i.getSpeed());
+            i.getDefenses().keySet().forEach((dt) -> {
+                this.getDefenses().put(dt, this.getDefenses().get(dt) + i.getDefenses().get(dt));
+            });
         }
     }
 
     public void calcTradeAttribute(AttributeType o, AttributeType d, Integer ratioPercentage) {
-        Double perc = this.getMissingAttributePercentage(o) / 100d * ratioPercentage / 100d;
+        Integer perc = (int) (this.getMissingAttributePercentage(o) / 100d * ratioPercentage / 100d);
         LOG.log(Level.INFO, "[calcTradeAttribute][perc] {0}", perc);
         if (perc > 0) {
-            switch (d) {
-                case LUCK:
-                    this.setCurrLuck(this.getCurrLuck() + (int) (this.getCurrLuck() * perc));
-                    LOG.log(Level.INFO, "[calcTradeAttribute][luck] {0}", this.getCurrLuck());
-                    break;
-                case SPEED:
-                    this.setCurrSpeed(this.getCurrSpeed() + (int) (this.getCurrSpeed() * perc));
-                    LOG.log(Level.INFO, "[calcTradeAttribute][speed] {0}", this.getCurrSpeed());
-                    break;
-                case DODGE:
-                    this.setCurrDodgeChance(this.getCurrDodgeChance() + (int) (this.getCurrDodgeChance() * perc));
-                    LOG.log(Level.INFO, "[calcTradeAttribute][dodgeChance] {0}", this.getCurrDodgeChance());
-                    break;
-                case CRIT_DMG:
-                    this.setCurrCritDamage(this.getCurrCritDamage() + (int) (this.getCurrCritDamage() * perc));
-                    LOG.log(Level.INFO, "[calcTradeAttribute][critDmg] {0}", this.getCurrCritDamage());
-                    break;
-                case CRIT_CHANCE:
-                    this.setCurrCritChance(this.getCurrCritChance() + (int) (this.getCurrCritChance() * perc));
-                    LOG.log(Level.INFO, "[calcTradeAttribute][critChance] {0}", this.getCurrCritChance());
-                    break;
-                case DMG:
-                    this.setCurrDmg(this.getCurrDmg() + (int) (this.getCurrDmg() * perc));
-                    LOG.log(Level.INFO, "[calcTradeAttribute][dmg] {0}", this.getCurrDmg());
-                    break;
-                case ARMOR:
-                    this.setCurrArmor(this.getCurrArmor() + (int) (this.getCurrArmor() * perc));
-                    LOG.log(Level.INFO, "[calcTradeAttribute][armor] {0}", this.getCurrArmor());
-                    break;
-                case MAGIC_RESIST:
-                    this.setCurrMagicResist(this.getCurrMagicResist() + (int) (this.getCurrMagicResist() * perc));
-                    LOG.log(Level.INFO, "[calcTradeAttribute][magicResist] {0}", this.getCurrMagicResist());
-                    break;
-                case DEFENSE:
-                    this.setCurrArmor(this.getCurrArmor() + (int) (this.getCurrArmor() * perc));
-                    this.setCurrMagicResist(this.getCurrMagicResist() + (int) (this.getCurrMagicResist() * perc));
-                    LOG.log(Level.INFO, "[calcTradeAttribute][armor] {0}", this.getCurrArmor());
-                    LOG.log(Level.INFO, "[calcTradeAttribute][magicResist] {0}", this.getCurrMagicResist());
-                    break;
-            }
+            this.recalcAttribute(d, perc, 1);
         }
     }
 
@@ -488,12 +427,11 @@ public class BattleHero implements Serializable {
 
     public String toStringComplete() {
         return "H{" + "id=" + this.id.substring(this.id.length() - 5, this.id.length() - 1) + ", ht=" + heroType + ", l=" + level
-                + ", d=" + dmg + ", a=" + armor + ", mr=" + magicResist
-                + ", s=" + speed + ", l=" + luck + ", cc=" + critChance
+                + ", d=" + dmg + ", ap=" + ap + ", def=" + defenses
+                + ", s=" + speed + ", cc=" + critChance
                 + ", cd=" + critDamage + ", dc=" + dodgeChance
-                + ", hp=" + hp + ", currD=" + currDmg + ", currA=" + currArmor
-                + ", currMR=" + currMagicResist + ", currS=" + currSpeed
-                + ", currL=" + currLuck + ", currCcc=" + currCritChance
+                + ", hp=" + hp + ", currD=" + currDmg + ", currDef=" + currDefenses + ", currS=" + currSpeed
+                + ", currCcc=" + currCritChance
                 + ", currCd=" + currCritDamage + ", currDc=" + currDodgeChance
                 + ", currHp=" + currHp + ", canDoAction=" + canDoAction + ", canDoSpecialAction=" + canDoSpecialAction
                 + ", currBuffs=" + currBuffs + ", chest=" + chest + ", weapon=" + weapon + ", boot=" + boot

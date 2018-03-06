@@ -1,4 +1,4 @@
-package com.idle.game.model.mongo;
+package com.idle.game.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.idle.game.core.action.Action;
@@ -6,12 +6,14 @@ import com.idle.game.core.constant.IdleConstants;
 import com.idle.game.core.hero.type.HeroTypeFaction;
 import com.idle.game.core.passive.Passive;
 import com.idle.game.core.type.BattleHeroType;
-import com.idle.game.core.type.DamageType;
 import com.idle.game.core.type.DistanceType;
 import com.idle.game.core.hero.type.HeroTypeQuality;
 import com.idle.game.core.hero.type.HeroTypeRole;
+import com.idle.game.core.type.DefenseType;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -31,58 +33,52 @@ public class HeroType implements Serializable {
     private String name;
     private Action specialAction;
     private Action defaultAction;
-    private DamageType damageType;
     private DistanceType distanceType;
     private List<Passive> passives;
 
     private Integer maxLevel = IdleConstants.HERO_MAX_LEVEL;
 
     private Integer minBaseDmg = 0;
-    private Integer minBaseArmor = 0;
-    private Integer minBaseMagicResist = 0;
+    private Integer minBaseAp = 0;
+    private Map<DefenseType, Integer> minBaseDefenses = new HashMap<>();
     private Integer minBaseSpeed = 0;
-    private Integer minBaseLuck = 0;
     private Integer minBaseCritChance = 0;
     private Integer minBaseCritDamage = 0;
     private Integer minBaseDodgeChance = 0;
     private Integer minBaseHp = 0;
 
     private Integer minMaxLevelDmg = 0;
-    private Integer minMaxLevelArmor = 0;
-    private Integer minMaxLevelMagicResist = 0;
+    private Integer minMaxLevelAp = 0;
+    private Map<DefenseType, Integer> minMaxLevelDefenses = new HashMap<>();
     private Integer minMaxLevelSpeed = 0;
-    private Integer minMaxLevelLuck = 0;
     private Integer minMaxLevelCritChance = 0;
     private Integer minMaxLevelCritDamage = 0;
     private Integer minMaxLevelDodgeChance = 0;
     private Integer minMaxLevelHp = 0;
 
     private Integer maxBaseDmg = 0;
-    private Integer maxBaseArmor = 0;
-    private Integer maxBaseMagicResist = 0;
+    private Integer maxBaseAp = 0;
+    private Map<DefenseType, Integer> maxBaseDefenses = new HashMap<>();
     private Integer maxBaseSpeed = 0;
-    private Integer maxBaseLuck = 0;
     private Integer maxBaseCritChance = 0;
     private Integer maxBaseCritDamage = 0;
     private Integer maxBaseDodgeChance = 0;
     private Integer maxBaseHp = 0;
 
     private Integer maxMaxLevelDmg = 0;
-    private Integer maxMaxLevelArmor = 0;
-    private Integer maxMaxLevelMagicResist = 0;
+    private Integer maxMaxLevelAp = 0;
+    private Map<DefenseType, Integer> maxMaxLevelDefenses = new HashMap<>();
     private Integer maxMaxLevelSpeed = 0;
-    private Integer maxMaxLevelLuck = 0;
     private Integer maxMaxLevelCritChance = 0;
     private Integer maxMaxLevelCritDamage = 0;
     private Integer maxMaxLevelDodgeChance = 0;
     private Integer maxMaxLevelHp = 0;
-    
+
     public HeroType() {
     }
 
     public BattleHeroType toBattleHeroType() {
         BattleHeroType ret = new BattleHeroType();
-        ret.setDamageType(this.getDamageType());
         ret.setDefaultAction(this.getDefaultAction());
         ret.setDistanceType(this.getDistanceType());
         ret.setQuality(this.getQuality());
@@ -94,6 +90,38 @@ public class HeroType implements Serializable {
         ret.setSpecialAction(this.getSpecialAction());
 
         return ret;
+    }
+
+    public Integer getMinBaseAp() {
+        return minBaseAp;
+    }
+
+    public void setMinBaseAp(Integer minBaseAp) {
+        this.minBaseAp = minBaseAp;
+    }
+
+    public Integer getMinMaxLevelAp() {
+        return minMaxLevelAp;
+    }
+
+    public void setMinMaxLevelAp(Integer minMaxLevelAp) {
+        this.minMaxLevelAp = minMaxLevelAp;
+    }
+
+    public Integer getMaxBaseAp() {
+        return maxBaseAp;
+    }
+
+    public void setMaxBaseAp(Integer maxBaseAp) {
+        this.maxBaseAp = maxBaseAp;
+    }
+
+    public Integer getMaxMaxLevelAp() {
+        return maxMaxLevelAp;
+    }
+
+    public void setMaxMaxLevelAp(Integer maxMaxLevelAp) {
+        this.maxMaxLevelAp = maxMaxLevelAp;
     }
 
     public HeroTypeQuality getQuality() {
@@ -152,14 +180,6 @@ public class HeroType implements Serializable {
         this.defaultAction = defaultAction;
     }
 
-    public DamageType getDamageType() {
-        return damageType;
-    }
-
-    public void setDamageType(DamageType damageType) {
-        this.damageType = damageType;
-    }
-
     public DistanceType getDistanceType() {
         return distanceType;
     }
@@ -192,36 +212,12 @@ public class HeroType implements Serializable {
         this.minBaseDmg = minBaseDmg;
     }
 
-    public Integer getMinBaseArmor() {
-        return minBaseArmor;
-    }
-
-    public void setMinBaseArmor(Integer minBaseArmor) {
-        this.minBaseArmor = minBaseArmor;
-    }
-
-    public Integer getMinBaseMagicResist() {
-        return minBaseMagicResist;
-    }
-
-    public void setMinBaseMagicResist(Integer minBaseMagicResist) {
-        this.minBaseMagicResist = minBaseMagicResist;
-    }
-
     public Integer getMinBaseSpeed() {
         return minBaseSpeed;
     }
 
     public void setMinBaseSpeed(Integer minBaseSpeed) {
         this.minBaseSpeed = minBaseSpeed;
-    }
-
-    public Integer getMinBaseLuck() {
-        return minBaseLuck;
-    }
-
-    public void setMinBaseLuck(Integer minBaseLuck) {
-        this.minBaseLuck = minBaseLuck;
     }
 
     public Integer getMinBaseCritChance() {
@@ -264,36 +260,12 @@ public class HeroType implements Serializable {
         this.minMaxLevelDmg = minMaxLevelDmg;
     }
 
-    public Integer getMinMaxLevelArmor() {
-        return minMaxLevelArmor;
-    }
-
-    public void setMinMaxLevelArmor(Integer minMaxLevelArmor) {
-        this.minMaxLevelArmor = minMaxLevelArmor;
-    }
-
-    public Integer getMinMaxLevelMagicResist() {
-        return minMaxLevelMagicResist;
-    }
-
-    public void setMinMaxLevelMagicResist(Integer minMaxLevelMagicResist) {
-        this.minMaxLevelMagicResist = minMaxLevelMagicResist;
-    }
-
     public Integer getMinMaxLevelSpeed() {
         return minMaxLevelSpeed;
     }
 
     public void setMinMaxLevelSpeed(Integer minMaxLevelSpeed) {
         this.minMaxLevelSpeed = minMaxLevelSpeed;
-    }
-
-    public Integer getMinMaxLevelLuck() {
-        return minMaxLevelLuck;
-    }
-
-    public void setMinMaxLevelLuck(Integer minMaxLevelLuck) {
-        this.minMaxLevelLuck = minMaxLevelLuck;
     }
 
     public Integer getMinMaxLevelCritChance() {
@@ -336,36 +308,12 @@ public class HeroType implements Serializable {
         this.maxBaseDmg = maxBaseDmg;
     }
 
-    public Integer getMaxBaseArmor() {
-        return maxBaseArmor;
-    }
-
-    public void setMaxBaseArmor(Integer maxBaseArmor) {
-        this.maxBaseArmor = maxBaseArmor;
-    }
-
-    public Integer getMaxBaseMagicResist() {
-        return maxBaseMagicResist;
-    }
-
-    public void setMaxBaseMagicResist(Integer maxBaseMagicResist) {
-        this.maxBaseMagicResist = maxBaseMagicResist;
-    }
-
     public Integer getMaxBaseSpeed() {
         return maxBaseSpeed;
     }
 
     public void setMaxBaseSpeed(Integer maxBaseSpeed) {
         this.maxBaseSpeed = maxBaseSpeed;
-    }
-
-    public Integer getMaxBaseLuck() {
-        return maxBaseLuck;
-    }
-
-    public void setMaxBaseLuck(Integer maxBaseLuck) {
-        this.maxBaseLuck = maxBaseLuck;
     }
 
     public Integer getMaxBaseCritChance() {
@@ -408,36 +356,12 @@ public class HeroType implements Serializable {
         this.maxMaxLevelDmg = maxMaxLevelDmg;
     }
 
-    public Integer getMaxMaxLevelArmor() {
-        return maxMaxLevelArmor;
-    }
-
-    public void setMaxMaxLevelArmor(Integer maxMaxLevelArmor) {
-        this.maxMaxLevelArmor = maxMaxLevelArmor;
-    }
-
-    public Integer getMaxMaxLevelMagicResist() {
-        return maxMaxLevelMagicResist;
-    }
-
-    public void setMaxMaxLevelMagicResist(Integer maxMaxLevelMagicResist) {
-        this.maxMaxLevelMagicResist = maxMaxLevelMagicResist;
-    }
-
     public Integer getMaxMaxLevelSpeed() {
         return maxMaxLevelSpeed;
     }
 
     public void setMaxMaxLevelSpeed(Integer maxMaxLevelSpeed) {
         this.maxMaxLevelSpeed = maxMaxLevelSpeed;
-    }
-
-    public Integer getMaxMaxLevelLuck() {
-        return maxMaxLevelLuck;
-    }
-
-    public void setMaxMaxLevelLuck(Integer maxMaxLevelLuck) {
-        this.maxMaxLevelLuck = maxMaxLevelLuck;
     }
 
     public Integer getMaxMaxLevelCritChance() {
@@ -470,6 +394,38 @@ public class HeroType implements Serializable {
 
     public void setMaxMaxLevelHp(Integer maxMaxLevelHp) {
         this.maxMaxLevelHp = maxMaxLevelHp;
+    }
+
+    public Map<DefenseType, Integer> getMinBaseDefenses() {
+        return minBaseDefenses;
+    }
+
+    public void setMinBaseDefenses(Map<DefenseType, Integer> minBaseDefenses) {
+        this.minBaseDefenses = minBaseDefenses;
+    }
+
+    public Map<DefenseType, Integer> getMinMaxLevelDefenses() {
+        return minMaxLevelDefenses;
+    }
+
+    public void setMinMaxLevelDefenses(Map<DefenseType, Integer> minMaxLevelDefenses) {
+        this.minMaxLevelDefenses = minMaxLevelDefenses;
+    }
+
+    public Map<DefenseType, Integer> getMaxBaseDefenses() {
+        return maxBaseDefenses;
+    }
+
+    public void setMaxBaseDefenses(Map<DefenseType, Integer> maxBaseDefenses) {
+        this.maxBaseDefenses = maxBaseDefenses;
+    }
+
+    public Map<DefenseType, Integer> getMaxMaxLevelDefenses() {
+        return maxMaxLevelDefenses;
+    }
+
+    public void setMaxMaxLevelDefenses(Map<DefenseType, Integer> maxMaxLevelDefenses) {
+        this.maxMaxLevelDefenses = maxMaxLevelDefenses;
     }
 
     @Override

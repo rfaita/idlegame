@@ -21,7 +21,6 @@ public class BattleHeroType implements Serializable {
     private String name;
     private Action specialAction;
     private Action defaultAction;
-    private DamageType damageType;
     private DistanceType distanceType;
     private List<Passive> passives;
 
@@ -76,14 +75,6 @@ public class BattleHeroType implements Serializable {
 
     public void setDefaultAction(Action defaultAction) {
         this.defaultAction = defaultAction;
-    }
-
-    public DamageType getDamageType() {
-        return damageType;
-    }
-
-    public void setDamageType(DamageType damageType) {
-        this.damageType = damageType;
     }
 
     public DistanceType getDistanceType() {

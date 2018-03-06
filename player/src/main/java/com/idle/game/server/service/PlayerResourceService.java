@@ -2,9 +2,9 @@ package com.idle.game.server.service;
 
 import static com.idle.game.constant.ResourceContants.defaultResources;
 import com.idle.game.helper.PlayerHelper;
-import com.idle.game.model.mongo.Player;
-import com.idle.game.model.mongo.PlayerResource;
-import com.idle.game.model.mongo.Resource;
+import com.idle.game.model.Player;
+import com.idle.game.model.PlayerResource;
+import com.idle.game.model.Resource;
 import com.idle.game.server.repository.PlayerResourceRepository;
 import com.idle.game.server.util.Destination;
 import com.idle.game.util.DateUtil;

@@ -6,7 +6,7 @@ package com.idle.game.server.service;
  */
 import com.idle.game.helper.PlayerHelper;
 import com.idle.game.model.mongo.Message;
-import com.idle.game.model.mongo.Player;
+import com.idle.game.model.Player;
 import com.idle.game.server.dto.Envelope;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

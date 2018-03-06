@@ -2,7 +2,7 @@ package com.idle.game.helper;
 
 import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_ID;
 import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION;
-import com.idle.game.model.mongo.Formation;
+import com.idle.game.model.Formation;
 import com.idle.game.server.dto.Envelope;
 import com.idle.game.util.EnvelopeUtil;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;

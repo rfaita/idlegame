@@ -2,7 +2,7 @@ package com.idle.game.server.rest;
 
 import com.idle.game.constant.URIConstants;
 import com.idle.game.core.hero.type.HeroTypeQuality;
-import com.idle.game.model.mongo.HeroType;
+import com.idle.game.model.HeroType;
 import com.idle.game.server.dto.Envelope;
 import com.idle.game.server.service.HeroTypeService;
 import java.util.List;

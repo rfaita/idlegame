@@ -1,7 +1,7 @@
 package com.idle.game.constant;
 
-import com.idle.game.model.mongo.Resource;
-import com.idle.game.model.mongo.ResourceType;
+import com.idle.game.model.Resource;
+import com.idle.game.model.ResourceType;
 import java.util.ArrayList;
 import java.util.List;
 

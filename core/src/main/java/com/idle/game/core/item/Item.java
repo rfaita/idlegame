@@ -1,6 +1,8 @@
 package com.idle.game.core.item;
 
 import com.idle.game.core.BaseObject;
+import com.idle.game.core.type.DefenseType;
+import java.util.Map;
 
 /**
  *
@@ -12,33 +14,48 @@ public class Item extends BaseObject {
     private ItemQuality itemQuality;
     private ItemType itemType;
     private Integer dmg;
-    private Integer armor;
-    private Integer magicResist;
+    private Integer ap;
     private Integer speed;
-    private Integer luck;
     private Integer critChance;
     private Integer critDamage;
     private Integer dodgeChance;
-    private Integer blockChance;
     private Integer hp;
+    private Map<DefenseType, Integer> defenses;
 
     public Item() {
     }
 
-    public Item(String name, ItemQuality itemQuality, ItemType itemType, Integer dmg, Integer armor, Integer magicResist, Integer speed, Integer luck, Integer critChance, Integer critDamage, Integer dodgeChance, Integer blockChance, Integer hp) {
+    public Item(String name, ItemQuality itemQuality, ItemType itemType,
+            Integer dmg, Integer ap, Integer speed, Integer luck, Integer critChance,
+            Integer critDamage, Integer dodgeChance, Integer hp,
+            Map<DefenseType, Integer> defenses) {
         this.name = name;
         this.itemQuality = itemQuality;
         this.itemType = itemType;
         this.dmg = dmg;
-        this.armor = armor;
-        this.magicResist = magicResist;
+        this.ap = ap;
         this.speed = speed;
-        this.luck = luck;
         this.critChance = critChance;
         this.critDamage = critDamage;
         this.dodgeChance = dodgeChance;
-        this.blockChance = blockChance;
         this.hp = hp;
+        this.defenses = defenses;
+    }
+
+    public Integer getAp() {
+        return ap;
+    }
+
+    public void setAp(Integer ap) {
+        this.ap = ap;
+    }
+
+    public Map<DefenseType, Integer> getDefenses() {
+        return defenses;
+    }
+
+    public void setDefenses(Map<DefenseType, Integer> defenses) {
+        this.defenses = defenses;
     }
 
     public String getName() {
@@ -73,36 +90,12 @@ public class Item extends BaseObject {
         this.dmg = dmg;
     }
 
-    public Integer getArmor() {
-        return armor;
-    }
-
-    public void setArmor(Integer armor) {
-        this.armor = armor;
-    }
-
-    public Integer getMagicResist() {
-        return magicResist;
-    }
-
-    public void setMagicResist(Integer magicResist) {
-        this.magicResist = magicResist;
-    }
-
     public Integer getSpeed() {
         return speed;
     }
 
     public void setSpeed(Integer speed) {
         this.speed = speed;
-    }
-
-    public Integer getLuck() {
-        return luck;
-    }
-
-    public void setLuck(Integer luck) {
-        this.luck = luck;
     }
 
     public Integer getCritChance() {
@@ -127,14 +120,6 @@ public class Item extends BaseObject {
 
     public void setDodgeChance(Integer dodgeChance) {
         this.dodgeChance = dodgeChance;
-    }
-
-    public Integer getBlockChance() {
-        return blockChance;
-    }
-
-    public void setBlockChance(Integer blockChance) {
-        this.blockChance = blockChance;
     }
 
     public Integer getHp() {

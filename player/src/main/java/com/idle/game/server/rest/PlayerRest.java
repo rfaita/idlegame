@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import static com.idle.game.constant.URIConstants.PLAYER__FIND_BY_LINKED_USER;
 import static com.idle.game.constant.URIConstants.PLAYER__FIND_BY_NAME;
 import com.idle.game.helper.TokenHelper;
-import com.idle.game.model.mongo.Player;
+import com.idle.game.model.Player;
 import com.idle.game.server.service.PlayerService;
 
 @RestController

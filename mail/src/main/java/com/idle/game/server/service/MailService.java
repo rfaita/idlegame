@@ -5,8 +5,8 @@ package com.idle.game.server.service;
  * @author rafael
  */
 import com.idle.game.helper.PlayerResourceHelper;
-import com.idle.game.model.mongo.Mail;
-import com.idle.game.model.mongo.Resource;
+import com.idle.game.model.Mail;
+import com.idle.game.model.Resource;
 import com.idle.game.server.dto.Envelope;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.idle.game.model.mongo;
+package com.idle.game.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;

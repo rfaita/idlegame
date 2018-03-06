@@ -2,6 +2,12 @@ target
 phantomjsdriver.log
 nbactions.xml
 keycloak*.db
+.idea
+.idea/*
+*.iml
+.classpath
+.project
+.settings
 
 node_modules/
 www/

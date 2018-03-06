@@ -1,6 +1,6 @@
 package com.idle.game.server.repository;
 
-import com.idle.game.model.mongo.PvpRating;
+import com.idle.game.model.PvpRating;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;

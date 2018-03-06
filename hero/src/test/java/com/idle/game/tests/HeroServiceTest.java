@@ -1,7 +1,7 @@
 package com.idle.game.tests;
 
 import com.idle.game.helper.PlayerHelper;
-import com.idle.game.model.mongo.Hero;
+import com.idle.game.model.Hero;
 import com.idle.game.server.repository.HeroRepository;
 import com.idle.game.server.service.HeroService;
 import static com.idle.game.tests.helper.TestHelper.createPlayer;

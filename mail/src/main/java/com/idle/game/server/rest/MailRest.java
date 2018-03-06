@@ -2,8 +2,8 @@ package com.idle.game.server.rest;
 
 import static com.idle.game.constant.URIConstants.MAIL__SEND_PRIVATE_MAIL;
 import com.idle.game.helper.TokenHelper;
-import com.idle.game.model.mongo.Mail;
-import com.idle.game.model.mongo.Reward;
+import com.idle.game.model.Mail;
+import com.idle.game.model.Reward;
 import com.idle.game.server.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;

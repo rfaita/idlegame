@@ -3,7 +3,7 @@ package com.idle.game.server.rest;
 import static com.idle.game.constant.URIConstants.FORMATION__FIND_BY_FORMATION_ALLOCATION;
 import com.idle.game.core.formation.type.FormationAllocation;
 import com.idle.game.helper.TokenHelper;
-import com.idle.game.model.mongo.Formation;
+import com.idle.game.model.Formation;
 import com.idle.game.server.service.*;
 import com.idle.game.server.dto.Envelope;
 import org.springframework.beans.factory.annotation.Autowired;

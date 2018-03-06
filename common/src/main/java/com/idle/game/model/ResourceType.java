@@ -1,4 +1,4 @@
-package com.idle.game.model.mongo;
+package com.idle.game.model;
 
 /**
  *

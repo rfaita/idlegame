@@ -1,12 +1,12 @@
 package com.idle.game.tests.helper;
 
-import com.idle.game.model.mongo.Formation;
-import com.idle.game.model.mongo.Friend;
-import com.idle.game.model.mongo.Player;
-import com.idle.game.model.mongo.PlayerResource;
-import com.idle.game.model.mongo.PvpRating;
-import com.idle.game.model.mongo.Resource;
-import com.idle.game.model.mongo.ResourceType;
+import com.idle.game.model.Formation;
+import com.idle.game.model.Friend;
+import com.idle.game.model.Player;
+import com.idle.game.model.PlayerResource;
+import com.idle.game.model.PvpRating;
+import com.idle.game.model.Resource;
+import com.idle.game.model.ResourceType;
 import java.util.ArrayList;
 import java.util.List;
 import org.mockito.invocation.InvocationOnMock;

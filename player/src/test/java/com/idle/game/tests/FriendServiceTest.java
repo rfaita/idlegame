@@ -2,8 +2,8 @@ package com.idle.game.tests;
 
 import com.idle.game.helper.MailHelper;
 import com.idle.game.helper.PlayerHelper;
-import com.idle.game.model.mongo.Friend;
-import com.idle.game.model.mongo.Mail;
+import com.idle.game.model.Friend;
+import com.idle.game.model.Mail;
 import com.idle.game.server.repository.FriendRepository;
 import com.idle.game.server.service.FriendService;
 import static com.idle.game.tests.helper.TestHelper.*;
