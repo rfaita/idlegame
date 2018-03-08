@@ -23,7 +23,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(SELF), bph);
 
@@ -38,7 +38,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositionsBiggerAndLowerHp(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(BIGGER_LIFE), bph);
 
@@ -53,7 +53,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositionsBiggerAndLowerHp(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(LOWER_LIFE), bph);
 
@@ -68,7 +68,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(ALL), bph);
 
@@ -99,7 +99,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(ALL_FRONT_LINE), bph);
 
@@ -118,7 +118,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{M_0, M_1, M_2, B_0, B_1, B_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(ALL_FRONT_LINE), bph);
 
@@ -137,7 +137,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{B_0, B_1, B_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(ALL_FRONT_LINE), bph);
 
@@ -156,7 +156,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(ALL_MIDDLE_LINE), bph);
 
@@ -174,7 +174,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{F_0, F_1, F_2, B_0, B_1, B_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(ALL_MIDDLE_LINE), bph);
 
@@ -192,7 +192,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{F_0, F_1, F_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(ALL_MIDDLE_LINE), bph);
 
@@ -211,7 +211,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(ALL_BACK_LINE), bph);
 
@@ -229,7 +229,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{F_0, F_1, F_2, M_0, M_1, M_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(ALL_MIDDLE_LINE), bph);
 
@@ -247,7 +247,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{M_1, M_0, M_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(ALL_MIDDLE_LINE), bph);
 
@@ -266,7 +266,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(NO_FRONT_LINE), bph);
 
@@ -291,7 +291,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{F_0, F_1, F_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(NO_FRONT_LINE), bph);
 
@@ -310,7 +310,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_PILLAR), bph);
 
@@ -329,7 +329,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_PILLAR), bph);
 
@@ -348,7 +348,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_2, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_2, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_PILLAR), bph);
 
@@ -367,7 +367,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(M_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(M_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_PILLAR), bph);
 
@@ -386,7 +386,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(M_1, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(M_1, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_PILLAR), bph);
 
@@ -405,7 +405,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(M_2, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(M_2, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_PILLAR), bph);
 
@@ -424,7 +424,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(B_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(B_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_PILLAR), bph);
 
@@ -443,7 +443,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(B_1, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(B_1, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_PILLAR), bph);
 
@@ -462,7 +462,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(B_2, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(B_2, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_PILLAR), bph);
 
@@ -481,7 +481,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{B_0, B_2, M_0, M_2, F_0, F_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_PILLAR), bph);
 
@@ -499,7 +499,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{B_2, M_2, F_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_PILLAR), bph);
 
@@ -517,7 +517,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{B_0, B_2, M_0, M_2, F_1, F_0, F_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_PILLAR), bph);
 
@@ -531,7 +531,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{B_0, B_2, M_0, M_1, M_2, F_1, F_0, F_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_PILLAR), bph);
 
@@ -547,7 +547,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{B_0, B_1, B_2, M_0, M_1, M_2, F_0, F_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_PILLAR), bph);
 
@@ -563,7 +563,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT), bph);
 
@@ -578,7 +578,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{F_1, F_2, M_0, B_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT), bph);
 
@@ -593,7 +593,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{F_1, F_2, B_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT), bph);
 
@@ -608,7 +608,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{F_1, B_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT), bph);
 
@@ -623,7 +623,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_SMALL_PILLAR), bph);
 
@@ -640,7 +640,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_SMALL_PILLAR), bph);
 
@@ -657,7 +657,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_2, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_2, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_SMALL_PILLAR), bph);
 
@@ -674,7 +674,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(M_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(M_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_SMALL_PILLAR), bph);
 
@@ -691,7 +691,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(M_1, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(M_1, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_SMALL_PILLAR), bph);
 
@@ -708,7 +708,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(M_2, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(M_2, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_SMALL_PILLAR), bph);
 
@@ -725,7 +725,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(B_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(B_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_SMALL_PILLAR), bph);
 
@@ -742,7 +742,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(B_1, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(B_1, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_SMALL_PILLAR), bph);
 
@@ -759,7 +759,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(B_2, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(B_2, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_SMALL_PILLAR), bph);
 
@@ -776,7 +776,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{B_0, B_2, B_1, M_2, M_1, M_0});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_SMALL_PILLAR), bph);
 
@@ -793,7 +793,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{B_0, B_2, B_1});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(IN_FRONT_SMALL_PILLAR), bph);
 
@@ -808,7 +808,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(FRONT_LINE), bph);
 
@@ -825,7 +825,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(FRONT_LINE_NO_SELF), bph);
 
@@ -844,7 +844,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{B_0, B_2, B_1, M_2, M_1, M_0});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(FRONT_LINE), bph);
 
@@ -861,7 +861,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{B_0, B_2, B_1});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(FRONT_LINE), bph);
 
@@ -878,7 +878,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(MIDDLE_LINE), bph);
 
@@ -895,7 +895,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(M_1, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(M_1, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(MIDDLE_LINE_NO_SELF), bph);
 
@@ -914,7 +914,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{B_0, B_2, B_1, F_2, F_1, F_0});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(MIDDLE_LINE), bph);
 
@@ -931,7 +931,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{F_2, F_1, F_0});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(MIDDLE_LINE), bph);
 
@@ -948,7 +948,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(BACK_LINE), bph);
 
@@ -965,7 +965,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(B_2, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(B_2, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(BACK_LINE_NO_SELF), bph);
 
@@ -985,7 +985,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{M_0, M_2, M_1, F_2, F_1, F_0});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(BACK_LINE), bph);
 
@@ -1002,7 +1002,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{M_0, M_2, M_1});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(BACK_LINE), bph);
 
@@ -1019,7 +1019,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(RANDOM), bph);
 
@@ -1036,7 +1036,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<FormationPosition> expected = Arrays.asList(F_1, F_2, M_0, M_1, M_2, B_0, B_1, B_2);
 
@@ -1055,7 +1055,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(TWO_RANDOM), bph);
 
@@ -1075,7 +1075,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(THREE_RANDOM), bph);
 
@@ -1099,7 +1099,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(FOUR_RANDOM), bph);
 
@@ -1127,7 +1127,7 @@ public class TargetTests {
 
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), new FormationPosition[]{F_1, F_2, B_1});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero());
+        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         List<BattlePositionedHero> ret = b.getTargetsOfActionEffect(createBasicActionEffect(FOUR_RANDOM), bph);
 

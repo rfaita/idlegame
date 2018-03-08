@@ -13,6 +13,7 @@ import com.idle.game.core.action.ActionEffect;
 import com.idle.game.core.action.Action;
 import com.idle.game.core.action.type.ActionType;
 import static com.idle.game.core.constant.IdleConstants.DEFAULT_ACTION;
+import static com.idle.game.core.constant.IdleConstants.DEFAULT_SPECIAL_ACTION;
 import static com.idle.game.core.action.type.ActionType.*;
 import com.idle.game.core.util.DiceUtil;
 import java.util.ArrayList;
@@ -267,22 +268,7 @@ public class Battle extends BaseObject {
             return;
         }
 
-        BattleHero aHero = aPositionedHero.getHero();
-
-        Action action;
-        if (customAction != null) {
-            action = customAction;
-        } else if (aPositionedHero.getEnergy() >= IdleConstants.MAX_ENERGY
-                && aHero.getHeroType().getSpecialAction() != null
-                && aHero.getCanDoSpecialAction()) {
-            action = aHero.getHeroType().getSpecialAction();
-        } else {
-            if (aHero.getHeroType().getDefaultAction() == null) {
-                action = DEFAULT_ACTION;
-            } else {
-                action = aHero.getHeroType().getDefaultAction();
-            }
-        }
+        Action action = customAction != null ? customAction : aPositionedHero.getNextAction();
 
         LOG.log(Level.INFO, "[ACTION] {0}", action);
 
@@ -304,7 +290,7 @@ public class Battle extends BaseObject {
         return dmgModifier;
     }
 
-    private void doDamage(BattleEvent be, BattlePositionedHero aPositionedHero,
+    public void doDamage(BattleEvent be, BattlePositionedHero aPositionedHero,
             ActionEffect ae, BattlePositionedHero tPositionedHero, Boolean special) {
 
         assert ae.getDamageType() != null : "DamageType can not be null, BUG";
@@ -332,7 +318,7 @@ public class Battle extends BaseObject {
 
     }
 
-    private void doHeal(BattleEvent be, BattlePositionedHero aPositionedHero,
+    public void doHeal(BattleEvent be, BattlePositionedHero aPositionedHero,
             ActionEffect ae, BattlePositionedHero tPositionedHero, Boolean special) {
 
         Integer dmgModifier = special ? aPositionedHero.getHero().getCurrAp() : aPositionedHero.getHero().getCurrDmg();

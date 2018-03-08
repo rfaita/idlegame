@@ -12,8 +12,10 @@ import com.idle.game.core.battle.BattlePositionedHero;
 import com.idle.game.core.battle.type.BattleTeamType;
 import com.idle.game.core.buff.BuffEffect;
 import com.idle.game.core.buff.type.BuffEffectType;
+import com.idle.game.core.constant.IdleConstants;
 import static com.idle.game.core.formation.type.FormationPosition.*;
-import com.idle.game.core.type.DistanceType;
+import static com.idle.game.core.formation.type.FormationPositionType.*;
+import com.idle.game.core.hero.type.HeroTypeSize;
 import com.idle.game.core.type.BattleHeroType;
 import com.idle.game.core.type.DefenseType;
 import com.idle.game.core.type.TargetType;
@@ -27,36 +29,133 @@ import java.util.UUID;
  */
 public class TestHelper {
 
-    private static BattleHeroType createHeroTypePhysicalMelee() {
+    private static BattleHeroType createHeroTypeSpecialFront() {
         BattleHeroType ret = new BattleHeroType();
-        ret.setDistanceType(DistanceType.MELEE);
-        ret.setDefaultAction(createBasicDmgBluntAction());
+        ret.getSpecialActions().put(F, createBasicDmgFireAction());
         return ret;
     }
 
-    private static BattleHeroType createHeroTypePhysicalRanged() {
+    private static BattleHeroType createHeroTypeSpecialBack() {
         BattleHeroType ret = new BattleHeroType();
-        ret.setDistanceType(DistanceType.RANGED);
-        ret.setDefaultAction(createBasicDmgBluntAction());
+        ret.getSpecialActions().put(B, createBasicDmgFireAction());
         return ret;
     }
 
-    private static BattleHeroType createHeroTypeMagicMelee() {
+    private static BattleHeroType createHeroTypeSpecialMiddle() {
         BattleHeroType ret = new BattleHeroType();
-        ret.setDistanceType(DistanceType.MELEE);
-        ret.setDefaultAction(createBasicDmgBluntAction());
+        ret.getSpecialActions().put(M, createBasicDmgFireAction());
         return ret;
     }
 
-    private static BattleHeroType createHeroTypeMagicRanged() {
+    private static BattleHeroType createHeroTypeSpecialBackAndAll() {
         BattleHeroType ret = new BattleHeroType();
-        ret.setDistanceType(DistanceType.RANGED);
-        ret.setDefaultAction(createBasicDmgBluntAction());
+        ret.getSpecialActions().put(B, createBasicDmgFireAction());
+        ret.getSpecialActions().put(ALL_LINES, createBasicDmgHolyAction());
         return ret;
     }
 
-    public static BattleHero createBasicMeleePhysicalNoCritNoDodge100HpHero() {
-        BattleHero ret = new BattleHero(UUID.randomUUID().toString(), createHeroTypePhysicalMelee(), 1);
+    public static BattleHero createSpecialFrontHero() {
+        return new BattleHero(UUID.randomUUID().toString(), createHeroTypeSpecialFront(), 1);
+    }
+
+    public static BattleHero createSpecialBackHero() {
+        return new BattleHero(UUID.randomUUID().toString(), createHeroTypeSpecialBack(), 1);
+    }
+
+    public static BattleHero createSpecialMiddleHero() {
+        return new BattleHero(UUID.randomUUID().toString(), createHeroTypeSpecialMiddle(), 1);
+    }
+
+    public static BattleHero createSpecialBackAndAllHero() {
+        return new BattleHero(UUID.randomUUID().toString(), createHeroTypeSpecialBackAndAll(), 1);
+    }
+
+    private static BattleHeroType createHeroTypeActionFront() {
+        BattleHeroType ret = new BattleHeroType();
+        ret.getDefaultActions().put(F, createBasicDmgFireAction());
+        return ret;
+    }
+
+    private static BattleHeroType createHeroTypeActionBack() {
+        BattleHeroType ret = new BattleHeroType();
+        ret.getDefaultActions().put(B, createBasicDmgFireAction());
+        return ret;
+    }
+
+    private static BattleHeroType createHeroTypeActionMiddle() {
+        BattleHeroType ret = new BattleHeroType();
+        ret.getDefaultActions().put(M, createBasicDmgFireAction());
+        return ret;
+    }
+
+    private static BattleHeroType createHeroTypeActionBackAndAll() {
+        BattleHeroType ret = new BattleHeroType();
+        ret.getDefaultActions().put(B, createBasicDmgFireAction());
+        ret.getDefaultActions().put(ALL_LINES, createBasicDmgHolyAction());
+        return ret;
+    }
+
+    public static BattleHero createActionFrontHero() {
+        return new BattleHero(UUID.randomUUID().toString(), createHeroTypeActionFront(), 1);
+    }
+
+    public static BattleHero createActionBackHero() {
+        return new BattleHero(UUID.randomUUID().toString(), createHeroTypeActionBack(), 1);
+    }
+
+    public static BattleHero createActionMiddleHero() {
+        return new BattleHero(UUID.randomUUID().toString(), createHeroTypeActionMiddle(), 1);
+    }
+
+    public static BattleHero createActionBackAndAllHero() {
+        return new BattleHero(UUID.randomUUID().toString(), createHeroTypeActionBackAndAll(), 1);
+    }
+
+    private static BattleHeroType createHeroTypeSmall() {
+        BattleHeroType ret = new BattleHeroType();
+        ret.setSize(HeroTypeSize.SMALL);
+        return ret;
+    }
+
+    public static BattleHero createBasicHeroSmall() {
+        return new BattleHero(UUID.randomUUID().toString(), createHeroTypeSmall(), 1);
+    }
+
+    private static BattleHeroType createHeroTypeMedium() {
+        BattleHeroType ret = new BattleHeroType();
+        ret.setSize(HeroTypeSize.MEDIUM);
+        return ret;
+    }
+
+    public static BattleHero createBasicHeroMedium() {
+        return new BattleHero(UUID.randomUUID().toString(), createHeroTypeMedium(), 1);
+    }
+
+    private static BattleHeroType createHeroTypeLarge() {
+        BattleHeroType ret = new BattleHeroType();
+        ret.setSize(HeroTypeSize.LARGE);
+        return ret;
+    }
+
+    public static BattleHero createBasicHeroLarge() {
+        return new BattleHero(UUID.randomUUID().toString(), createHeroTypeLarge(), 1);
+    }
+
+    private static BattleHeroType createHeroTypeBlunt() {
+        BattleHeroType ret = new BattleHeroType();
+        ret.setSize(HeroTypeSize.SMALL);
+        ret.getDefaultActions().put(ALL_LINES, createBasicDmgBluntAction());
+        return ret;
+    }
+
+    private static BattleHeroType createHeroTypeFire() {
+        BattleHeroType ret = new BattleHeroType();
+        ret.getDefaultActions().put(ALL_LINES, createBasicDmgFireAction());
+        return ret;
+    }
+
+    public static BattleHero createBasicBluntNoCritNoDodge100HpHero() {
+        BattleHero ret = new BattleHero(UUID.randomUUID().toString(), createHeroTypeBlunt(), 1);
         ret.setDmg(100);
         ret.setAp(100);
         for (DefenseType dt : DefenseType.values()) {
@@ -68,47 +167,55 @@ public class TestHelper {
         ret.setDodgeChance(0);
         ret.setHp(100);
 
+        ret.prepareToBattle();
+
         return ret;
     }
 
-    public static BattleHero createBasicMeleePhysicalNoCritNoDodge10000HpHero() {
-        BattleHero ret = createBasicMeleeMagic100CritNoDodge100HpHero();
+    public static BattleHero createBasicBluntNoCritNoDodge10000HpHero() {
+        BattleHero ret = createBasicFire100CritNoDodge100HpHero();
         ret.setHp(10000);
 
+        ret.prepareToBattle();
         return ret;
     }
 
-    public static BattleHero createBasicMeleePhysicalNoCritNoDodge50HpHero() {
+    public static BattleHero createBasicBluntNoCritNoDodge50HpHero() {
 
-        BattleHero ret = createBasicMeleeMagic100CritNoDodge100HpHero();
+        BattleHero ret = createBasicFire100CritNoDodge100HpHero();
         ret.setHp(50);
 
+        ret.prepareToBattle();
         return ret;
 
     }
 
-    public static BattleHero createBasicMeleePhysicalNoCritNoDodge100HpHero10XFaster() {
-        BattleHero ret = createBasicMeleeMagic100CritNoDodge100HpHero();
+    public static BattleHero createBasicBluntNoCritNoDodge100HpHero10XFaster() {
+        BattleHero ret = createBasicFire100CritNoDodge100HpHero();
         ret.setSpeed(10);
 
+        ret.prepareToBattle();
         return ret;
     }
 
-    public static BattleHero createBasicMeleePhysicalNoCritNoDodge200Hp10000SpeedHero() {
-        BattleHero ret = createBasicMeleePhysicalNoCritNoDodge200HpHero();
+    public static BattleHero createBasicBluntNoCritNoDodge200Hp10000SpeedHero() {
+        BattleHero ret = createBasicBluntNoCritNoDodge200HpHero();
         ret.setSpeed(10000);
+
+        ret.prepareToBattle();
         return ret;
     }
 
-    public static BattleHero createBasicMeleePhysicalNoCritNoDodge200HpHero() {
-        BattleHero ret = createBasicMeleeMagicNoCritNoDodge100HpHero();
+    public static BattleHero createBasicBluntNoCritNoDodge200HpHero() {
+        BattleHero ret = createBasicBluntNoCritNoDodge100HpHero();
         ret.setHp(200);
 
+        ret.prepareToBattle();
         return ret;
     }
 
-    public static BattleHero createBasicRangedPhysicalNoCritNoDodge100HpHero() {
-        BattleHero ret = new BattleHero(UUID.randomUUID().toString(), createHeroTypePhysicalRanged(), 1);
+    public static BattleHero createBasicFireNoCritNoDodge100HpHero() {
+        BattleHero ret = new BattleHero(UUID.randomUUID().toString(), createHeroTypeFire(), 1);
         ret.setDmg(100);
         ret.setAp(100);
         for (DefenseType dt : DefenseType.values()) {
@@ -120,175 +227,89 @@ public class TestHelper {
         ret.setDodgeChance(0);
         ret.setHp(100);
 
+        ret.prepareToBattle();
+
         return ret;
     }
 
-    public static BattleHero createBasicRangedPhysicalNoCritNoDodge200HpHero() {
-        BattleHero ret = createBasicRangedPhysicalNoCritNoDodge100HpHero();
+    public static BattleHero createBasicFireNoCritNoDodge200HpHero() {
+        BattleHero ret = createBasicFireNoCritNoDodge100HpHero();
         ret.setHp(200);
 
+        ret.prepareToBattle();
         return ret;
     }
 
-    public static BattleHero createBasicMeleeMagicNoCritNoDodge100HpHero() {
-        BattleHero ret = new BattleHero(UUID.randomUUID().toString(), createHeroTypeMagicMelee(), 1);
-        ret.setDmg(100);
-        ret.setAp(100);
-        for (DefenseType dt : DefenseType.values()) {
-            ret.getDefenses().put(dt, 6000);
-        }
-        ret.setSpeed(1);
-        ret.setCritChance(0);
-        ret.setCritDamage(-1);
-        ret.setDodgeChance(0);
-        ret.setHp(100);
-
-        return ret;
-    }
-
-    public static BattleHero createBasicMeleeMagicNoCritNoDodge200HpHero() {
-        BattleHero ret = createBasicMeleeMagicNoCritNoDodge100HpHero();
-        ret.setHp(200);
-
-        return ret;
-    }
-
-    public static BattleHero createBasicRangedMagicNoCritNoDodge100HpHero() {
-        BattleHero ret = new BattleHero(UUID.randomUUID().toString(), createHeroTypeMagicRanged(), 1);
-        ret.setDmg(100);
-        ret.setAp(100);
-        for (DefenseType dt : DefenseType.values()) {
-            ret.getDefenses().put(dt, 6000);
-        }
-        ret.setSpeed(1);
-        ret.setCritChance(0);
-        ret.setCritDamage(-1);
-        ret.setDodgeChance(0);
-        ret.setHp(100);
-
-        return ret;
-    }
-
-    public static BattleHero createBasicRangedMagicNoCritNoDodge200HpHero() {
-        BattleHero ret = createBasicRangedMagicNoCritNoDodge100HpHero();
-        ret.setHp(200);
-
-        return ret;
-    }
-
-    public static BattleHero createBasicMeleePhysical100CritNoDodge100HpHero() {
-        BattleHero ret = createBasicMeleePhysicalNoCritNoDodge100HpHero();
+    public static BattleHero createBasicBlunt100CritNoDodge100HpHero() {
+        BattleHero ret = createBasicBluntNoCritNoDodge100HpHero();
         ret.setCritChance(100);
         ret.setCritDamage(100);
 
+        ret.prepareToBattle();
         return ret;
     }
 
-    public static BattleHero createBasicMeleePhysical100CritNoDodge200HpHero() {
-        BattleHero ret = createBasicMeleePhysical100CritNoDodge100HpHero();
+    public static BattleHero createBasicBlunt100CritNoDodge200HpHero() {
+        BattleHero ret = createBasicBlunt100CritNoDodge100HpHero();
         ret.setHp(200);
 
+        ret.prepareToBattle();
         return ret;
     }
 
-    public static BattleHero createBasicRangedPhysical100CritNoDodge100HpHero() {
-        BattleHero ret = createBasicRangedPhysicalNoCritNoDodge100HpHero();
+    public static BattleHero createBasicFire100CritNoDodge100HpHero() {
+        BattleHero ret = createBasicFireNoCritNoDodge100HpHero();
         ret.setCritChance(100);
         ret.setCritDamage(100);
 
+        ret.prepareToBattle();
         return ret;
     }
 
-    public static BattleHero createBasicRangedPhysical100CritNoDodge200HpHero() {
-        BattleHero ret = createBasicRangedPhysical100CritNoDodge100HpHero();
+    public static BattleHero createBasicFire100CritNoDodge200HpHero() {
+        BattleHero ret = createBasicFire100CritNoDodge100HpHero();
         ret.setHp(200);
 
+        ret.prepareToBattle();
         return ret;
     }
 
-    public static BattleHero createBasicMeleeMagic100CritNoDodge100HpHero() {
-        BattleHero ret = createBasicMeleeMagicNoCritNoDodge100HpHero();
-        ret.setCritChance(100);
-        ret.setCritDamage(100);
-
-        return ret;
-    }
-
-    public static BattleHero createBasicMeleeMagic100CritNoDodge200HpHero() {
-        BattleHero ret = createBasicMeleeMagic100CritNoDodge100HpHero();
-        ret.setHp(200);
-
-        return ret;
-    }
-
-    public static BattleHero createBasicRangedMagic100CritNoDodge100HpHero() {
-        BattleHero ret = createBasicRangedMagicNoCritNoDodge100HpHero();
-        ret.setCritChance(100);
-        ret.setCritDamage(100);
-
-        return ret;
-    }
-
-    public static BattleHero createBasicRangedMagic100CritNoDodge200HpHero() {
-        BattleHero ret = createBasicRangedMagic100CritNoDodge100HpHero();
-        ret.setHp(200);
-
-        return ret;
-    }
-
-    public static BattleHero createBasicMeleePhysicalNoCrit100Dodge100HpHero() {
-        BattleHero ret = createBasicMeleePhysicalNoCritNoDodge100HpHero();
+    public static BattleHero createBasicBluntNoCrit100Dodge100HpHero() {
+        BattleHero ret = createBasicBluntNoCritNoDodge100HpHero();
         ret.setDodgeChance(100);
 
+        ret.prepareToBattle();
         return ret;
     }
 
-    public static BattleHero createBasicMeleePhysicalNoCrit100Dodge200HpHero() {
-        BattleHero ret = createBasicMeleePhysicalNoCrit100Dodge100HpHero();
+    public static BattleHero createBasicBluntNoCrit100Dodge200HpHero() {
+        BattleHero ret = createBasicBluntNoCrit100Dodge100HpHero();
         ret.setHp(200);
 
+        ret.prepareToBattle();
         return ret;
     }
 
-    public static BattleHero createBasicRangedPhysicalNoCrit100Dodge100HpHero() {
-        BattleHero ret = createBasicRangedPhysicalNoCritNoDodge100HpHero();
+    public static BattleHero createBasicFireNoCrit100Dodge100HpHero() {
+        BattleHero ret = createBasicFireNoCritNoDodge100HpHero();
         ret.setDodgeChance(100);
 
+        ret.prepareToBattle();
         return ret;
     }
 
-    public static BattleHero createBasicRangedPhysicalNoCrit100Dodge200HpHero() {
-        BattleHero ret = createBasicRangedPhysicalNoCrit100Dodge100HpHero();
+    public static BattleHero createBasicFireNoCrit100Dodge200HpHero() {
+        BattleHero ret = createBasicFireNoCrit100Dodge100HpHero();
         ret.setHp(200);
 
+        ret.prepareToBattle();
         return ret;
     }
 
-    public static BattleHero createBasicMeleeMagicNoCrit100Dodge100HpHero() {
-        BattleHero ret = createBasicMeleeMagicNoCritNoDodge100HpHero();
-        ret.setDodgeChance(100);
-
-        return ret;
-    }
-
-    public static BattleHero createBasicMeleeMagicNoCrit100Dodge200HpHero() {
-        BattleHero ret = createBasicMeleeMagicNoCrit100Dodge100HpHero();
-        ret.setHp(200);
-
-        return ret;
-    }
-
-    public static BattleHero createBasicRangedMagicNoCrit100Dodge100HpHero() {
-        BattleHero ret = createBasicRangedMagicNoCritNoDodge100HpHero();
-        ret.setDodgeChance(100);
-
-        return ret;
-    }
-
-    public static BattleHero createBasicRangedMagicNoCrit100Dodge200HpHero() {
-        BattleHero ret = createBasicRangedMagicNoCrit100Dodge100HpHero();
-        ret.setHp(200);
-
+    public static BattlePositionedHero createBasicAttackPositionedHeroMaxEnergy(FormationPosition battlePositionType, BattleHero hero) {
+        BattlePositionedHero ret = new BattlePositionedHero(BattleTeamType.ATTACK_TEAM, battlePositionType, hero);
+        ret.setEnergy(IdleConstants.MAX_ENERGY);
+        ret.getHero().setCanDoSpecialAction(Boolean.TRUE);
         return ret;
     }
 
@@ -315,6 +336,20 @@ public class TestHelper {
         return ret;
     }
 
+    public static Action createBasicDmgFireAction() {
+        Action ret = new Action();
+        ret.setMainActionEffect(new ActionEffect(ActionType.DMG, TargetType.RANDOM, 100, DamageType.FIRE, Boolean.FALSE));
+
+        return ret;
+    }
+
+    public static Action createBasicDmgHolyAction() {
+        Action ret = new Action();
+        ret.setMainActionEffect(new ActionEffect(ActionType.DMG, TargetType.RANDOM, 100, DamageType.HOLY, Boolean.FALSE));
+
+        return ret;
+    }
+
     public static Action createBasicHealSpell() {
         Action ret = new Action();
         ret.setMainActionEffect(new ActionEffect(ActionType.HEAL, TargetType.RANDOM, 100, DamageType.HOLY, Boolean.TRUE));
@@ -336,12 +371,12 @@ public class TestHelper {
     private static Battle createBasicBattle(FormationPosition[] attForms, FormationPosition[] defForms) {
         BattleFormation attForm = createBasicFormation();
         for (FormationPosition fp : attForms) {
-            attForm.addBattlePositionedHero(createBasicPositionedHero(fp, createBasicMeleePhysicalNoCritNoDodge100HpHero()));
+            attForm.addBattlePositionedHero(createBasicPositionedHero(fp, createBasicBluntNoCritNoDodge100HpHero()));
         }
 
         BattleFormation defForm = createBasicFormation();
         for (FormationPosition fp : defForms) {
-            defForm.addBattlePositionedHero(createBasicPositionedHero(fp, createBasicMeleePhysicalNoCritNoDodge100HpHero()));
+            defForm.addBattlePositionedHero(createBasicPositionedHero(fp, createBasicBluntNoCritNoDodge100HpHero()));
         }
 
         return new Battle(attForm, defForm);
@@ -355,7 +390,7 @@ public class TestHelper {
         List<BattlePositionedHero> tAll
                 = ret.getTargetsOfActionEffect(
                         createBasicActionEffect(TargetType.ALL),
-                        createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero())
+                        createBasicAttackPositionedHero(F_0, createBasicFireNoCritNoDodge100HpHero())
                 );
 
         tAll.forEach((t) -> {
@@ -365,7 +400,7 @@ public class TestHelper {
         List<BattlePositionedHero> tBigger
                 = ret.getTargetsOfActionEffect(
                         createBasicActionEffect(TargetType.IN_FRONT),
-                        createBasicAttackPositionedHero(F_0, createBasicMeleeMagicNoCritNoDodge100HpHero())
+                        createBasicAttackPositionedHero(F_0, createBasicFireNoCritNoDodge100HpHero())
                 );
 
         tBigger.get(0).getHero().setCurrHp(100);
@@ -373,7 +408,7 @@ public class TestHelper {
         List<BattlePositionedHero> tLower
                 = ret.getTargetsOfActionEffect(
                         createBasicActionEffect(TargetType.IN_FRONT),
-                        createBasicAttackPositionedHero(F_1, createBasicMeleeMagicNoCritNoDodge100HpHero())
+                        createBasicAttackPositionedHero(F_1, createBasicFireNoCritNoDodge100HpHero())
                 );
 
         tLower.get(0).getHero().setCurrHp(80);
@@ -398,6 +433,18 @@ public class TestHelper {
 
     public static ActionEffect createBasicActionEffect(TargetType tt) {
         ActionEffect ae = new ActionEffect();
+        ae.setPercentage(100);
+        ae.setDamageType(DamageType.BLUNT);
+        ae.setOverSameTeam(Boolean.FALSE);
+        ae.setTargetType(tt);
+
+        return ae;
+    }
+
+    public static ActionEffect createFireActionEffect(TargetType tt) {
+        ActionEffect ae = new ActionEffect();
+        ae.setPercentage(100);
+        ae.setDamageType(DamageType.FIRE);
         ae.setOverSameTeam(Boolean.FALSE);
         ae.setTargetType(tt);
 

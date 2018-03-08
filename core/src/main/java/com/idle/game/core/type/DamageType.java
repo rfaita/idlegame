@@ -6,7 +6,7 @@ package com.idle.game.core.type;
  */
 public enum DamageType {
 
-    SLASH(DefenseType.SLASH), BLUNT(DefenseType.BLUNT), PIECING(DefenseType.PIECING),
+    SLASH(DefenseType.SLASH), BLUNT(DefenseType.BLUNT), PIERCE(DefenseType.PIERCE),
     FIRE(DefenseType.FIRE), ICE(DefenseType.ICE), THUNDER(DefenseType.THUNDER),
     EARTH(DefenseType.EARTH), DARK(DefenseType.DARK), HOLY(DefenseType.HOLY);
 

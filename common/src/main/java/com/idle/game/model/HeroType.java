@@ -3,12 +3,14 @@ package com.idle.game.model;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.idle.game.core.action.Action;
 import com.idle.game.core.constant.IdleConstants;
+import com.idle.game.core.formation.type.FormationPositionType;
 import com.idle.game.core.hero.type.HeroTypeFaction;
 import com.idle.game.core.passive.Passive;
 import com.idle.game.core.type.BattleHeroType;
 import com.idle.game.core.type.DistanceType;
 import com.idle.game.core.hero.type.HeroTypeQuality;
 import com.idle.game.core.hero.type.HeroTypeRole;
+import com.idle.game.core.hero.type.HeroTypeSize;
 import com.idle.game.core.type.DefenseType;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -31,9 +33,10 @@ public class HeroType implements Serializable {
     private HeroTypeFaction faction;
     private HeroTypeRole role;
     private String name;
-    private Action specialAction;
-    private Action defaultAction;
+    private final Map<FormationPositionType, Action> specialActions = new HashMap<>();
+    private final Map<FormationPositionType, Action> defaultActions = new HashMap<>();
     private DistanceType distanceType;
+    private HeroTypeSize size;
     private List<Passive> passives;
 
     private Integer maxLevel = IdleConstants.HERO_MAX_LEVEL;
@@ -79,7 +82,7 @@ public class HeroType implements Serializable {
 
     public BattleHeroType toBattleHeroType() {
         BattleHeroType ret = new BattleHeroType();
-        ret.setDefaultAction(this.getDefaultAction());
+        ret.getDefaultActions().putAll(this.getDefaultActions());
         ret.setDistanceType(this.getDistanceType());
         ret.setQuality(this.getQuality());
         ret.setRole(this.getRole());
@@ -87,41 +90,17 @@ public class HeroType implements Serializable {
         ret.setMaxLevel(this.getMaxLevel());
         ret.setName(this.getName());
         ret.setPassives(this.getPassives());
-        ret.setSpecialAction(this.getSpecialAction());
+        ret.getDefaultActions().putAll(this.getSpecialActions());
 
         return ret;
     }
 
-    public Integer getMinBaseAp() {
-        return minBaseAp;
+    public String getId() {
+        return id;
     }
 
-    public void setMinBaseAp(Integer minBaseAp) {
-        this.minBaseAp = minBaseAp;
-    }
-
-    public Integer getMinMaxLevelAp() {
-        return minMaxLevelAp;
-    }
-
-    public void setMinMaxLevelAp(Integer minMaxLevelAp) {
-        this.minMaxLevelAp = minMaxLevelAp;
-    }
-
-    public Integer getMaxBaseAp() {
-        return maxBaseAp;
-    }
-
-    public void setMaxBaseAp(Integer maxBaseAp) {
-        this.maxBaseAp = maxBaseAp;
-    }
-
-    public Integer getMaxMaxLevelAp() {
-        return maxMaxLevelAp;
-    }
-
-    public void setMaxMaxLevelAp(Integer maxMaxLevelAp) {
-        this.maxMaxLevelAp = maxMaxLevelAp;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public HeroTypeQuality getQuality() {
@@ -148,14 +127,6 @@ public class HeroType implements Serializable {
         this.role = role;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
@@ -164,20 +135,12 @@ public class HeroType implements Serializable {
         this.name = name;
     }
 
-    public Action getSpecialAction() {
-        return specialAction;
+    public Map<FormationPositionType, Action> getSpecialActions() {
+        return specialActions;
     }
 
-    public void setSpecialAction(Action specialAction) {
-        this.specialAction = specialAction;
-    }
-
-    public Action getDefaultAction() {
-        return defaultAction;
-    }
-
-    public void setDefaultAction(Action defaultAction) {
-        this.defaultAction = defaultAction;
+    public Map<FormationPositionType, Action> getDefaultActions() {
+        return defaultActions;
     }
 
     public DistanceType getDistanceType() {
@@ -186,6 +149,14 @@ public class HeroType implements Serializable {
 
     public void setDistanceType(DistanceType distanceType) {
         this.distanceType = distanceType;
+    }
+
+    public HeroTypeSize getSize() {
+        return size;
+    }
+
+    public void setSize(HeroTypeSize size) {
+        this.size = size;
     }
 
     public List<Passive> getPassives() {
@@ -210,6 +181,22 @@ public class HeroType implements Serializable {
 
     public void setMinBaseDmg(Integer minBaseDmg) {
         this.minBaseDmg = minBaseDmg;
+    }
+
+    public Integer getMinBaseAp() {
+        return minBaseAp;
+    }
+
+    public void setMinBaseAp(Integer minBaseAp) {
+        this.minBaseAp = minBaseAp;
+    }
+
+    public Map<DefenseType, Integer> getMinBaseDefenses() {
+        return minBaseDefenses;
+    }
+
+    public void setMinBaseDefenses(Map<DefenseType, Integer> minBaseDefenses) {
+        this.minBaseDefenses = minBaseDefenses;
     }
 
     public Integer getMinBaseSpeed() {
@@ -260,6 +247,22 @@ public class HeroType implements Serializable {
         this.minMaxLevelDmg = minMaxLevelDmg;
     }
 
+    public Integer getMinMaxLevelAp() {
+        return minMaxLevelAp;
+    }
+
+    public void setMinMaxLevelAp(Integer minMaxLevelAp) {
+        this.minMaxLevelAp = minMaxLevelAp;
+    }
+
+    public Map<DefenseType, Integer> getMinMaxLevelDefenses() {
+        return minMaxLevelDefenses;
+    }
+
+    public void setMinMaxLevelDefenses(Map<DefenseType, Integer> minMaxLevelDefenses) {
+        this.minMaxLevelDefenses = minMaxLevelDefenses;
+    }
+
     public Integer getMinMaxLevelSpeed() {
         return minMaxLevelSpeed;
     }
@@ -306,6 +309,22 @@ public class HeroType implements Serializable {
 
     public void setMaxBaseDmg(Integer maxBaseDmg) {
         this.maxBaseDmg = maxBaseDmg;
+    }
+
+    public Integer getMaxBaseAp() {
+        return maxBaseAp;
+    }
+
+    public void setMaxBaseAp(Integer maxBaseAp) {
+        this.maxBaseAp = maxBaseAp;
+    }
+
+    public Map<DefenseType, Integer> getMaxBaseDefenses() {
+        return maxBaseDefenses;
+    }
+
+    public void setMaxBaseDefenses(Map<DefenseType, Integer> maxBaseDefenses) {
+        this.maxBaseDefenses = maxBaseDefenses;
     }
 
     public Integer getMaxBaseSpeed() {
@@ -356,6 +375,22 @@ public class HeroType implements Serializable {
         this.maxMaxLevelDmg = maxMaxLevelDmg;
     }
 
+    public Integer getMaxMaxLevelAp() {
+        return maxMaxLevelAp;
+    }
+
+    public void setMaxMaxLevelAp(Integer maxMaxLevelAp) {
+        this.maxMaxLevelAp = maxMaxLevelAp;
+    }
+
+    public Map<DefenseType, Integer> getMaxMaxLevelDefenses() {
+        return maxMaxLevelDefenses;
+    }
+
+    public void setMaxMaxLevelDefenses(Map<DefenseType, Integer> maxMaxLevelDefenses) {
+        this.maxMaxLevelDefenses = maxMaxLevelDefenses;
+    }
+
     public Integer getMaxMaxLevelSpeed() {
         return maxMaxLevelSpeed;
     }
@@ -394,38 +429,6 @@ public class HeroType implements Serializable {
 
     public void setMaxMaxLevelHp(Integer maxMaxLevelHp) {
         this.maxMaxLevelHp = maxMaxLevelHp;
-    }
-
-    public Map<DefenseType, Integer> getMinBaseDefenses() {
-        return minBaseDefenses;
-    }
-
-    public void setMinBaseDefenses(Map<DefenseType, Integer> minBaseDefenses) {
-        this.minBaseDefenses = minBaseDefenses;
-    }
-
-    public Map<DefenseType, Integer> getMinMaxLevelDefenses() {
-        return minMaxLevelDefenses;
-    }
-
-    public void setMinMaxLevelDefenses(Map<DefenseType, Integer> minMaxLevelDefenses) {
-        this.minMaxLevelDefenses = minMaxLevelDefenses;
-    }
-
-    public Map<DefenseType, Integer> getMaxBaseDefenses() {
-        return maxBaseDefenses;
-    }
-
-    public void setMaxBaseDefenses(Map<DefenseType, Integer> maxBaseDefenses) {
-        this.maxBaseDefenses = maxBaseDefenses;
-    }
-
-    public Map<DefenseType, Integer> getMaxMaxLevelDefenses() {
-        return maxMaxLevelDefenses;
-    }
-
-    public void setMaxMaxLevelDefenses(Map<DefenseType, Integer> maxMaxLevelDefenses) {
-        this.maxMaxLevelDefenses = maxMaxLevelDefenses;
     }
 
     @Override

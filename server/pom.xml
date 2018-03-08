@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.idle.game</groupId>
     <artifactId>server</artifactId>
-    <version>0.0.1-ALPHA</version>
+    <version>0.0.2-ALPHA</version>
     <packaging>war</packaging>
 
     <properties>

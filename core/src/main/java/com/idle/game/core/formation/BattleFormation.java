@@ -4,12 +4,20 @@ import com.idle.game.core.battle.BattlePositionedHero;
 import com.idle.game.core.formation.type.FormationPosition;
 import com.idle.game.core.constant.IdleConstants;
 import com.idle.game.core.formation.type.FormationAllocation;
+import static com.idle.game.core.formation.type.FormationPosition.F_0;
+import static com.idle.game.core.formation.type.FormationPosition.F_1;
+import static com.idle.game.core.formation.type.FormationPosition.M_0;
+import static com.idle.game.core.formation.type.FormationPosition.M_1;
+import com.idle.game.core.formation.type.FormationPositionRelation;
 import com.idle.game.core.formation.type.FormationType;
+import com.idle.game.core.hero.type.HeroTypeSize;
+import static com.idle.game.core.hero.type.HeroTypeSize.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.ValidationException;
 
 /**
  *
@@ -27,32 +35,63 @@ public class BattleFormation implements Serializable {
     }
 
     public BattleFormation(List<BattlePositionedHero> heroes) {
-        this.heroes.addAll(heroes);
-        this.size = this.heroes.size();
+        heroes.forEach((h) -> {
+            this.addBattlePositionedHero(h);
+        });
     }
 
     public BattleFormation(BattlePositionedHero[] heroes) {
-        this.heroes.addAll(Arrays.asList(heroes));
-        this.size = this.heroes.size();
+        Arrays.asList(heroes).forEach((h) -> {
+            this.addBattlePositionedHero(h);
+        });
     }
 
     public BattleFormation(FormationAllocation fa, List<BattlePositionedHero> heroes) {
         this.formationAllocation = fa;
-        this.heroes.addAll(heroes);
-        this.size = this.heroes.size();
+        heroes.forEach((h) -> {
+            this.addBattlePositionedHero(h);
+        });
     }
 
     public BattleFormation(FormationAllocation fa, BattlePositionedHero[] heroes) {
         this.formationAllocation = fa;
-        this.heroes.addAll(Arrays.asList(heroes));
-        this.size = this.heroes.size();
+        Arrays.asList(heroes).forEach((h) -> {
+            this.addBattlePositionedHero(h);
+        });
     }
 
-    public void addBattlePositionedHero(BattlePositionedHero hero) {
+    public void addBattlePositionedHero(BattlePositionedHero bph) {
 
-        assert this.size + 1 <= IdleConstants.MAX_SIZE_FORMATION : "Formation max size reached, BUG";
-        this.size++;
-        this.heroes.add(hero);
+        HeroTypeSize hts = bph.getHero().getHeroType().getSize();
+        FormationPosition fp = bph.getPosition();
+
+        assert this.size + hts.size() <= IdleConstants.MAX_SIZE_FORMATION : "Formation max size reached, BUG";
+
+        if (hts.equals(HeroTypeSize.MEDIUM)) {
+            if (!fp.equals(F_0)
+                    && !fp.equals(F_1)
+                    && !fp.equals(M_0)
+                    && !fp.equals(M_1)) {
+                throw new ValidationException("can.not.allocate.hero.here");
+            }
+        } else if (hts.equals(LARGE)) {
+            if (!fp.equals(M_1)) {
+                throw new ValidationException("can.not.allocate.hero.here");
+            }
+        }
+
+        this.size += hts.size();
+        if (hts.equals(SMALL)) {
+            this.heroes.add(bph);
+
+        } else {
+            this.heroes.add(bph);
+            FormationPositionRelation.DATA.get(fp).get(hts).forEach((fpClone) -> {
+                BattlePositionedHero bphClone = bph.duplicate();
+                bphClone.setPosition(fpClone);
+                this.heroes.add(bphClone);
+            });
+        }
     }
 
     public void removedBattlePositionedHero(FormationPosition p) {
@@ -60,7 +99,7 @@ public class BattleFormation implements Serializable {
                 (ph) -> (ph.getPosition().equals(p))
         ).findFirst();
         if (ret.isPresent()) {
-            this.size--;
+            this.size -= ret.get().getHero().getHeroType().getSize().size();
             this.heroes.remove(ret.get());
         }
     }
@@ -79,10 +118,6 @@ public class BattleFormation implements Serializable {
 
     public Integer getSize() {
         return size;
-    }
-
-    public void setSize(Integer size) {
-        this.size = size;
     }
 
     public String getId() {

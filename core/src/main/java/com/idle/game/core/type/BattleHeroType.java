@@ -3,11 +3,15 @@ package com.idle.game.core.type;
 import com.idle.game.core.hero.type.HeroTypeQuality;
 import com.idle.game.core.action.Action;
 import com.idle.game.core.constant.IdleConstants;
+import com.idle.game.core.formation.type.FormationPositionType;
 import com.idle.game.core.hero.type.HeroTypeFaction;
 import com.idle.game.core.hero.type.HeroTypeRole;
+import com.idle.game.core.hero.type.HeroTypeSize;
 import com.idle.game.core.passive.Passive;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -18,15 +22,24 @@ public class BattleHeroType implements Serializable {
     private HeroTypeQuality quality;
     private HeroTypeFaction faction;
     private HeroTypeRole role;
+    private HeroTypeSize size;
     private String name;
-    private Action specialAction;
-    private Action defaultAction;
+    private final Map<FormationPositionType, Action> specialActions = new HashMap<>();
+    private final Map<FormationPositionType, Action> defaultActions = new HashMap<>();
     private DistanceType distanceType;
     private List<Passive> passives;
 
     private Integer maxLevel = IdleConstants.HERO_MAX_LEVEL;
 
     public BattleHeroType() {
+    }
+
+    public HeroTypeSize getSize() {
+        return size;
+    }
+
+    public void setSize(HeroTypeSize size) {
+        this.size = size;
     }
 
     public HeroTypeQuality getQuality() {
@@ -61,20 +74,12 @@ public class BattleHeroType implements Serializable {
         this.name = name;
     }
 
-    public Action getSpecialAction() {
-        return specialAction;
+    public Map<FormationPositionType, Action> getSpecialActions() {
+        return specialActions;
     }
 
-    public void setSpecialAction(Action specialAction) {
-        this.specialAction = specialAction;
-    }
-
-    public Action getDefaultAction() {
-        return defaultAction;
-    }
-
-    public void setDefaultAction(Action defaultAction) {
-        this.defaultAction = defaultAction;
+    public Map<FormationPositionType, Action> getDefaultActions() {
+        return defaultActions;
     }
 
     public DistanceType getDistanceType() {

@@ -33,5 +33,6 @@ public interface IdleConstants {
     final String LOG_NAME_SERVER = "com.idle.game.server";
 
     final Action DEFAULT_ACTION = new Action(new ActionEffect(DMG, TargetType.RANDOM, 100, DamageType.BLUNT));
+    final Action DEFAULT_SPECIAL_ACTION = new Action(new ActionEffect(DMG, TargetType.RANDOM, 100, DamageType.BLUNT), Boolean.TRUE);
 
 }

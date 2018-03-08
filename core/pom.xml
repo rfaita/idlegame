@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.idle.game</groupId>
     <artifactId>core</artifactId>
-    <version>0.0.1-ALPHA</version>
+    <version>0.0.2-ALPHA</version>
     <packaging>jar</packaging>
     
     <parent>
@@ -19,6 +19,11 @@
     </properties>
     
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
