@@ -24,8 +24,9 @@ export class HeroTypeComponent implements OnInit, OnDestroy {
   public heroTypeTypes: HeroTypeTypes;
   public actionEffectTypes: ActionEffectTypes;
 
-  private defaultActionBackUp: Action;
-  private specialActionBackUp: Action;
+  public defaultActionFormationPositionType: string = "";
+  public specialActionFormationPositionType: string = "";
+
 
   private sub: any;
 
@@ -51,7 +52,9 @@ export class HeroTypeComponent implements OnInit, OnDestroy {
         this.actionEffectTypesService.get().subscribe(env => {
           this.actionEffectTypes = env.data;
           if (id !== "new") {
-            this.heroTypeService.findById(id).subscribe(env => { this.heroType = env.data });
+            this.heroTypeService.findById(id).subscribe(env => {
+              this.heroType = env.data;
+            });
           } else {
             this.heroType = new HeroType();
           }
@@ -62,67 +65,71 @@ export class HeroTypeComponent implements OnInit, OnDestroy {
   }
 
   public save(data: any) {
-    data.id = this.heroType.id;
-    data.defaultAction = this.heroType.defaultAction;
-    data.specialAction = this.heroType.specialAction;
-    this.heroTypeService.save(data).subscribe(env => {
+    this.heroTypeService.save(this.heroType).subscribe(env => {
       this.heroType = env.data;
       this.snotifyService.info("Hero Type saved.", '', notificationConfig());
     });
   }
 
-
-  public changeHaveDefaultAction() {
-    if (this.defaultActionBackUp == null) {
-      this.defaultActionBackUp = clone(this.heroType.defaultAction);
-    }
-
-    if (this.heroType.defaultAction == null) {
-      this.heroType.defaultAction = (this.defaultActionBackUp != null) ? this.defaultActionBackUp : new Action();
-    } else {
-      this.heroType.defaultAction = null;
+  public addDefaultAction() {
+    if (this.defaultActionFormationPositionType != "") {
+      if (this.heroType.defaultActions == null) {
+        this.heroType.defaultActions = [];
+      }
+      if (this.defaultAction(this.heroType, this.defaultActionFormationPositionType) == null) {
+        this.heroType.defaultActions.push(new Action(this.defaultActionFormationPositionType));
+      }
+      this.defaultActionFormationPositionType = "";
     }
   }
 
-  public addSecundaryActionEffectDefaultAction() {
-    if (this.heroType.defaultAction.secundaryActionsEffects == null) {
-      this.heroType.defaultAction.secundaryActionsEffects = [];
-    }
-    this.heroType.defaultAction.secundaryActionsEffects.push(new ActionEffect());
+  public removeDefaultAction(i: number) {
+    this.heroType.defaultActions.splice(i, 1);
   }
 
-  public changeSecundaryActionEffectDefaultAction(event: ActionEffect, i: number) {
+  public addSpecialAction() {
+    if (this.specialActionFormationPositionType != "") {
+      if (this.heroType.specialActions == null) {
+        this.heroType.specialActions = [];
+      }
+      if (this.specialAction(this.heroType, this.specialActionFormationPositionType) == null) {
+        this.heroType.specialActions.push(new Action(this.specialActionFormationPositionType));
+      }
+      this.specialActionFormationPositionType = "";
+    }
+  }
+
+  public removeSpecialAction(i: number) {
+    this.heroType.specialActions.splice(i, 1);
+  }
+
+  public addSecundaryActionEffectDefaultAction(action: Action) {
+    if (action.secundaryActionsEffects == null) {
+      action.secundaryActionsEffects = [];
+    }
+    action.secundaryActionsEffects.push(new ActionEffect());
+  }
+
+  public changeSecundaryActionEffectDefaultAction(action: Action, event: ActionEffect, i: number) {
     if (event != null) {
-      this.heroType.defaultAction.secundaryActionsEffects[i] = event;
+      action.secundaryActionsEffects[i] = event;
     } else {
-      this.heroType.defaultAction.secundaryActionsEffects.splice(i, 1);
+      action.secundaryActionsEffects.splice(i, 1);
     }
   }
 
-  public changeHaveSpecialAction() {
-    if (this.specialActionBackUp == null) {
-      this.specialActionBackUp = clone(this.heroType.specialAction);
+  public addSecundaryActionEffectSpecialAction(action: Action) {
+    if (action.secundaryActionsEffects == null) {
+      action.secundaryActionsEffects = [];
     }
-
-    if (this.heroType.specialAction == null) {
-      this.heroType.specialAction = (this.specialActionBackUp != null) ? this.specialActionBackUp : new Action();
-    } else {
-      this.heroType.specialAction = null;
-    }
+    action.secundaryActionsEffects.push(new ActionEffect());
   }
 
-  public addSecundaryActionEffectSpecialAction() {
-    if (this.heroType.specialAction.secundaryActionsEffects == null) {
-      this.heroType.specialAction.secundaryActionsEffects = [];
-    }
-    this.heroType.specialAction.secundaryActionsEffects.push(new ActionEffect());
-  }
-
-  public changeSecundaryActionEffectSpecialAction(event: ActionEffect, i: number) {
+  public changeSecundaryActionEffectSpecialAction(action: Action, event: ActionEffect, i: number) {
     if (event != null) {
-      this.heroType.specialAction.secundaryActionsEffects[i] = event;
+      action.secundaryActionsEffects[i] = event;
     } else {
-      this.heroType.specialAction.secundaryActionsEffects.splice(i, 1);
+      action.secundaryActionsEffects.splice(i, 1);
     }
   }
 
@@ -130,5 +137,25 @@ export class HeroTypeComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+
+  private defaultAction(heroType: HeroType, fpt: String): Action {
+    let ret: Action[] = heroType.defaultActions.filter(a => a.formationPositionType == fpt);
+    if (ret.length > 0) {
+      return ret[0];
+    } else {
+      return null;
+    }
+
+  }
+
+  private specialAction(heroType: HeroType, fpt: String): Action {
+    let ret: Action[] = heroType.specialActions.filter(a => a.formationPositionType == fpt);
+    if (ret.length > 0) {
+      return ret[0];
+    } else {
+      return null;
+    }
+
+  }
 
 }

@@ -47,26 +47,15 @@
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
-                                        <label>Base Armor</label>
-                                        <input type="text" name="baseArmor" class="form-control" required [ngModel]="hero.baseArmor">
+                                        <label>Base AP</label>
+                                        <input type="text" name="baseDmg" class="form-control" required [ngModel]="hero.baseAp">
                                     </div>
                                 </div>
-                                <div class="col-md-1">
-                                    <div class="form-group form-black">
-                                        <label>Base MR</label>
-                                        <input type="text" name="baseMagicResist" class="form-control" required [ngModel]="hero.baseMagicResist">
-                                    </div>
-                                </div>
+                               
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
                                         <label>Base Speed</label>
                                         <input type="text" name="baseSpeed" class="form-control" required [ngModel]="hero.baseSpeed">
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="form-group form-black">
-                                        <label>Base Luck</label>
-                                        <input type="text" name="baseLuck" class="form-control" required [ngModel]="hero.baseLuck">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
@@ -96,6 +85,14 @@
 
                             </div>
 
+                            <div class="row">
+                                <div class="col-md-1" *ngFor="let defense of hero.baseDefenses">
+                                    <div class="form-group form-black">
+                                        <label>Base {{defense.type}}</label>
+                                        <input type="text" [ngModelOptions]="{standalone: true}" class="form-control" required [(ngModel)]="defense.value">
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="row">
                                 <div class="col-md-1">
@@ -106,26 +103,15 @@
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
-                                        <label>ML Armor</label>
-                                        <input type="text" name="maxLevelArmor" class="form-control" required [ngModel]="hero.maxLevelArmor">
+                                        <label>ML AP</label>
+                                        <input type="text" name="maxLevelDmg" class="form-control" required [ngModel]="hero.maxLevelAp">
                                     </div>
                                 </div>
-                                <div class="col-md-1">
-                                    <div class="form-group form-black">
-                                        <label>ML MR</label>
-                                        <input type="text" name="maxLevelMagicResist" class="form-control" required [ngModel]="hero.maxLevelMagicResist">
-                                    </div>
-                                </div>
+                             
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
                                         <label>ML Speed</label>
                                         <input type="text" name="maxLevelSpeed" class="form-control" required [ngModel]="hero.maxLevelSpeed">
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="form-group form-black">
-                                        <label>ML Luck</label>
-                                        <input type="text" name="maxLevelLuck" class="form-control" required [ngModel]="hero.maxLevelLuck">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
@@ -153,6 +139,15 @@
                                     </div>
                                 </div>
 
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-1" *ngFor="let defense of hero.maxLevelDefenses">
+                                    <div class="form-group form-black">
+                                        <label>ML {{defense.type}}</label>
+                                        <input type="text" [ngModelOptions]="{standalone: true}" class="form-control" required [(ngModel)]="defense.value">
+                                    </div>
+                                </div>
                             </div>
 
 

@@ -40,8 +40,9 @@ public class BattleHeroService {
                 Double levelUpRatio = 1d * ((hero.getLevel() - 1d) / (heroType.getMaxLevel() - 1d));
 
                 if (levelUpRatio > 0) {
-                    ret.getDefenses().keySet().forEach((dt) -> {
-                        ret.getDefenses().put(dt, hero.getBaseDefenses().get(dt) + (int) ((hero.getMaxLevelDefenses().get(dt) - hero.getBaseDefenses().get(dt)) * levelUpRatio));
+                    ret.getDefenses().forEach((def) -> {
+                        ret.setDefense(def.getType(), hero.getBaseDefense(def.getType()).getValue()
+                                + (int) ((hero.getMaxLevelDefense(def.getType()).getValue() - hero.getBaseDefense(def.getType()).getValue()) * levelUpRatio));
                     });
                     ret.setCritChance(hero.getBaseCritChance() + (int) ((hero.getMaxLevelCritChance() - hero.getBaseCritChance()) * levelUpRatio));
                     ret.setCritDamage(hero.getBaseCritDamage() + (int) ((hero.getMaxLevelCritDamage() - hero.getBaseCritDamage()) * levelUpRatio));
@@ -51,8 +52,8 @@ public class BattleHeroService {
                     ret.setHp(hero.getBaseHp() + (int) ((hero.getMaxLevelHp() - hero.getBaseHp()) * levelUpRatio));
                     ret.setSpeed(hero.getBaseSpeed() + (int) ((hero.getMaxLevelSpeed() - hero.getBaseSpeed()) * levelUpRatio));
                 } else {
-                    ret.getDefenses().keySet().forEach((dt) -> {
-                        ret.getDefenses().put(dt, hero.getBaseDefenses().get(dt));
+                    ret.getDefenses().forEach((def) -> {
+                        ret.setDefense(def.getType(), hero.getBaseDefense(def.getType()).getValue());
                     });
                     ret.setCritChance(hero.getBaseCritChance());
                     ret.setCritDamage(hero.getBaseCritDamage());

@@ -19,7 +19,7 @@ public class NextSpecialActionTests {
     @Test
     public void testPositionedHeroBackAndSpecialActionBack() {
 
-        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.B_0, createSpecialBackHero()).getNextAction();
+        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.B_0, createSpecialBackHero()).nextAction();
         Assert.assertTrue(a != null);
         Assert.assertEquals(FIRE, a.getMainActionEffect().getDamageType());
 
@@ -28,7 +28,7 @@ public class NextSpecialActionTests {
     @Test
     public void testPositionedHeroFrontAndSpecialActionBack() {
 
-        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.F_0, createSpecialBackHero()).getNextAction();
+        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.F_0, createSpecialBackHero()).nextAction();
         Assert.assertTrue(a != null);
         Assert.assertEquals(BLUNT, a.getMainActionEffect().getDamageType());
 
@@ -37,7 +37,7 @@ public class NextSpecialActionTests {
     @Test
     public void testPositionedHeroMiddleAndSpecialActionBack() {
 
-        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.M_0, createSpecialBackHero()).getNextAction();
+        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.M_0, createSpecialBackHero()).nextAction();
         Assert.assertTrue(a != null);
         Assert.assertEquals(BLUNT, a.getMainActionEffect().getDamageType());
 
@@ -46,7 +46,7 @@ public class NextSpecialActionTests {
     @Test
     public void testPositionedHeroBackAndSpecialActionMiddle() {
 
-        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.B_0, createSpecialMiddleHero()).getNextAction();
+        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.B_0, createSpecialMiddleHero()).nextAction();
         Assert.assertTrue(a != null);
         Assert.assertEquals(BLUNT, a.getMainActionEffect().getDamageType());
 
@@ -55,7 +55,7 @@ public class NextSpecialActionTests {
     @Test
     public void testPositionedHeroFrontAndSpecialActionMiddle() {
 
-        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.F_0, createSpecialMiddleHero()).getNextAction();
+        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.F_0, createSpecialMiddleHero()).nextAction();
         Assert.assertTrue(a != null);
         Assert.assertEquals(BLUNT, a.getMainActionEffect().getDamageType());
 
@@ -64,7 +64,7 @@ public class NextSpecialActionTests {
     @Test
     public void testPositionedHeroMiddleAndSpecialActionMiddle() {
 
-        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.M_0, createSpecialMiddleHero()).getNextAction();
+        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.M_0, createSpecialMiddleHero()).nextAction();
 
         Assert.assertTrue(a != null);
         Assert.assertEquals(FIRE, a.getMainActionEffect().getDamageType());
@@ -74,7 +74,7 @@ public class NextSpecialActionTests {
     @Test
     public void testPositionedHeroBackAndSpecialActionFront() {
 
-        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.B_0, createSpecialFrontHero()).getNextAction();
+        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.B_0, createSpecialFrontHero()).nextAction();
 
         Assert.assertTrue(a != null);
         Assert.assertEquals(BLUNT, a.getMainActionEffect().getDamageType());
@@ -84,7 +84,7 @@ public class NextSpecialActionTests {
     @Test
     public void testPositionedHeroFrontAndSpecialActionFront() {
 
-        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.F_0, createSpecialFrontHero()).getNextAction();
+        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.F_0, createSpecialFrontHero()).nextAction();
 
         Assert.assertTrue(a != null);
         Assert.assertEquals(FIRE, a.getMainActionEffect().getDamageType());
@@ -94,7 +94,7 @@ public class NextSpecialActionTests {
     @Test
     public void testPositionedHeroMiddleAndSpecialActionFront() {
 
-        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.M_0, createSpecialFrontHero()).getNextAction();
+        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.M_0, createSpecialFrontHero()).nextAction();
 
         Assert.assertTrue(a != null);
         Assert.assertEquals(BLUNT, a.getMainActionEffect().getDamageType());
@@ -104,7 +104,7 @@ public class NextSpecialActionTests {
     @Test
     public void testPositionedHeroBackAndSpecialActionBackAndAll() {
 
-        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.B_0, createSpecialBackAndAllHero()).getNextAction();
+        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.B_0, createSpecialBackAndAllHero()).nextAction();
 
         Assert.assertTrue(a != null);
         Assert.assertEquals(FIRE, a.getMainActionEffect().getDamageType());
@@ -114,7 +114,7 @@ public class NextSpecialActionTests {
     @Test
     public void testPositionedHeroFrontAndSpecialActionBackAndAll() {
 
-        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.F_0, createSpecialBackAndAllHero()).getNextAction();
+        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.F_0, createSpecialBackAndAllHero()).nextAction();
         Assert.assertTrue(a != null);
         Assert.assertEquals(HOLY, a.getMainActionEffect().getDamageType());
 
@@ -123,7 +123,7 @@ public class NextSpecialActionTests {
     @Test
     public void testPositionedHeroMiddleAndSpecialActionBackAndAll() {
 
-        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.M_0, createSpecialBackAndAllHero()).getNextAction();
+        Action a = createBasicAttackPositionedHeroMaxEnergy(FormationPosition.M_0, createSpecialBackAndAllHero()).nextAction();
         Assert.assertTrue(a != null);
         Assert.assertEquals(HOLY, a.getMainActionEffect().getDamageType());
 

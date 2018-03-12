@@ -20,6 +20,7 @@ import static com.idle.game.core.hero.type.HeroTypeRole.MAGE;
 import static com.idle.game.core.hero.type.HeroTypeRole.PRIEST;
 import static com.idle.game.core.hero.type.HeroTypeRole.RANGER;
 import static com.idle.game.core.hero.type.HeroTypeRole.WARRIOR;
+import com.idle.game.core.hero.type.HeroTypeSize;
 import com.idle.game.core.type.AttributeType;
 import com.idle.game.core.type.DamageType;
 import static com.idle.game.core.type.DamageType.FIRE;
@@ -97,25 +98,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(571480);
             ht.setMinMaxLevelDmg(19107);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1958);
+            ht.setMinMaxLevelAp(19107);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1958);
             ht.setMinMaxLevelSpeed(1042);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1958);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1958);
             ht.setMinBaseHp(25663);
             ht.setMinBaseDmg(2526);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 682);
+            ht.setMinBaseAp(2526);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 682);
             ht.setMinBaseSpeed(548);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 682);
+            ht.setMinBaseDefense(DefenseType.FIRE, 682);
             ht.setMaxMaxLevelHp(698476);
             ht.setMaxMaxLevelDmg(23353);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 2393);
+            ht.setMaxMaxLevelAp(23353);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 2393);
             ht.setMaxMaxLevelSpeed(1274);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 2393);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 2393);
             ht.setMaxBaseHp(31365);
             ht.setMaxBaseDmg(3088);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 834);
+            ht.setMaxBaseAp(3088);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 834);
             ht.setMaxBaseSpeed(670);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 834);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 834);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -128,25 +134,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(365637);
             ht.setMinMaxLevelDmg(20896);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 2642);
+            ht.setMinMaxLevelAp(20896);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 2642);
             ht.setMinMaxLevelSpeed(1037);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 2642);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 2642);
             ht.setMinBaseHp(17088);
             ht.setMinBaseDmg(2966);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 979);
+            ht.setMinBaseAp(2966);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 979);
             ht.setMinBaseSpeed(546);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 979);
+            ht.setMinBaseDefense(DefenseType.FIRE, 979);
             ht.setMaxMaxLevelHp(446889);
             ht.setMaxMaxLevelDmg(25540);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 3229);
+            ht.setMaxMaxLevelAp(25540);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 3229);
             ht.setMaxMaxLevelSpeed(1267);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 3229);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 3229);
             ht.setMaxBaseHp(20886);
             ht.setMaxBaseDmg(3625);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 1197);
+            ht.setMaxBaseAp(3625);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 1197);
             ht.setMaxBaseSpeed(668);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 1197);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 1197);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -159,25 +170,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(279987);
             ht.setMinMaxLevelDmg(26558);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1399);
+            ht.setMinMaxLevelAp(26558);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1399);
             ht.setMinMaxLevelSpeed(1023);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1399);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1399);
             ht.setMinBaseHp(15833);
             ht.setMinBaseDmg(3749);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 569);
+            ht.setMinBaseAp(3749);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 569);
             ht.setMinBaseSpeed(532);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 569);
+            ht.setMinBaseDefense(DefenseType.FIRE, 569);
             ht.setMaxMaxLevelHp(342207);
             ht.setMaxMaxLevelDmg(32460);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1709);
+            ht.setMaxMaxLevelAp(32460);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1709);
             ht.setMaxMaxLevelSpeed(1251);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1709);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1709);
             ht.setMaxBaseHp(19351);
             ht.setMaxBaseDmg(4582);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 695);
+            ht.setMaxBaseAp(4582);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 695);
             ht.setMaxBaseSpeed(650);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 695);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 695);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -190,25 +206,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(476697);
             ht.setMinMaxLevelDmg(16205);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 2055);
+            ht.setMinMaxLevelAp(16205);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 2055);
             ht.setMinMaxLevelSpeed(1040);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 2055);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 2055);
             ht.setMinBaseHp(16385);
             ht.setMinBaseDmg(3296);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 741);
+            ht.setMinBaseAp(3296);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 741);
             ht.setMinBaseSpeed(545);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 741);
+            ht.setMinBaseDefense(DefenseType.FIRE, 741);
             ht.setMaxMaxLevelHp(582629);
             ht.setMaxMaxLevelDmg(19806);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 2511);
+            ht.setMaxMaxLevelAp(19806);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 2511);
             ht.setMaxMaxLevelSpeed(1271);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 2511);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 2511);
             ht.setMaxBaseHp(20027);
             ht.setMaxBaseDmg(4028);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 905);
+            ht.setMaxBaseAp(4028);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 905);
             ht.setMaxBaseSpeed(667);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 905);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 905);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -221,25 +242,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(293849);
             ht.setMinMaxLevelDmg(28387);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1399);
+            ht.setMinMaxLevelAp(28387);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1399);
             ht.setMinMaxLevelSpeed(1052);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1399);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1399);
             ht.setMinBaseHp(13577);
             ht.setMinBaseDmg(4190);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 549);
+            ht.setMinBaseAp(4190);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 549);
             ht.setMinBaseSpeed(559);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 549);
+            ht.setMinBaseDefense(DefenseType.FIRE, 549);
             ht.setMaxMaxLevelHp(359149);
             ht.setMaxMaxLevelDmg(34695);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1709);
+            ht.setMaxMaxLevelAp(34695);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1709);
             ht.setMaxMaxLevelSpeed(1286);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1709);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1709);
             ht.setMaxBaseHp(16594);
             ht.setMaxBaseDmg(5122);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 671);
+            ht.setMaxBaseAp(5122);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 671);
             ht.setMaxBaseSpeed(683);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 671);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 671);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -252,25 +278,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(557116);
             ht.setMinMaxLevelDmg(13640);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1958);
+            ht.setMinMaxLevelAp(13640);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1958);
             ht.setMinMaxLevelSpeed(1037);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1958);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1958);
             ht.setMinBaseHp(26345);
             ht.setMinBaseDmg(2079);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 751);
+            ht.setMinBaseAp(2079);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 751);
             ht.setMinBaseSpeed(543);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 751);
+            ht.setMinBaseDefense(DefenseType.FIRE, 751);
             ht.setMaxMaxLevelHp(680920);
             ht.setMaxMaxLevelDmg(16672);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 2393);
+            ht.setMaxMaxLevelAp(16672);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 2393);
             ht.setMaxMaxLevelSpeed(1267);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 2393);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 2393);
             ht.setMaxBaseHp(32199);
             ht.setMaxBaseDmg(2541);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 917);
+            ht.setMaxBaseAp(2541);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 917);
             ht.setMaxBaseSpeed(663);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 917);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 917);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -283,25 +314,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(262555);
             ht.setMinMaxLevelDmg(22568);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1352);
+            ht.setMinMaxLevelAp(22568);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1352);
             ht.setMinMaxLevelSpeed(1013);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1352);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1352);
             ht.setMinBaseHp(13577);
             ht.setMinBaseDmg(3492);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 549);
+            ht.setMinBaseAp(3492);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 549);
             ht.setMinBaseSpeed(522);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 549);
+            ht.setMinBaseDefense(DefenseType.FIRE, 549);
             ht.setMaxMaxLevelHp(320901);
             ht.setMaxMaxLevelDmg(27583);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1652);
+            ht.setMaxMaxLevelAp(27583);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1652);
             ht.setMaxMaxLevelSpeed(1239);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1652);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1652);
             ht.setMaxBaseHp(16594);
             ht.setMaxBaseDmg(4268);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 671);
+            ht.setMaxBaseAp(4268);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 671);
             ht.setMaxBaseSpeed(638);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 671);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 671);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -314,25 +350,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(358453);
             ht.setMinMaxLevelDmg(30017);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1399);
+            ht.setMinMaxLevelAp(30017);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1399);
             ht.setMinMaxLevelSpeed(1023);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1399);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1399);
             ht.setMinBaseHp(19326);
             ht.setMinBaseDmg(3749);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 569);
+            ht.setMinBaseAp(3749);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 569);
             ht.setMinBaseSpeed(529);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 569);
+            ht.setMinBaseDefense(DefenseType.FIRE, 569);
             ht.setMaxMaxLevelHp(438109);
             ht.setMaxMaxLevelDmg(36687);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1709);
+            ht.setMaxMaxLevelAp(36687);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1709);
             ht.setMaxMaxLevelSpeed(1251);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1709);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1709);
             ht.setMaxBaseHp(23620);
             ht.setMaxBaseDmg(4582);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 695);
+            ht.setMaxBaseAp(4582);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 695);
             ht.setMaxBaseSpeed(647);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 695);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 695);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -345,25 +386,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(390807);
             ht.setMinMaxLevelDmg(21846);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1352);
+            ht.setMinMaxLevelAp(21846);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1352);
             ht.setMinMaxLevelSpeed(1031);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1352);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1352);
             ht.setMinBaseHp(20294);
             ht.setMinBaseDmg(3335);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 549);
+            ht.setMinBaseAp(3335);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 549);
             ht.setMinBaseSpeed(533);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 549);
+            ht.setMinBaseDefense(DefenseType.FIRE, 549);
             ht.setMaxMaxLevelHp(477653);
             ht.setMaxMaxLevelDmg(26700);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1652);
+            ht.setMaxMaxLevelAp(26700);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1652);
             ht.setMaxMaxLevelSpeed(1260);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1652);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1652);
             ht.setMaxBaseHp(24804);
             ht.setMaxBaseDmg(4077);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 671);
+            ht.setMaxBaseAp(4077);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 671);
             ht.setMaxBaseSpeed(651);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 671);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 671);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -376,25 +422,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(435599);
             ht.setMinMaxLevelDmg(24820);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1399);
+            ht.setMinMaxLevelAp(24820);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1399);
             ht.setMinMaxLevelSpeed(1109);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1399);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1399);
             ht.setMinBaseHp(20506);
             ht.setMinBaseDmg(3570);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 569);
+            ht.setMinBaseAp(3570);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 569);
             ht.setMinBaseSpeed(580);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 569);
+            ht.setMinBaseDefense(DefenseType.FIRE, 569);
             ht.setMaxMaxLevelHp(532399);
             ht.setMaxMaxLevelDmg(30336);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1709);
+            ht.setMaxMaxLevelAp(30336);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1709);
             ht.setMaxMaxLevelSpeed(1355);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1709);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1709);
             ht.setMaxBaseHp(25062);
             ht.setMaxBaseDmg(4364);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 695);
+            ht.setMaxBaseAp(4364);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 695);
             ht.setMaxBaseSpeed(708);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 695);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 695);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -407,25 +458,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(374039);
             ht.setMinMaxLevelDmg(21641);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1352);
+            ht.setMinMaxLevelAp(21641);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1352);
             ht.setMinMaxLevelSpeed(1069);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1352);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1352);
             ht.setMinBaseHp(17492);
             ht.setMinBaseDmg(3296);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 549);
+            ht.setMinBaseAp(3296);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 549);
             ht.setMinBaseSpeed(560);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 549);
+            ht.setMinBaseDefense(DefenseType.FIRE, 549);
             ht.setMaxMaxLevelHp(457159);
             ht.setMaxMaxLevelDmg(26450);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1652);
+            ht.setMaxMaxLevelAp(26450);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1652);
             ht.setMaxMaxLevelSpeed(1307);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1652);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1652);
             ht.setMaxBaseHp(21380);
             ht.setMaxBaseDmg(4028);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 671);
+            ht.setMaxBaseAp(4028);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 671);
             ht.setMaxBaseSpeed(684);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 671);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 671);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -438,25 +494,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(437340);
             ht.setMinMaxLevelDmg(22866);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1399);
+            ht.setMinMaxLevelAp(22866);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1399);
             ht.setMinMaxLevelSpeed(1031);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1399);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1399);
             ht.setMinBaseHp(21001);
             ht.setMinBaseDmg(3884);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 569);
+            ht.setMinBaseAp(3884);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 569);
             ht.setMinBaseSpeed(540);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 569);
+            ht.setMinBaseDefense(DefenseType.FIRE, 569);
             ht.setMaxMaxLevelHp(534526);
             ht.setMaxMaxLevelDmg(27948);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1709);
+            ht.setMaxMaxLevelAp(27948);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1709);
             ht.setMaxMaxLevelSpeed(1260);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1709);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1709);
             ht.setMaxBaseHp(25667);
             ht.setMaxBaseDmg(4748);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 695);
+            ht.setMaxBaseAp(4748);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 695);
             ht.setMaxBaseSpeed(660);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 695);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 695);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -469,25 +530,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(428710);
             ht.setMinMaxLevelDmg(17431);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1421);
+            ht.setMinMaxLevelAp(17431);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1421);
             ht.setMinMaxLevelSpeed(1044);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1421);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1421);
             ht.setMinBaseHp(27076);
             ht.setMinBaseDmg(2707);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 598);
+            ht.setMinBaseAp(2707);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 598);
             ht.setMinBaseSpeed(548);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 598);
+            ht.setMinBaseDefense(DefenseType.FIRE, 598);
             ht.setMaxMaxLevelHp(523978);
             ht.setMaxMaxLevelDmg(21305);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1737);
+            ht.setMaxMaxLevelAp(21305);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1737);
             ht.setMaxMaxLevelSpeed(1276);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1737);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1737);
             ht.setMaxBaseHp(33092);
             ht.setMaxBaseDmg(3309);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 730);
+            ht.setMaxBaseAp(3309);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 730);
             ht.setMaxBaseSpeed(670);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 730);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 730);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -500,25 +566,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(305987);
             ht.setMinMaxLevelDmg(27050);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1421);
+            ht.setMinMaxLevelAp(27050);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1421);
             ht.setMinMaxLevelSpeed(1011);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1421);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1421);
             ht.setMinBaseHp(16104);
             ht.setMinBaseDmg(3955);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 579);
+            ht.setMinBaseAp(3955);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 579);
             ht.setMinBaseSpeed(519);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 579);
+            ht.setMinBaseDefense(DefenseType.FIRE, 579);
             ht.setMaxMaxLevelHp(373985);
             ht.setMaxMaxLevelDmg(33062);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1737);
+            ht.setMaxMaxLevelAp(33062);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1737);
             ht.setMaxMaxLevelSpeed(1235);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1737);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1737);
             ht.setMaxBaseHp(19682);
             ht.setMaxBaseDmg(4833);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 707);
+            ht.setMaxBaseAp(4833);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 707);
             ht.setMaxBaseSpeed(635);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 707);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 707);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -531,25 +602,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(413532);
             ht.setMinMaxLevelDmg(18454);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1468);
+            ht.setMinMaxLevelAp(18454);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1468);
             ht.setMinMaxLevelSpeed(1042);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1468);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1468);
             ht.setMinBaseHp(21824);
             ht.setMinBaseDmg(2884);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 598);
+            ht.setMinBaseAp(2884);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 598);
             ht.setMinBaseSpeed(523);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 598);
+            ht.setMinBaseDefense(DefenseType.FIRE, 598);
             ht.setMaxMaxLevelHp(505428);
             ht.setMaxMaxLevelDmg(22554);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1794);
+            ht.setMaxMaxLevelAp(22554);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1794);
             ht.setMaxMaxLevelSpeed(1274);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1794);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1794);
             ht.setMaxBaseHp(26674);
             ht.setMaxBaseDmg(3524);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 730);
+            ht.setMaxBaseAp(3524);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 730);
             ht.setMaxBaseSpeed(639);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 730);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 730);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -562,25 +638,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(526962);
             ht.setMinMaxLevelDmg(24611);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1421);
+            ht.setMinMaxLevelAp(24611);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1421);
             ht.setMinMaxLevelSpeed(1011);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1421);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1421);
             ht.setMinBaseHp(22342);
             ht.setMinBaseDmg(3280);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 579);
+            ht.setMinBaseAp(3280);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 579);
             ht.setMinBaseSpeed(517);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 579);
+            ht.setMinBaseDefense(DefenseType.FIRE, 579);
             ht.setMaxMaxLevelHp(644064);
             ht.setMaxMaxLevelDmg(30081);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1737);
+            ht.setMaxMaxLevelAp(30081);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1737);
             ht.setMaxMaxLevelSpeed(1235);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1737);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1737);
             ht.setMaxBaseHp(27306);
             ht.setMaxBaseDmg(4008);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 707);
+            ht.setMaxBaseAp(4008);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 707);
             ht.setMaxBaseSpeed(631);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 707);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 707);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -593,25 +674,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(583668);
             ht.setMinMaxLevelDmg(12871);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 2310);
+            ht.setMinMaxLevelAp(12871);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 2310);
             ht.setMinMaxLevelSpeed(1037);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 2310);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 2310);
             ht.setMinBaseHp(26816);
             ht.setMinBaseDmg(1883);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 828);
+            ht.setMinBaseAp(1883);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 828);
             ht.setMinBaseSpeed(543);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 828);
+            ht.setMinBaseDefense(DefenseType.FIRE, 828);
             ht.setMaxMaxLevelHp(713372);
             ht.setMaxMaxLevelDmg(15731);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 2824);
+            ht.setMaxMaxLevelAp(15731);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 2824);
             ht.setMaxMaxLevelSpeed(1267);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 2824);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 2824);
             ht.setMaxBaseHp(32776);
             ht.setMaxBaseDmg(2301);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 1012);
+            ht.setMaxBaseAp(2301);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 1012);
             ht.setMaxBaseSpeed(663);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 1012);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 1012);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -624,25 +710,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(316914);
             ht.setMinMaxLevelDmg(20817);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1538);
+            ht.setMinMaxLevelAp(20817);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1538);
             ht.setMinMaxLevelSpeed(1026);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1538);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1538);
             ht.setMinBaseHp(17088);
             ht.setMinBaseDmg(2707);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 627);
+            ht.setMinBaseAp(2707);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 627);
             ht.setMinBaseSpeed(535);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 627);
+            ht.setMinBaseDefense(DefenseType.FIRE, 627);
             ht.setMaxMaxLevelHp(387340);
             ht.setMaxMaxLevelDmg(25443);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1880);
+            ht.setMaxMaxLevelAp(25443);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1880);
             ht.setMaxMaxLevelSpeed(1254);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1880);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1880);
             ht.setMaxBaseHp(20886);
             ht.setMaxBaseDmg(3309);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 767);
+            ht.setMaxBaseAp(3309);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 767);
             ht.setMaxBaseSpeed(653);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 767);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 767);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -655,25 +746,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(323174);
             ht.setMinMaxLevelDmg(21021);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1468);
+            ht.setMinMaxLevelAp(21021);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1468);
             ht.setMinMaxLevelSpeed(1080);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1468);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1468);
             ht.setMinBaseHp(15774);
             ht.setMinBaseDmg(3080);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 598);
+            ht.setMinBaseAp(3080);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 598);
             ht.setMinBaseSpeed(573);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 598);
+            ht.setMinBaseDefense(DefenseType.FIRE, 598);
             ht.setMaxMaxLevelHp(394990);
             ht.setMaxMaxLevelDmg(25693);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1794);
+            ht.setMaxMaxLevelAp(25693);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1794);
             ht.setMaxMaxLevelSpeed(1320);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1794);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1794);
             ht.setMaxBaseHp(19280);
             ht.setMaxBaseDmg(3764);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 730);
+            ht.setMaxBaseAp(3764);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 730);
             ht.setMaxBaseSpeed(701);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 730);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 730);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -686,25 +782,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(280497);
             ht.setMinMaxLevelDmg(26555);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1468);
+            ht.setMinMaxLevelAp(26555);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1468);
             ht.setMinMaxLevelSpeed(1049);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1468);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1468);
             ht.setMinBaseHp(15774);
             ht.setMinBaseDmg(3200);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 598);
+            ht.setMinBaseAp(3200);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 598);
             ht.setMinBaseSpeed(556);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 598);
+            ht.setMinBaseDefense(DefenseType.FIRE, 598);
             ht.setMaxMaxLevelHp(342829);
             ht.setMaxMaxLevelDmg(32457);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1794);
+            ht.setMaxMaxLevelAp(32457);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1794);
             ht.setMaxMaxLevelSpeed(1283);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1794);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1794);
             ht.setMaxBaseHp(19280);
             ht.setMaxBaseDmg(3912);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 730);
+            ht.setMaxBaseAp(3912);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 730);
             ht.setMaxBaseSpeed(680);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 730);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 730);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -717,25 +818,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(445377);
             ht.setMinMaxLevelDmg(18457);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1468);
+            ht.setMinMaxLevelAp(18457);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1468);
             ht.setMinMaxLevelSpeed(1013);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1468);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1468);
             ht.setMinBaseHp(21706);
             ht.setMinBaseDmg(2589);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 627);
+            ht.setMinBaseAp(2589);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 627);
             ht.setMinBaseSpeed(432);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 627);
+            ht.setMinBaseDefense(DefenseType.FIRE, 627);
             ht.setMaxMaxLevelHp(544349);
             ht.setMaxMaxLevelDmg(22559);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1794);
+            ht.setMaxMaxLevelAp(22559);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1794);
             ht.setMaxMaxLevelSpeed(1239);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1794);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1794);
             ht.setMaxBaseHp(26530);
             ht.setMaxBaseDmg(3165);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 767);
+            ht.setMaxBaseAp(3165);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 767);
             ht.setMaxBaseSpeed(528);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 767);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 767);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -748,25 +854,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(389057);
             ht.setMinMaxLevelDmg(23715);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1468);
+            ht.setMinMaxLevelAp(23715);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1468);
             ht.setMinMaxLevelSpeed(997);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1468);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1468);
             ht.setMinBaseHp(17492);
             ht.setMinBaseDmg(3460);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 598);
+            ht.setMinBaseAp(3460);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 598);
             ht.setMinBaseSpeed(510);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 598);
+            ht.setMinBaseDefense(DefenseType.FIRE, 598);
             ht.setMaxMaxLevelHp(475515);
             ht.setMaxMaxLevelDmg(28985);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1794);
+            ht.setMaxMaxLevelAp(28985);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1794);
             ht.setMaxMaxLevelSpeed(1219);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1794);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1794);
             ht.setMaxBaseHp(21380);
             ht.setMaxBaseDmg(4228);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 730);
+            ht.setMaxBaseAp(4228);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 730);
             ht.setMaxBaseSpeed(624);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 730);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 730);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -779,25 +890,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(455989);
             ht.setMinMaxLevelDmg(19071);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 2854);
+            ht.setMinMaxLevelAp(19071);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 2854);
             ht.setMinMaxLevelSpeed(1042);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 2854);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 2854);
             ht.setMinBaseHp(23691);
             ht.setMinBaseDmg(2502);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 839);
+            ht.setMinBaseAp(2502);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 839);
             ht.setMinBaseSpeed(548);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 839);
+            ht.setMinBaseDefense(DefenseType.FIRE, 839);
             ht.setMaxMaxLevelHp(557319);
             ht.setMaxMaxLevelDmg(23309);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 3488);
+            ht.setMaxMaxLevelAp(23309);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 3488);
             ht.setMaxMaxLevelSpeed(1274);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 3488);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 3488);
             ht.setMaxBaseHp(28955);
             ht.setMaxBaseDmg(3058);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 1025);
+            ht.setMaxBaseAp(3058);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 1025);
             ht.setMaxBaseSpeed(670);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 1025);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 1025);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -810,25 +926,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(512027);
             ht.setMinMaxLevelDmg(16926);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1445);
+            ht.setMinMaxLevelAp(16926);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1445);
             ht.setMinMaxLevelSpeed(1045);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1445);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1445);
             ht.setMinBaseHp(24013);
             ht.setMinBaseDmg(2393);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 598);
+            ht.setMinBaseAp(2393);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 598);
             ht.setMinBaseSpeed(548);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 598);
+            ht.setMinBaseDefense(DefenseType.FIRE, 598);
             ht.setMaxMaxLevelHp(625811);
             ht.setMaxMaxLevelDmg(20688);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1766);
+            ht.setMaxMaxLevelAp(20688);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1766);
             ht.setMaxMaxLevelSpeed(1277);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1766);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1766);
             ht.setMaxBaseHp(29349);
             ht.setMaxBaseDmg(2925);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 730);
+            ht.setMaxBaseAp(2925);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 730);
             ht.setMaxBaseSpeed(670);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 730);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 730);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -841,25 +962,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(335076);
             ht.setMinMaxLevelDmg(25852);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1399);
+            ht.setMinMaxLevelAp(25852);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1399);
             ht.setMinMaxLevelSpeed(1109);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1399);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1399);
             ht.setMinBaseHp(17088);
             ht.setMinBaseDmg(3570);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 569);
+            ht.setMinBaseAp(3570);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 569);
             ht.setMinBaseSpeed(580);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 569);
+            ht.setMinBaseDefense(DefenseType.FIRE, 569);
             ht.setMaxMaxLevelHp(409538);
             ht.setMaxMaxLevelDmg(31596);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1709);
+            ht.setMaxMaxLevelAp(31596);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1709);
             ht.setMaxMaxLevelSpeed(1355);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1709);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1709);
             ht.setMaxBaseHp(20886);
             ht.setMaxBaseDmg(4364);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 695);
+            ht.setMaxBaseAp(4364);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 695);
             ht.setMaxBaseSpeed(708);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 695);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 695);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -872,24 +998,28 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(434465);
             ht.setMinMaxLevelDmg(21151);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1399);
+            ht.setMinMaxLevelAp(21151);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1399);
             ht.setMinMaxLevelSpeed(997);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1399);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1399);
             ht.setMinBaseHp(24863);
             ht.setMinBaseDmg(2661);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 598);
+            ht.setMinBaseAp(2661);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 598);
             ht.setMinBaseSpeed(510);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 598);
+            ht.setMinBaseDefense(DefenseType.FIRE, 598);
             ht.setMaxMaxLevelHp(531013);
             ht.setMaxMaxLevelDmg(25851);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1709);
+            ht.setMaxMaxLevelAp(25851);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1709);
             ht.setMaxMaxLevelSpeed(1219);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1709);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1709);
             ht.setMaxBaseHp(30389);
             ht.setMaxBaseDmg(3253);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 730);
+            ht.setMaxBaseAp(3253);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 730);
             ht.setMaxBaseSpeed(624);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 730);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 730);
 
             ae = new ActionEffect(ActionType.DMG, TargetType.RANDOM, 158, FIRE);
             sae1 = new ActionEffect(ActionType.HEAL, TargetType.LOWER_LIFE, 420, FIRE, Boolean.TRUE);
@@ -898,9 +1028,11 @@ public class IdleHeroApplication {
             specialAction.setMainActionEffect(ae);
             specialAction.addSecundaryActionsEffects(sae1);
             specialAction.setSpecial(Boolean.TRUE);
+            specialAction.setFormationPositionType(ALL_LINES);
 
-            ht.getSpecialActions().put(ALL_LINES, specialAction);
+            ht.getSpecialActions().add(specialAction);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -913,25 +1045,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(454645);
             ht.setMinMaxLevelDmg(17590);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1399);
+            ht.setMinMaxLevelAp(17590);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1399);
             ht.setMinMaxLevelSpeed(1069);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1399);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1399);
             ht.setMinBaseHp(26369);
             ht.setMinBaseDmg(2786);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 569);
+            ht.setMinBaseAp(2786);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 569);
             ht.setMinBaseSpeed(561);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 569);
+            ht.setMinBaseDefense(DefenseType.FIRE, 569);
             ht.setMaxMaxLevelHp(555677);
             ht.setMaxMaxLevelDmg(21498);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1709);
+            ht.setMaxMaxLevelAp(21498);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1709);
             ht.setMaxMaxLevelSpeed(1307);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1709);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1709);
             ht.setMaxBaseHp(32229);
             ht.setMaxBaseDmg(3405);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 695);
+            ht.setMaxBaseAp(3405);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 695);
             ht.setMaxBaseSpeed(685);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 695);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 695);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -944,25 +1081,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(307177);
             ht.setMinMaxLevelDmg(16915);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1399);
+            ht.setMinMaxLevelAp(16915);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1399);
             ht.setMinMaxLevelSpeed(1054);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1399);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1399);
             ht.setMinBaseHp(18462);
             ht.setMinBaseDmg(2471);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 569);
+            ht.setMinBaseAp(2471);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 569);
             ht.setMinBaseSpeed(562);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 569);
+            ht.setMinBaseDefense(DefenseType.FIRE, 569);
             ht.setMaxMaxLevelHp(375439);
             ht.setMaxMaxLevelDmg(20673);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1709);
+            ht.setMaxMaxLevelAp(20673);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1709);
             ht.setMaxMaxLevelSpeed(1288);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1709);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1709);
             ht.setMaxBaseHp(22564);
             ht.setMaxBaseDmg(3021);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 695);
+            ht.setMaxBaseAp(3021);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 695);
             ht.setMaxBaseSpeed(686);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 695);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 695);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -975,25 +1117,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(620170);
             ht.setMinMaxLevelDmg(11778);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 2128);
+            ht.setMinMaxLevelAp(11778);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 2128);
             ht.setMinMaxLevelSpeed(1037);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 2128);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 2128);
             ht.setMinBaseHp(34939);
             ht.setMinBaseDmg(1726);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 598);
+            ht.setMinBaseAp(1726);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 598);
             ht.setMinBaseSpeed(543);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 598);
+            ht.setMinBaseDefense(DefenseType.FIRE, 598);
             ht.setMaxMaxLevelHp(757986);
             ht.setMaxMaxLevelDmg(14396);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 2600);
+            ht.setMaxMaxLevelAp(14396);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 2600);
             ht.setMaxMaxLevelSpeed(1267);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 2600);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 2600);
             ht.setMaxBaseHp(42703);
             ht.setMaxBaseDmg(2110);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 730);
+            ht.setMaxBaseAp(2110);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 730);
             ht.setMaxBaseSpeed(663);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 730);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 730);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -1006,25 +1153,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(356910);
             ht.setMinMaxLevelDmg(15890);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1468);
+            ht.setMinMaxLevelAp(15890);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1468);
             ht.setMinMaxLevelSpeed(1037);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1468);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1468);
             ht.setMinBaseHp(21621);
             ht.setMinBaseDmg(2335);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 598);
+            ht.setMinBaseAp(2335);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 598);
             ht.setMinBaseSpeed(541);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 598);
+            ht.setMinBaseDefense(DefenseType.FIRE, 598);
             ht.setMaxMaxLevelHp(436224);
             ht.setMaxMaxLevelDmg(19421);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1794);
+            ht.setMaxMaxLevelAp(19421);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1794);
             ht.setMaxMaxLevelSpeed(1267);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1794);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1794);
             ht.setMaxBaseHp(26425);
             ht.setMaxBaseDmg(2853);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 730);
+            ht.setMaxBaseAp(2853);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 730);
             ht.setMaxBaseSpeed(661);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 730);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 730);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -1037,25 +1189,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(271274);
             ht.setMinMaxLevelDmg(19479);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1399);
+            ht.setMinMaxLevelAp(19479);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1399);
             ht.setMinMaxLevelSpeed(1049);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1399);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1399);
             ht.setMinBaseHp(15833);
             ht.setMinBaseDmg(2884);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 569);
+            ht.setMinBaseAp(2884);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 569);
             ht.setMinBaseSpeed(556);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 569);
+            ht.setMinBaseDefense(DefenseType.FIRE, 569);
             ht.setMaxMaxLevelHp(331557);
             ht.setMaxMaxLevelDmg(23807);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1709);
+            ht.setMaxMaxLevelAp(23807);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1709);
             ht.setMaxMaxLevelSpeed(1283);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1709);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1709);
             ht.setMaxBaseHp(19351);
             ht.setMaxBaseDmg(3524);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 695);
+            ht.setMaxBaseAp(3524);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 695);
             ht.setMaxBaseSpeed(680);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 695);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 695);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -1068,25 +1225,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(530941);
             ht.setMinMaxLevelDmg(14716);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1468);
+            ht.setMinMaxLevelAp(14716);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1468);
             ht.setMinMaxLevelSpeed(1042);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1468);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1468);
             ht.setMinBaseHp(25211);
             ht.setMinBaseDmg(2060);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 788);
+            ht.setMinBaseAp(2060);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 788);
             ht.setMinBaseSpeed(548);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 788);
+            ht.setMinBaseDefense(DefenseType.FIRE, 788);
             ht.setMaxMaxLevelHp(648927);
             ht.setMaxMaxLevelDmg(17986);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1794);
+            ht.setMaxMaxLevelAp(17986);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1794);
             ht.setMaxMaxLevelSpeed(1274);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1794);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1794);
             ht.setMaxBaseHp(30813);
             ht.setMaxBaseDmg(2518);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 964);
+            ht.setMaxBaseAp(2518);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 964);
             ht.setMaxBaseSpeed(670);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 964);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 964);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -1099,25 +1261,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(302043);
             ht.setMinMaxLevelDmg(22664);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1399);
+            ht.setMinMaxLevelAp(22664);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1399);
             ht.setMinMaxLevelSpeed(1026);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1399);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1399);
             ht.setMinBaseHp(18462);
             ht.setMinBaseDmg(2471);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 569);
+            ht.setMinBaseAp(2471);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 569);
             ht.setMinBaseSpeed(535);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 569);
+            ht.setMinBaseDefense(DefenseType.FIRE, 569);
             ht.setMaxMaxLevelHp(369163);
             ht.setMaxMaxLevelDmg(27700);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1709);
+            ht.setMaxMaxLevelAp(27700);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1709);
             ht.setMaxMaxLevelSpeed(1254);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1709);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1709);
             ht.setMaxBaseHp(22564);
             ht.setMaxBaseDmg(3021);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 695);
+            ht.setMaxBaseAp(3021);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 695);
             ht.setMaxBaseSpeed(653);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 695);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 695);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -1130,25 +1297,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(379067);
             ht.setMinMaxLevelDmg(17424);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1399);
+            ht.setMinMaxLevelAp(17424);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1399);
             ht.setMinMaxLevelSpeed(1019);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1399);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1399);
             ht.setMinBaseHp(20012);
             ht.setMinBaseDmg(3080);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 549);
+            ht.setMinBaseAp(3080);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 549);
             ht.setMinBaseSpeed(543);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 549);
+            ht.setMinBaseDefense(DefenseType.FIRE, 549);
             ht.setMaxMaxLevelHp(463304);
             ht.setMaxMaxLevelDmg(21296);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1709);
+            ht.setMaxMaxLevelAp(21296);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1709);
             ht.setMaxMaxLevelSpeed(1245);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1709);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1709);
             ht.setMaxBaseHp(24460);
             ht.setMaxBaseDmg(3764);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 671);
+            ht.setMaxBaseAp(3764);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 671);
             ht.setMaxBaseSpeed(663);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 671);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 671);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -1161,25 +1333,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(259483);
             ht.setMinMaxLevelDmg(28427);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1352);
+            ht.setMinMaxLevelAp(28427);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1352);
             ht.setMinMaxLevelSpeed(1011);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1352);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1352);
             ht.setMinBaseHp(15656);
             ht.setMinBaseDmg(4003);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 549);
+            ht.setMinBaseAp(4003);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 549);
             ht.setMinBaseSpeed(519);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 549);
+            ht.setMinBaseDefense(DefenseType.FIRE, 549);
             ht.setMaxMaxLevelHp(317145);
             ht.setMaxMaxLevelDmg(34744);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1652);
+            ht.setMaxMaxLevelAp(34744);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1652);
             ht.setMaxMaxLevelSpeed(1235);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1652);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1652);
             ht.setMaxBaseHp(19136);
             ht.setMaxBaseDmg(4893);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 671);
+            ht.setMaxBaseAp(4893);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 671);
             ht.setMaxBaseSpeed(635);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 671);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 671);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -1192,25 +1369,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(386665);
             ht.setMinMaxLevelDmg(23599);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1399);
+            ht.setMinMaxLevelAp(23599);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1399);
             ht.setMinMaxLevelSpeed(1004);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1399);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1399);
             ht.setMinBaseHp(19652);
             ht.setMinBaseDmg(3067);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 569);
+            ht.setMinBaseAp(3067);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 569);
             ht.setMinBaseSpeed(505);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 569);
+            ht.setMinBaseDefense(DefenseType.FIRE, 569);
             ht.setMaxMaxLevelHp(472591);
             ht.setMaxMaxLevelDmg(28843);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1709);
+            ht.setMaxMaxLevelAp(28843);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1709);
             ht.setMaxMaxLevelSpeed(1228);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1709);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1709);
             ht.setMaxBaseHp(24019);
             ht.setMaxBaseDmg(3749);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 695);
+            ht.setMaxBaseAp(3749);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 695);
             ht.setMaxBaseSpeed(617);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 695);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 695);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -1223,25 +1405,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(369313);
             ht.setMinMaxLevelDmg(26199);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1282);
+            ht.setMinMaxLevelAp(26199);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1282);
             ht.setMinMaxLevelSpeed(1013);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1282);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1282);
             ht.setMinBaseHp(19646);
             ht.setMinBaseDmg(4119);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 519);
+            ht.setMinBaseAp(4119);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 519);
             ht.setMinBaseSpeed(522);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 519);
+            ht.setMinBaseDefense(DefenseType.FIRE, 519);
             ht.setMaxMaxLevelHp(451383);
             ht.setMaxMaxLevelDmg(32021);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1566);
+            ht.setMaxMaxLevelAp(32021);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1566);
             ht.setMaxMaxLevelSpeed(1239);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1566);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1566);
             ht.setMaxBaseHp(24012);
             ht.setMaxBaseDmg(5035);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 635);
+            ht.setMaxBaseAp(5035);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 635);
             ht.setMaxBaseSpeed(638);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 635);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 635);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -1254,24 +1441,28 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(519777);
             ht.setMinMaxLevelDmg(14872);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1399);
+            ht.setMinMaxLevelAp(14872);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1399);
             ht.setMinMaxLevelSpeed(1040);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1399);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1399);
             ht.setMinBaseHp(24015);
             ht.setMinBaseDmg(2256);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 569);
+            ht.setMinBaseAp(2256);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 569);
             ht.setMinBaseSpeed(545);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 569);
+            ht.setMinBaseDefense(DefenseType.FIRE, 569);
             ht.setMaxMaxLevelHp(635283);
             ht.setMaxMaxLevelDmg(18176);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1709);
+            ht.setMaxMaxLevelAp(18176);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1709);
             ht.setMaxMaxLevelSpeed(1271);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1709);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1709);
             ht.setMaxBaseHp(29351);
             ht.setMaxBaseDmg(2758);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 695);
+            ht.setMaxBaseAp(2758);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 695);
             ht.setMaxBaseSpeed(667);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 695);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 695);
 
             //Attacks the weakest enemy for 207% of Baade’s ATK, and reduces the target’s ATK by 27% for two rounds. Can’t be dodged.
             BuffEffect b1 = new BuffEffect(BuffEffectType.DECREASE_ATTRIBUTE, 27, 0, 2, AttributeType.DMG);
@@ -1282,9 +1473,11 @@ public class IdleHeroApplication {
             specialAction = new Action();
             specialAction.setMainActionEffect(ae);
             specialAction.setSpecial(Boolean.TRUE);
+            specialAction.setFormationPositionType(ALL_LINES);
 
-            ht.getSpecialActions().put(ALL_LINES, specialAction);
+            ht.getSpecialActions().add(specialAction);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -1297,25 +1490,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(275895);
             ht.setMinMaxLevelDmg(26004);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1328);
+            ht.setMinMaxLevelAp(26004);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1328);
             ht.setMinMaxLevelSpeed(1055);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1328);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1328);
             ht.setMinBaseHp(16716);
             ht.setMinBaseDmg(3695);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 539);
+            ht.setMinBaseAp(3695);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 539);
             ht.setMinBaseSpeed(562);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 539);
+            ht.setMinBaseDefense(DefenseType.FIRE, 539);
             ht.setMaxMaxLevelHp(337205);
             ht.setMaxMaxLevelDmg(31782);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1624);
+            ht.setMaxMaxLevelAp(31782);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1624);
             ht.setMaxMaxLevelSpeed(1289);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1624);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1624);
             ht.setMaxBaseHp(20430);
             ht.setMaxBaseDmg(4517);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 659);
+            ht.setMaxBaseAp(4517);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 659);
             ht.setMaxBaseSpeed(686);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 659);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 659);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -1328,25 +1526,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(555466);
             ht.setMinMaxLevelDmg(15686);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1757);
+            ht.setMinMaxLevelAp(15686);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1757);
             ht.setMinMaxLevelSpeed(1042);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1757);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1757);
             ht.setMinBaseHp(32962);
             ht.setMinBaseDmg(2071);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 631);
+            ht.setMinBaseAp(2071);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 631);
             ht.setMinBaseSpeed(541);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 631);
+            ht.setMinBaseDefense(DefenseType.FIRE, 631);
             ht.setMaxMaxLevelHp(678902);
             ht.setMaxMaxLevelDmg(19172);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 2147);
+            ht.setMaxMaxLevelAp(19172);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 2147);
             ht.setMaxMaxLevelSpeed(1274);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 2147);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 2147);
             ht.setMaxBaseHp(40286);
             ht.setMaxBaseDmg(2531);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 771);
+            ht.setMaxBaseAp(2531);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 771);
             ht.setMaxBaseSpeed(661);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 771);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 771);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -1359,25 +1562,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(605224);
             ht.setMinMaxLevelDmg(12461);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1352);
+            ht.setMinMaxLevelAp(12461);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1352);
             ht.setMinMaxLevelSpeed(1037);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1352);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1352);
             ht.setMinBaseHp(32962);
             ht.setMinBaseDmg(2256);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 549);
+            ht.setMinBaseAp(2256);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 549);
             ht.setMinBaseSpeed(543);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 549);
+            ht.setMinBaseDefense(DefenseType.FIRE, 549);
             ht.setMaxMaxLevelHp(739718);
             ht.setMaxMaxLevelDmg(15231);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1652);
+            ht.setMaxMaxLevelAp(15231);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1652);
             ht.setMaxMaxLevelSpeed(1267);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1652);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1652);
             ht.setMaxBaseHp(40286);
             ht.setMaxBaseDmg(2758);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 671);
+            ht.setMaxBaseAp(2758);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 671);
             ht.setMaxBaseSpeed(663);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 671);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 671);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -1390,25 +1598,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(298966);
             ht.setMinMaxLevelDmg(22834);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1328);
+            ht.setMinMaxLevelAp(22834);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1328);
             ht.setMinMaxLevelSpeed(1026);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1328);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1328);
             ht.setMinBaseHp(20601);
             ht.setMinBaseDmg(3200);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 549);
+            ht.setMinBaseAp(3200);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 549);
             ht.setMinBaseSpeed(535);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 549);
+            ht.setMinBaseDefense(DefenseType.FIRE, 549);
             ht.setMaxMaxLevelHp(365402);
             ht.setMaxMaxLevelDmg(27908);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1624);
+            ht.setMaxMaxLevelAp(27908);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1624);
             ht.setMaxMaxLevelSpeed(1254);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1624);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1624);
             ht.setMaxBaseHp(25179);
             ht.setMaxBaseDmg(3912);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 671);
+            ht.setMaxBaseAp(3912);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 671);
             ht.setMaxBaseSpeed(653);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 671);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 671);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -1421,25 +1634,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(389358);
             ht.setMinMaxLevelDmg(23333);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1622);
+            ht.setMinMaxLevelAp(23333);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1622);
             ht.setMinMaxLevelSpeed(1028);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1622);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1622);
             ht.setMinBaseHp(22083);
             ht.setMinBaseDmg(3519);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 592);
+            ht.setMinBaseAp(3519);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 592);
             ht.setMinBaseSpeed(529);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 592);
+            ht.setMinBaseDefense(DefenseType.FIRE, 592);
             ht.setMaxMaxLevelHp(475882);
             ht.setMaxMaxLevelDmg(28518);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1982);
+            ht.setMaxMaxLevelAp(28518);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1982);
             ht.setMaxMaxLevelSpeed(1256);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1982);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1982);
             ht.setMaxBaseHp(26991);
             ht.setMaxBaseDmg(4301);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 724);
+            ht.setMaxBaseAp(4301);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 724);
             ht.setMaxBaseSpeed(647);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 724);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 724);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -1452,25 +1670,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(289234);
             ht.setMinMaxLevelDmg(31225);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1282);
+            ht.setMinMaxLevelAp(31225);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1282);
             ht.setMinMaxLevelSpeed(997);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1282);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1282);
             ht.setMinBaseHp(15715);
             ht.setMinBaseDmg(3955);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 519);
+            ht.setMinBaseAp(3955);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 519);
             ht.setMinBaseSpeed(510);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 519);
+            ht.setMinBaseDefense(DefenseType.FIRE, 519);
             ht.setMaxMaxLevelHp(353508);
             ht.setMaxMaxLevelDmg(38163);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1566);
+            ht.setMaxMaxLevelAp(38163);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1566);
             ht.setMaxMaxLevelSpeed(1219);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1566);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1566);
             ht.setMaxBaseHp(19207);
             ht.setMaxBaseDmg(4833);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 635);
+            ht.setMaxBaseAp(4833);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 635);
             ht.setMaxBaseSpeed(624);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 635);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 635);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -1483,25 +1706,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(343806);
             ht.setMinMaxLevelDmg(24994);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1328);
+            ht.setMinMaxLevelAp(24994);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1328);
             ht.setMinMaxLevelSpeed(1049);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1328);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1328);
             ht.setMinBaseHp(18069);
             ht.setMinBaseDmg(3695);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 539);
+            ht.setMinBaseAp(3695);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 539);
             ht.setMinBaseSpeed(556);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 539);
+            ht.setMinBaseDefense(DefenseType.FIRE, 539);
             ht.setMaxMaxLevelHp(420208);
             ht.setMaxMaxLevelDmg(30548);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1624);
+            ht.setMaxMaxLevelAp(30548);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1624);
             ht.setMaxMaxLevelSpeed(1283);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1624);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1624);
             ht.setMaxBaseHp(22085);
             ht.setMaxBaseDmg(4517);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 659);
+            ht.setMaxBaseAp(4517);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 659);
             ht.setMaxBaseSpeed(680);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 659);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 659);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }
@@ -1514,25 +1742,30 @@ public class IdleHeroApplication {
 
             ht.setMinMaxLevelHp(262545);
             ht.setMinMaxLevelDmg(27681);
-            ht.getMinMaxLevelDefenses().put(DefenseType.BLUNT, 1328);
+            ht.setMinMaxLevelAp(27681);
+            ht.setMinMaxLevelDefense(DefenseType.BLUNT, 1328);
             ht.setMinMaxLevelSpeed(1052);
-            ht.getMinMaxLevelDefenses().put(DefenseType.FIRE, 1328);
+            ht.setMinMaxLevelDefense(DefenseType.FIRE, 1328);
             ht.setMinBaseHp(15892);
             ht.setMinBaseDmg(3813);
-            ht.getMinBaseDefenses().put(DefenseType.BLUNT, 539);
+            ht.setMinBaseAp(3813);
+            ht.setMinBaseDefense(DefenseType.BLUNT, 539);
             ht.setMinBaseSpeed(559);
-            ht.getMinBaseDefenses().put(DefenseType.FIRE, 539);
+            ht.setMinBaseDefense(DefenseType.FIRE, 539);
             ht.setMaxMaxLevelHp(320889);
             ht.setMaxMaxLevelDmg(33833);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.BLUNT, 1624);
+            ht.setMaxMaxLevelAp(33833);
+            ht.setMaxMaxLevelDefense(DefenseType.BLUNT, 1624);
             ht.setMaxMaxLevelSpeed(1286);
-            ht.getMaxMaxLevelDefenses().put(DefenseType.FIRE, 1624);
+            ht.setMaxMaxLevelDefense(DefenseType.FIRE, 1624);
             ht.setMaxBaseHp(19424);
             ht.setMaxBaseDmg(4661);
-            ht.getMaxBaseDefenses().put(DefenseType.BLUNT, 659);
+            ht.setMaxBaseAp(4661);
+            ht.setMaxBaseDefense(DefenseType.BLUNT, 659);
             ht.setMaxBaseSpeed(683);
-            ht.getMaxBaseDefenses().put(DefenseType.FIRE, 659);
+            ht.setMaxBaseDefense(DefenseType.FIRE, 659);
 
+            ht.setSize(HeroTypeSize.SMALL);
             if (heroTypeRepository.findByName(ht.getName()) == null) {
                 heroTypeService.save(ht);
             }

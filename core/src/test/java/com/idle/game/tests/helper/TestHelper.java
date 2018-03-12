@@ -14,6 +14,7 @@ import com.idle.game.core.buff.BuffEffect;
 import com.idle.game.core.buff.type.BuffEffectType;
 import com.idle.game.core.constant.IdleConstants;
 import static com.idle.game.core.formation.type.FormationPosition.*;
+import com.idle.game.core.formation.type.FormationPositionType;
 import static com.idle.game.core.formation.type.FormationPositionType.*;
 import com.idle.game.core.hero.type.HeroTypeSize;
 import com.idle.game.core.type.BattleHeroType;
@@ -31,26 +32,26 @@ public class TestHelper {
 
     private static BattleHeroType createHeroTypeSpecialFront() {
         BattleHeroType ret = new BattleHeroType();
-        ret.getSpecialActions().put(F, createBasicDmgFireAction());
+        ret.getSpecialActions().add(createBasicDmgFireAction(F));
         return ret;
     }
 
     private static BattleHeroType createHeroTypeSpecialBack() {
         BattleHeroType ret = new BattleHeroType();
-        ret.getSpecialActions().put(B, createBasicDmgFireAction());
+        ret.getSpecialActions().add(createBasicDmgFireAction(B));
         return ret;
     }
 
     private static BattleHeroType createHeroTypeSpecialMiddle() {
         BattleHeroType ret = new BattleHeroType();
-        ret.getSpecialActions().put(M, createBasicDmgFireAction());
+        ret.getSpecialActions().add(createBasicDmgFireAction(M));
         return ret;
     }
 
     private static BattleHeroType createHeroTypeSpecialBackAndAll() {
         BattleHeroType ret = new BattleHeroType();
-        ret.getSpecialActions().put(B, createBasicDmgFireAction());
-        ret.getSpecialActions().put(ALL_LINES, createBasicDmgHolyAction());
+        ret.getSpecialActions().add(createBasicDmgFireAction(B));
+        ret.getSpecialActions().add(createBasicDmgHolyAction(ALL_LINES));
         return ret;
     }
 
@@ -72,26 +73,26 @@ public class TestHelper {
 
     private static BattleHeroType createHeroTypeActionFront() {
         BattleHeroType ret = new BattleHeroType();
-        ret.getDefaultActions().put(F, createBasicDmgFireAction());
+        ret.getDefaultActions().add(createBasicDmgFireAction(F));
         return ret;
     }
 
     private static BattleHeroType createHeroTypeActionBack() {
         BattleHeroType ret = new BattleHeroType();
-        ret.getDefaultActions().put(B, createBasicDmgFireAction());
+        ret.getDefaultActions().add(createBasicDmgFireAction(B));
         return ret;
     }
 
     private static BattleHeroType createHeroTypeActionMiddle() {
         BattleHeroType ret = new BattleHeroType();
-        ret.getDefaultActions().put(M, createBasicDmgFireAction());
+        ret.getDefaultActions().add(createBasicDmgFireAction(M));
         return ret;
     }
 
     private static BattleHeroType createHeroTypeActionBackAndAll() {
         BattleHeroType ret = new BattleHeroType();
-        ret.getDefaultActions().put(B, createBasicDmgFireAction());
-        ret.getDefaultActions().put(ALL_LINES, createBasicDmgHolyAction());
+        ret.getDefaultActions().add(createBasicDmgFireAction(B));
+        ret.getDefaultActions().add(createBasicDmgHolyAction(ALL_LINES));
         return ret;
     }
 
@@ -144,13 +145,13 @@ public class TestHelper {
     private static BattleHeroType createHeroTypeBlunt() {
         BattleHeroType ret = new BattleHeroType();
         ret.setSize(HeroTypeSize.SMALL);
-        ret.getDefaultActions().put(ALL_LINES, createBasicDmgBluntAction());
+        ret.getSpecialActions().add(createBasicDmgBluntAction(ALL_LINES));
         return ret;
     }
 
     private static BattleHeroType createHeroTypeFire() {
         BattleHeroType ret = new BattleHeroType();
-        ret.getDefaultActions().put(ALL_LINES, createBasicDmgFireAction());
+        ret.getSpecialActions().add(createBasicDmgFireAction(ALL_LINES));
         return ret;
     }
 
@@ -159,7 +160,7 @@ public class TestHelper {
         ret.setDmg(100);
         ret.setAp(100);
         for (DefenseType dt : DefenseType.values()) {
-            ret.getDefenses().put(dt, 6000);
+            ret.setDefense(dt, 6000);
         }
         ret.setSpeed(1);
         ret.setCritChance(0);
@@ -219,7 +220,7 @@ public class TestHelper {
         ret.setDmg(100);
         ret.setAp(100);
         for (DefenseType dt : DefenseType.values()) {
-            ret.getDefenses().put(dt, 6000);
+            ret.setDefense(dt, 6000);
         }
         ret.setSpeed(1);
         ret.setCritChance(0);
@@ -329,23 +330,26 @@ public class TestHelper {
         return new BattleFormation(heroes);
     }
 
-    public static Action createBasicDmgBluntAction() {
+    public static Action createBasicDmgBluntAction(FormationPositionType fpt) {
         Action ret = new Action();
         ret.setMainActionEffect(new ActionEffect(ActionType.DMG, TargetType.RANDOM, 100, DamageType.BLUNT, Boolean.FALSE));
+        ret.setFormationPositionType(fpt);
 
         return ret;
     }
 
-    public static Action createBasicDmgFireAction() {
+    public static Action createBasicDmgFireAction(FormationPositionType fpt) {
         Action ret = new Action();
         ret.setMainActionEffect(new ActionEffect(ActionType.DMG, TargetType.RANDOM, 100, DamageType.FIRE, Boolean.FALSE));
+        ret.setFormationPositionType(fpt);
 
         return ret;
     }
 
-    public static Action createBasicDmgHolyAction() {
+    public static Action createBasicDmgHolyAction(FormationPositionType fpt) {
         Action ret = new Action();
         ret.setMainActionEffect(new ActionEffect(ActionType.DMG, TargetType.RANDOM, 100, DamageType.HOLY, Boolean.FALSE));
+        ret.setFormationPositionType(fpt);
 
         return ret;
     }

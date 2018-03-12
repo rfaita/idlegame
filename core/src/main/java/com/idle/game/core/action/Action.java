@@ -1,6 +1,7 @@
 package com.idle.game.core.action;
 
 import com.idle.game.core.BaseObject;
+import com.idle.game.core.formation.type.FormationPositionType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,8 @@ public class Action extends BaseObject {
     private Boolean passive = Boolean.FALSE;
     private ActionEffect mainActionEffect;
     private List<ActionEffect> secundaryActionsEffects = new ArrayList<>();
+    
+    private FormationPositionType formationPositionType;
 
     public Action() {
     }
@@ -32,6 +35,14 @@ public class Action extends BaseObject {
         this.special = special;
     }
 
+    public FormationPositionType getFormationPositionType() {
+        return formationPositionType;
+    }
+
+    public void setFormationPositionType(FormationPositionType formationPositionType) {
+        this.formationPositionType = formationPositionType;
+    }
+    
     public Boolean getSpecial() {
         return special;
     }

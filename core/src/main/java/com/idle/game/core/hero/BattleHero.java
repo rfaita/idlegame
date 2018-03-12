@@ -1,11 +1,11 @@
 package com.idle.game.core.hero;
 
+import com.idle.game.core.type.Defense;
 import static com.idle.game.core.constant.IdleConstants.LOG;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
 
@@ -16,7 +16,8 @@ import com.idle.game.core.item.ItemType;
 import com.idle.game.core.type.AttributeType;
 import com.idle.game.core.type.BattleHeroType;
 import com.idle.game.core.type.DefenseType;
-import java.util.HashMap;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 /**
  *
@@ -31,7 +32,7 @@ public class BattleHero implements Serializable {
 
     private Integer dmg;
     private Integer ap;
-    private Map<DefenseType, Integer> defenses = new HashMap<>();
+    private List<Defense> defenses = new ArrayList<>();
     private Integer speed;
     private Integer critChance;
     private Integer critDamage;
@@ -40,12 +41,13 @@ public class BattleHero implements Serializable {
 
     private Integer currDmg;
     private Integer currAp;
-    private Map<DefenseType, Integer> currDefenses = new HashMap<>();
+    private List<Defense> currDefenses = new ArrayList<>();
     private Integer currSpeed;
     private Integer currCritChance;
     private Integer currCritDamage;
     private Integer currDodgeChance;
     private Integer currHp;
+
     private Boolean canDoAction;
     private Boolean canDoSpecialAction;
 
@@ -83,19 +85,59 @@ public class BattleHero implements Serializable {
         this.currAp = currAp;
     }
 
-    public Map<DefenseType, Integer> getDefenses() {
+    public List<Defense> getDefenses() {
         return defenses;
     }
 
-    public void setDefenses(Map<DefenseType, Integer> defenses) {
+    public void setDefenses(List<Defense> defenses) {
         this.defenses = defenses;
     }
 
-    public Map<DefenseType, Integer> getCurrDefenses() {
+    public Defense getDefense(DefenseType dt) {
+
+        Optional<Defense> ret = this.getDefenses().stream().filter((d) -> d.getType().equals(dt)).findFirst();
+        try {
+            return ret.get();
+        } catch (NoSuchElementException e) {
+            this.getDefenses().add(new Defense(dt, 0));
+            return getDefense(dt);
+        }
+    }
+
+    public void setDefense(DefenseType dt, Integer value) {
+        Defense d = getDefense(dt);
+        if (d != null) {
+            d.setValue(value);
+        } else {
+            this.getDefenses().add(new Defense(dt, value));
+        }
+    }
+
+    public Defense getCurrDefense(DefenseType dt) {
+
+        Optional<Defense> ret = this.getCurrDefenses().stream().filter((d) -> d.getType().equals(dt)).findFirst();
+        try {
+            return ret.get();
+        } catch (NoSuchElementException e) {
+            this.getCurrDefenses().add(new Defense(dt, 0));
+            return getCurrDefense(dt);
+        }
+    }
+
+    public void setCurrDefense(DefenseType dt, Integer value) {
+        Defense d = getCurrDefense(dt);
+        if (d != null) {
+            d.setValue(value);
+        } else {
+            this.getCurrDefenses().add(new Defense(dt, value));
+        }
+    }
+
+    public List<Defense> getCurrDefenses() {
         return currDefenses;
     }
 
-    public void setCurrDefenses(Map<DefenseType, Integer> currDefenses) {
+    public void setCurrDefenses(List<Defense> currDefenses) {
         this.currDefenses = currDefenses;
     }
 
@@ -363,9 +405,9 @@ public class BattleHero implements Serializable {
                     LOG.log(Level.INFO, "[recalcAttribute][ap] {0}", this.getCurrAp());
                     break;
                 case DEFENSE:
-                    this.getCurrDefenses().keySet().forEach((dt) -> {
-                        this.getCurrDefenses().put(dt, this.getCurrDefenses().get(dt) + (int) (this.getCurrDefenses().get(dt) * perc));
-                        LOG.log(Level.INFO, "[calcTradeAttribute][{0}] {1}", new Object[]{dt, this.getCurrDefenses().get(dt)});
+                    this.getCurrDefenses().forEach((dt) -> {
+                        dt.setValue((int) (dt.getValue() * perc));
+                        LOG.log(Level.INFO, "[calcTradeAttribute][{0}] {1}", new Object[]{dt.getType(), dt.getValue()});
                     });
                     break;
 
@@ -395,8 +437,8 @@ public class BattleHero implements Serializable {
             this.setAp(this.getAp() + i.getAp());
             this.setDmg(this.getDmg() + i.getDmg());
             this.setSpeed(this.getSpeed() + i.getSpeed());
-            i.getDefenses().keySet().forEach((dt) -> {
-                this.getDefenses().put(dt, this.getDefenses().get(dt) + i.getDefenses().get(dt));
+            i.getDefenses().forEach((dt) -> {
+                this.setDefense(dt.getType(), this.getDefense(dt.getType()).getValue() + dt.getValue());
             });
         }
     }

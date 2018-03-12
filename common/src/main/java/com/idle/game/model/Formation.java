@@ -21,7 +21,7 @@ public class Formation implements Serializable {
     @Id
     private String id;
     private String player;
-    @Size(min = 1, max = 6, message = "formation.min.size.max.size")
+    @Size(min = 1, max = 9, message = "formation.min.size.max.size")
     private List<BattlePositionedHero> heroes;
     @NotNull(message = "formation.allocation.can.not.be.null")
     private FormationAllocation formationAllocation;

@@ -12,8 +12,6 @@ import com.idle.game.core.buff.Buff;
 import com.idle.game.core.action.ActionEffect;
 import com.idle.game.core.action.Action;
 import com.idle.game.core.action.type.ActionType;
-import static com.idle.game.core.constant.IdleConstants.DEFAULT_ACTION;
-import static com.idle.game.core.constant.IdleConstants.DEFAULT_SPECIAL_ACTION;
 import static com.idle.game.core.action.type.ActionType.*;
 import com.idle.game.core.util.DiceUtil;
 import java.util.ArrayList;
@@ -100,10 +98,12 @@ public class Battle extends BaseObject {
         this.battlePositionedHeroes = new ArrayList<>();
 
         this.attackFormation.getHeroes().forEach((t) -> {
-            this.battlePositionedHeroes.add(new BattlePositionedHero(BattleTeamType.ATTACK_TEAM, t.getPosition(), t.getHero()));
+            t.setBattleTeamType(ATTACK_TEAM);
+            this.battlePositionedHeroes.add(t.duplicate(Boolean.FALSE));
         });
         this.defenseFormation.getHeroes().forEach((t) -> {
-            this.battlePositionedHeroes.add(new BattlePositionedHero(BattleTeamType.DEFENSE_TEAM, t.getPosition(), t.getHero()));
+            t.setBattleTeamType(DEFENSE_TEAM);
+            this.battlePositionedHeroes.add(t.duplicate(Boolean.FALSE));
         });
 
         this.battleLog = new ArrayList<>();
@@ -268,7 +268,7 @@ public class Battle extends BaseObject {
             return;
         }
 
-        Action action = customAction != null ? customAction : aPositionedHero.getNextAction();
+        Action action = customAction != null ? customAction : aPositionedHero.nextAction();
 
         LOG.log(Level.INFO, "[ACTION] {0}", action);
 
@@ -300,6 +300,8 @@ public class Battle extends BaseObject {
         Double critDmgModifier = criticalDamage(be, aPositionedHero.getHero());
 
         Integer dmgModifier = special ? aPositionedHero.getHero().getCurrAp() : aPositionedHero.getHero().getCurrDmg();
+
+        assert dmgModifier != null : "DmgModigier is null. BUG";
 
         be.setValue(-(int) ((dmgModifier * critDmgModifier * ae.getPercentage() / 100f) * dmgReduction));
         be.setDamageType(ae.getDamageType());
@@ -475,7 +477,7 @@ public class Battle extends BaseObject {
     }
 
     private Double getDmgDefenseReduction(BattleHero h, DamageType dmgType) {
-        return 6000d / (6000d + h.getCurrDefenses().get(dmgType.getDefenseType()));
+        return 6000d / (6000d + h.getCurrDefense(dmgType.getDefenseType()).getValue());
     }
 
     public List<BattlePositionedHero> getTargetsOfActionEffect(ActionEffect ae, BattlePositionedHero self) {
@@ -693,7 +695,31 @@ public class Battle extends BaseObject {
                 }
                 break;
         }
-        return targets;
+        return removeTargetClones(targets);
+    }
+
+    private BattlePositionedHero findOriginalTarget(BattlePositionedHero bph) {
+        Optional<BattlePositionedHero> ret
+                = this.battlePositionedHeroes.stream()
+                        .filter((t) -> !t.getClone()
+                        && t.getBattleTeamType().equals(bph.getBattleTeamType())
+                        && t.getHero().getId().equals(bph.getHero().getId())).findFirst();
+
+        try {
+            return ret.get();
+        } catch (NoSuchElementException e) {
+            return null;
+        }
+    }
+
+    private List<BattlePositionedHero> removeTargetClones(List<BattlePositionedHero> targets) {
+        List<BattlePositionedHero> ret = targets.stream().filter((t) -> !t.getClone()).collect(Collectors.toList());
+
+        targets.stream().filter((t) -> t.getClone()).forEach((t) -> {
+            ret.add(this.findOriginalTarget(t));
+        });
+
+        return ret.stream().distinct().collect(Collectors.toList());
     }
 
     private BattlePositionedHero getHeroByLessLifePerc(BattleTeamType battleTeamType) {
@@ -903,13 +929,13 @@ public class Battle extends BaseObject {
 
     private Stream<BattlePositionedHero> getHeroesByTeamTypeAndAlive(BattleTeamType battleTeamType, FormationPosition selfFp) {
         return this.getHeroesByBattleTeamType(battleTeamType).filter((BattlePositionedHero t) -> {
-            return t.getHero().getCurrHp() > 0 && (selfFp == null || !t.getPosition().equals(selfFp));
+            return this.findOriginalTarget(t).getHero().getCurrHp() > 0 && (selfFp == null || !t.getPosition().equals(selfFp));
         });
     }
 
     private Stream<BattlePositionedHero> getHeroesByTeamTypeAndDead(BattleTeamType battleTeamType) {
         return this.getHeroesByBattleTeamType(battleTeamType).filter((BattlePositionedHero t) -> {
-            return t.getHero().getCurrHp() <= 0;
+            return this.findOriginalTarget(t).getHero().getCurrHp() <= 0;
         });
     }
 
@@ -924,7 +950,7 @@ public class Battle extends BaseObject {
     private List<BattlePositionedHero> getTurnActionRated() {
 
         return this.battlePositionedHeroes.stream().filter((BattlePositionedHero t) -> {
-            return t.getHero().getCurrHp() > 0;
+            return !t.getClone() && t.getHero().getCurrHp() > 0;
         }).sorted((BattlePositionedHero t, BattlePositionedHero t1) -> {
             if (t1.getHero().getCurrSpeed() - t.getHero().getCurrSpeed() != 0) {
                 return t1.getHero().getCurrSpeed() - t.getHero().getCurrSpeed();
@@ -1027,7 +1053,7 @@ public class Battle extends BaseObject {
 
             BattleHero hero = h.getHero();
 
-            if (hero.getHeroType().getPassives() != null) {
+            if (!h.getClone() && hero.getHeroType().getPassives() != null) {
                 hero.getHeroType().getPassives().stream()
                         .filter((Passive p) -> {
                             return (p.getCondiction().getActionType().equals(actionType));

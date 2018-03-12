@@ -25,7 +25,7 @@ public interface IdleConstants {
     final Integer HERO_MAX_LEVEL = 250;
 
     final Integer MAX_SIZE_FORMATION = FormationPosition.values().length;
-    final Integer TURN_LIMIT = 25;
+    final Integer TURN_LIMIT = 100;
 
     final String LOG_DELIMITER_BATTLE = "###############################################################";
     //final String LOG_DELIMITER = "---------------------------------------------------------------";

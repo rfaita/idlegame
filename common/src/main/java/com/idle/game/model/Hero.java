@@ -2,11 +2,14 @@ package com.idle.game.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.idle.game.core.hero.type.HeroQuality;
+import com.idle.game.core.type.Defense;
 import com.idle.game.core.type.DefenseType;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Optional;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -29,7 +32,7 @@ public class Hero implements Serializable {
 
     private Integer baseDmg;
     private Integer baseAp;
-    private Map<DefenseType, Integer> baseDefenses = new HashMap<>();
+    private List<Defense> baseDefenses = new ArrayList<>();
     private Integer baseSpeed;
     private Integer baseCritChance;
     private Integer baseCritDamage;
@@ -38,7 +41,7 @@ public class Hero implements Serializable {
 
     private Integer maxLevelDmg;
     private Integer maxLevelAp;
-    private Map<DefenseType, Integer> maxLevelDefenses = new HashMap<>();
+    private List<Defense> maxLevelDefenses = new ArrayList<>();
     private Integer maxLevelSpeed;
     private Integer maxLevelCritChance;
     private Integer maxLevelCritDamage;
@@ -197,20 +200,60 @@ public class Hero implements Serializable {
         this.maxLevelHp = maxLevelHp;
     }
 
-    public Map<DefenseType, Integer> getBaseDefenses() {
+    public List<Defense> getBaseDefenses() {
         return baseDefenses;
     }
 
-    public void setBaseDefenses(Map<DefenseType, Integer> baseDefenses) {
+    public void setBaseDefenses(List<Defense> baseDefenses) {
         this.baseDefenses = baseDefenses;
     }
 
-    public Map<DefenseType, Integer> getMaxLevelDefenses() {
+    public List<Defense> getMaxLevelDefenses() {
         return maxLevelDefenses;
     }
 
-    public void setMaxLevelDefenses(Map<DefenseType, Integer> maxLevelDefenses) {
+    public void setMaxLevelDefenses(List<Defense> maxLevelDefenses) {
         this.maxLevelDefenses = maxLevelDefenses;
+    }
+
+    public Defense getBaseDefense(DefenseType dt) {
+
+        Optional<Defense> ret = this.getBaseDefenses().stream().filter((d) -> d.getType().equals(dt)).findFirst();
+        try {
+            return ret.get();
+        } catch (NoSuchElementException e) {
+            this.getBaseDefenses().add(new Defense(dt, 0));
+            return getBaseDefense(dt);
+        }
+    }
+
+    public void setBaseDefense(DefenseType dt, Integer value) {
+        Defense d = getBaseDefense(dt);
+        if (d != null) {
+            d.setValue(value);
+        } else {
+            this.getBaseDefenses().add(new Defense(dt, value));
+        }
+    }
+
+    public Defense getMaxLevelDefense(DefenseType dt) {
+
+        Optional<Defense> ret = this.getMaxLevelDefenses().stream().filter((d) -> d.getType().equals(dt)).findFirst();
+        try {
+            return ret.get();
+        } catch (NoSuchElementException e) {
+            this.getMaxLevelDefenses().add(new Defense(dt, 0));
+            return getMaxLevelDefense(dt);
+        }
+    }
+
+    public void setMaxLevelDefense(DefenseType dt, Integer value) {
+        Defense d = getMaxLevelDefense(dt);
+        if (d != null) {
+            d.setValue(value);
+        } else {
+            this.getMaxLevelDefenses().add(new Defense(dt, value));
+        }
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.idle.game.core.item;
 
 import com.idle.game.core.BaseObject;
-import com.idle.game.core.type.DefenseType;
-import java.util.Map;
+import com.idle.game.core.type.Defense;
+import java.util.List;
 
 /**
  *
@@ -20,7 +20,7 @@ public class Item extends BaseObject {
     private Integer critDamage;
     private Integer dodgeChance;
     private Integer hp;
-    private Map<DefenseType, Integer> defenses;
+    private List<Defense> defenses;
 
     public Item() {
     }
@@ -28,7 +28,7 @@ public class Item extends BaseObject {
     public Item(String name, ItemQuality itemQuality, ItemType itemType,
             Integer dmg, Integer ap, Integer speed, Integer luck, Integer critChance,
             Integer critDamage, Integer dodgeChance, Integer hp,
-            Map<DefenseType, Integer> defenses) {
+            List<Defense> defenses) {
         this.name = name;
         this.itemQuality = itemQuality;
         this.itemType = itemType;
@@ -50,11 +50,11 @@ public class Item extends BaseObject {
         this.ap = ap;
     }
 
-    public Map<DefenseType, Integer> getDefenses() {
+    public List<Defense> getDefenses() {
         return defenses;
     }
 
-    public void setDefenses(Map<DefenseType, Integer> defenses) {
+    public void setDefenses(List<Defense> defenses) {
         this.defenses = defenses;
     }
 

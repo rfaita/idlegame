@@ -23,10 +23,10 @@ public class RandomHeroTests {
             Hero h = hs.rollHero(HeroQuality.POOR, createGenericHeroType());
 
             for (DefenseType dt : DefenseType.values()) {
-                Assert.assertTrue("Value must be greater or equal to 10", h.getBaseDefenses().get(dt) >= 10);
-                Assert.assertTrue("Value must be lower or equal to 12", h.getBaseDefenses().get(dt) <= 12);
-                Assert.assertTrue("Value must be greater or equal to 10", h.getMaxLevelDefenses().get(dt) >= 10);
-                Assert.assertTrue("Value must be lower or equal to 12", h.getMaxLevelDefenses().get(dt) <= 12);
+                Assert.assertTrue("Value must be greater or equal to 10", h.getBaseDefense(dt).getValue() >= 10);
+                Assert.assertTrue("Value must be lower or equal to 12", h.getBaseDefense(dt).getValue() <= 12);
+                Assert.assertTrue("Value must be greater or equal to 10", h.getMaxLevelDefense(dt).getValue() >= 10);
+                Assert.assertTrue("Value must be lower or equal to 12", h.getMaxLevelDefense(dt).getValue() <= 12);
             }
 
             Assert.assertTrue("Value must be greater or equal to 10", h.getBaseCritChance() >= 10);
@@ -67,10 +67,10 @@ public class RandomHeroTests {
             Hero h = hs.rollHero(HeroQuality.AVERAGE, createGenericHeroType());
 
             for (DefenseType dt : DefenseType.values()) {
-                Assert.assertTrue("Value must be greater or equal to 11", h.getBaseDefenses().get(dt) >= 11);
-                Assert.assertTrue("Value must be lower or equal to 13", h.getBaseDefenses().get(dt) <= 13);
-                Assert.assertTrue("Value must be greater or equal to 11", h.getMaxLevelDefenses().get(dt) >= 11);
-                Assert.assertTrue("Value must be lower or equal to 13", h.getMaxLevelDefenses().get(dt) <= 13);
+                Assert.assertTrue("Value must be greater or equal to 11", h.getBaseDefense(dt).getValue() >= 11);
+                Assert.assertTrue("Value must be lower or equal to 13", h.getBaseDefense(dt).getValue() <= 13);
+                Assert.assertTrue("Value must be greater or equal to 11", h.getMaxLevelDefense(dt).getValue() >= 11);
+                Assert.assertTrue("Value must be lower or equal to 13", h.getMaxLevelDefense(dt).getValue() <= 13);
             }
 
             Assert.assertTrue("Value must be greater or equal to 11", h.getBaseCritChance() >= 11);
@@ -111,10 +111,10 @@ public class RandomHeroTests {
             Hero h = hs.rollHero(HeroQuality.BEST, createGenericHeroType());
 
             for (DefenseType dt : DefenseType.values()) {
-                Assert.assertTrue("Value must be greater or equal to 13", h.getBaseDefenses().get(dt) >= 13);
-                Assert.assertTrue("Value must be lower or equal to 15", h.getBaseDefenses().get(dt) <= 15);
-                Assert.assertTrue("Value must be greater or equal to 13", h.getMaxLevelDefenses().get(dt) >= 13);
-                Assert.assertTrue("Value must be lower or equal to 15", h.getMaxLevelDefenses().get(dt) <= 15);
+                Assert.assertTrue("Value must be greater or equal to 13", h.getBaseDefense(dt).getValue() >= 13);
+                Assert.assertTrue("Value must be lower or equal to 15", h.getBaseDefense(dt).getValue() <= 15);
+                Assert.assertTrue("Value must be greater or equal to 13", h.getMaxLevelDefense(dt).getValue() >= 13);
+                Assert.assertTrue("Value must be lower or equal to 15", h.getMaxLevelDefense(dt).getValue() <= 15);
             }
 
             Assert.assertTrue("Value must be greater or equal to 13", h.getBaseCritChance() >= 13);
@@ -155,8 +155,8 @@ public class RandomHeroTests {
             Hero h = hs.rollShineHero(createGenericHeroType());
 
             for (DefenseType dt : DefenseType.values()) {
-                Assert.assertTrue("Value must be equal to 15", h.getBaseDefenses().get(dt) <= 15);
-                Assert.assertTrue("Value must be equal to 15", h.getMaxLevelDefenses().get(dt) <= 15);
+                Assert.assertTrue("Value must be equal to 15", h.getBaseDefense(dt).getValue() <= 15);
+                Assert.assertTrue("Value must be equal to 15", h.getMaxLevelDefense(dt).getValue() <= 15);
             }
 
             Assert.assertTrue("Value must be equal to 15", h.getBaseCritChance() == 15);
@@ -185,10 +185,10 @@ public class RandomHeroTests {
             Hero h = hs.rollUniqueHero(createGenericHeroType());
 
             for (DefenseType dt : DefenseType.values()) {
-                Assert.assertTrue("Value must be greater or equal to 15", h.getBaseDefenses().get(dt) >= 15);
-                Assert.assertTrue("Value must be lower or equal to 16", h.getBaseDefenses().get(dt) <= 16);
-                Assert.assertTrue("Value must be greater or equal to 15", h.getMaxLevelDefenses().get(dt) >= 15);
-                Assert.assertTrue("Value must be lower or equal to 16", h.getMaxLevelDefenses().get(dt) <= 16);
+                Assert.assertTrue("Value must be greater or equal to 15", h.getBaseDefense(dt).getValue() >= 15);
+                Assert.assertTrue("Value must be lower or equal to 16", h.getBaseDefense(dt).getValue() <= 16);
+                Assert.assertTrue("Value must be greater or equal to 15", h.getMaxLevelDefense(dt).getValue() >= 15);
+                Assert.assertTrue("Value must be lower or equal to 16", h.getMaxLevelDefense(dt).getValue() <= 16);
             }
 
             Assert.assertTrue("Value must be greater or equal to 15", h.getBaseCritChance() >= 15);

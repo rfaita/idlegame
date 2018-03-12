@@ -10,13 +10,13 @@
                                 <div class="col-md-4">
                                     <div class="form-group form-black">
                                         <label>Name</label>
-                                        <input type="text" name="name" class="form-control" required [ngModel]="heroType.name">
+                                        <input type="text" name="name" class="form-control" required [ngModel]="heroType.name" (ngModelChange)="heroType.name = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group  form-black">
                                         <label>Quality</label>
-                                        <select name="quality" class="form-control" required [ngModel]="heroType.quality">
+                                        <select name="quality" class="form-control" required [ngModel]="heroType.quality" (ngModelChange)="heroType.quality = $event">
                                             <option *ngFor="let v of heroTypeTypes.heroTypeQualitys">{{v}}</option>
                                         </select>
                                     </div>
@@ -24,7 +24,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group form-black">
                                         <label>Role</label>
-                                        <select name="role" class="form-control" required [ngModel]="heroType.role">
+                                        <select name="role" class="form-control" required [ngModel]="heroType.role" (ngModelChange)="heroType.role = $event">
                                             <option *ngFor="let v of heroTypeTypes.heroTypeRoles">{{v}}</option>
                                         </select>
                                     </div>
@@ -35,316 +35,359 @@
                                 <div class="col-md-4">
                                     <div class="form-group form-black">
                                         <label>Faction</label>
-                                        <select name="faction" class="form-control" required [ngModel]="heroType.faction">
+                                        <select name="faction" class="form-control" required [ngModel]="heroType.faction" (ngModelChange)="heroType.faction = $event">
                                             <option *ngFor="let v of heroTypeTypes.heroTypeFactions">{{v}}</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group form-black">
-                                        <label>Damage Type</label>
-                                        <select name="damageType" class="form-control" required [ngModel]="heroType.damageType">
-                                            <option *ngFor="let v of heroTypeTypes.damageTypes">{{v}}</option>
-                                        </select>
-                                    </div>
-                                </div>
+
                                 <div class="col-md-4">
                                     <div class="form-group form-black">
                                         <label>Distance Type</label>
-                                        <select name="distanceType" class="form-control" required [ngModel]="heroType.distanceType">
+                                        <select name="distanceType" class="form-control" required [ngModel]="heroType.distanceType" (ngModelChange)="heroType.distanceType = $event">
                                             <option *ngFor="let v of heroTypeTypes.distanceTypes">{{v}}</option>
                                         </select>
                                     </div>
                                 </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group form-black">
+                                        <label>Size</label>
+                                        <select name="heroTypeSize" class="form-control" required [ngModel]="heroType.size" (ngModelChange)="heroType.size = $event">
+                                            <option *ngFor="let v of heroTypeTypes.heroTypeSizes">{{v}}</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
-                                        <label>Min Base Dmg</label>
-                                        <input type="text" name="minBaseDmg" class="form-control" required [ngModel]="heroType.minBaseDmg">
+                                        <label>Min B Dmg</label>
+                                        <input type="text" name="minBaseDmg" class="form-control" required [ngModel]="heroType.minBaseDmg" (ngModelChange)="heroType.minBaseDmg = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
-                                        <label>Min Base Armor</label>
-                                        <input type="text" name="minBaseArmor" class="form-control" required [ngModel]="heroType.minBaseArmor">
+                                        <label>Min B AP</label>
+                                        <input type="text" name="minBaseAp" class="form-control" required [ngModel]="heroType.minBaseAp" (ngModelChange)="heroType.minBaseAp = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
-                                        <label>Min Base MR</label>
-                                        <input type="text" name="minBaseMagicResist" class="form-control" required [ngModel]="heroType.minBaseMagicResist">
+                                        <label>Min B Speed</label>
+                                        <input type="text" name="minBaseSpeed" class="form-control" required [ngModel]="heroType.minBaseSpeed" (ngModelChange)="heroType.minBaseSpeed = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
-                                        <label>Min Base Speed</label>
-                                        <input type="text" name="minBaseSpeed" class="form-control" required [ngModel]="heroType.minBaseSpeed">
+                                        <label>Min B Crit %</label>
+                                        <input type="text" name="minBaseCritChance" class="form-control" required [ngModel]="heroType.minBaseCritChance" (ngModelChange)="heroType.minBaseCritChance = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
-                                        <label>Min Base Luck</label>
-                                        <input type="text" name="minBaseLuck" class="form-control" required [ngModel]="heroType.minBaseLuck">
+                                        <label>Min B Crit Dmg</label>
+                                        <input type="text" name="minBaseCritDamage" class="form-control" required [ngModel]="heroType.minBaseCritDamage" (ngModelChange)="heroType.minBaseCritDamage = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
-                                        <label>Min Base Crit %</label>
-                                        <input type="text" name="minBaseCritChance" class="form-control" required [ngModel]="heroType.minBaseCritChance">
+                                        <label>Min B Dodge %</label>
+                                        <input type="text" name="minBaseDodgeChance" class="form-control" required [ngModel]="heroType.minBaseDodgeChance" (ngModelChange)="heroType.minBaseDodgeChance = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
-                                        <label>Min Base Crit Dmg</label>
-                                        <input type="text" name="minBaseCritDamage" class="form-control" required [ngModel]="heroType.minBaseCritDamage">
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="form-group form-black">
-                                        <label>Min Base Dodge %</label>
-                                        <input type="text" name="minBaseDodgeChance" class="form-control" required [ngModel]="heroType.minBaseDodgeChance">
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="form-group form-black">
-                                        <label>Min Base HP</label>
-                                        <input type="text" name="minBaseHp" class="form-control" required [ngModel]="heroType.minBaseHp">
+                                        <label>Min B HP</label>
+                                        <input type="text" name="minBaseHp" class="form-control" required [ngModel]="heroType.minBaseHp" (ngModelChange)="heroType.minBaseHp = $event">
                                     </div>
                                 </div>
 
                             </div>
 
                             <div class="row">
+                                <div class="col-md-1" *ngFor="let defense of heroType.minBaseDefenses">
+                                    <div class="form-group form-black">
+                                        <label>Min B {{defense.type}}</label>
+                                        <input type="text" [ngModelOptions]="{standalone: true}" class="form-control" required [(ngModel)]="defense.value">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
-                                        <label>Max Base Dmg</label>
-                                        <input type="text" name="maxBaseDmg" class="form-control" required [ngModel]="heroType.maxBaseDmg">
+                                        <label>Max B Dmg</label>
+                                        <input type="text" name="maxBaseDmg" class="form-control" required [ngModel]="heroType.maxBaseDmg" (ngModelChange)="heroType.maxBaseDmg = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
-                                        <label>Max Base Armor</label>
-                                        <input type="text" name="maxBaseArmor" class="form-control" required [ngModel]="heroType.maxBaseArmor">
+                                        <label>Max B AP</label>
+                                        <input type="text" name="maxBaseAp" class="form-control" required [ngModel]="heroType.maxBaseAp" (ngModelChange)="heroType.maxBaseAp = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
-                                        <label>Max Base MR</label>
-                                        <input type="text" name="maxBaseMagicResist" class="form-control" required [ngModel]="heroType.maxBaseMagicResist">
+                                        <label>Max B Speed</label>
+                                        <input type="text" name="maxBaseSpeed" class="form-control" required [ngModel]="heroType.maxBaseSpeed" (ngModelChange)="heroType.maxBaseSpeed = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
-                                        <label>Max Base Speed</label>
-                                        <input type="text" name="maxBaseSpeed" class="form-control" required [ngModel]="heroType.maxBaseSpeed">
+                                        <label>Max B Crit %</label>
+                                        <input type="text" name="maxBaseCritChance" class="form-control" required [ngModel]="heroType.maxBaseCritChance" (ngModelChange)="heroType.maxBaseCritChance = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
-                                        <label>Max Base Luck</label>
-                                        <input type="text" name="maxBaseLuck" class="form-control" required [ngModel]="heroType.maxBaseLuck">
+                                        <label>Max B Crit Dmg</label>
+                                        <input type="text" name="maxBaseCritDamage" class="form-control" required [ngModel]="heroType.maxBaseCritDamage" (ngModelChange)="heroType.maxBaseCritDamage = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
-                                        <label>Max Base Crit %</label>
-                                        <input type="text" name="maxBaseCritChance" class="form-control" required [ngModel]="heroType.maxBaseCritChance">
+                                        <label>Max B Dodge %</label>
+                                        <input type="text" name="maxBaseDodgeChance" class="form-control" required [ngModel]="heroType.maxBaseDodgeChance" (ngModelChange)="heroType.maxBaseDodgeChance = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
-                                        <label>Max Base Crit Dmg</label>
-                                        <input type="text" name="maxBaseCritDamage" class="form-control" required [ngModel]="heroType.maxBaseCritDamage">
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="form-group form-black">
-                                        <label>Max Base Dodge %</label>
-                                        <input type="text" name="maxBaseDodgeChance" class="form-control" required [ngModel]="heroType.maxBaseDodgeChance">
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="form-group form-black">
-                                        <label>Max Base HP</label>
-                                        <input type="text" name="maxBaseHp" class="form-control" required [ngModel]="heroType.maxBaseHp">
+                                        <label>Max B HP</label>
+                                        <input type="text" name="maxBaseHp" class="form-control" required [ngModel]="heroType.maxBaseHp" (ngModelChange)="heroType.maxBaseHp = $event">
                                     </div>
                                 </div>
 
                             </div>
+
+                            <div class="row">
+                                <div class="col-md-1" *ngFor="let defense of heroType.maxBaseDefenses">
+                                    <div class="form-group form-black">
+                                        <label>Max B {{defense.type}}</label>
+                                        <input type="text" [ngModelOptions]="{standalone: true}" class="form-control" required [(ngModel)]="defense.value">
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="row">
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
                                         <label>Min ML Dmg</label>
-                                        <input type="text" name="minMaxLevelDmg" class="form-control" required [ngModel]="heroType.minMaxLevelDmg">
+                                        <input type="text" name="minMaxLevelDmg" class="form-control" required [ngModel]="heroType.minMaxLevelDmg" (ngModelChange)="heroType.minMaxLevelDmg = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
-                                        <label>Min ML Armor</label>
-                                        <input type="text" name="minMaxLevelArmor" class="form-control" required [ngModel]="heroType.minMaxLevelArmor">
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="form-group form-black">
-                                        <label>Min ML MR</label>
-                                        <input type="text" name="minMaxLevelMagicResist" class="form-control" required [ngModel]="heroType.minMaxLevelMagicResist">
+                                        <label>Min ML Ap</label>
+                                        <input type="text" name="minMaxLevelAp" class="form-control" required [ngModel]="heroType.minMaxLevelAp" (ngModelChange)="heroType.minMaxLevelAp = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
                                         <label>Min ML Speed</label>
-                                        <input type="text" name="minMaxLevelSpeed" class="form-control" required [ngModel]="heroType.minMaxLevelSpeed">
+                                        <input type="text" name="minMaxLevelSpeed" class="form-control" required [ngModel]="heroType.minMaxLevelSpeed" (ngModelChange)="heroType.minMaxLevelSpeed = $event">
                                     </div>
                                 </div>
-                                <div class="col-md-1">
-                                    <div class="form-group form-black">
-                                        <label>Min ML Luck</label>
-                                        <input type="text" name="minMaxLevelLuck" class="form-control" required [ngModel]="heroType.minMaxLevelLuck">
-                                    </div>
-                                </div>
+
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
                                         <label>Min ML Crit %</label>
-                                        <input type="text" name="minMaxLevelCritChance" class="form-control" required [ngModel]="heroType.minMaxLevelCritChance">
+                                        <input type="text" name="minMaxLevelCritChance" class="form-control" required [ngModel]="heroType.minMaxLevelCritChance"
+                                            (ngModelChange)="heroType.minMaxLevelCritChance = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
                                         <label>Min ML Crit Dmg</label>
-                                        <input type="text" name="minMaxLevelCritDamage" class="form-control" required [ngModel]="heroType.minMaxLevelCritDamage">
+                                        <input type="text" name="minMaxLevelCritDamage" class="form-control" required [ngModel]="heroType.minMaxLevelCritDamage"
+                                            (ngModelChange)="heroType.minMaxLevelCritDamage = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
                                         <label>Min ML Dodge %</label>
-                                        <input type="text" name="minMaxLevelDodgeChance" class="form-control" required [ngModel]="heroType.minMaxLevelDodgeChance">
+                                        <input type="text" name="minMaxLevelDodgeChance" class="form-control" required [ngModel]="heroType.minMaxLevelDodgeChance"
+                                            (ngModelChange)="heroType.minMaxLevelDodgeChance = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
                                         <label>Min ML HP</label>
-                                        <input type="text" name="minMaxLevelHp" class="form-control" required [ngModel]="heroType.minMaxLevelHp">
+                                        <input type="text" name="minMaxLevelHp" class="form-control" required [ngModel]="heroType.minMaxLevelHp" (ngModelChange)="heroType.minMaxLevelHp = $event">
                                     </div>
                                 </div>
 
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-1" *ngFor="let defense of heroType.minMaxLevelDefenses">
+                                    <div class="form-group form-black">
+                                        <label>Min ML {{defense.type}}</label>
+                                        <input type="text" [ngModelOptions]="{standalone: true}" class="form-control" required [(ngModel)]="defense.value">
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
                                         <label>Max ML Dmg</label>
-                                        <input type="text" name="maxMaxLevelDmg" class="form-control" required [ngModel]="heroType.maxMaxLevelDmg">
+                                        <input type="text" name="maxMaxLevelDmg" class="form-control" required [ngModel]="heroType.maxMaxLevelDmg" (ngModelChange)="heroType.maxMaxLevelDmg = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
-                                        <label>Max ML Armor</label>
-                                        <input type="text" name="maxMaxLevelArmor" class="form-control" required [ngModel]="heroType.maxMaxLevelArmor">
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="form-group form-black">
-                                        <label>Max ML MR</label>
-                                        <input type="text" name="maxMaxLevelMagicResist" class="form-control" required [ngModel]="heroType.maxMaxLevelMagicResist">
+                                        <label>Max ML Ap</label>
+                                        <input type="text" name="maxMaxLevelAp" class="form-control" required [ngModel]="heroType.maxMaxLevelAp" (ngModelChange)="heroType.maxMaxLevelAp = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
                                         <label>Max ML Speed</label>
-                                        <input type="text" name="maxMaxLevelSpeed" class="form-control" required [ngModel]="heroType.maxMaxLevelSpeed">
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="form-group form-black">
-                                        <label>Max ML Luck</label>
-                                        <input type="text" name="maxMaxLevelLuck" class="form-control" required [ngModel]="heroType.maxMaxLevelLuck">
+                                        <input type="text" name="maxMaxLevelSpeed" class="form-control" required [ngModel]="heroType.maxMaxLevelSpeed" (ngModelChange)="heroType.maxMaxLevelSpeed = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
                                         <label>Max ML Crit %</label>
-                                        <input type="text" name="maxMaxLevelCritChance" class="form-control" required [ngModel]="heroType.maxMaxLevelCritChance">
+                                        <input type="text" name="maxMaxLevelCritChance" class="form-control" required [ngModel]="heroType.maxMaxLevelCritChance"
+                                            (ngModelChange)="heroType.maxMaxLevelCritChance = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
                                         <label>Max ML Crit Dmg</label>
-                                        <input type="text" name="maxMaxLevelCritDamage" class="form-control" required [ngModel]="heroType.maxMaxLevelCritDamage">
+                                        <input type="text" name="maxMaxLevelCritDamage" class="form-control" required [ngModel]="heroType.maxMaxLevelCritDamage"
+                                            (ngModelChange)="heroType.maxMaxLevelCritDamage = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
                                         <label>Max ML Dodge %</label>
-                                        <input type="text" name="maxMaxLevelDodgeChance" class="form-control" required [ngModel]="heroType.maxMaxLevelDodgeChance">
+                                        <input type="text" name="maxMaxLevelDodgeChance" class="form-control" required [ngModel]="heroType.maxMaxLevelDodgeChance"
+                                            (ngModelChange)="heroType.maxMaxLevelDodgeChance = $event">
                                     </div>
                                 </div>
                                 <div class="col-md-1">
                                     <div class="form-group form-black">
                                         <label>Max ML HP</label>
-                                        <input type="text" name="maxMaxLevelHp" class="form-control" required [ngModel]="heroType.maxMaxLevelHp">
+                                        <input type="text" name="maxMaxLevelHp" class="form-control" required [ngModel]="heroType.maxMaxLevelHp" (ngModelChange)="heroType.maxMaxLevelHp = $event">
                                     </div>
                                 </div>
 
                             </div>
 
                             <div class="row">
-
-                                <div class="card cardAction">
-
-                                    <div class="card-header" data-background-color="blue">
-
-                                        <div class="form-check form-black">
-                                            <input class="form-check-input" type="checkbox" name="haveDefaultAction" (click)="changeHaveDefaultAction()" [ngModel]="heroType.defaultAction!=null">
-                                            <label class="title form-check-label">Default Action</label>
-                                            <button *ngIf="heroType.defaultAction!=null" type="button" style="margin: 0px" class="btn btn-outline-secondary btn-sm space"
-                                                (click)="addSecundaryActionEffectDefaultAction()">
-                                                <i class="material-icons">add</i>
-                                                Add Secundary
-                                            </button>
-                                        </div>
+                                <div class="col-md-1" *ngFor="let defense of heroType.maxMaxLevelDefenses">
+                                    <div class="form-group form-black">
+                                        <label>Max ML {{defense.type}}</label>
+                                        <input type="text" [ngModelOptions]="{standalone: true}" class="form-control" required [(ngModel)]="defense.value">
                                     </div>
-
-                                    <div *ngIf="!!heroType.defaultAction">
-                                        <app-actioneffect (result)="heroType.defaultAction.mainActionEffect = $event" actionEffectName="Main Action Effect" [actionEffect]="heroType.defaultAction.mainActionEffect"
-                                            [actionEffectTypes]="actionEffectTypes"></app-actioneffect>
-
-                                        <app-actioneffect *ngFor="let secundaryActionsEffect of heroType.defaultAction.secundaryActionsEffects; let i = index" (result)="changeSecundaryActionEffectDefaultAction($event, i)"
-                                            [actionEffectName]="'Secundary Action Effect - ' + (i + 1)" [actionEffect]="secundaryActionsEffect"
-                                            [actionEffectTypes]="actionEffectTypes">
-                                        </app-actioneffect>
-                                    </div>
-
                                 </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-2">
+                                    <div class="form-group form-black">
+                                        <label>Formation Position Type</label>
+                                        <select name="positionFormationTypeDefault" class="form-control" required (ngModelChange)="defaultActionFormationPositionType = $event"
+                                            [ngModel]="defaultActionFormationPositionType">
+                                            <option *ngFor="let v of heroTypeTypes.formationPositionTypes">{{v}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="btn btn-outline-secondary btn-sm space addAction" (click)="addDefaultAction()">
+                                        <i class="material-icons">add</i>
+                                        Add Default Action
+                                    </button>
+                                </div>
+
+                                <ng-container *ngIf="!!heroType.defaultActions">
+                                    <div class="card cardAction" *ngFor="let action of heroType.defaultActions; let i = index">
+
+                                        <div class="card-header" data-background-color="blue">
+
+                                            <div class="form-check form-black">
+                                                <label class="title form-check-label">Default Action - {{action.formationPositionType}}</label>
+                                                <button type="button" class="btn btn-outline-secondary btn-sm space" (click)="removeDefaultAction(i)">
+                                                    <i class="material-icons">delete</i>
+                                                    Remove
+                                                </button>
+                                                <button type="button" style="margin: 0px" class="btn btn-outline-secondary btn-sm space" (click)="addSecundaryActionEffectDefaultAction(action)">
+                                                    <i class="material-icons">add</i>
+                                                    Add Secundary
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <app-actioneffect (result)="action.mainActionEffect = $event" actionEffectName="Main Action Effect" [actionEffect]="action.mainActionEffect"
+                                                [actionEffectTypes]="actionEffectTypes">
+                                            </app-actioneffect>
+
+                                            <app-actioneffect *ngFor="let secundaryActionsEffect of action.secundaryActionsEffects; let i = index" (result)="changeSecundaryActionEffectDefaultAction(action, $event, i)"
+                                                [actionEffectName]="'Secundary Action Effect - ' + (i + 1)" [actionEffect]="secundaryActionsEffect"
+                                                [actionEffectTypes]="actionEffectTypes">
+                                            </app-actioneffect>
+                                        </div>
+
+                                    </div>
+                                </ng-container>
 
 
                             </div>
 
                             <div class="row">
 
-                                <div class="card cardAction">
-
-                                    <div class="card-header" data-background-color="blue">
-
-                                        <div class="form-check form-black">
-                                            <input class="form-check-input" type="checkbox" name="haveSpecialAction" (click)="changeHaveSpecialAction()" [ngModel]="heroType.specialAction!=null">
-                                            <label class="title form-check-label">Special Action</label>
-                                            <button *ngIf="heroType.specialAction!=null" type="button" style="margin: 0px" class="btn btn-outline-secondary btn-sm" (click)="addSecundaryActionEffectSpecialAction()">Add Secundary</button>
-                                        </div>
-                                    </div>
-
-                                    <div *ngIf="!!heroType.specialAction">
-                                        <app-actioneffect (result)="heroType.specialAction.mainActionEffect = $event" actionEffectName="Main Action Effect" [actionEffect]="heroType.specialAction.mainActionEffect"
-                                            [actionEffectTypes]="actionEffectTypes"></app-actioneffect>
-
-                                        <app-actioneffect *ngFor="let secundaryActionsEffect of heroType.specialAction.secundaryActionsEffects; let i = index" (result)="changeSecundaryActionEffectSpecialAction($event, i)"
-                                            [actionEffectName]="'Secundary Action Effect - ' + (i + 1)" [actionEffect]="secundaryActionsEffect"
-                                            [actionEffectTypes]="actionEffectTypes">
-                                        </app-actioneffect>
+                                <div class="col-md-2">
+                                    <div class="form-group form-black">
+                                        <label>Formation Position Type</label>
+                                        <select name="positionFormationTypeSpecial" class="form-control" required (ngModelChange)="specialActionFormationPositionType = $event"
+                                            [ngModel]="specialActionFormationPositionType">
+                                            <option *ngFor="let v of heroTypeTypes.formationPositionTypes">{{v}}</option>
+                                        </select>
                                     </div>
 
                                 </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="btn btn-outline-secondary btn-sm space addAction" (click)="addSpecialAction()">
+                                        <i class="material-icons">add</i>
+                                        Add Special Action
+                                    </button>
+                                </div>
+
+                                <ng-container *ngIf="!!heroType.specialActions">
+                                    <div class="card cardAction" *ngFor="let action of heroType.specialActions; let i = infex">
+
+                                        <div class="card-header" data-background-color="blue">
+
+                                            <div class="form-check form-black">
+                                                <label class="title form-check-label">Special Action - {{key}}</label>
+                                                <button type="button" class="btn btn-outline-secondary btn-sm space" (click)="removeSpecialAction(i)">
+                                                    <i class="material-icons">delete</i>
+                                                    Remove
+                                                </button>
+                                                <button type="button" style="margin: 0px" class="btn btn-outline-secondary btn-sm" (click)="addSecundaryActionEffectSpecialAction(key)">
+                                                    <i class="material-icons">add</i>
+                                                    Add Secundary</button>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <app-actioneffect (result)="action.mainActionEffect = $event" actionEffectName="Main Action Effect" [actionEffect]="action.mainActionEffect"
+                                                [actionEffectTypes]="actionEffectTypes"></app-actioneffect>
+
+                                            <app-actioneffect *ngFor="let secundaryActionsEffect of action.secundaryActionsEffects; let i = index" (result)="changeSecundaryActionEffectSpecialAction(key, $event, i)"
+                                                [actionEffectName]="'Secundary Action Effect - ' + (i + 1)" [actionEffect]="secundaryActionsEffect"
+                                                [actionEffectTypes]="actionEffectTypes">
+                                            </app-actioneffect>
+                                        </div>
+
+                                    </div>
+                                </ng-container>
 
 
                             </div>

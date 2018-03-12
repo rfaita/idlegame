@@ -43,6 +43,7 @@ import { PvpService } from './service/pvp.service';
 import { PvpComponent } from './pvp/pvp.component';
 import { PlayerResourceService } from './service/playerresource.service';
 import { PlayerResourceStompConfig, playerResourceStompConfigFactory } from './utils/playerStompConfigFactory';
+import { KeysPipe } from './utils/pipe/keys.pipe';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { PlayerResourceStompConfig, playerResourceStompConfigFactory } from './u
     ChatComponent, ChatPmComponent,
     FriendsComponent,
     PvpComponent,
+    KeysPipe
   ],
   imports: [
     AvatarModule,

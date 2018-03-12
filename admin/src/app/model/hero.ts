@@ -1,3 +1,4 @@
+import { Defense } from './defense';
 export class Hero {
     public id: String;
     public heroType: String;
@@ -9,20 +10,18 @@ export class Hero {
     public quality: String;
 
     public baseDmg: Number;
-    public baseArmor: Number;
-    public baseMagicResist: Number;
+    public baseAp: Number;
+    public baseDefenses: Defense[];
     public baseSpeed: Number;
-    public baseLuck: Number;
     public baseCritChance: Number;
     public baseCritDamage: Number;
     public baseDodgeChance: Number;
     public baseHp: Number;
 
     public maxLevelDmg: Number;
-    public maxLevelArmor: Number;
-    public maxLevelMagicResist: Number;
+    public maxLevelAp: Number;
+    public maxLevelDefenses: Defense[];
     public maxLevelSpeed: Number;
-    public maxLevelLuck: Number;
     public maxLevelCritChance: Number;
     public maxLevelCritDamage: Number;
     public maxLevelDodgeChance: Number;

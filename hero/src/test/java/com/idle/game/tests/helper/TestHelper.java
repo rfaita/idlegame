@@ -67,10 +67,10 @@ public class TestHelper {
         ret.setMaxMaxLevelSpeed(1000);
 
         for (DefenseType dt : DefenseType.values()) {
-            ret.getMinBaseDefenses().put(dt, 10);
-            ret.getMaxBaseDefenses().put(dt, 15);
-            ret.getMinMaxLevelDefenses().put(dt, 10);
-            ret.getMaxMaxLevelDefenses().put(dt, 15);
+            ret.setMinBaseDefense(dt, 10);
+            ret.setMaxBaseDefense(dt, 15);
+            ret.setMinMaxLevelDefense(dt, 10);
+            ret.setMaxMaxLevelDefense(dt, 15);
         }
 
         return ret;

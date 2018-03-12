@@ -17,7 +17,6 @@ import com.idle.game.core.constant.IdleConstants;
 import com.idle.game.core.hero.type.HeroQuality;
 import com.idle.game.core.hero.type.HeroTypeFaction;
 import com.idle.game.core.hero.type.HeroTypeQuality;
-import com.idle.game.core.type.DefenseType;
 import com.idle.game.core.util.DiceUtil;
 import com.idle.game.helper.HeroTypeHelper;
 import com.idle.game.helper.LootRollHelper;
@@ -210,18 +209,30 @@ public class HeroService {
         ret.setBaseCritChance(DiceUtil.randomAttribute(hq, ht.getMinBaseCritChance(), ht.getMaxBaseCritChance()));
         ret.setBaseCritDamage(DiceUtil.randomAttribute(hq, ht.getMinBaseCritDamage(), ht.getMaxBaseCritDamage()));
         ret.setBaseDmg(DiceUtil.randomAttribute(hq, ht.getMinBaseDmg(), ht.getMaxBaseDmg()));
+        ret.setBaseAp(DiceUtil.randomAttribute(hq, ht.getMinBaseAp(), ht.getMaxBaseAp()));
         ret.setBaseDodgeChance(DiceUtil.randomAttribute(hq, ht.getMinBaseDodgeChance(), ht.getMaxBaseDodgeChance()));
         ret.setBaseHp(DiceUtil.randomAttribute(hq, ht.getMinBaseHp(), ht.getMaxBaseHp()));
         ret.setBaseSpeed(DiceUtil.randomAttribute(hq, ht.getMinBaseSpeed(), ht.getMaxBaseSpeed()));
 
-        ht.getMinBaseDefenses().keySet().forEach((dt) -> {
-            ret.getBaseDefenses().put(dt, DiceUtil.randomAttribute(hq, ht.getMinBaseDefenses().get(dt), ht.getMaxBaseDefenses().get(dt)));
-            ret.getMaxLevelDefenses().put(dt, DiceUtil.randomAttribute(hq, ht.getMinMaxLevelDefenses().get(dt), ht.getMaxMaxLevelDefenses().get(dt)));
+        ht.getMinBaseDefenses().forEach((def) -> {
+            ret.setBaseDefense(def.getType(),
+                    DiceUtil.randomAttribute(hq,
+                            ht.getMinBaseDefense(def.getType()).getValue(),
+                            ht.getMaxBaseDefense(def.getType()).getValue()
+                    )
+            );
+            ret.setMaxLevelDefense(def.getType(),
+                    DiceUtil.randomAttribute(hq,
+                            ht.getMinMaxLevelDefense(def.getType()).getValue(),
+                            ht.getMaxMaxLevelDefense(def.getType()).getValue()
+                    )
+            );
         });
 
         ret.setMaxLevelCritChance(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelCritChance(), ht.getMaxMaxLevelCritChance()));
         ret.setMaxLevelCritDamage(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelCritDamage(), ht.getMaxMaxLevelCritDamage()));
         ret.setMaxLevelDmg(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelDmg(), ht.getMaxMaxLevelDmg()));
+        ret.setMaxLevelAp(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelAp(), ht.getMaxMaxLevelAp()));
         ret.setMaxLevelDodgeChance(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelDodgeChance(), ht.getMaxMaxLevelDodgeChance()));
         ret.setMaxLevelHp(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelHp(), ht.getMaxMaxLevelHp()));
         ret.setMaxLevelSpeed(DiceUtil.randomAttribute(hq, ht.getMinMaxLevelSpeed(), ht.getMaxMaxLevelSpeed()));
@@ -237,6 +248,7 @@ public class HeroService {
         ret.setBaseCritChance((int) (heroType.getMaxBaseCritChance()));
         ret.setBaseCritDamage((int) (heroType.getMaxBaseCritDamage()));
         ret.setBaseDmg((int) (heroType.getMaxBaseDmg()));
+        ret.setBaseAp((int) (heroType.getMaxBaseAp()));
         ret.setBaseDodgeChance((int) (heroType.getMaxBaseDodgeChance()));
         ret.setBaseHp((int) (heroType.getMaxBaseHp()));
         ret.setBaseSpeed((int) (heroType.getMaxBaseSpeed()));
@@ -245,6 +257,7 @@ public class HeroService {
         ret.setMaxLevelCritChance((int) (heroType.getMaxMaxLevelCritChance()));
         ret.setMaxLevelCritDamage((int) (heroType.getMaxMaxLevelCritDamage()));
         ret.setMaxLevelDmg((int) (heroType.getMaxMaxLevelDmg()));
+        ret.setMaxLevelAp((int) (heroType.getMaxMaxLevelAp()));
         ret.setMaxLevelDodgeChance((int) (heroType.getMaxMaxLevelDodgeChance()));
         ret.setMaxLevelHp((int) (heroType.getMaxMaxLevelHp()));
         ret.setMaxLevelSpeed((int) (heroType.getMaxMaxLevelSpeed()));
@@ -252,28 +265,34 @@ public class HeroService {
         return ret;
     }
 
-    public Hero rollUniqueHero(HeroType heroType) {
+    public Hero rollUniqueHero(HeroType ht) {
 
         Hero ret = new Hero();
 
-        ret.setBaseCritChance((int) (heroType.getMaxBaseCritChance()));
-        ret.setBaseCritDamage((int) (heroType.getMaxBaseCritDamage() * (1d + (DiceUtil.random(10) / 100d))));
-        ret.setBaseDmg((int) (heroType.getMaxBaseDmg() * (1d + (DiceUtil.random(10) / 100d))));
-        ret.setBaseDodgeChance((int) (heroType.getMaxBaseDodgeChance() * (1d + (DiceUtil.random(10) / 100d))));
-        ret.setBaseHp((int) (heroType.getMaxBaseHp() * (1d + (DiceUtil.random(10) / 100d))));
-        ret.setBaseSpeed((int) (heroType.getMaxBaseSpeed() * (1d + (DiceUtil.random(10) / 100d))));
+        ret.setBaseCritChance((int) (ht.getMaxBaseCritChance()));
+        ret.setBaseCritDamage((int) (ht.getMaxBaseCritDamage() * (1d + (DiceUtil.random(10) / 100d))));
+        ret.setBaseDmg((int) (ht.getMaxBaseDmg() * (1d + (DiceUtil.random(10) / 100d))));
+        ret.setBaseAp((int) (ht.getMaxBaseAp() * (1d + (DiceUtil.random(10) / 100d))));
+        ret.setBaseDodgeChance((int) (ht.getMaxBaseDodgeChance() * (1d + (DiceUtil.random(10) / 100d))));
+        ret.setBaseHp((int) (ht.getMaxBaseHp() * (1d + (DiceUtil.random(10) / 100d))));
+        ret.setBaseSpeed((int) (ht.getMaxBaseSpeed() * (1d + (DiceUtil.random(10) / 100d))));
 
-        for (DefenseType dt : heroType.getMinBaseDefenses().keySet()) {
-            ret.getBaseDefenses().put(dt, (int) (heroType.getMaxBaseDefenses().get(dt) * (1d + (DiceUtil.random(10) / 100d))));
-            ret.getMaxLevelDefenses().put(dt, (int) (heroType.getMaxMaxLevelDefenses().get(dt) * (1d + (DiceUtil.random(10) / 100d))));
-        }
+        ht.getMinBaseDefenses().forEach((def) -> {
+            ret.setBaseDefense(def.getType(),
+                    (int) (ht.getMaxBaseDefense(def.getType()).getValue() * (1d + (DiceUtil.random(10) / 100d)))
+            );
+            ret.setMaxLevelDefense(def.getType(),
+                    (int) (ht.getMaxMaxLevelDefense(def.getType()).getValue() * (1d + (DiceUtil.random(10) / 100d)))
+            );
+        });
 
-        ret.setMaxLevelCritChance((int) (heroType.getMaxMaxLevelCritChance() * (1d + (DiceUtil.random(10) / 100d))));
-        ret.setMaxLevelCritDamage((int) (heroType.getMaxMaxLevelCritDamage() * (1d + (DiceUtil.random(10) / 100d))));
-        ret.setMaxLevelDmg((int) (heroType.getMaxMaxLevelDmg() * (1d + (DiceUtil.random(10) / 100d))));
-        ret.setMaxLevelDodgeChance((int) (heroType.getMaxMaxLevelDodgeChance() * (1d + (DiceUtil.random(10) / 100d))));
-        ret.setMaxLevelHp((int) (heroType.getMaxMaxLevelHp() * (1d + (DiceUtil.random(10) / 100d))));
-        ret.setMaxLevelSpeed((int) (heroType.getMaxMaxLevelSpeed() * (1d + (DiceUtil.random(10) / 100d))));
+        ret.setMaxLevelCritChance((int) (ht.getMaxMaxLevelCritChance() * (1d + (DiceUtil.random(10) / 100d))));
+        ret.setMaxLevelCritDamage((int) (ht.getMaxMaxLevelCritDamage() * (1d + (DiceUtil.random(10) / 100d))));
+        ret.setMaxLevelDmg((int) (ht.getMaxMaxLevelDmg() * (1d + (DiceUtil.random(10) / 100d))));
+        ret.setMaxLevelAp((int) (ht.getMaxMaxLevelAp() * (1d + (DiceUtil.random(10) / 100d))));
+        ret.setMaxLevelDodgeChance((int) (ht.getMaxMaxLevelDodgeChance() * (1d + (DiceUtil.random(10) / 100d))));
+        ret.setMaxLevelHp((int) (ht.getMaxMaxLevelHp() * (1d + (DiceUtil.random(10) / 100d))));
+        ret.setMaxLevelSpeed((int) (ht.getMaxMaxLevelSpeed() * (1d + (DiceUtil.random(10) / 100d))));
 
         return ret;
     }

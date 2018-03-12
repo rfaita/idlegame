@@ -31,6 +31,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                     if (errorResponse.status == 403) {
                         this.snotifyService.warning('You do not have authorization to that action.', '', notificationConfig());
                     } else if (errorResponse.status == 400) {
+                        console.error(errorResponse);
                         if (errorResponse.error.errors != null) {
                             for (let i in errorResponse.error.errors) {
                                 this.snotifyService.warning(errorResponse.error.errors[i], '', notificationConfig());

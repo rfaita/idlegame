@@ -5,4 +5,8 @@ export class HeroTypeTypes {
 
     public damageTypes: String[];
     public distanceTypes: String[];
+
+    public formationPositionTypes: String[];
+    public heroTypeSizes: String[];
+
 }

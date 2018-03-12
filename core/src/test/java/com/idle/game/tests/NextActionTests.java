@@ -18,7 +18,7 @@ public class NextActionTests {
     @Test
     public void testPositionedHeroBackAndActionBack() {
 
-        Action a = createBasicAttackPositionedHero(FormationPosition.B_0, createActionBackHero()).getNextAction();
+        Action a = createBasicAttackPositionedHero(FormationPosition.B_0, createActionBackHero()).nextAction();
         Assert.assertTrue(a != null);
         Assert.assertEquals(FIRE, a.getMainActionEffect().getDamageType());
 
@@ -27,7 +27,7 @@ public class NextActionTests {
     @Test
     public void testPositionedHeroFrontAndActionBack() {
 
-        Action a = createBasicAttackPositionedHero(FormationPosition.F_0, createActionBackHero()).getNextAction();
+        Action a = createBasicAttackPositionedHero(FormationPosition.F_0, createActionBackHero()).nextAction();
         Assert.assertTrue(a != null);
         Assert.assertEquals(BLUNT, a.getMainActionEffect().getDamageType());
 
@@ -36,7 +36,7 @@ public class NextActionTests {
     @Test
     public void testPositionedHeroMiddleAndActionBack() {
 
-        Action a = createBasicAttackPositionedHero(FormationPosition.M_0, createActionBackHero()).getNextAction();
+        Action a = createBasicAttackPositionedHero(FormationPosition.M_0, createActionBackHero()).nextAction();
         Assert.assertTrue(a != null);
         Assert.assertEquals(BLUNT, a.getMainActionEffect().getDamageType());
 
@@ -45,7 +45,7 @@ public class NextActionTests {
     @Test
     public void testPositionedHeroBackAndActionMiddle() {
 
-        Action a = createBasicAttackPositionedHero(FormationPosition.B_0, createActionMiddleHero()).getNextAction();
+        Action a = createBasicAttackPositionedHero(FormationPosition.B_0, createActionMiddleHero()).nextAction();
         Assert.assertTrue(a != null);
         Assert.assertEquals(BLUNT, a.getMainActionEffect().getDamageType());
 
@@ -54,7 +54,7 @@ public class NextActionTests {
     @Test
     public void testPositionedHeroFrontAndActionMiddle() {
 
-        Action a = createBasicAttackPositionedHero(FormationPosition.F_0, createActionMiddleHero()).getNextAction();
+        Action a = createBasicAttackPositionedHero(FormationPosition.F_0, createActionMiddleHero()).nextAction();
         Assert.assertTrue(a != null);
         Assert.assertEquals(BLUNT, a.getMainActionEffect().getDamageType());
 
@@ -63,7 +63,7 @@ public class NextActionTests {
     @Test
     public void testPositionedHeroMiddleAndActionMiddle() {
 
-        Action a = createBasicAttackPositionedHero(FormationPosition.M_0, createActionMiddleHero()).getNextAction();
+        Action a = createBasicAttackPositionedHero(FormationPosition.M_0, createActionMiddleHero()).nextAction();
 
         Assert.assertTrue(a != null);
         Assert.assertEquals(FIRE, a.getMainActionEffect().getDamageType());
@@ -73,7 +73,7 @@ public class NextActionTests {
     @Test
     public void testPositionedHeroBackAndActionFront() {
 
-        Action a = createBasicAttackPositionedHero(FormationPosition.B_0, createActionFrontHero()).getNextAction();
+        Action a = createBasicAttackPositionedHero(FormationPosition.B_0, createActionFrontHero()).nextAction();
 
         Assert.assertTrue(a != null);
         Assert.assertEquals(BLUNT, a.getMainActionEffect().getDamageType());
@@ -83,7 +83,7 @@ public class NextActionTests {
     @Test
     public void testPositionedHeroFrontAndActionFront() {
 
-        Action a = createBasicAttackPositionedHero(FormationPosition.F_0, createActionFrontHero()).getNextAction();
+        Action a = createBasicAttackPositionedHero(FormationPosition.F_0, createActionFrontHero()).nextAction();
 
         Assert.assertTrue(a != null);
         Assert.assertEquals(FIRE, a.getMainActionEffect().getDamageType());
@@ -93,7 +93,7 @@ public class NextActionTests {
     @Test
     public void testPositionedHeroMiddleAndActionFront() {
 
-        Action a = createBasicAttackPositionedHero(FormationPosition.M_0, createActionFrontHero()).getNextAction();
+        Action a = createBasicAttackPositionedHero(FormationPosition.M_0, createActionFrontHero()).nextAction();
 
         Assert.assertTrue(a != null);
         Assert.assertEquals(BLUNT, a.getMainActionEffect().getDamageType());
@@ -103,7 +103,7 @@ public class NextActionTests {
     @Test
     public void testPositionedHeroBackAndActionBackAndAll() {
 
-        Action a = createBasicAttackPositionedHero(FormationPosition.B_0, createActionBackAndAllHero()).getNextAction();
+        Action a = createBasicAttackPositionedHero(FormationPosition.B_0, createActionBackAndAllHero()).nextAction();
 
         Assert.assertTrue(a != null);
         Assert.assertEquals(FIRE, a.getMainActionEffect().getDamageType());
@@ -113,7 +113,7 @@ public class NextActionTests {
     @Test
     public void testPositionedHeroFrontAndActionBackAndAll() {
 
-        Action a = createBasicAttackPositionedHero(FormationPosition.F_0, createActionBackAndAllHero()).getNextAction();
+        Action a = createBasicAttackPositionedHero(FormationPosition.F_0, createActionBackAndAllHero()).nextAction();
         Assert.assertTrue(a != null);
         Assert.assertEquals(HOLY, a.getMainActionEffect().getDamageType());
 
@@ -122,7 +122,7 @@ public class NextActionTests {
     @Test
     public void testPositionedHeroMiddleAndActionBackAndAll() {
 
-        Action a = createBasicAttackPositionedHero(FormationPosition.M_0, createActionBackAndAllHero()).getNextAction();
+        Action a = createBasicAttackPositionedHero(FormationPosition.M_0, createActionBackAndAllHero()).nextAction();
         Assert.assertTrue(a != null);
         Assert.assertEquals(HOLY, a.getMainActionEffect().getDamageType());
 

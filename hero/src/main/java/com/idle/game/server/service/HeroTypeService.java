@@ -8,6 +8,7 @@ import static com.idle.game.constant.CacheConstants.HERO_TYPE_FIND_BY_ID;
 import static com.idle.game.constant.CacheConstants.HERO_TYPE_FIND_BY_NAME;
 import com.idle.game.core.hero.type.HeroTypeFaction;
 import com.idle.game.core.hero.type.HeroTypeQuality;
+import com.idle.game.core.type.DefenseType;
 import com.idle.game.model.HeroType;
 import com.idle.game.server.repository.HeroTypeRepository;
 import java.util.List;
@@ -51,10 +52,17 @@ public class HeroTypeService {
                 @CacheEvict(value = FORMATION_FIND_BY_ID, allEntries = true)
                 ,
                 @CacheEvict(value = FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION, allEntries = true)
-                
+
             }
     )
     public HeroType save(HeroType ht) {
+        //Set all missing defesens to zero
+        for (DefenseType dt : DefenseType.values()) {
+            ht.getMinBaseDefense(dt);
+            ht.getMaxBaseDefense(dt);
+            ht.getMinMaxLevelDefense(dt);
+            ht.getMaxMaxLevelDefense(dt);
+        }
         return heroTypeRepository.save(ht);
     }
 

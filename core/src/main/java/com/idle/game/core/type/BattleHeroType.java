@@ -9,9 +9,10 @@ import com.idle.game.core.hero.type.HeroTypeRole;
 import com.idle.game.core.hero.type.HeroTypeSize;
 import com.idle.game.core.passive.Passive;
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 /**
  *
@@ -24,8 +25,8 @@ public class BattleHeroType implements Serializable {
     private HeroTypeRole role;
     private HeroTypeSize size;
     private String name;
-    private final Map<FormationPositionType, Action> specialActions = new HashMap<>();
-    private final Map<FormationPositionType, Action> defaultActions = new HashMap<>();
+    private List<Action> specialActions = new ArrayList<>();
+    private List<Action> defaultActions = new ArrayList<>();
     private DistanceType distanceType;
     private List<Passive> passives;
 
@@ -74,12 +75,20 @@ public class BattleHeroType implements Serializable {
         this.name = name;
     }
 
-    public Map<FormationPositionType, Action> getSpecialActions() {
+    public List<Action> getSpecialActions() {
         return specialActions;
     }
 
-    public Map<FormationPositionType, Action> getDefaultActions() {
+    public void setSpecialActions(List<Action> specialActions) {
+        this.specialActions = specialActions;
+    }
+
+    public List<Action> getDefaultActions() {
         return defaultActions;
+    }
+
+    public void setDefaultActions(List<Action> defaultActions) {
+        this.defaultActions = defaultActions;
     }
 
     public DistanceType getDistanceType() {
@@ -104,6 +113,26 @@ public class BattleHeroType implements Serializable {
 
     public void setMaxLevel(Integer maxLevel) {
         this.maxLevel = maxLevel;
+    }
+
+    public Action getDefaultAction(FormationPositionType fpt) {
+
+        Optional<Action> ret = this.getDefaultActions().stream().filter((d) -> d.getFormationPositionType().equals(fpt)).findFirst();
+        try {
+            return ret.get();
+        } catch (NoSuchElementException e) {
+            return null;
+        }
+    }
+
+    public Action getSpecialAction(FormationPositionType fpt) {
+
+        Optional<Action> ret = this.getSpecialActions().stream().filter((d) -> d.getFormationPositionType().equals(fpt)).findFirst();
+        try {
+            return ret.get();
+        } catch (NoSuchElementException e) {
+            return null;
+        }
     }
 
     @Override

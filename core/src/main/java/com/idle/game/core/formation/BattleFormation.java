@@ -83,11 +83,11 @@ public class BattleFormation implements Serializable {
         this.size += hts.size();
         if (hts.equals(SMALL)) {
             this.heroes.add(bph);
-
         } else {
             this.heroes.add(bph);
             FormationPositionRelation.DATA.get(fp).get(hts).forEach((fpClone) -> {
                 BattlePositionedHero bphClone = bph.duplicate();
+                bphClone.setClone(Boolean.TRUE);
                 bphClone.setPosition(fpClone);
                 this.heroes.add(bphClone);
             });

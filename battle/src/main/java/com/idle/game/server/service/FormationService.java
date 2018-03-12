@@ -4,11 +4,20 @@ import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_ID;
 import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION;
 import com.idle.game.core.battle.BattlePositionedHero;
 import com.idle.game.core.formation.type.FormationAllocation;
+import com.idle.game.core.formation.type.FormationPosition;
+import static com.idle.game.core.formation.type.FormationPosition.F_0;
+import static com.idle.game.core.formation.type.FormationPosition.F_1;
+import static com.idle.game.core.formation.type.FormationPosition.M_0;
+import static com.idle.game.core.formation.type.FormationPosition.M_1;
+import com.idle.game.core.hero.type.HeroTypeSize;
+import static com.idle.game.core.hero.type.HeroTypeSize.LARGE;
 import com.idle.game.helper.BattleHeroHelper;
 import com.idle.game.helper.HeroHelper;
+import com.idle.game.helper.HeroTypeHelper;
 import com.idle.game.helper.PlayerHelper;
 import com.idle.game.model.Formation;
 import com.idle.game.model.Hero;
+import com.idle.game.model.HeroType;
 import com.idle.game.model.Player;
 import com.idle.game.server.repository.FormationRepository;
 import java.util.HashSet;
@@ -38,6 +47,9 @@ public class FormationService {
 
     @Autowired
     private HeroHelper heroHelper;
+
+    @Autowired
+    private HeroTypeHelper heroTypeHelper;
 
     @Autowired
     private BattleHeroHelper battleHeroHelper;
@@ -97,6 +109,30 @@ public class FormationService {
             if (hero == null || !hero.getPlayer().equals(f.getPlayer())) {
                 throw new ValidationException("player.is.not.owner.of.this.hero");
             }
+
+            HeroType ht = heroTypeHelper.getHeroTypeById(hero.getHeroType());
+
+            if (ht != null) {
+                HeroTypeSize hts = ht.getSize();
+
+                FormationPosition fp = ph.getPosition();
+
+                if (hts.equals(HeroTypeSize.MEDIUM)) {
+                    if (!fp.equals(F_0)
+                            && !fp.equals(F_1)
+                            && !fp.equals(M_0)
+                            && !fp.equals(M_1)) {
+                        throw new ValidationException("can.not.allocate.hero.here");
+                    }
+                } else if (hts.equals(LARGE)) {
+                    if (!fp.equals(M_1)) {
+                        throw new ValidationException("can.not.allocate.hero.here");
+                    }
+                }
+            } else {
+                throw new ValidationException("hero.type.not.found");
+            }
+
         }
 
     }

@@ -1,5 +1,6 @@
 package com.idle.game.core.battle;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.idle.game.core.action.Action;
 import com.idle.game.core.hero.BattleHero;
 import static com.idle.game.core.constant.IdleConstants.LOG;
@@ -16,18 +17,30 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.logging.Level;
 
 /**
  *
  * @author rafael
  */
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class BattlePositionedHero implements Serializable {
 
     private Integer energy = 0;
     private BattleTeamType battleTeamType;
     private FormationPosition position;
     private BattleHero hero;
+
+    private Boolean clone = Boolean.FALSE;
+
+    public Boolean getClone() {
+        return clone;
+    }
+
+    public void setClone(Boolean clone) {
+        this.clone = clone;
+    }
 
     public FormationPosition getPosition() {
         return position;
@@ -89,7 +102,7 @@ public class BattlePositionedHero implements Serializable {
         return "BPH{" + "type=" + battleTeamType + ",p=" + position + ",hero=" + hero + ",energy=" + energy + '}';
     }
 
-    public Action getNextAction() {
+    public Action nextAction() {
 
         BattleHero aHero = this.getHero();
 
@@ -98,17 +111,17 @@ public class BattlePositionedHero implements Serializable {
         Action action;
         if (this.getEnergy() >= IdleConstants.MAX_ENERGY
                 && aHero.getCanDoSpecialAction()) {
-            if (aHero.getHeroType().getSpecialActions().get(fpt) != null) {
-                action = aHero.getHeroType().getSpecialActions().get(fpt);
-            } else if (aHero.getHeroType().getSpecialActions().get(ALL_LINES) != null) {
-                action = aHero.getHeroType().getSpecialActions().get(ALL_LINES);
+            if (aHero.getHeroType().getSpecialAction(fpt) != null) {
+                action = aHero.getHeroType().getSpecialAction(fpt);
+            } else if (aHero.getHeroType().getSpecialAction(ALL_LINES) != null) {
+                action = aHero.getHeroType().getSpecialAction(ALL_LINES);
             } else {
                 action = DEFAULT_SPECIAL_ACTION;
             }
-        } else if (aHero.getHeroType().getDefaultActions().get(fpt) != null) {
-            action = aHero.getHeroType().getDefaultActions().get(fpt);
-        } else if (aHero.getHeroType().getDefaultActions().get(ALL_LINES) != null) {
-            action = aHero.getHeroType().getDefaultActions().get(ALL_LINES);
+        } else if (aHero.getHeroType().getDefaultAction(fpt) != null) {
+            action = aHero.getHeroType().getDefaultAction(fpt);
+        } else if (aHero.getHeroType().getDefaultAction(ALL_LINES) != null) {
+            action = aHero.getHeroType().getDefaultAction(ALL_LINES);
         } else {
             action = DEFAULT_ACTION;
         }
@@ -117,6 +130,10 @@ public class BattlePositionedHero implements Serializable {
     }
 
     public BattlePositionedHero duplicate() {
+        return duplicate(Boolean.TRUE);
+    }
+
+    public BattlePositionedHero duplicate(Boolean removeHeroType) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(baos);
@@ -125,12 +142,44 @@ public class BattlePositionedHero implements Serializable {
             ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
             ObjectInputStream ois = new ObjectInputStream(bais);
             BattlePositionedHero ret = (BattlePositionedHero) ois.readObject();
-            ret.getHero().setHeroType(null);
+            if (removeHeroType) {
+                ret.getHero().setHeroType(null);
+            }
             return ret;
         } catch (IOException | ClassNotFoundException e) {
             LOG.log(Level.SEVERE, e.getMessage(), e);
         }
         return null;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 59 * hash + Objects.hashCode(this.battleTeamType);
+        hash = 59 * hash + Objects.hashCode(this.position);
+        hash = 59 * hash + Objects.hashCode(this.hero);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final BattlePositionedHero other = (BattlePositionedHero) obj;
+        if (this.battleTeamType != other.battleTeamType) {
+            return false;
+        }
+        if (this.position != other.position) {
+            return false;
+        }
+        return Objects.equals(this.hero, other.hero);
     }
 
 }
