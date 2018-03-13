@@ -70,6 +70,14 @@ zuul:
         path: /pvp/**
         sensitiveHeaders:
         url: http://localhost:8085/pvp
+    guild:
+        path: /guild/**
+        sensitiveHeaders:
+        url: http://localhost:8087/guild
+    guildMember:
+        path: /guildMember/**
+        sensitiveHeaders:
+        url: http://localhost:8087/guildMember
     
 #Spring Boot Config            
 spring:

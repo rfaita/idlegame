@@ -1,0 +1,70 @@
+info:
+    version: @pom.version@
+    stage: dev
+server:
+    port: 8087
+    compression:
+        enabled: true
+        mime-types: application/json
+
+management: 
+    security: 
+        enabled: false
+idle:
+    url:
+        heroType:
+            http://localhost:8082/heroType
+        hero:
+            http://localhost:8082/hero
+        battleHero:
+            http://localhost:8081/battleHero
+        formation:
+            http://localhost:8081/formation
+        player:
+            http://localhost:8085/player
+        playerResource:
+            http://localhost:8085/playerResource
+        mail:
+            http://localhost:8084/mail
+        battle:
+            http://localhost:8081/battle
+        shop:
+            http://localhost:8086/shop
+        guild:
+            http://localhost:8087/guild
+        guildMember:
+            http://localhost:8087/guildMember
+    config:
+        #Redis
+        redis:
+            hostname: localhost
+            port: 6379
+        #Mongo
+        mongodb:
+            hostname: localhost
+            port: 11111
+            database: test
+        #RabbitMQ relay
+        relay:
+            hostname: localhost
+            port: 61613
+            username: admin
+            password: admin123
+            
+        pvpRating:
+            expire: 1800
+            price: 20
+keycloak:
+    auth-server-url: http://localhost:8180/auth
+    realm: idlerealm
+    resource: idlegame
+    public-client: true
+
+#Spring Boot Config            
+spring:
+    profiles:
+        active: default
+    application:
+        name: @pom.artifactId@
+    jackson:
+        default-property-inclusion: non_null

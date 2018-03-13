@@ -1,7 +1,7 @@
 package com.idle.game.server.rest;
 
 import static com.idle.game.constant.URIConstants.SHOP__BUY_LOOT_ROLL;
-import com.idle.game.model.mongo.shop.LootRoll;
+import com.idle.game.model.shop.LootRoll;
 import com.idle.game.server.dto.Envelope;
 import com.idle.game.server.service.LootRollService;
 import java.util.List;

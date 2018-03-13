@@ -44,6 +44,10 @@ import { PvpComponent } from './pvp/pvp.component';
 import { PlayerResourceService } from './service/playerresource.service';
 import { PlayerResourceStompConfig, playerResourceStompConfigFactory } from './utils/playerStompConfigFactory';
 import { KeysPipe } from './utils/pipe/keys.pipe';
+import { Guild } from './model/guild';
+import { GuildService } from './service/guild.service';
+import { GuildComponent } from './guild/guild.component';
+import { GuildMemberService } from './service/guildmember.service';
 
 @NgModule({
   declarations: [
@@ -56,6 +60,7 @@ import { KeysPipe } from './utils/pipe/keys.pipe';
     ChatComponent, ChatPmComponent,
     FriendsComponent,
     PvpComponent,
+    GuildComponent,
     KeysPipe
   ],
   imports: [
@@ -112,7 +117,9 @@ import { KeysPipe } from './utils/pipe/keys.pipe';
     MailService,
     FriendService,
     PvpService,
-    PlayerResourceService
+    PlayerResourceService,
+    GuildService,
+    GuildMemberService
   ],
   bootstrap: [AppComponent]
 })

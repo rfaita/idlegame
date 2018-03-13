@@ -2,8 +2,8 @@ package com.idle.game.tests;
 
 import static com.idle.game.core.constant.IdleConstants.LOG;
 import com.idle.game.core.hero.type.HeroQuality;
-import com.idle.game.model.mongo.shop.LootRoll;
-import com.idle.game.model.mongo.shop.LootRollValue;
+import com.idle.game.model.shop.LootRoll;
+import com.idle.game.model.shop.LootRollValue;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;

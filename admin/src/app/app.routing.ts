@@ -11,8 +11,10 @@ import { BattleComponent } from './battle/battle.component';
 import { ChatComponent } from './chat/chat.component';
 import { FriendsComponent } from './friends/friends.component';
 import { PvpComponent } from './pvp/pvp.component';
+import { GuildComponent } from './guild/guild.component';
 
 const routes: Routes = [
+  { path: 'guild', component: GuildComponent },
   { path: 'friends', component: FriendsComponent },
   { path: 'chat', component: ChatComponent },
   { path: 'pvp', component: PvpComponent },

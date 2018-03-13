@@ -3,7 +3,7 @@ package com.idle.game.server.service;
 import static com.idle.game.constant.CacheConstants.BATTLE_HERO_FIND_BY_ID;
 import static com.idle.game.constant.CacheConstants.HERO_FIND_BY_ID;
 import static com.idle.game.core.constant.IdleConstants.LOG;
-import static com.idle.game.model.mongo.shop.LootRollType.HERO;
+import static com.idle.game.model.shop.LootRollType.HERO;
 import java.util.List;
 import java.util.logging.Level;
 import javax.validation.ValidationException;
@@ -24,7 +24,7 @@ import com.idle.game.helper.PlayerHelper;
 import com.idle.game.model.Hero;
 import com.idle.game.model.HeroType;
 import com.idle.game.model.Player;
-import com.idle.game.model.mongo.shop.LootRoll;
+import com.idle.game.model.shop.LootRoll;
 import com.idle.game.server.repository.HeroRepository;
 
 /**

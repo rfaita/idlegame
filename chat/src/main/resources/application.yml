@@ -30,6 +30,10 @@ idle:
             http://localhost:8081/battle
         shop:
             http://localhost:8086/shop
+        guild:
+            http://localhost:8087/guild
+        guildMember:
+            http://localhost:8087/guildMember
     config:
         #Redis
         redis:

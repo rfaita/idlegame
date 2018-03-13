@@ -27,6 +27,7 @@
         <module>shop</module>
         <module>player</module>
         <module>proxy</module>
+        <module>guild</module>
     </modules>
 
 </project>

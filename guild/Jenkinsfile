@@ -1,0 +1,67 @@
+node {
+    stage('Git Clone Core') {
+        sh 'rm -rf *'
+        sh 'svn export https://github.com/rfaita/idlegame.git/trunk/core --force .'
+    }
+    stage('Build Core') {
+        def mvnHome = tool 'M3'
+        env.PATH = "${mvnHome}/bin:${env.PATH}"
+        sh 'mvn clean install -DskipTests=true'
+    }
+    stage('Test Core') {
+        def mvnHome = tool 'M3'
+        env.PATH = "${mvnHome}/bin:${env.PATH}"
+        sh 'mvn test'
+    }
+    stage('Git Clone Common') {
+        sh 'rm -rf *'
+        sh 'svn export https://github.com/rfaita/idlegame.git/trunk/common --force .'
+    }
+    stage('Build Common') {
+        def mvnHome = tool 'M3'
+        env.PATH = "${mvnHome}/bin:${env.PATH}"
+        sh 'mvn clean install -DskipTests=true'
+    }
+    stage('Test Common') {
+        def mvnHome = tool 'M3'
+        env.PATH = "${mvnHome}/bin:${env.PATH}"
+        sh 'mvn test'
+    }
+    stage('Git Clone') {
+        sh 'rm -rf *'
+        sh 'svn export https://github.com/rfaita/idlegame.git/trunk/player --force .'
+    }
+    stage('Build') {
+        def mvnHome = tool 'M3'
+        env.PATH = "${mvnHome}/bin:${env.PATH}"
+        sh 'mvn clean install -DskipTests=true'
+    }
+    stage('Test') {
+        def mvnHome = tool 'M3'
+        env.PATH = "${mvnHome}/bin:${env.PATH}"
+        sh 'mvn test -Dspring.profiles.active=test'
+    }
+
+    stage('Build Image') {
+        withEnv(['DOCKER_HOST=unix:///var/run/docker.sock']) {
+            tool 'DOCKER'
+            sh 'mvn dockerfile:build'
+        }
+    }
+    stage('Push Image') {
+        withEnv(['DOCKER_HOST=unix:///var/run/docker.sock']) {
+            tool 'DOCKER'
+	    withDockerRegistry([credentialsId: 'jenkins_registry', url: 'https://idlegame01:5000']) {
+            	sh 'docker push idlegame01:5000/player:latest'
+	    }
+        }
+    }
+    stage('Promote') {
+        withEnv(['DOCKER_HOST=unix:///var/run/docker.sock']) {
+	    withDockerRegistry([credentialsId: 'jenkins_registry', url: 'https://idlegame01:5000']) {
+                sh 'docker service update --detach=false --force --with-registry-auth --image idlegame01:5000/player:latest --update-parallelism=1 ig_player'
+	    }
+        }
+    }
+}
+
