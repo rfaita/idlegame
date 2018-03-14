@@ -12,13 +12,20 @@
                         <i class="material-icons">add</i>
                         <div class="ripple-container"></div>
                     </button>
-                    <button type="button" class="btn btn-white btn-round btn-just-icon">
+                    <button type="button" class="btn btn-white btn-round btn-just-icon" (click)="findByName()">
                         <i class="material-icons">search</i>
                         <div class="ripple-container"></div>
                     </button>
                 </form>
             </div>
         </nav>
+        <div class="row" *ngIf="!!guild">
+            <div class="col-md-12">
+                {{guild.name}}
+                {{guild.level}}
+                {{guild.initialMessage}}
+            </div>
+        </div>
         <div class="row" *ngIf="!!guild">
             <div class="col-md-12">
                 <div class="card">

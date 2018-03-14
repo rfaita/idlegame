@@ -54,7 +54,7 @@ public class HeroRest {
     Envelope<List<Hero>> findAllByPlayer(@PathVariable("player") String player) {
 
         Envelope<List<Hero>> ret = new Envelope<>();
-        ret.setData(heroService.findAllByPlayer(player));
+        ret.setData(heroService.findAllByPlayerId(player));
 
         return ret;
 
@@ -65,7 +65,7 @@ public class HeroRest {
     Envelope<List<Hero>> findAllByPlayerAndQuality(@PathVariable("player") String player, @PathVariable("quality") String quality) {
 
         Envelope<List<Hero>> ret = new Envelope<>();
-        ret.setData(heroService.findAllByPlayerAndQuality(player, HeroQuality.valueOf(quality)));
+        ret.setData(heroService.findAllByPlayerIdAndQuality(player, HeroQuality.valueOf(quality)));
 
         return ret;
 

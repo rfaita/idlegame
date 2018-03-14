@@ -1,0 +1,32 @@
+type Hero {
+    id: ID!
+    quality: String!
+    heroTypeId: String!
+    heroType: HeroType!
+    playerId: String!
+    player: Player!
+    level: Int!
+
+    baseDmg: Int!
+    baseAp: Int!
+    baseDefenses: [Defense]!
+    baseSpeed: Int!
+    baseCritChance: Int!
+    baseCritDamage: Int!
+    baseDodgeChance: Int!
+    baseHp: Int!
+
+    maxLevelDmg: Int!
+    maxLevelAp: Int!
+    maxLevelDefenses: [Defense]!
+    maxLevelSpeed: Int!
+    maxLevelCritChance: Int!
+    maxLevelCritDamage: Int!
+    maxLevelDodgeChance: Int!
+    maxLevelHp: Int!
+
+}
+
+type Query { 
+    findHeroes(player:String!, quality:String): [Hero]!    
+}

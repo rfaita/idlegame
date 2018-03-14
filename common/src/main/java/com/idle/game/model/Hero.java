@@ -24,9 +24,9 @@ public class Hero implements Serializable {
 
     @Id
     private String id;
-    private String heroType;
+    private String heroTypeId;
     @Indexed
-    private String player;
+    private String playerId;
     private Integer level;
     private HeroQuality quality;
 
@@ -47,6 +47,25 @@ public class Hero implements Serializable {
     private Integer maxLevelCritDamage;
     private Integer maxLevelDodgeChance;
     private Integer maxLevelHp;
+
+    private transient HeroType heroType;
+    private transient Player player;
+
+    public HeroType getHeroType() {
+        return heroType;
+    }
+
+    public void setHeroType(HeroType heroType) {
+        this.heroType = heroType;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 
     public String getId() {
         return id;
@@ -80,20 +99,20 @@ public class Hero implements Serializable {
         this.quality = heroQuality;
     }
 
-    public String getHeroType() {
-        return heroType;
+    public String getHeroTypeId() {
+        return heroTypeId;
     }
 
-    public void setHeroType(String heroType) {
-        this.heroType = heroType;
+    public void setHeroTypeId(String heroType) {
+        this.heroTypeId = heroType;
     }
 
-    public String getPlayer() {
-        return player;
+    public String getPlayerId() {
+        return playerId;
     }
 
-    public void setPlayer(String player) {
-        this.player = player;
+    public void setPlayerId(String player) {
+        this.playerId = player;
     }
 
     public Integer getLevel() {

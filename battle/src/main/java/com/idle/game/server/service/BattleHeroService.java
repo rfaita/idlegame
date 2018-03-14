@@ -31,7 +31,7 @@ public class BattleHeroService {
 
         if (hero != null) {
 
-            HeroType heroType = heroTypeHelper.getHeroTypeById(hero.getHeroType());
+            HeroType heroType = heroTypeHelper.getHeroTypeById(hero.getHeroTypeId());
 
             if (heroType != null) {
 

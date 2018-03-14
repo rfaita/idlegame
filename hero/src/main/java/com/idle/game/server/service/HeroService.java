@@ -52,14 +52,14 @@ public class HeroService {
         return heroRepository.findById(id);
     }
 
-    public List<Hero> findAllByPlayer(String idPlayer) {
+    public List<Hero> findAllByPlayerId(String idPlayer) {
 
-        return heroRepository.findAllByPlayer(idPlayer);
+        return heroRepository.findAllByPlayerId(idPlayer);
     }
 
-    public List<Hero> findAllByPlayerAndQuality(String idPlayer, HeroQuality quality) {
+    public List<Hero> findAllByPlayerIdAndQuality(String idPlayer, HeroQuality quality) {
 
-        return heroRepository.findAllByPlayerAndQuality(idPlayer, quality);
+        return heroRepository.findAllByPlayerIdAndQuality(idPlayer, quality);
     }
 
     @Caching(put
@@ -110,7 +110,7 @@ public class HeroService {
         if (h == null) {
             throw new ValidationException("hero.not.found");
         }
-        if (!h.getPlayer().equalsIgnoreCase(player)) {
+        if (!h.getPlayerId().equalsIgnoreCase(player)) {
             throw new ValidationException("player.is.not.owner.of.this.hero");
         }
         if (h.getLevel() + 1 > IdleConstants.HERO_MAX_LEVEL) {
@@ -191,10 +191,10 @@ public class HeroService {
                 hero = rollHero(heroQuality, heroType);
         }
 
-        hero.setPlayer(player);
+        hero.setPlayerId(player);
         hero.setQuality(heroQuality);
         hero.setLevel(1);
-        hero.setHeroType(heroType.getId());
+        hero.setHeroTypeId(heroType.getId());
 
         return heroRepository.save(hero);
 

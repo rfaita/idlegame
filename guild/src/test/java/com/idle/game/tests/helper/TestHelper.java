@@ -1,8 +1,8 @@
 package com.idle.game.tests.helper;
 
-import com.idle.game.model.Friend;
 import com.idle.game.model.Guild;
 import com.idle.game.model.GuildMember;
+import com.idle.game.model.GuildMemberType;
 import com.idle.game.model.Player;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -16,6 +16,18 @@ public class TestHelper {
     public static Guild createGuild(String id) {
         Guild ret = new Guild();
         ret.setId(id);
+        return ret;
+    }
+
+    public static GuildMember createMemberGuildMember(String guildId, String userMember, String userName) {
+        GuildMember ret = createGuildMember(guildId, userMember, userName);
+        ret.setType(GuildMemberType.MEMBER);
+        return ret;
+    }
+
+    public static GuildMember createAdminGuildMember(String guildId, String userMember, String userName) {
+        GuildMember ret = createGuildMember(guildId, userMember, userName);
+        ret.setType(GuildMemberType.ADMIN);
         return ret;
     }
 

@@ -58,7 +58,7 @@ export class HeroesComponent implements OnInit {
       this.heroService.findAllByPlayer(env.data.id).subscribe(env => {
         this.heroes = env.data
         this.heroes.forEach(hero => {
-          let heroType = this.heroTypes.filter(heroType => heroType.id === hero.heroType)[0];
+          let heroType = this.heroTypes.filter(heroType => heroType.id === hero.heroTypeId)[0];
           hero.heroTypeName = heroType.name;
         });
       });

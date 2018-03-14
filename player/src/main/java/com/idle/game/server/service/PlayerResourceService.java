@@ -1,6 +1,6 @@
 package com.idle.game.server.service;
 
-import static com.idle.game.constant.ResourceContants.defaultResources;
+import static com.idle.game.constant.ResourceConstants.defaultResources;
 import com.idle.game.helper.PlayerHelper;
 import com.idle.game.model.Player;
 import com.idle.game.model.PlayerResource;

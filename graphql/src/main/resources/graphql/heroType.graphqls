@@ -1,0 +1,85 @@
+type HeroType {
+    id: ID!
+    name: String!
+    defaultActions: [Action]
+    specialActions: [Action]
+    quality: String!
+    faction: String!
+    role: String!
+    distanceType: String! 
+    size: String!
+
+    maxLevel: Int!
+
+    minBaseDmg: Int!
+    minBaseAp: Int!
+    minBaseDefenses: [Defense]
+    minBaseSpeed: Int!
+    minBaseCritChance: Int!
+    minBaseCritDamage: Int!
+    minBaseDodgeChance: Int!
+    minBaseHp: Int!
+
+    minMaxLevelDmg: Int!
+    minMaxLevelAp: Int!
+    minMaxLevelDefenses: [Defense]
+    minMaxLevelSpeed: Int!
+    minMaxLevelCritChance: Int!
+    minMaxLevelCritDamage: Int!
+    minMaxLevelDodgeChance: Int!
+    minMaxLevelHp: Int!
+
+    maxBaseDmg: Int!
+    maxBaseAp: Int!
+    maxBaseDefenses: [Defense]
+    maxBaseSpeed: Int!
+    maxBaseCritChance: Int!
+    maxBaseCritDamage: Int!
+    maxBaseDodgeChance: Int!
+    maxBaseHp: Int!
+
+    maxMaxLevelDmg: Int!
+    maxMaxLevelAp: Int!
+    maxMaxLevelDefenses: [Defense]
+    maxMaxLevelSpeed: Int!
+    maxMaxLevelCritChance: Int!
+    maxMaxLevelCritDamage: Int!
+    maxMaxLevelDodgeChance: Int!
+    maxMaxLevelHp: Int!
+   
+}
+
+type Defense {
+    type: String!
+    value: Int!
+}
+
+type Action {
+    special: Boolean!
+    passive: Boolean!
+    mainActionEffect: ActionEffect
+    secundaryActionsEffects: [ActionEffect]
+    formationPositionType: String!
+}
+
+type ActionEffect {
+    type: String!
+    targetType: String!
+    canBeDodge: Boolean!
+    percentage: Int!
+    damageType: String!
+    overSameTeam: Boolean!
+    buffEffects: [BuffEffect]!
+}
+
+type BuffEffect {
+    percentage: Int!
+    chance: Int!
+    duration: Int!
+    effectType: String!
+    attributeType: String!
+}
+
+extend type Query { 
+    findHeroesType(faction:String, quality:String): [HeroType]!    
+}

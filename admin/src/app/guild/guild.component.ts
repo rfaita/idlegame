@@ -39,8 +39,13 @@ export class GuildComponent implements OnInit {
       this.findByUserOwner();
       this.guildName = "";
     });
+  }
 
-    
+  public findByName() {
+    this.guildService.findByName(this.guildName).subscribe(env => {
+      this.guild = env.data;
+      this.getGuildMembers();
+    });
   }
 
   public findByUserOwner() {

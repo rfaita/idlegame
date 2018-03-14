@@ -80,7 +80,7 @@ export class BattleComponent implements OnInit, OnDestroy {
       this.heroService.findAllByPlayer(env.data.id).subscribe(env => {
         this.heroesDefense = env.data;
         this.heroesDefense.forEach(hero => {
-          let heroType = this.heroTypes.filter(heroType => heroType.id === hero.heroType)[0];
+          let heroType = this.heroTypes.filter(heroType => heroType.id === hero.heroTypeId)[0];
           hero.heroTypeName = heroType.name;
         });
       });
@@ -99,7 +99,7 @@ export class BattleComponent implements OnInit, OnDestroy {
       this.heroService.findAllByPlayer(env.data.id).subscribe(env => {
         this.heroesAttack = env.data;
         this.heroesAttack.forEach(hero => {
-          let heroType = this.heroTypes.filter(heroType => heroType.id === hero.heroType)[0];
+          let heroType = this.heroTypes.filter(heroType => heroType.id === hero.heroTypeId)[0];
           hero.heroTypeName = heroType.name;
         });
       });

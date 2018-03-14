@@ -1,11 +1,11 @@
 import { Defense } from './defense';
 export class Hero {
     public id: String;
-    public heroType: String;
+    public heroTypeId: String;
 
     public heroTypeName: String;
 
-    public player: String;
+    public playerId: String;
     public level: Number;
     public quality: String;
 

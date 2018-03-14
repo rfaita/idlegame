@@ -106,11 +106,11 @@ public class FormationService {
         for (BattlePositionedHero ph : f.getHeroes()) {
 
             Hero hero = heroHelper.getHeroById(ph.getHero().getId());
-            if (hero == null || !hero.getPlayer().equals(f.getPlayer())) {
+            if (hero == null || !hero.getPlayerId().equals(f.getPlayer())) {
                 throw new ValidationException("player.is.not.owner.of.this.hero");
             }
 
-            HeroType ht = heroTypeHelper.getHeroTypeById(hero.getHeroType());
+            HeroType ht = heroTypeHelper.getHeroTypeById(hero.getHeroTypeId());
 
             if (ht != null) {
                 HeroTypeSize hts = ht.getSize();

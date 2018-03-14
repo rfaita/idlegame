@@ -9,7 +9,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group form-black">
                                         <label>Hero Type</label>
-                                        <select name="heroType" class="form-control" required [ngModel]="hero.heroType">
+                                        <select name="heroTypeId" class="form-control" required [ngModel]="hero.heroTypeId">
                                             <option *ngFor="let v of heroTypesData" [value]="v.id">{{v.name}}</option>
                                         </select>
                                     </div>
@@ -32,7 +32,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group form-black">
                                         <label>Player</label>
-                                        <input type="text" name="player" class="form-control" required [ngModel]="hero.player">
+                                        <input type="text" name="playerId" class="form-control" required [ngModel]="hero.playerId">
                                     </div>
                                 </div>
 

@@ -26,7 +26,7 @@ public class TestHelper {
     public static Hero createHero(String id, String playerId) {
         Hero ret = new Hero();
         ret.setId(id);
-        ret.setPlayer(playerId);
+        ret.setPlayerId(playerId);
         ret.setLevel(1);
         return ret;
     }

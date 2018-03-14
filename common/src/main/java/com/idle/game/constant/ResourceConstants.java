@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author rafael
  */
-public class ResourceContants {
+public class ResourceConstants {
 
     public static final Long INITIAL_GOLD_PS = 5L;
     public static final Long INITIAL_RUNE_PS = 5L;

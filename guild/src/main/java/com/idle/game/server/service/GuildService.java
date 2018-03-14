@@ -31,9 +31,14 @@ public class GuildService {
         
         Guild guildExist = findByUserOwner(guild.getUserOwner());
         if (guildExist!=null) {
-            throw new ValidationException("user.alreday.have.a.guild");
+            throw new ValidationException("user.already.have.a.guild");
         }
                 
+        guildExist = findByName(guild.getName());
+        if (guildExist!=null) {
+            throw new ValidationException("guild.name.already.rexist");
+        }
+        
         guild = this.guildRepository.save(guild);
         
         guildMemberHelper.createAdmin();

@@ -1,6 +1,5 @@
 package com.idle.game.core.type;
 
-import com.idle.game.core.type.DefenseType;
 import java.io.Serializable;
 import java.util.Objects;
 

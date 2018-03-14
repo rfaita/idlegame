@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.idle.game.helper.TokenHelper;
 import com.idle.game.model.GuildMember;
+import com.idle.game.model.GuildMemberType;
 import com.idle.game.server.service.GuildMemberService;
 import java.util.List;
 
@@ -56,6 +57,13 @@ public class GuildMemberRest {
     public void acceptGuildMemberRequest(@PathVariable("memberRequestId") String memberRequestId) {
 
         guildMemberService.acceptGuildMemberRequest(tokenHelper.getSubject(), memberRequestId);
+    }
+
+    @RequestMapping(path = "/{memberId}/{type}", method = RequestMethod.PUT)
+    public void promoteGuildMember(@PathVariable("memberId") String memberId,
+            @PathVariable("type") String type) {
+
+        guildMemberService.promoteGuildMember(tokenHelper.getSubject(), memberId, GuildMemberType.valueOf(type));
     }
 
 }
