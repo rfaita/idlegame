@@ -136,7 +136,7 @@ public class PvpService {
         if (player != null) {
 
             PvpRating ratPlayer = pvpRatingRepository.findByPlayer(player.getId());
-            PvpRating ratTarget = pvpRatingRepository.findById(idPvpRating);
+            PvpRating ratTarget = pvpRatingRepository.findOne(idPvpRating);
 
             if (ratTarget != null) {
 

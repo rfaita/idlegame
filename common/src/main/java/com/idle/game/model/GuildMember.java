@@ -16,8 +16,8 @@ public class GuildMember implements Serializable {
 
     @Id
     private String id;
-    private String guild;
-    private String userMember;
+    private String guildId;
+    private String userMemberId;
     private String nameMember;
     private Date since;
     private Boolean accepted = Boolean.FALSE;
@@ -26,9 +26,9 @@ public class GuildMember implements Serializable {
     public GuildMember() {
     }
 
-    public GuildMember(String guild, String userMember, String nameMember) {
-        this.guild = guild;
-        this.userMember = userMember;
+    public GuildMember(String guildId, String userMemberId, String nameMember) {
+        this.guildId = guildId;
+        this.userMemberId = userMemberId;
         this.nameMember = nameMember;
     }
 
@@ -48,20 +48,20 @@ public class GuildMember implements Serializable {
         this.id = id;
     }
 
-    public String getGuild() {
-        return guild;
+    public String getGuildId() {
+        return guildId;
     }
 
-    public void setGuild(String guild) {
-        this.guild = guild;
+    public void setGuildId(String guildId) {
+        this.guildId = guildId;
     }
 
-    public String getUserMember() {
-        return userMember;
+    public String getUserMemberId() {
+        return userMemberId;
     }
 
-    public void setUserMember(String userMember) {
-        this.userMember = userMember;
+    public void setUserMemberId(String userMemberId) {
+        this.userMemberId = userMemberId;
     }
 
     public String getNameMember() {

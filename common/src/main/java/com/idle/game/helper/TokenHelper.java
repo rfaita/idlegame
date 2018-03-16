@@ -26,7 +26,7 @@ public class TokenHelper {
     public String getSubject() {
         return accessToken.getSubject();
     }
-    
+
     public String getEmail() {
         return accessToken.getEmail();
     }
@@ -34,11 +34,11 @@ public class TokenHelper {
     public String getLocale() {
         return accessToken.getLocale();
     }
-    
+
     public Boolean isAdmin() {
         return this.getRoles().contains("ADMIN");
     }
-    
+
     public Set<String> getRoles() {
         return accessToken.getRealmAccess().getRoles();
     }

@@ -10,6 +10,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.5.10.RELEASE</version>
+        <relativePath/>
     </parent>
     
     <properties>
@@ -41,9 +42,14 @@
         </dependency>
         
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        
+        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-hystrix</artifactId>
-            <version>1.4.0.RELEASE</version>
+            <version>1.4.3.RELEASE</version>
         </dependency>
         
         <dependency>
@@ -60,7 +66,7 @@
         <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-spring-boot-starter</artifactId>
-            <version>3.4.2.Final</version>
+            <version>3.4.3.Final</version>
         </dependency>
         
         <dependency>
@@ -71,6 +77,18 @@
         
 
     </dependencies>
+    
+    <!--    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Finchley.M8</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>-->
     
     <build>
         <plugins>

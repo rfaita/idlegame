@@ -1,6 +1,5 @@
 package com.idle.game.server.service;
 
-import com.idle.game.helper.PlayerHelper;
 import com.idle.game.helper.PlayerResourceHelper;
 import com.idle.game.model.shop.LootRoll;
 import com.idle.game.server.repository.LootRollRepository;
@@ -27,7 +26,7 @@ public class LootRollService {
     }
 
     public LootRoll findById(String id) {
-        return lootRollRepository.findById(id);
+        return lootRollRepository.findOne(id);
     }
 
     public LootRoll buyById(String id) {

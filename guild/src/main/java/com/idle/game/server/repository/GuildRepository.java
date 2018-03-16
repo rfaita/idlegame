@@ -11,10 +11,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GuildRepository extends MongoRepository<Guild, String> {
 
-    Guild findById(String id);
-
     Guild findByName(String name);
 
-    Guild findByUserOwner(String userOwner);
+    Guild findByUserOwnerId(String userOwnerId);
 
 }

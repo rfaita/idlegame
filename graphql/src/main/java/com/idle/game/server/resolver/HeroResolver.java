@@ -1,9 +1,9 @@
 package com.idle.game.server.resolver;
 
 import com.coxautodev.graphql.tools.GraphQLResolver;
-import com.idle.game.helper.HeroTypeHelper;
 import com.idle.game.helper.ManualTokenHelper;
-import com.idle.game.helper.PlayerHelper;
+import com.idle.game.helper.cb.HeroTypeCircuitBreakerService;
+import com.idle.game.helper.cb.PlayerCircuitBreakerService;
 import com.idle.game.model.Hero;
 import com.idle.game.model.HeroType;
 import com.idle.game.model.Player;
@@ -18,20 +18,20 @@ import org.springframework.stereotype.Component;
 public class HeroResolver implements GraphQLResolver<Hero> {
 
     @Autowired
-    private HeroTypeHelper heroTypeHelper;
+    private HeroTypeCircuitBreakerService heroTypeCircuitBreakerService;
 
     @Autowired
-    private PlayerHelper playerHelper;
+    private PlayerCircuitBreakerService playerCircuitBreakerService;
 
     @Autowired
     private ManualTokenHelper manualTokenHelper;
 
     public HeroType getHeroType(Hero hero) {
-        return heroTypeHelper.getHeroTypeById(hero.getHeroTypeId(), manualTokenHelper.getToken());
+        return heroTypeCircuitBreakerService.getHeroTypeById(hero.getHeroTypeId(), manualTokenHelper.getToken());
     }
 
     public Player getPlayer(Hero hero) {
-        return playerHelper.getPlayerById(hero.getPlayerId(), manualTokenHelper.getToken());
+        return playerCircuitBreakerService.getPlayerById(hero.getPlayerId(), manualTokenHelper.getToken());
     }
 
 }

@@ -37,6 +37,28 @@ public enum GuildMemberType {
         return canPromote;
     }
 
+    public GuildMemberType getLowerLevel() {
+        switch (this) {
+            case ADMIN:
+                return OFFICIAL;
+            case OFFICIAL:
+                return MEMBER;
+            default:
+                return MEMBER;
+        }
+    }
+
+    public GuildMemberType getNextLevel() {
+        switch (this) {
+            case MEMBER:
+                return OFFICIAL;
+            case OFFICIAL:
+                return ADMIN;
+            default:
+                return ADMIN;
+        }
+    }
+
     private GuildMemberType(Integer level, Boolean canAccept, Boolean canKick, Boolean canInvite, Boolean canPromote) {
         this.level = level;
         this.canAccept = canAccept;

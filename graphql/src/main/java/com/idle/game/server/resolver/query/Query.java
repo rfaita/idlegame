@@ -8,6 +8,7 @@ import com.idle.game.helper.HeroHelper;
 import com.idle.game.helper.HeroTypeHelper;
 import com.idle.game.helper.ManualTokenHelper;
 import com.idle.game.helper.PlayerHelper;
+import com.idle.game.helper.cb.PlayerCircuitBreakerService;
 import com.idle.game.model.Hero;
 import com.idle.game.model.HeroType;
 import com.idle.game.model.Player;
@@ -23,7 +24,7 @@ import org.springframework.stereotype.Component;
 public class Query implements GraphQLQueryResolver {
 
     @Autowired
-    private PlayerHelper playerHelper;
+    private PlayerCircuitBreakerService playerCircuitBreakerService;
 
     @Autowired
     private HeroHelper heroHelper;
@@ -38,7 +39,7 @@ public class Query implements GraphQLQueryResolver {
 
         String token = manualTokenHelper.getToken();
 
-        Player player = playerHelper.getPlayerByName(name, token);
+        Player player = playerCircuitBreakerService.getPlayerByName(name, token);
         if (player == null) {
             return null;
         } else {

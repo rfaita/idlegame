@@ -18,18 +18,32 @@ export class GuildMemberService {
         return <Observable<Envelope<GuildMember[]>>>this.http.get(environment.API_BASE_URL + "guildMember/" + guildId);
     }
 
+    getGuildMembersRequest(guildId: String): Observable<Envelope<GuildMember[]>> {
+        return <Observable<Envelope<GuildMember[]>>>this.http.get(environment.API_BASE_URL + "guildMember/requests/" + guildId);
+    }
+
     sendGuildMemberRequest(guildId: String): Observable<Envelope<void>> {
         return <Observable<Envelope<void>>>this.http.post(environment.API_BASE_URL + "guildMember/" + guildId, null);
     }
-
 
     acceptGuildMemberRequest(memberRequestId: String): Observable<Envelope<void>> {
         return <Observable<Envelope<void>>>this.http.put(environment.API_BASE_URL + "guildMember/" + memberRequestId, null);
     }
 
+    promoteGuildMember(memberRequestId: String): Observable<Envelope<void>> {
+        return <Observable<Envelope<void>>>this.http.put(environment.API_BASE_URL + "guildMember/promote/" + memberRequestId, null);
+    }
+
+    demoteGuildMember(memberRequestId: String): Observable<Envelope<void>> {
+        return <Observable<Envelope<void>>>this.http.put(environment.API_BASE_URL + "guildMember/demote/" + memberRequestId, null);
+    }
 
     removeGuildMember(memberId: String): Observable<Envelope<void>> {
         return <Observable<Envelope<void>>>this.http.delete(environment.API_BASE_URL + "guildMember/" + memberId);
+    }
+
+    myGuildMember(): Observable<Envelope<GuildMember>> {
+        return <Observable<Envelope<GuildMember>>>this.http.get(environment.API_BASE_URL + "guildMember");
     }
 
 

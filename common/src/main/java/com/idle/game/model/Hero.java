@@ -235,6 +235,13 @@ public class Hero implements Serializable {
         this.maxLevelDefenses = maxLevelDefenses;
     }
 
+    public Hero() {
+    }
+
+    public Hero(String id) {
+        this.id = id;
+    }
+
     public Defense getBaseDefense(DefenseType dt) {
 
         Optional<Defense> ret = this.getBaseDefenses().stream().filter((d) -> d.getType().equals(dt)).findFirst();

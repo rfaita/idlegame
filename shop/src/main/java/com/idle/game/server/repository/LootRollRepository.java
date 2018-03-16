@@ -11,6 +11,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LootRollRepository extends MongoRepository<LootRoll, String> {
 
-    LootRoll findById(String id);
-
 }

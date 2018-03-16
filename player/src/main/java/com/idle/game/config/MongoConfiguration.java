@@ -32,6 +32,11 @@ public class MongoConfiguration extends AbstractMongoConfiguration {
     public Mongo mongo() throws Exception {
         return new MongoClient(mongoHost + ":" + mongoPort);
     }
+//    @Override
+//    @Bean
+//    public MongoClient mongoClient() {
+//        return new MongoClient(mongoHost + ":" + mongoPort);
+//    }
 
     @Override
     protected String getDatabaseName() {

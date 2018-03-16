@@ -32,7 +32,7 @@ public class ChatRoomService {
     }
 
     public ChatRoom findById(String chatRoom) {
-        return chatRoomRepository.findById(chatRoom);
+        return chatRoomRepository.findOne(chatRoom);
     }
 
     public List<ChatRoom> findAll() {

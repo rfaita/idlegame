@@ -13,8 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PvpRatingRepository extends MongoRepository<PvpRating, String> {
 
-    PvpRating findById(String id);
-
     PvpRating findByPlayer(String player);
 
     PvpRating findByPlayerAndId(String player, String id);

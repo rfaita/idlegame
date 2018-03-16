@@ -12,6 +12,7 @@ import com.idle.game.core.type.DefenseType;
 import com.idle.game.model.HeroType;
 import com.idle.game.server.repository.HeroTypeRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -36,7 +37,7 @@ public class HeroTypeService {
 
     @Cacheable(value = HERO_TYPE_FIND_BY_ID, key = "'" + HERO_TYPE_FIND_BY_ID + "' + #id")
     public HeroType findById(String id) {
-        return heroTypeRepository.findById(id);
+        return heroTypeRepository.findOne(id);
     }
 
     @Caching(put

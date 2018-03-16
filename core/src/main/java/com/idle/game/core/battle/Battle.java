@@ -17,7 +17,6 @@ import com.idle.game.core.util.DiceUtil;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
@@ -705,11 +704,11 @@ public class Battle extends BaseObject {
                         && t.getBattleTeamType().equals(bph.getBattleTeamType())
                         && t.getHero().getId().equals(bph.getHero().getId())).findFirst();
 
-        try {
+        if (ret != null && ret.isPresent()) {
             return ret.get();
-        } catch (NoSuchElementException e) {
-            return null;
         }
+
+        return null;
     }
 
     private List<BattlePositionedHero> removeTargetClones(List<BattlePositionedHero> targets) {
@@ -727,11 +726,11 @@ public class Battle extends BaseObject {
             return h.getHero().getCurrHp() / (h.getHero().getHp() * 1f) < h2.getHero().getCurrHp() / (h2.getHero().getHp() * 1f) ? h : h2;
         });
 
-        try {
+        if (ret != null && ret.isPresent()) {
             return ret.get();
-        } catch (NoSuchElementException e) {
-            return null;
         }
+
+        return null;
 
     }
 
@@ -740,11 +739,11 @@ public class Battle extends BaseObject {
             return h.getHero().getCurrHp() / (h.getHero().getHp() * 1f) > h2.getHero().getCurrHp() / (h2.getHero().getHp() * 1f) ? h : h2;
         });
 
-        try {
+        if (ret != null && ret.isPresent()) {
             return ret.get();
-        } catch (NoSuchElementException e) {
-            return null;
         }
+
+        return null;
 
     }
 
@@ -766,14 +765,12 @@ public class Battle extends BaseObject {
         }
 
         List<BattlePositionedHero> ret = new ArrayList<>(num);
-        for (Integer roll : rolls) {
+        rolls.forEach((roll) -> {
             Optional<BattlePositionedHero> hero = getHeroesByTeamTypeAndAlive(battleTeamType).skip(roll).findFirst();
-            try {
+            if (hero != null && hero.isPresent()) {
                 ret.add(hero.get());
-            } catch (NoSuchElementException e) {
-                return null;
             }
-        }
+        });
         return ret;
 
     }
@@ -788,11 +785,10 @@ public class Battle extends BaseObject {
 
         if (size > 0) {
             Optional<BattlePositionedHero> ret = getHeroesByTeamTypeAndAlive(battleTeamType, selfFp).skip(DiceUtil.random(size - 1)).findFirst();
-            try {
+            if (ret != null && ret.isPresent()) {
                 return ret.get();
-            } catch (NoSuchElementException e) {
-                return null;
             }
+
         }
         return null;
     }
@@ -804,11 +800,10 @@ public class Battle extends BaseObject {
         if (size > 0) {
             Optional<BattlePositionedHero> ret = getHeroesByTeamTypeAndDead(battleTeamType)
                     .skip(DiceUtil.random(size - 1)).findFirst();
-            try {
+            if (ret != null && ret.isPresent()) {
                 return ret.get();
-            } catch (NoSuchElementException e) {
-                return null;
             }
+
         }
         return null;
     }
@@ -847,11 +842,11 @@ public class Battle extends BaseObject {
 
         if (size > 0) {
             Optional<BattlePositionedHero> ret = getHeroesByLine(battleTeamType, fpt, selfFp).skip(DiceUtil.random(size - 1)).findFirst();
-            try {
+
+            if (ret != null && ret.isPresent()) {
                 return ret.get();
-            } catch (NoSuchElementException e) {
-                return null;
             }
+
         }
         return null;
     }

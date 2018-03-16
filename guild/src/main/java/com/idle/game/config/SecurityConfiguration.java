@@ -1,6 +1,5 @@
 package com.idle.game.config;
 
-import static com.idle.game.constant.URIConstants.PLAYERRESOURCE__ADD_RESOURCES;
 import javax.servlet.http.HttpServletRequest;
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.adapters.KeycloakConfigResolver;

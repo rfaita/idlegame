@@ -7,6 +7,7 @@ import com.idle.game.server.service.HeroService;
 import static com.idle.game.tests.helper.TestHelper.createPlayer;
 import static com.idle.game.tests.helper.TestHelper.createHero;
 import static com.idle.game.tests.helper.TestHelper.createHeroMaxLevel;
+import java.util.Optional;
 import javax.validation.ValidationException;
 import org.junit.Assert;
 import org.junit.Rule;
@@ -56,7 +57,7 @@ public class HeroServiceTest {
 
         when(playerHelper.getPlayerByLinkedUser("1")).thenReturn(createPlayer("1"));
 
-        when(heroRepository.findById("1")).thenReturn(null);
+        when(heroRepository.findOne("1")).thenReturn(null);
 
         expcetionExpect.expect(ValidationException.class);
         expcetionExpect.expectMessage("hero.not.found");
@@ -70,7 +71,7 @@ public class HeroServiceTest {
 
         when(playerHelper.getPlayerByLinkedUser("1")).thenReturn(createPlayer("1"));
 
-        when(heroRepository.findById("1")).thenReturn(createHero("1", "2"));
+        when(heroRepository.findOne("1")).thenReturn(createHero("1", "2"));
 
         expcetionExpect.expect(ValidationException.class);
         expcetionExpect.expectMessage("player.is.not.owner.of.this.hero");
@@ -84,7 +85,7 @@ public class HeroServiceTest {
 
         when(playerHelper.getPlayerByLinkedUser("1")).thenReturn(createPlayer("1"));
 
-        when(heroRepository.findById("1")).thenReturn(createHeroMaxLevel("1", "1"));
+        when(heroRepository.findOne("1")).thenReturn(createHeroMaxLevel("1", "1"));
 
         expcetionExpect.expect(ValidationException.class);
         expcetionExpect.expectMessage("hero.max.level.reached");
@@ -98,7 +99,7 @@ public class HeroServiceTest {
 
         when(playerHelper.getPlayerByLinkedUser("1")).thenReturn(createPlayer("1"));
 
-        when(heroRepository.findById("1")).thenReturn(createHero("1", "1"));
+        when(heroRepository.findOne("1")).thenReturn(createHero("1", "1"));
 
         Hero heroRet = heroService.levelUp("1", "1");
 

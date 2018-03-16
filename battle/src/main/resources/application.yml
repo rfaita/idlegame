@@ -51,9 +51,22 @@ idle:
             username: admin
             password: admin123
             
+        #RabbitMQ message
+        amq:
+            hostname: localhost
+            port: 5672
+            username: admin
+            password: admin123
+            
         pvpRating:
             expire: 1800
             price: 20
+           
+        mail:
+            exchange: idle.game.mail.exchange
+            sendDLQQueue: idle.game.mail.sendDLQQueue
+            sendQueue: idle.game.mail.sendQueue
+
 keycloak:
     auth-server-url: http://localhost:8180/auth
     realm: idlerealm

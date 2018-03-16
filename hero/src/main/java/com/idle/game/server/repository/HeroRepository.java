@@ -13,8 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface HeroRepository extends MongoRepository<Hero, String> {
 
-    Hero findById(String id);
-
     List<Hero> findAllByPlayerId(String player);
 
     List<Hero> findAllByPlayerIdAndQuality(String player, HeroQuality quality);

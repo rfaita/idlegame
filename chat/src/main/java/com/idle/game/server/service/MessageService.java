@@ -5,6 +5,7 @@ package com.idle.game.server.service;
  * @author rafael
  */
 import com.idle.game.helper.PlayerHelper;
+import com.idle.game.helper.cb.PlayerCircuitBreakerService;
 import com.idle.game.model.mongo.Message;
 import com.idle.game.model.Player;
 import com.idle.game.server.dto.Envelope;
@@ -26,7 +27,7 @@ public class MessageService {
     private MessageRepository messageRepository;
 
     @Autowired
-    private PlayerHelper playerHelper;
+    private PlayerCircuitBreakerService playerCircuitBreakerService;
 
     public List<Message> findAllByChatRoom(String chatRoom) {
         return messageRepository.findAllByChatRoom(chatRoom);
@@ -45,8 +46,8 @@ public class MessageService {
     }
 
     public void sendPrivateMessage(Message message, String token) {
-        
-        Player player = playerHelper.getPlayerByLinkedUser(message.getToUser(), token);
+
+        Player player = playerCircuitBreakerService.getPlayerByLinkedUser(message.getToUser(), token);
 
         if (player == null) {
             throw new ValidationException("player.not.found");

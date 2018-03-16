@@ -19,7 +19,6 @@ public interface URIConstants {
     final String MAIL__SEND_PRIVATE_MAIL = "sendPrivateMail";
     final String FORMATION__FIND_BY_FORMATION_ALLOCATION = "findByFormationAllocation";
     final String SHOP__BUY_LOOT_ROLL = "buyLootRoll";
-    final String GUILD__FIND_BY_USER_OWNER = "findByUserOwner";
     final String GUILD_MEMBER__CREATE_ADMIN = "createAdmin";
 
 }

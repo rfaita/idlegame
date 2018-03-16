@@ -16,8 +16,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -61,12 +61,16 @@ public class PlayerResourceHelper {
             } else {
                 return null;
             }
-        } catch (HttpClientErrorException e) {
-            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
-            throw new ValidationException((String) ret.getErrors().get(0));
-        } catch (HttpServerErrorException e) {
-            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
-            throw new ValidationException((String) ret.getErrors().get(0));
+        } catch (HttpStatusCodeException e) {
+            if (e.getStatusCode() == HttpStatus.BAD_REQUEST) {
+                Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
+                throw new ValidationException((String) ret.getErrors().get(0));
+            } else if (e.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR) {
+                throw new ValidationException("internal.server.error");
+            }
+            throw new ValidationException("unmapped.server.error");
+        } catch (RestClientException e) {
+            throw new ValidationException(e);
         }
 
     }
@@ -97,12 +101,16 @@ public class PlayerResourceHelper {
             } else {
                 return null;
             }
-        } catch (HttpClientErrorException e) {
-            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
-            throw new ValidationException((String) ret.getErrors().get(0));
-        } catch (HttpServerErrorException e) {
-            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
-            throw new ValidationException((String) ret.getErrors().get(0));
+        } catch (HttpStatusCodeException e) {
+            if (e.getStatusCode() == HttpStatus.BAD_REQUEST) {
+                Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
+                throw new ValidationException((String) ret.getErrors().get(0));
+            } else if (e.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR) {
+                throw new ValidationException("internal.server.error");
+            }
+            throw new ValidationException("unmapped.server.error");
+        } catch (RestClientException e) {
+            throw new ValidationException(e);
         }
 
     }

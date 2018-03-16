@@ -8,7 +8,7 @@
                             [ngModelOptions]="{standalone: true}">
                         <span class="material-input"></span>
                     </div>
-                    <button type="button" class="btn btn-white btn-round btn-just-icon" (click)="create()">
+                    <button type="button" *ngIf="!guild" class="btn btn-white btn-round btn-just-icon" (click)="create()">
                         <i class="material-icons">add</i>
                         <div class="ripple-container"></div>
                     </button>
@@ -21,15 +21,18 @@
         </nav>
         <div class="row" *ngIf="!!guild">
             <div class="col-md-12">
-                {{guild.name}}
-                {{guild.level}}
-                {{guild.initialMessage}}
-            </div>
-        </div>
-        <div class="row" *ngIf="!!guild">
-            <div class="col-md-12">
                 <div class="card">
-
+                    <div class="card-header" data-background-color="blue">
+                        <label class="title">{{guild.name}}
+                            <span class="badge badge-pill badge-primary">Level: {{guild.level}}</span>
+                        </label>
+                        <button type="button" *ngIf="!guildMember" class="btn btn-sm" (click)="sendGuildMemberRequest()">
+                                <i class="material-icons">send</i>
+                                Send Request
+                                <div class="ripple-container"></div>
+                            </button>
+                        <p class="category">{{guild.initialMessage}}</p>
+                    </div>
                     <div class="card-content table-responsive">
                         <table class="table table-hover">
                             <thead class="text-info">
@@ -41,10 +44,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let guildMember of guildMembers">
-                                    <td>{{guildMember.nameMember}}</td>
-                                    <td>{{guildMember.since | date}}</td>
-                                    <td>{{guildMember.type}}</td>
+                                <tr *ngFor="let gm of guildMembers">
+                                    <td>{{gm.nameMember}}</td>
+                                    <td>{{gm.since | date}}</td>
+                                    <td>{{gm.type}}</td>
+                                    <td class="td-actions text-right">
+                                        <button *ngIf="!gm.accepted" type="button" rel="tooltip" title="Accept" class="btn btn-primary btn-simple btn-xs"
+                                            (click)="acceptGuildMemberRequest(gm.id)">
+                                            <i class="material-icons">done</i>
+                                        </button>
+                                        <button *ngIf="!!guildMember && gm.id != guildMember.id" type="button" rel="tooltip" title="Kick" class="btn btn-primary btn-simple btn-xs"
+                                            (click)="removeGuildMember(gm.id)">
+                                            <i class="material-icons"><i class="material-icons">remove_circle</i></i>
+                                        </button>
+                                        <button *ngIf="!!guildMember && gm.id == guildMember.id" type="button" rel="tooltip" title="Leave" class="btn btn-primary btn-simple btn-xs"
+                                            (click)="removeGuildMember(gm.id)">
+                                            <i class="material-icons"><i class="material-icons">exit_to_app</i></i>
+                                        </button>
+                                        <button *ngIf="!!guildMember && gm.id != guildMember.id && gm.accepted" type="button" rel="tooltip" title="Promote" class="btn btn-primary btn-simple btn-xs"
+                                            (click)="promoteGuildMember(gm.id)">
+                                            <i class="material-icons"><i class="material-icons">vertical_align_top</i></i>
+                                        </button>
+                                        <button *ngIf="!!guildMember && gm.id != guildMember.id && gm.accepted" type="button" rel="tooltip" title="Demote" class="btn btn-primary btn-simple btn-xs"
+                                            (click)="demoteGuildMember(gm.id)">
+                                            <i class="material-icons"><i class="material-icons">vertical_align_bottom</i></i>
+                                        </button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -52,7 +77,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

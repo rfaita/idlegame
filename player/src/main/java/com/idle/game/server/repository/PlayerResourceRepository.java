@@ -11,8 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PlayerResourceRepository extends MongoRepository<PlayerResource, String> {
 
-    PlayerResource findById(String id);
-
     PlayerResource findByPlayer(String player);
 
 }

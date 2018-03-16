@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.idle.game.helper.TokenHelper;
 import com.idle.game.model.GuildMember;
-import com.idle.game.model.GuildMemberType;
 import com.idle.game.server.service.GuildMemberService;
 import java.util.List;
 
@@ -24,6 +23,18 @@ public class GuildMemberRest {
     @Autowired
     private GuildMemberService guildMemberService;
 
+    @RequestMapping(path = "", method = RequestMethod.GET
+    )
+    public @ResponseBody
+    Envelope<GuildMember> myGuildMember() {
+
+        Envelope<GuildMember> ret = new Envelope<>();
+        ret.setData(guildMemberService.findByUserMemberId(tokenHelper.getSubject()));
+
+        return ret;
+
+    }
+
     @RequestMapping(path = "/{guildId}", method = RequestMethod.GET)
     public @ResponseBody
     Envelope<List<GuildMember>> getGuildMembers(@PathVariable("guildId") String guildId) {
@@ -35,16 +46,27 @@ public class GuildMemberRest {
 
     }
 
+    @RequestMapping(path = "/requests/{guildId}", method = RequestMethod.GET)
+    public @ResponseBody
+    Envelope<List<GuildMember>> getGuildMembersRequests(@PathVariable("guildId") String guildId) {
+
+        Envelope<List<GuildMember>> ret = new Envelope<>();
+        ret.setData(guildMemberService.getGuildMembersRequests(guildId));
+
+        return ret;
+
+    }
+
     @RequestMapping(path = "/{guildId}", method = RequestMethod.POST)
     public void sendGuildMemberRequest(@PathVariable("guildId") String guildId) {
 
         guildMemberService.sendGuildMemberRequest(guildId, tokenHelper.getSubject());
     }
 
-    @RequestMapping(path = "/" + GUILD_MEMBER__CREATE_ADMIN, method = RequestMethod.POST)
-    public void createAdmin() {
+    @RequestMapping(path = "/" + GUILD_MEMBER__CREATE_ADMIN + "/{guildId}", method = RequestMethod.POST)
+    public void createAdmin(@PathVariable("guildId") String guildId) {
 
-        guildMemberService.createAdmin(tokenHelper.getSubject());
+        guildMemberService.createAdmin(tokenHelper.getSubject(), guildId);
     }
 
     @RequestMapping(path = "/{memberId}", method = RequestMethod.DELETE)
@@ -59,11 +81,16 @@ public class GuildMemberRest {
         guildMemberService.acceptGuildMemberRequest(tokenHelper.getSubject(), memberRequestId);
     }
 
-    @RequestMapping(path = "/{memberId}/{type}", method = RequestMethod.PUT)
-    public void promoteGuildMember(@PathVariable("memberId") String memberId,
-            @PathVariable("type") String type) {
+    @RequestMapping(path = "/promote/{memberId}", method = RequestMethod.PUT)
+    public void promoteGuildMember(@PathVariable("memberId") String memberId) {
 
-        guildMemberService.promoteGuildMember(tokenHelper.getSubject(), memberId, GuildMemberType.valueOf(type));
+        guildMemberService.promoteGuildMember(tokenHelper.getSubject(), memberId);
+    }
+
+    @RequestMapping(path = "/demote/{memberId}", method = RequestMethod.PUT)
+    public void demoteGuildMember(@PathVariable("memberId") String memberId) {
+
+        guildMemberService.demoteGuildMember(tokenHelper.getSubject(), memberId);
     }
 
 }

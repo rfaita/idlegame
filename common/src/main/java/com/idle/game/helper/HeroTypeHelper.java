@@ -11,7 +11,6 @@ import java.net.URI;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import com.idle.game.core.hero.type.HeroTypeFaction;
@@ -21,10 +20,11 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import static com.idle.game.constant.URIConstants.HEROTYPE__FIND_ALL_BY_QUALITY;
+import com.idle.game.helper.cb.HeroTypeCircuitBreakerService;
 import com.idle.game.util.EnvelopeUtil;
 import javax.validation.ValidationException;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.RestClientException;
 
 /**
  *
@@ -37,59 +37,19 @@ public class HeroTypeHelper {
     private RestTemplate restTemplate;
 
     @Autowired
-    private RedisTemplate<Object, Object> redisTemplate;
-
-    @Autowired
     private EnvelopeUtil envelopeUtil;
 
     @Autowired
     private TokenHelper tokenHelper;
 
+    @Autowired
+    private HeroTypeCircuitBreakerService heroTypeCircuitBreakerService;
+
     @Value("${idle.url.heroType}")
     private String urlHeroType;
 
-    //Have to do that, because @HytrixCommand run in a new thread and that can not access TokenHelper correct
     public HeroType getHeroTypeById(String id) {
-        return getHeroTypeById(id, tokenHelper.getToken());
-    }
-
-    @HystrixCommand(fallbackMethod = "getHeroTypeCacheById")
-    public HeroType getHeroTypeById(String id, String token) {
-
-        URI uri = URI.create(urlHeroType + "/" + id);
-        try {
-            ResponseEntity<Envelope<HeroType>> ret = restTemplate.exchange(uri,
-                    HttpMethod.GET,
-                    new HttpEntity(HeaderUtil.getAuthHeaders(token)),
-                    new ParameterizedTypeReference<Envelope<HeroType>>() {
-            });
-
-            if (ret.getStatusCode() == HttpStatus.OK) {
-                Envelope<HeroType> data = ret.getBody();
-                if (data.getErrors() == null || data.getErrors().isEmpty()) {
-                    return data.getData();
-                } else {
-                    return null;
-                }
-            } else {
-                return null;
-            }
-        } catch (HttpClientErrorException e) {
-            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
-            throw new ValidationException((String) ret.getErrors().get(0));
-        } catch (HttpServerErrorException e) {
-            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
-            throw new ValidationException((String) ret.getErrors().get(0));
-        }
-    }
-
-    public HeroType getHeroTypeCacheById(String id, String token) {
-        HeroType ret = (HeroType) redisTemplate.boundValueOps(HERO_TYPE_FIND_BY_ID + id).get();
-        if (ret != null) {
-            return ret;
-        } else {
-            return null;
-        }
+        return heroTypeCircuitBreakerService.getHeroTypeById(id, tokenHelper.getToken());
     }
 
     public List<HeroType> getAllHeroType() {
@@ -117,12 +77,16 @@ public class HeroTypeHelper {
             } else {
                 return null;
             }
-        } catch (HttpClientErrorException e) {
-            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
-            throw new ValidationException((String) ret.getErrors().get(0));
-        } catch (HttpServerErrorException e) {
-            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
-            throw new ValidationException((String) ret.getErrors().get(0));
+        } catch (HttpStatusCodeException e) {
+            if (e.getStatusCode() == HttpStatus.BAD_REQUEST) {
+                Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
+                throw new ValidationException((String) ret.getErrors().get(0));
+            } else if (e.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR) {
+                throw new ValidationException("internal.server.error");
+            }
+            throw new ValidationException("unmapped.server.error");
+        } catch (RestClientException e) {
+            throw new ValidationException(e);
         }
     }
 
@@ -151,12 +115,16 @@ public class HeroTypeHelper {
             } else {
                 return null;
             }
-        } catch (HttpClientErrorException e) {
-            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
-            throw new ValidationException((String) ret.getErrors().get(0));
-        } catch (HttpServerErrorException e) {
-            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
-            throw new ValidationException((String) ret.getErrors().get(0));
+        } catch (HttpStatusCodeException e) {
+            if (e.getStatusCode() == HttpStatus.BAD_REQUEST) {
+                Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
+                throw new ValidationException((String) ret.getErrors().get(0));
+            } else if (e.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR) {
+                throw new ValidationException("internal.server.error");
+            }
+            throw new ValidationException("unmapped.server.error");
+        } catch (RestClientException e) {
+            throw new ValidationException(e);
         }
     }
 
@@ -184,12 +152,16 @@ public class HeroTypeHelper {
             } else {
                 return null;
             }
-        } catch (HttpClientErrorException e) {
-            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
-            throw new ValidationException((String) ret.getErrors().get(0));
-        } catch (HttpServerErrorException e) {
-            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
-            throw new ValidationException((String) ret.getErrors().get(0));
+        } catch (HttpStatusCodeException e) {
+            if (e.getStatusCode() == HttpStatus.BAD_REQUEST) {
+                Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
+                throw new ValidationException((String) ret.getErrors().get(0));
+            } else if (e.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR) {
+                throw new ValidationException("internal.server.error");
+            }
+            throw new ValidationException("unmapped.server.error");
+        } catch (RestClientException e) {
+            throw new ValidationException(e);
         }
     }
 
@@ -219,12 +191,16 @@ public class HeroTypeHelper {
             } else {
                 return null;
             }
-        } catch (HttpClientErrorException e) {
-            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
-            throw new ValidationException((String) ret.getErrors().get(0));
-        } catch (HttpServerErrorException e) {
-            Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
-            throw new ValidationException((String) ret.getErrors().get(0));
+        } catch (HttpStatusCodeException e) {
+            if (e.getStatusCode() == HttpStatus.BAD_REQUEST) {
+                Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
+                throw new ValidationException((String) ret.getErrors().get(0));
+            } else if (e.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR) {
+                throw new ValidationException("internal.server.error");
+            }
+            throw new ValidationException("unmapped.server.error");
+        } catch (RestClientException e) {
+            throw new ValidationException(e);
         }
     }
 

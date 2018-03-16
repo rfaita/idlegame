@@ -3,7 +3,6 @@ package com.idle.game.tests;
 import com.idle.game.helper.GuildHelper;
 import com.idle.game.helper.MailHelper;
 import com.idle.game.helper.PlayerHelper;
-import com.idle.game.model.Friend;
 import com.idle.game.model.GuildMember;
 import com.idle.game.model.Mail;
 import com.idle.game.server.service.GuildMemberService;
@@ -65,7 +64,7 @@ public class GuildMemberServiceTest {
 
         when(guildHelper.getGuildById("123")).thenReturn(createGuild("123"));
 
-        when(guildMemberRepository.findByUserMemberAndAccepted("456", Boolean.TRUE)).thenReturn(createGuildMember("123", "456", "test456"));
+        when(guildMemberRepository.findByUserMemberIdAndAccepted("456", Boolean.TRUE)).thenReturn(createGuildMember("123", "456", "test456"));
 
         exceptionExpect.expect(ValidationException.class);
         exceptionExpect.expectMessage("guild.member.already");
@@ -79,7 +78,7 @@ public class GuildMemberServiceTest {
 
         when(guildHelper.getGuildById("123")).thenReturn(createGuild("123"));
 
-        when(guildMemberRepository.findByUserMemberAndAccepted("123", Boolean.TRUE)).thenReturn(null);
+        when(guildMemberRepository.findByUserMemberIdAndAccepted("123", Boolean.TRUE)).thenReturn(null);
 
         when(playerHelper.getPlayerByLinkedUser("456")).thenReturn(null);
 
@@ -95,7 +94,7 @@ public class GuildMemberServiceTest {
 
         when(guildHelper.getGuildById("123")).thenReturn(createGuild("123"));
 
-        when(guildMemberRepository.findByGuildAndUserMember("123", "456")).thenReturn(null);
+        when(guildMemberRepository.findByGuildIdAndUserMemberId("123", "456")).thenReturn(null);
 
         when(playerHelper.getPlayerByLinkedUser("456")).thenReturn(createPlayer("456"));
 
@@ -110,7 +109,7 @@ public class GuildMemberServiceTest {
     @Test
     public void testAcceptGuildMemberRequestYouGuildNotFound() {
 
-        when(guildMemberRepository.findByUserMemberAndAccepted("321", Boolean.TRUE)).thenReturn(null);
+        when(guildMemberRepository.findByUserMemberIdAndAccepted("321", Boolean.TRUE)).thenReturn(null);
 
         exceptionExpect.expect(ValidationException.class);
         exceptionExpect.expectMessage("your.guild.not.found");
@@ -122,7 +121,7 @@ public class GuildMemberServiceTest {
     @Test
     public void testAcceptGuildMemberRequestCantAccept() {
 
-        when(guildMemberRepository.findByUserMemberAndAccepted("321", Boolean.TRUE)).thenReturn(createGuildMember("A", "321", "test321"));
+        when(guildMemberRepository.findByUserMemberIdAndAccepted("321", Boolean.TRUE)).thenReturn(createGuildMember("A", "321", "test321"));
 
         when(guildHelper.getGuildById("A")).thenReturn(null);
 
@@ -136,7 +135,7 @@ public class GuildMemberServiceTest {
     @Test
     public void testAcceptGuildMemberRequestGuildNotFound() {
 
-        when(guildMemberRepository.findByUserMemberAndAccepted("321", Boolean.TRUE)).thenReturn(createAdminGuildMember("A", "321", "test321"));
+        when(guildMemberRepository.findByUserMemberIdAndAccepted("321", Boolean.TRUE)).thenReturn(createAdminGuildMember("A", "321", "test321"));
 
         when(guildHelper.getGuildById("A")).thenReturn(null);
 
@@ -150,11 +149,11 @@ public class GuildMemberServiceTest {
     @Test
     public void testAcceptGuildMemberRequestGuildMemberRequestNotFound() {
 
-        when(guildMemberRepository.findByUserMemberAndAccepted("321", Boolean.TRUE)).thenReturn(createAdminGuildMember("A", "321", "test321"));
+        when(guildMemberRepository.findByUserMemberIdAndAccepted("321", Boolean.TRUE)).thenReturn(createAdminGuildMember("A", "321", "test321"));
 
         when(guildHelper.getGuildById("A")).thenReturn(createGuild("A"));
 
-        when(guildMemberRepository.findByGuildAndIdAndAccepted("321", "789", Boolean.FALSE)).thenReturn(null);
+        when(guildMemberRepository.findByGuildIdAndIdAndAccepted("321", "789", Boolean.FALSE)).thenReturn(null);
 
         exceptionExpect.expect(ValidationException.class);
         exceptionExpect.expectMessage("guild.member.request.not.found");
@@ -166,11 +165,11 @@ public class GuildMemberServiceTest {
     @Test
     public void testAcceptGuildMemberRequestSuccess() {
 
-        when(guildMemberRepository.findByUserMemberAndAccepted("321", Boolean.TRUE)).thenReturn(createAdminGuildMember("A", "321", "test321"));
+        when(guildMemberRepository.findByUserMemberIdAndAccepted("321", Boolean.TRUE)).thenReturn(createAdminGuildMember("A", "321", "test321"));
 
         when(guildHelper.getGuildById("A")).thenReturn(createGuild("A"));
 
-        when(guildMemberRepository.findByGuildAndIdAndAccepted("A", "789", Boolean.FALSE)).thenReturn(createGuildMember("A", "456", "test456"));
+        when(guildMemberRepository.findByGuildIdAndIdAndAccepted("A", "789", Boolean.FALSE)).thenReturn(createGuildMember("A", "456", "test456"));
 
         when(guildMemberRepository.save(any(GuildMember.class))).thenAnswer(createGuildMemberAnswerForSomeInput());
 
@@ -183,7 +182,7 @@ public class GuildMemberServiceTest {
     @Test
     public void testRemoveGuildMemberRequestYouGuildNotFound() {
 
-        when(guildMemberRepository.findByUserMemberAndAccepted("321", Boolean.TRUE)).thenReturn(null);
+        when(guildMemberRepository.findByUserMemberIdAndAccepted("321", Boolean.TRUE)).thenReturn(null);
 
         exceptionExpect.expect(ValidationException.class);
         exceptionExpect.expectMessage("your.guild.not.found");
@@ -195,7 +194,7 @@ public class GuildMemberServiceTest {
     @Test
     public void testRemoveGuildMemberRequestCantAccept() {
 
-        when(guildMemberRepository.findByUserMemberAndAccepted("321", Boolean.TRUE)).thenReturn(createGuildMember("A", "321", "test321"));
+        when(guildMemberRepository.findByUserMemberIdAndAccepted("321", Boolean.TRUE)).thenReturn(createGuildMember("A", "321", "test321"));
 
         when(guildHelper.getGuildById("A")).thenReturn(null);
 
@@ -209,7 +208,7 @@ public class GuildMemberServiceTest {
     @Test
     public void testRemoveGuildMemberGuildNotFound() {
 
-        when(guildMemberRepository.findByUserMemberAndAccepted("321", Boolean.TRUE)).thenReturn(createAdminGuildMember("A", "321", "test321"));
+        when(guildMemberRepository.findByUserMemberIdAndAccepted("321", Boolean.TRUE)).thenReturn(createAdminGuildMember("A", "321", "test321"));
 
         when(guildHelper.getGuildById("A")).thenReturn(null);
 
@@ -223,11 +222,11 @@ public class GuildMemberServiceTest {
     @Test
     public void testRemoveGuildMemberGuildMemberNotFound() {
 
-        when(guildMemberRepository.findByUserMemberAndAccepted("321", Boolean.TRUE)).thenReturn(createAdminGuildMember("A", "321", "test321"));
+        when(guildMemberRepository.findByUserMemberIdAndAccepted("321", Boolean.TRUE)).thenReturn(createAdminGuildMember("A", "321", "test321"));
 
         when(guildHelper.getGuildById("A")).thenReturn(createGuild("A"));
 
-        when(guildMemberRepository.findByGuildAndId("321", "789")).thenReturn(null);
+        when(guildMemberRepository.findByGuildIdAndId("321", "789")).thenReturn(null);
 
         exceptionExpect.expect(ValidationException.class);
         exceptionExpect.expectMessage("guild.member.not.found");
@@ -239,11 +238,11 @@ public class GuildMemberServiceTest {
     @Test
     public void testRemoveGuildMemberSuccess() {
 
-        when(guildMemberRepository.findByUserMemberAndAccepted("321", Boolean.TRUE)).thenReturn(createAdminGuildMember("A", "321", "test321"));
+        when(guildMemberRepository.findByUserMemberIdAndAccepted("321", Boolean.TRUE)).thenReturn(createAdminGuildMember("A", "321", "test321"));
 
         when(guildHelper.getGuildById("A")).thenReturn(createGuild("A"));
 
-        when(guildMemberRepository.findByGuildAndId("A", "789")).thenReturn(createGuildMember("A", "456", "test456"));
+        when(guildMemberRepository.findByGuildIdAndId("A", "789")).thenReturn(createGuildMember("A", "456", "test456"));
 
         doNothing().when(guildMemberRepository).delete(any(GuildMember.class));
         

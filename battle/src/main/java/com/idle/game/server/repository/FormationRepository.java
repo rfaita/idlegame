@@ -13,8 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FormationRepository extends MongoRepository<Formation, String> {
 
-    Formation findById(String id);
-
     List<Formation> findAllByPlayer(String player);
     
     Formation findByPlayerAndFormationAllocation(String player, FormationAllocation formationAllocation);

@@ -17,9 +17,6 @@ import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.context.annotation.Bean;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  *
@@ -31,17 +28,6 @@ public class IdleShopApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(IdleShopApplication.class, args);
-    }
-
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                // we have to enable CORS to make requests from other domains work
-                registry.addMapping("/**").allowedOrigins("*").allowedMethods("*");
-            }
-        };
     }
 
     @Bean

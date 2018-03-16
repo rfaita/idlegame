@@ -12,14 +12,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GuildMemberRepository extends MongoRepository<GuildMember, String> {
 
-    List<GuildMember> findAllByGuildAndAccepted(String guild, Boolean accepted);
+    List<GuildMember> findAllByGuildIdAndAccepted(String guild, Boolean accepted);
 
-    GuildMember findByGuildAndUserMember(String guild, String userMember);
+    GuildMember findByGuildIdAndUserMemberId(String guild, String userMember);
     
-    GuildMember findByUserMemberAndAccepted(String userMember, Boolean accepted);
+    GuildMember findByUserMemberIdAndAccepted(String userMember, Boolean accepted);
 
-    GuildMember findByGuildAndIdAndAccepted(String guild, String id, Boolean accepted);
+    GuildMember findByGuildIdAndIdAndAccepted(String guild, String id, Boolean accepted);
 
-    GuildMember findByGuildAndId(String guild, String id);
+    GuildMember findByGuildIdAndId(String guild, String id);
 
 }

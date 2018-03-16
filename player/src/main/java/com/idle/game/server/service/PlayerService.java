@@ -15,7 +15,6 @@ public class PlayerService {
     @Autowired
     private PlayerRepository playerRepository;
 
-    
     @Cacheable(value = PLAYER_FIND_BY_NAME, key = "'" + PLAYER_FIND_BY_NAME + "' + #name")
     public Player findByName(String name) {
         return playerRepository.findByName(name);
@@ -23,7 +22,7 @@ public class PlayerService {
 
     @Cacheable(value = PLAYER_FIND_BY_ID, key = "'" + PLAYER_FIND_BY_ID + "' + #id")
     public Player findById(String id) {
-        return playerRepository.findById(id);
+        return playerRepository.findOne(id);
     }
 
     public Player create(Player player) {

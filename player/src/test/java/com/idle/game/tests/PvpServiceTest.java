@@ -1,7 +1,6 @@
 package com.idle.game.tests;
 
 import com.idle.game.core.battle.Battle;
-import static com.idle.game.core.formation.type.FormationAllocation.PVP;
 import static com.idle.game.core.formation.type.FormationAllocation.PVP_DEFENSE;
 import com.idle.game.helper.BattleHelper;
 import com.idle.game.helper.FormationHelper;
@@ -31,6 +30,7 @@ import static com.idle.game.tests.helper.TestHelper.createListPvpRating1150;
 import static com.idle.game.tests.helper.TestHelper.createListPvpRating1550;
 import static com.idle.game.tests.helper.TestHelper.createListPvpRating950;
 import static com.idle.game.tests.helper.TestHelper.createPvpRatingWithId;
+import java.util.Optional;
 import static org.mockito.Mockito.mock;
 
 /**
@@ -163,7 +163,7 @@ public class PvpServiceTest {
 
         when(this.playerHelper.getPlayerByLinkedUser("1")).thenReturn(createPlayer("1"));
 
-        when(this.pvpRatingRepository.findById("1234")).thenReturn(null);
+        when(this.pvpRatingRepository.findOne("1234")).thenReturn(null);
 
         expcetionExpect.expect(ValidationException.class);
         expcetionExpect.expectMessage("pvpRating.not.found");
@@ -178,7 +178,7 @@ public class PvpServiceTest {
         when(this.playerHelper.getPlayerByLinkedUser("1")).thenReturn(createPlayer("1"));
 
         when(this.pvpRatingRepository.findByPlayer("1")).thenReturn(createPvpRating1000("1", "5432"));
-        when(this.pvpRatingRepository.findById("1234")).thenReturn(createPvpRatingWithId("2", "1234", 1000, "4321"));
+        when(this.pvpRatingRepository.findOne("1234")).thenReturn(createPvpRatingWithId("2", "1234", 1000, "4321"));
 
         Battle ret = mock(Battle.class);
 

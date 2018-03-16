@@ -20,11 +20,15 @@ export class GuildService {
     }
 
     findByUserOwner(user: String): Observable<Envelope<Guild>> {
-        return <Observable<Envelope<Guild>>>this.http.get(environment.API_BASE_URL + "guild/findByUserOwner/" + user);
+        return <Observable<Envelope<Guild>>>this.http.get(environment.API_BASE_URL + "guild/findByUserOwnerId/" + user);
     }
 
     findByName(name: String): Observable<Envelope<Guild>> {
         return <Observable<Envelope<Guild>>>this.http.get(environment.API_BASE_URL + "guild/findByName/" + name);
+    }
+
+    myGuild(): Observable<Envelope<Guild>> {
+        return <Observable<Envelope<Guild>>>this.http.get(environment.API_BASE_URL + "guild");
     }
 
 }

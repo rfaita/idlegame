@@ -4,6 +4,7 @@ import com.idle.game.model.Player;
 import com.idle.game.server.repository.PlayerRepository;
 import com.idle.game.server.service.PlayerService;
 import static com.idle.game.tests.helper.TestHelper.createPlayer;
+import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -35,7 +36,7 @@ public class PlayerServiceTest {
     @Test
     public void testFindById() {
 
-        when(this.playerRepository.findById("1")).thenReturn(createPlayer("1"));
+        when(this.playerRepository.findOne("1")).thenReturn(createPlayer("1"));
 
         Player p1Expected = playerService.findById("1");
 

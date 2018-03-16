@@ -14,8 +14,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface HeroTypeRepository extends MongoRepository<HeroType, String> {
 
-    HeroType findById(String id);
-
     HeroType findByName(String name);
 
     List<HeroType> findAllByQuality(HeroTypeQuality quality);

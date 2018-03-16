@@ -27,14 +27,19 @@ public class MongoEmbeddedConfiguration extends AbstractMongoConfiguration {
     }
 
     @Override
+    protected String getMappingBasePackage() {
+        return "com.idle.game.model.mongo";
+    }
+
+    @Override
     @Bean
     public Mongo mongo() throws Exception {
         return new Fongo(getDatabaseName()).getMongo();
     }
-
-    @Override
-    protected String getMappingBasePackage() {
-        return "com.idle.game.model.mongo";
-    }
+//    @Override
+//    @Bean
+//    public MongoClient mongoClient() {
+//        return new Fongo(getDatabaseName()).getMongo();
+//    }
 
 }

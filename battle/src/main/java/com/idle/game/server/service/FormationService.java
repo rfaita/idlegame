@@ -21,6 +21,7 @@ import com.idle.game.model.HeroType;
 import com.idle.game.model.Player;
 import com.idle.game.server.repository.FormationRepository;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -60,7 +61,7 @@ public class FormationService {
     @Cacheable(value = FORMATION_FIND_BY_ID, key = "'" + FORMATION_FIND_BY_ID + "' + #id")
     public Formation findById(String id) {
 
-        Formation ret = formationRepository.findById(id);
+        Formation ret = formationRepository.findOne(id);
 
         if (ret != null) {
             ret.getHeroes().forEach((h) -> {

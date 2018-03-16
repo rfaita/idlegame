@@ -1,22 +1,9 @@
 package com.idle.game.helper;
 
-import static com.idle.game.constant.URIConstants.MAIL__SEND_PRIVATE_MAIL;
+import com.idle.game.helper.cb.MailCircuitBreakerService;
 import com.idle.game.model.Mail;
-import com.idle.game.model.Player;
-import com.idle.game.server.dto.Envelope;
-import java.net.URI;
-import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.RestTemplate;
 
 /**
  *
@@ -26,30 +13,17 @@ import org.springframework.web.client.RestTemplate;
 public class MailHelper {
 
     @Autowired
-    private RestTemplate restTemplate;
+    private MailCircuitBreakerService mailHelperCircuitBreaker;
 
     @Autowired
     private TokenHelper tokenHelper;
 
-    @Value("${idle.url.mail}")
-    private String urlMail;
-
     public void sendPrivateMail(Mail mail) {
-
-        URI uri = URI.create(urlMail + "/" + MAIL__SEND_PRIVATE_MAIL);
-        try {
-            ResponseEntity<Envelope<Player>> ret = restTemplate.exchange(uri,
-                    HttpMethod.POST,
-                    new HttpEntity(mail, HeaderUtil.getAuthHeaders(tokenHelper.getToken())),
-                    new ParameterizedTypeReference<Envelope<Player>>() {
-            });
-
-            if (ret.getStatusCode() != HttpStatus.OK) {
-                throw new ValidationException("mail.not.send");
-            }
-        } catch (HttpClientErrorException | HttpServerErrorException e) {
-            throw new ValidationException("mail.not.send");
-        }
+        mail.setFromUser(tokenHelper.getSubject());
+        mail.setFromNickName(tokenHelper.getNickName());
+        mail.setFromAdmin(Boolean.FALSE);
+        mail.setReward(null);
+        mailHelperCircuitBreaker.sendPrivateMail(mail, tokenHelper.getToken());
     }
 
 }

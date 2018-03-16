@@ -26,6 +26,7 @@ import com.idle.game.model.HeroType;
 import com.idle.game.model.Player;
 import com.idle.game.model.shop.LootRoll;
 import com.idle.game.server.repository.HeroRepository;
+import java.util.Optional;
 
 /**
  *
@@ -49,7 +50,7 @@ public class HeroService {
     @Cacheable(value = HERO_FIND_BY_ID, key = "'" + HERO_FIND_BY_ID + "' + #id")
     public Hero findById(String id) {
 
-        return heroRepository.findById(id);
+        return heroRepository.findOne(id);
     }
 
     public List<Hero> findAllByPlayerId(String idPlayer) {
@@ -80,7 +81,7 @@ public class HeroService {
             }
     )
     public void delete(String id) {
-        heroRepository.delete(id);
+        heroRepository.delete(new Hero(id));
     }
 
     @Caching(put
@@ -93,7 +94,7 @@ public class HeroService {
         Player player = playerHelper.getPlayerByLinkedUser(user);
 
         if (player != null) {
-            Hero h = heroRepository.findById(id);
+            Hero h = heroRepository.findOne(id);
 
             validateLevelUp(h, player.getId());
 
