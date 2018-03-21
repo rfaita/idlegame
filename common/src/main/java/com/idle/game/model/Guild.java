@@ -3,6 +3,7 @@ package com.idle.game.model;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -23,6 +24,16 @@ public class Guild implements Serializable {
     private String initialMessage;
     private Integer level;
     private String name;
+
+    private transient List<GuildMember> members;
+
+    public List<GuildMember> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<GuildMember> members) {
+        this.members = members;
+    }
 
     public Date getDate() {
         return date;

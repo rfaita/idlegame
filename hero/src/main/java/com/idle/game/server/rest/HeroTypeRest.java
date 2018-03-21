@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.idle.game.core.hero.type.HeroTypeFaction;
 import static com.idle.game.constant.URIConstants.HEROTYPE__FIND_ALL_BY_QUALITY;
+import static com.idle.game.constant.URIConstants.HEROTYPE__FIND_BY_NAME;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
@@ -23,7 +24,7 @@ public class HeroTypeRest {
     @Autowired
     private HeroTypeService heroTypeService;
 
-    @RequestMapping(path = "/findByName/{name}", method = RequestMethod.GET)
+    @RequestMapping(path = "/" + HEROTYPE__FIND_BY_NAME + "/{name}", method = RequestMethod.GET)
     public @ResponseBody
     Envelope<HeroType> findByName(@PathVariable("name") String name) {
 
@@ -44,7 +45,7 @@ public class HeroTypeRest {
         return ret;
 
     }
-    
+
     @RequestMapping(path = "", method = RequestMethod.GET)
     public @ResponseBody
     Envelope<List<HeroType>> findAll() {
@@ -55,7 +56,7 @@ public class HeroTypeRest {
         return ret;
 
     }
-    
+
     @RequestMapping(path = "", method = RequestMethod.POST)
     public @ResponseBody
     Envelope<HeroType> save(@RequestBody HeroType heroType) {

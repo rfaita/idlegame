@@ -12,6 +12,7 @@ import { Action } from '../model/action';
 import { ActionEffect } from '../model/actionEffect';
 import { clone, notificationConfig } from '../utils/helper';
 import { SnotifyService } from 'ng-snotify';
+import { Defense } from '../model/defense';
 
 @Component({
   selector: 'app-herotype',
@@ -57,7 +58,19 @@ export class HeroTypeComponent implements OnInit, OnDestroy {
             });
           } else {
             this.heroType = new HeroType();
+            this.heroType.minBaseDefenses = [];
+            this.heroType.maxBaseDefenses = [];
+            this.heroType.minMaxLevelDefenses = [];
+            this.heroType.maxMaxLevelDefenses = [];
+
+            for (let item in this.heroTypeTypes.defenseTypes) {
+              this.heroType.minBaseDefenses.push(new Defense(this.heroTypeTypes.defenseTypes[item], 0));
+              this.heroType.maxBaseDefenses.push(new Defense(this.heroTypeTypes.defenseTypes[item], 0));
+              this.heroType.minMaxLevelDefenses.push(new Defense(this.heroTypeTypes.defenseTypes[item], 0));
+              this.heroType.maxMaxLevelDefenses.push(new Defense(this.heroTypeTypes.defenseTypes[item], 0));
+            }
           }
+
         });
       });
     });

@@ -29,7 +29,7 @@ node {
     }
     stage('Git Clone') {
         sh 'rm -rf *'
-        sh 'svn export https://github.com/rfaita/idlegame.git/trunk/player --force .'
+        sh 'svn export https://github.com/rfaita/idlegame.git/trunk/guild --force .'
     }
     stage('Build') {
         def mvnHome = tool 'M3'
@@ -52,14 +52,14 @@ node {
         withEnv(['DOCKER_HOST=unix:///var/run/docker.sock']) {
             tool 'DOCKER'
 	    withDockerRegistry([credentialsId: 'jenkins_registry', url: 'https://idlegame01:5000']) {
-            	sh 'docker push idlegame01:5000/player:latest'
+            	sh 'docker push idlegame01:5000/guild:latest'
 	    }
         }
     }
     stage('Promote') {
         withEnv(['DOCKER_HOST=unix:///var/run/docker.sock']) {
 	    withDockerRegistry([credentialsId: 'jenkins_registry', url: 'https://idlegame01:5000']) {
-                sh 'docker service update --detach=false --force --with-registry-auth --image idlegame01:5000/player:latest --update-parallelism=1 ig_player'
+                sh 'docker service update --detach=false --force --with-registry-auth --image idlegame01:5000/guild:latest --update-parallelism=1 ig_guild'
 	    }
         }
     }

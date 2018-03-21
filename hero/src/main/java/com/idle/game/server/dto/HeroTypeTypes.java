@@ -7,6 +7,7 @@ import com.idle.game.core.hero.type.HeroTypeQuality;
 import com.idle.game.core.hero.type.HeroTypeRole;
 import com.idle.game.core.hero.type.HeroTypeSize;
 import com.idle.game.core.type.DamageType;
+import com.idle.game.core.type.DefenseType;
 import com.idle.game.core.type.DistanceType;
 import java.io.Serializable;
 
@@ -22,10 +23,15 @@ public class HeroTypeTypes implements Serializable {
     private final HeroTypeRole[] heroTypeRoles = HeroTypeRole.values();
 
     private final DamageType[] damageTypes = DamageType.values();
+    private final DefenseType[] defenseTypes = DefenseType.values();
     private final DistanceType[] distanceTypes = DistanceType.values();
 
     private final FormationPositionType[] formationPositionTypes = FormationPositionType.values();
     private final HeroTypeSize[] heroTypeSizes = HeroTypeSize.values();
+
+    public DefenseType[] getDefenseTypes() {
+        return defenseTypes;
+    }
 
     public HeroTypeSize[] getHeroTypeSizes() {
         return heroTypeSizes;

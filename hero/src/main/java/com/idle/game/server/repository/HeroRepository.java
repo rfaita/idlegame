@@ -17,4 +17,8 @@ public interface HeroRepository extends MongoRepository<Hero, String> {
 
     List<Hero> findAllByPlayerIdAndQuality(String player, HeroQuality quality);
 
+    List<Hero> findAllByPlayerIdAndHeroTypeIdAndQuality(String player, String heroTypeId, HeroQuality quality);
+
+    List<Hero> findAllByPlayerIdAndHeroTypeId(String player, String heroTypeId);
+
 }

@@ -63,6 +63,16 @@ public class HeroService {
         return heroRepository.findAllByPlayerIdAndQuality(idPlayer, quality);
     }
 
+    public List<Hero> findAllByPlayerIdAndHeroTypeIdAndQuality(String idPlayer, String heroTypeId, HeroQuality quality) {
+
+        return heroRepository.findAllByPlayerIdAndHeroTypeIdAndQuality(idPlayer, heroTypeId, quality);
+    }
+
+    public List<Hero> findAllByPlayerIdAndHeroTypeId(String idPlayer, String heroTypeId) {
+
+        return heroRepository.findAllByPlayerIdAndHeroTypeId(idPlayer, heroTypeId);
+    }
+
     @Caching(put
             = @CachePut(value = HERO_FIND_BY_ID, key = "'" + HERO_FIND_BY_ID + "' + #hero.id"),
             evict

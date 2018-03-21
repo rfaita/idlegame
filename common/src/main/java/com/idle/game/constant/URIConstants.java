@@ -9,6 +9,7 @@ public interface URIConstants {
     final String HEROTYPE__FIND_ALL_BY_QUALITY = "findAllByQuality";
     final String HEROTYPE__FIND_ALL_BY_FACTION = "findAllByFaction";
     final String HEROTYPE__FIND_ALL_BY_FACTION_AND_QUALITY = "findAllByFactionAndQuality";
+    final String HEROTYPE__FIND_BY_NAME = "findByName";
     final String HERO__FIND_ALL_BY_PLAYER = "all";
     final String HERO__ROLL = "roll";
     final String PLAYERRESOURCE__COMPUTE_RESOURCES = "computeResources";

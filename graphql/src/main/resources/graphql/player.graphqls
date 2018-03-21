@@ -3,4 +3,9 @@ type Player {
     name: String!
     level: Int!
     linkedUser: String!
+    heroes(heroTypeName:String, quality:String): [Hero]
+}
+
+type Query { 
+    player(player:String): Player!    
 }

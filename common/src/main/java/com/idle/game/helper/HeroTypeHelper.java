@@ -1,12 +1,10 @@
 package com.idle.game.helper;
 
-import static com.idle.game.constant.CacheConstants.HERO_TYPE_FIND_BY_ID;
 import com.idle.game.constant.URIConstants;
 import static com.idle.game.constant.URIConstants.HEROTYPE__FIND_ALL_BY_FACTION_AND_QUALITY;
 import com.idle.game.core.hero.type.HeroTypeQuality;
 import com.idle.game.model.HeroType;
 import com.idle.game.server.dto.Envelope;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import java.net.URI;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +45,14 @@ public class HeroTypeHelper {
 
     @Value("${idle.url.heroType}")
     private String urlHeroType;
+
+    public HeroType getHeroTypeByName(String name) {
+        return getHeroTypeByName(name, tokenHelper.getToken());
+    }
+
+    public HeroType getHeroTypeByName(String name, String token) {
+        return heroTypeCircuitBreakerService.getHeroTypeByName(name, token);
+    }
 
     public HeroType getHeroTypeById(String id) {
         return heroTypeCircuitBreakerService.getHeroTypeById(id, tokenHelper.getToken());

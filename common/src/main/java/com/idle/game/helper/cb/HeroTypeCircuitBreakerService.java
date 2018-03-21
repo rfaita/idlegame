@@ -2,6 +2,8 @@ package com.idle.game.helper.cb;
 
 import com.idle.game.helper.*;
 import static com.idle.game.constant.CacheConstants.HERO_TYPE_FIND_BY_ID;
+import static com.idle.game.constant.CacheConstants.HERO_TYPE_FIND_BY_NAME;
+import com.idle.game.constant.URIConstants;
 import com.idle.game.model.HeroType;
 import com.idle.game.server.dto.Envelope;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
@@ -76,6 +78,49 @@ public class HeroTypeCircuitBreakerService {
 
     public HeroType getHeroTypeCacheById(String id, String token) {
         HeroType ret = (HeroType) redisTemplate.boundValueOps(HERO_TYPE_FIND_BY_ID + id).get();
+        if (ret != null) {
+            return ret;
+        } else {
+            return null;
+        }
+    }
+
+    @HystrixCommand(fallbackMethod = "getHeroTypeCacheByName")
+    public HeroType getHeroTypeByName(String name, String token) {
+
+        URI uri = URI.create(urlHeroType + "/" + URIConstants.HEROTYPE__FIND_BY_NAME + "/" + name);
+        try {
+            ResponseEntity<Envelope<HeroType>> ret = restTemplate.exchange(uri,
+                    HttpMethod.GET,
+                    new HttpEntity(HeaderUtil.getAuthHeaders(token)),
+                    new ParameterizedTypeReference<Envelope<HeroType>>() {
+            });
+
+            if (ret.getStatusCode() == HttpStatus.OK) {
+                Envelope<HeroType> data = ret.getBody();
+                if (data.getErrors() == null || data.getErrors().isEmpty()) {
+                    return data.getData();
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        } catch (HttpStatusCodeException e) {
+            if (e.getStatusCode() == HttpStatus.BAD_REQUEST) {
+                Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
+                throw new ValidationException((String) ret.getErrors().get(0));
+            } else if (e.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR) {
+                throw new ValidationException("internal.server.error");
+            }
+            throw new ValidationException("unmapped.server.error");
+        } catch (RestClientException e) {
+            throw new ValidationException(e);
+        }
+    }
+
+    public HeroType getHeroTypeCacheByName(String name, String token) {
+        HeroType ret = (HeroType) redisTemplate.boundValueOps(HERO_TYPE_FIND_BY_NAME + name).get();
         if (ret != null) {
             return ret;
         } else {

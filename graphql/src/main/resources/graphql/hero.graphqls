@@ -26,7 +26,3 @@ type Hero {
     maxLevelHp: Int!
 
 }
-
-type Query { 
-    findHeroes(player:String!, quality:String): [Hero]!    
-}

@@ -4,6 +4,7 @@ export class HeroTypeTypes {
     public heroTypeRoles: String[];
 
     public damageTypes: String[];
+    public defenseTypes: String[];
     public distanceTypes: String[];
 
     public formationPositionTypes: String[];

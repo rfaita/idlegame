@@ -51,7 +51,7 @@ public class HeroRest {
 
     @RequestMapping(path = "/" + HERO__FIND_ALL_BY_PLAYER + "/{player}", method = RequestMethod.GET)
     public @ResponseBody
-    Envelope<List<Hero>> findAllByPlayer(@PathVariable("player") String player) {
+    Envelope<List<Hero>> findAllByPlayerId(@PathVariable("player") String player) {
 
         Envelope<List<Hero>> ret = new Envelope<>();
         ret.setData(heroService.findAllByPlayerId(player));
@@ -60,18 +60,30 @@ public class HeroRest {
 
     }
 
-    @RequestMapping(path = "/" + HERO__FIND_ALL_BY_PLAYER + "/{player}/{quality}", method = RequestMethod.GET)
+    @RequestMapping(path = "/" + HERO__FIND_ALL_BY_PLAYER + "/{player}/{heroTypeId}", method = RequestMethod.GET)
     public @ResponseBody
-    Envelope<List<Hero>> findAllByPlayerAndQuality(@PathVariable("player") String player, @PathVariable("quality") String quality) {
+    Envelope<List<Hero>> findAllByPlayerIdAndHeroTypeId(@PathVariable("player") String player, @PathVariable("heroTypeId") String heroTypeId) {
 
         Envelope<List<Hero>> ret = new Envelope<>();
-        ret.setData(heroService.findAllByPlayerIdAndQuality(player, HeroQuality.valueOf(quality)));
+        ret.setData(heroService.findAllByPlayerIdAndHeroTypeId(player, heroTypeId));
 
         return ret;
 
     }
-    
-    
+
+    @RequestMapping(path = "/" + HERO__FIND_ALL_BY_PLAYER + "/{player}/{heroTypeId}/{quality}", method = RequestMethod.GET)
+    public @ResponseBody
+    Envelope<List<Hero>> findAllByPlayerIdAndHeroTypeIdAndQuality(@PathVariable("player") String player,
+            @PathVariable("quality") String quality,
+            @PathVariable("heroTypeId") String heroTypeId) {
+
+        Envelope<List<Hero>> ret = new Envelope<>();
+        ret.setData(heroService.findAllByPlayerIdAndHeroTypeIdAndQuality(player, heroTypeId, HeroQuality.valueOf(quality)));
+
+        return ret;
+
+    }
+
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     public @ResponseBody
     Envelope<Void> delete(@PathVariable("id") String id) {
@@ -80,7 +92,7 @@ public class HeroRest {
         return new Envelope<>();
 
     }
-    
+
     @RequestMapping(path = "", method = RequestMethod.POST)
     public @ResponseBody
     Envelope<Hero> save(@RequestBody Hero hero) {

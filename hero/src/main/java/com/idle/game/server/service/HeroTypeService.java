@@ -12,7 +12,6 @@ import com.idle.game.core.type.DefenseType;
 import com.idle.game.model.HeroType;
 import com.idle.game.server.repository.HeroTypeRepository;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;

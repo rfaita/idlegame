@@ -84,12 +84,48 @@ public class HeroHelper {
         }
     }
 
-    public List<Hero> getHeroesByPlayerIdAndQuality(String player, HeroQuality quality) {
-        return getHeroesByPlayerId(player, tokenHelper.getToken());
+    public List<Hero> getHeroesByPlayerIdAndHeroTypeId(String playerId, String heroTypeId) {
+        return getHeroesByPlayerId(playerId, tokenHelper.getToken());
     }
 
-    public List<Hero> getHeroesByPlayerIdAndQuality(String player, HeroQuality quality, String token) {
-        URI uri = URI.create(urlHero + "/" + HERO__FIND_ALL_BY_PLAYER + "/" + player + "/" + quality.toString());
+    public List<Hero> getHeroesByPlayerIdAndHeroTypeId(String playerId, String heroTypeId, String token) {
+        URI uri = URI.create(urlHero + "/" + HERO__FIND_ALL_BY_PLAYER + "/" + playerId + "/" + heroTypeId);
+        try {
+            ResponseEntity<Envelope<List<Hero>>> ret = restTemplate.exchange(uri,
+                    HttpMethod.GET,
+                    new HttpEntity(HeaderUtil.getAuthHeaders(token)),
+                    new ParameterizedTypeReference<Envelope<List<Hero>>>() {
+            });
+
+            if (ret.getStatusCode() == HttpStatus.OK) {
+                Envelope<List<Hero>> data = ret.getBody();
+                if (data.getErrors() == null || data.getErrors().isEmpty()) {
+                    return data.getData();
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        } catch (HttpStatusCodeException e) {
+            if (e.getStatusCode() == HttpStatus.BAD_REQUEST) {
+                Envelope<Void> ret = envelopeUtil.getEnvelopeError(e);
+                throw new ValidationException((String) ret.getErrors().get(0));
+            } else if (e.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR) {
+                throw new ValidationException("internal.server.error");
+            }
+            throw new ValidationException("unmapped.server.error");
+        } catch (RestClientException e) {
+            throw new ValidationException(e);
+        }
+    }
+
+    public List<Hero> getHeroesByPlayerIdAndHeroTypeIdAndQuality(String playerId, String heroTypeId, HeroQuality quality) {
+        return getHeroesByPlayerIdAndHeroTypeIdAndQuality(playerId, heroTypeId, quality, tokenHelper.getToken());
+    }
+
+    public List<Hero> getHeroesByPlayerIdAndHeroTypeIdAndQuality(String playerId, String heroTypeId, HeroQuality quality, String token) {
+        URI uri = URI.create(urlHero + "/" + HERO__FIND_ALL_BY_PLAYER + "/" + playerId + "/" + heroTypeId + "/" + quality);
         try {
             ResponseEntity<Envelope<List<Hero>>> ret = restTemplate.exchange(uri,
                     HttpMethod.GET,
