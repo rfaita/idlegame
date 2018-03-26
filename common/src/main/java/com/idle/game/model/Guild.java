@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -25,7 +26,18 @@ public class Guild implements Serializable {
     private Integer level;
     private String name;
 
+    @Transient
     private transient List<GuildMember> members;
+    @Transient
+    private transient List<GuildMember> requests;
+
+    public List<GuildMember> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(List<GuildMember> requests) {
+        this.requests = requests;
+    }
 
     public List<GuildMember> getMembers() {
         return members;

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import java.util.Date;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -23,6 +24,9 @@ public class GuildMember implements Serializable {
     private Boolean accepted = Boolean.FALSE;
     private GuildMemberType type = GuildMemberType.MEMBER;
 
+    @Transient
+    private transient Player player;
+
     public GuildMember() {
     }
 
@@ -30,6 +34,14 @@ public class GuildMember implements Serializable {
         this.guildId = guildId;
         this.userMemberId = userMemberId;
         this.nameMember = nameMember;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     public GuildMemberType getType() {

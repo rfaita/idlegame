@@ -1,0 +1,10 @@
+type Guild {
+    id: ID!
+    date: Date!
+    userOwnerId: String!
+    initialMessage: String 
+    level: Int!
+    name: String!
+    members: [GuildMember]
+    requests: [GuildMember]
+}

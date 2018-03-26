@@ -11,6 +11,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -48,7 +49,9 @@ public class Hero implements Serializable {
     private Integer maxLevelDodgeChance;
     private Integer maxLevelHp;
 
+    @Transient
     private transient HeroType heroType;
+    @Transient
     private transient Player player;
 
     public HeroType getHeroType() {

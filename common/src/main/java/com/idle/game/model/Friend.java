@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import java.util.Date;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -23,6 +24,9 @@ public class Friend implements Serializable {
     private Boolean reverse = Boolean.FALSE;
     private Boolean accepted = Boolean.FALSE;
 
+    @Transient
+    private transient Player playerFriend;
+
     public Friend() {
     }
 
@@ -34,6 +38,14 @@ public class Friend implements Serializable {
 
     public Boolean getReverse() {
         return reverse;
+    }
+
+    public Player getPlayerFriend() {
+        return playerFriend;
+    }
+
+    public void setPlayerFriend(Player playerFriend) {
+        this.playerFriend = playerFriend;
     }
 
     public void setReverse(Boolean reverse) {

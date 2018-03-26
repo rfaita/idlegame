@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -21,9 +22,22 @@ public class Player implements Serializable {
     private String name;
     private String linkedUser;
 
+    @Transient
     private transient List<Hero> heroes;
+    @Transient
     private transient List<Friend> friends;
+    @Transient
     private transient Guild guild;
+    @Transient
+    private transient Formation formation;
+
+    public Formation getFormation() {
+        return formation;
+    }
+
+    public void setFormation(Formation formation) {
+        this.formation = formation;
+    }
 
     public List<Hero> getHeroes() {
         return heroes;

@@ -1,0 +1,10 @@
+type Friend {
+    id: ID!
+    user: String
+    userFriend: String
+    nameFriend: String
+    since: Date
+    reverse: Boolean!
+    accepted: Boolean!
+    playerFriend: Player!
+}

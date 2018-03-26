@@ -1,9 +1,13 @@
+scalar Date
+
 type Player {
     id: ID!
     name: String!
     level: Int!
     linkedUser: String!
     heroes(heroTypeName:String, quality:String): [Hero]
+    friends: [Friend]
+    guild: Guild
 }
 
 type Query { 

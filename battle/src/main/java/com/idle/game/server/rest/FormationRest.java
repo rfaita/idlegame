@@ -48,7 +48,7 @@ public class FormationRest {
 
     @RequestMapping(path = "/{player}/{formationAllocation}", method = RequestMethod.GET)
     public @ResponseBody
-    Envelope<Formation> findByPlayerAndFormationAllocation(@PathVariable("formationAllocation") String fa, @PathVariable("player") String player) {
+    Envelope<Formation> findByPlayerAndFormationAllocation(@PathVariable("player") String player, @PathVariable("formationAllocation") String fa) {
 
         Envelope<Formation> ret = new Envelope<>();
         ret.setData(formationService.findByPlayerAndFormationAllocation(player, FormationAllocation.valueOf(fa)));

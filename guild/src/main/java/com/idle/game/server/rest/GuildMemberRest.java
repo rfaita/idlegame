@@ -1,6 +1,7 @@
 package com.idle.game.server.rest;
 
 import static com.idle.game.constant.URIConstants.GUILD_MEMBER__CREATE_ADMIN;
+import static com.idle.game.constant.URIConstants.GUILD_MEMBER__REQUESTS;
 import com.idle.game.server.dto.Envelope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,7 +47,7 @@ public class GuildMemberRest {
 
     }
 
-    @RequestMapping(path = "/requests/{guildId}", method = RequestMethod.GET)
+    @RequestMapping(path = "/" + GUILD_MEMBER__REQUESTS + "/{guildId}", method = RequestMethod.GET)
     public @ResponseBody
     Envelope<List<GuildMember>> getGuildMembersRequests(@PathVariable("guildId") String guildId) {
 

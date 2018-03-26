@@ -21,5 +21,6 @@ public interface URIConstants {
     final String FORMATION__FIND_BY_FORMATION_ALLOCATION = "findByFormationAllocation";
     final String SHOP__BUY_LOOT_ROLL = "buyLootRoll";
     final String GUILD_MEMBER__CREATE_ADMIN = "createAdmin";
+    final String GUILD_MEMBER__REQUESTS = "requests";
 
 }

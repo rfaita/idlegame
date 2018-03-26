@@ -20,6 +20,8 @@ idle:
             http://localhost:8081/battleHero
         formation:
             http://localhost:8081/formation
+        friend:
+            http://localhost:8085/friend
         player:
             http://localhost:8085/player
         playerResource:
