@@ -21,10 +21,10 @@ public class Mail implements Serializable {
     @Indexed(name = "expirationDate", expireAfterSeconds = 2592000)
     private final Date date = new Date();
 
-    private String fromUser;
-    private String fromNickName;
-    private String toUser;
-    private String toNickName;
+    private String fromUserId;
+    private String fromUserNickName;
+    private String toUserId;
+    private String toUserNickName;
     private Reward reward;
     private String text;
 
@@ -51,36 +51,36 @@ public class Mail implements Serializable {
         this.id = id;
     }
 
-    public String getFromUser() {
-        return fromUser;
+    public String getFromUserId() {
+        return fromUserId;
     }
 
-    public void setFromUser(String fromUser) {
-        this.fromUser = fromUser;
+    public void setFromUserId(String fromUserId) {
+        this.fromUserId = fromUserId;
     }
 
-    public String getFromNickName() {
-        return fromNickName;
+    public String getFromUserNickName() {
+        return fromUserNickName;
     }
 
-    public void setFromNickName(String fromNickName) {
-        this.fromNickName = fromNickName;
+    public void setFromUserNickName(String fromUserNickName) {
+        this.fromUserNickName = fromUserNickName;
     }
 
-    public String getToUser() {
-        return toUser;
+    public String getToUserId() {
+        return toUserId;
     }
 
-    public void setToUser(String toUser) {
-        this.toUser = toUser;
+    public void setToUserId(String toUserId) {
+        this.toUserId = toUserId;
     }
 
-    public String getToNickName() {
-        return toNickName;
+    public String getToUserNickName() {
+        return toUserNickName;
     }
 
-    public void setToNickName(String toNickName) {
-        this.toNickName = toNickName;
+    public void setToUserNickName(String toUserNickName) {
+        this.toUserNickName = toUserNickName;
     }
 
     public Reward getReward() {

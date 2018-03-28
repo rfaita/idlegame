@@ -23,7 +23,7 @@ public class TokenHelper {
         return accessToken.getAccessTokenHash();
     }
 
-    public String getSubject() {
+    public String getUserId() {
         return accessToken.getSubject();
     }
 

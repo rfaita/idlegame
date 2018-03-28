@@ -1,7 +1,7 @@
 type Guild {
     id: ID!
     date: Date!
-    userOwnerId: String!
+    ownerUserId: String!
     initialMessage: String 
     level: Int!
     name: String!

@@ -2,7 +2,6 @@ package com.idle.game.server.service;
 
 import static com.idle.game.constant.CacheConstants.BATTLE_HERO_FIND_BY_ID;
 import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_ID;
-import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION;
 import static com.idle.game.constant.CacheConstants.HERO_TYPE_FIND_ALL;
 import static com.idle.game.constant.CacheConstants.HERO_TYPE_FIND_BY_ID;
 import static com.idle.game.constant.CacheConstants.HERO_TYPE_FIND_BY_NAME;
@@ -18,6 +17,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_USER_ID_AND_FORMATION_ALLOCATION;
 
 /**
  *
@@ -51,7 +51,7 @@ public class HeroTypeService {
                 ,
                 @CacheEvict(value = FORMATION_FIND_BY_ID, allEntries = true)
                 ,
-                @CacheEvict(value = FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION, allEntries = true)
+                @CacheEvict(value = FORMATION_FIND_BY_USER_ID_AND_FORMATION_ALLOCATION, allEntries = true)
 
             }
     )

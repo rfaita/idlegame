@@ -1,7 +1,6 @@
 package com.idle.game.tests;
 
-import com.idle.game.helper.MailHelper;
-import com.idle.game.helper.PlayerHelper;
+import com.idle.game.helper.client.mail.MailClient;
 import com.idle.game.model.Friend;
 import com.idle.game.model.Mail;
 import com.idle.game.server.repository.FriendRepository;
@@ -28,14 +27,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class FriendServiceTest {
 
-    @MockBean
+    @MockBean(name = "default")
     private FriendRepository friendRepository;
 
-    @MockBean
-    private PlayerHelper playerHelper;
-
-    @MockBean
-    private MailHelper mailHelper;
+    @MockBean(name = "default")
+    private MailClient mailClient;
 
     @Autowired
     private FriendService friendService;
@@ -49,42 +45,39 @@ public class FriendServiceTest {
         expcetionExpect.expect(ValidationException.class);
         expcetionExpect.expectMessage("you.can.not.be.your.friend");
 
-        friendService.sendFriendRequest("1", "1");
+        friendService.sendFriendRequest("1", "test", "1");
 
     }
 
     @Test
     public void testAlreadyFriends() {
 
-        when(friendRepository.findByUserAndUserFriend("1", "2")).thenReturn(new Friend("1", "2", "teste"));
+        when(friendRepository.findByUserIdAndFriendUserId("1", "2")).thenReturn(new Friend("1", "2", "teste"));
 
         expcetionExpect.expect(ValidationException.class);
         expcetionExpect.expectMessage("user.already.your.friend");
 
-        friendService.sendFriendRequest("1", "2");
+        friendService.sendFriendRequest("1", "test", "2");
 
     }
 
     @Test
     public void testSuccessFriends() {
 
-        when(friendRepository.findByUserAndUserFriend("1", "2")).thenReturn(null);
+        when(friendRepository.findByUserIdAndFriendUserId("1", "2")).thenReturn(null);
 
         when(friendRepository.save(any(Friend.class))).thenAnswer(createFriendAnswerForSomeInput());
 
-        when(playerHelper.getPlayerByLinkedUser("1")).thenReturn(createPlayer("1"));
-        when(playerHelper.getPlayerByLinkedUser("2")).thenReturn(createPlayer("2"));
+        doNothing().when(mailClient).sendPrivateMail(any(Mail.class));
 
-        doNothing().when(mailHelper).sendPrivateMail(any(Mail.class));
-
-        friendService.sendFriendRequest("1", "2");
+        friendService.sendFriendRequest("1", "test", "2");
 
     }
 
     @Test
     public void testAcceptFriendRequestRequestNotFound() {
 
-        when(friendRepository.findByUserAndIdAndAcceptedAndReverse("1", "1000", Boolean.FALSE, Boolean.TRUE)).thenReturn(null);
+        when(friendRepository.findByUserIdAndIdAndAcceptedAndReverse("1", "1000", Boolean.FALSE, Boolean.TRUE)).thenReturn(null);
 
         expcetionExpect.expect(ValidationException.class);
         expcetionExpect.expectMessage("friend.request.not.found");
@@ -96,10 +89,12 @@ public class FriendServiceTest {
     @Test
     public void testAcceptFriendRequest() {
 
-        when(friendRepository.findByUserAndIdAndAcceptedAndReverse("1", "1000", Boolean.FALSE, Boolean.TRUE)).thenReturn(new Friend("1", "2", "teste"));
-        when(friendRepository.findByUserAndUserFriend("2", "1")).thenReturn(new Friend("2", "1", "teste2"));
+        when(friendRepository.findByUserIdAndIdAndAcceptedAndReverse("1", "1000", Boolean.FALSE, Boolean.TRUE)).thenReturn(new Friend("1", "2", "teste"));
+        when(friendRepository.findByUserIdAndFriendUserId("2", "1")).thenReturn(new Friend("2", "1", "teste2"));
 
         when(friendRepository.save(any(Friend.class))).thenAnswer(createFriendAnswerForSomeInput());
+        
+        doNothing().when(mailClient).sendPrivateMail(any(Mail.class));
 
         friendService.acceptFriendRequest("1", "1000");
 
@@ -108,7 +103,7 @@ public class FriendServiceTest {
     @Test
     public void testRemoveFriendFriendNotFound() {
 
-        when(friendRepository.findByUserAndId("1", "2")).thenReturn(null);
+        when(friendRepository.findByUserIdAndId("1", "2")).thenReturn(null);
 
         expcetionExpect.expect(ValidationException.class);
         expcetionExpect.expectMessage("friend.not.found");
@@ -120,7 +115,7 @@ public class FriendServiceTest {
     @Test
     public void testRemoveFriend() {
 
-        when(friendRepository.findByUserAndId("1", "2")).thenReturn(new Friend("1", "2", "teste"));
+        when(friendRepository.findByUserIdAndId("1", "2")).thenReturn(new Friend("1", "2", "teste"));
 
         doNothing().when(friendRepository).delete(any(Friend.class));
 

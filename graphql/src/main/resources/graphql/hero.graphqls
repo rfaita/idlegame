@@ -3,8 +3,8 @@ type Hero {
     quality: String!
     heroTypeId: String!
     heroType: HeroType!
-    playerId: String!
-    player: Player!
+    userId: String!
+    user: User!
     level: Int!
 
     baseDmg: Int!

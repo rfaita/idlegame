@@ -13,6 +13,6 @@ public interface GuildRepository extends MongoRepository<Guild, String> {
 
     Guild findByName(String name);
 
-    Guild findByUserOwnerId(String userOwnerId);
+    Guild findByOwnerUserId(String userOwnerId);
 
 }

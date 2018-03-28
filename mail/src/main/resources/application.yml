@@ -22,10 +22,10 @@ idle:
             http://localhost:8081/formation
         friend:
             http://localhost:8085/friend
-        player:
-            http://localhost:8085/player
-        playerResource:
-            http://localhost:8085/playerResource
+        user:
+            http://localhost:8085/user
+        userResource:
+            http://localhost:8085/userResource
         mail:
             http://localhost:8084/mail
         battle:

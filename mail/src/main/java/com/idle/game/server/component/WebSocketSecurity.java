@@ -25,6 +25,6 @@ public class WebSocketSecurity {
 
         manualTokenHelper.createAccessToken(authentication);
 
-        return manualTokenHelper.getSubject().equalsIgnoreCase(user);
+        return manualTokenHelper.getUserId().equalsIgnoreCase(user);
     }
 }

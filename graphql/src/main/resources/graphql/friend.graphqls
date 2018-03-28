@@ -1,10 +1,10 @@
 type Friend {
     id: ID!
-    user: String
-    userFriend: String
-    nameFriend: String
+    userId: String
+    friendUserId: String
+    friendNickName: String
     since: Date
     reverse: Boolean!
     accepted: Boolean!
-    playerFriend: Player!
+    friend: User!
 }

@@ -10,17 +10,16 @@ public interface URIConstants {
     final String HEROTYPE__FIND_ALL_BY_FACTION = "findAllByFaction";
     final String HEROTYPE__FIND_ALL_BY_FACTION_AND_QUALITY = "findAllByFactionAndQuality";
     final String HEROTYPE__FIND_BY_NAME = "findByName";
-    final String HERO__FIND_ALL_BY_PLAYER = "all";
+    final String HERO__FIND_ALL_BY_USER_ID = "all";
     final String HERO__ROLL = "roll";
-    final String PLAYERRESOURCE__COMPUTE_RESOURCES = "computeResources";
-    final String PLAYERRESOURCE__USE_RESOURCES = "useResources";
-    final String PLAYERRESOURCE__ADD_RESOURCES = "addResources";
-    final String PLAYER__FIND_BY_LINKED_USER = "findByLinkedUser";
-    final String PLAYER__FIND_BY_NAME = "findByName";
+    final String USERRESOURCE__COMPUTE_RESOURCES = "computeResources";
+    final String USERRESOURCE__USE_RESOURCES = "useResources";
+    final String USERRESOURCE__ADD_RESOURCES = "addResources";
     final String MAIL__SEND_PRIVATE_MAIL = "sendPrivateMail";
     final String FORMATION__FIND_BY_FORMATION_ALLOCATION = "findByFormationAllocation";
     final String SHOP__BUY_LOOT_ROLL = "buyLootRoll";
     final String GUILD_MEMBER__CREATE_ADMIN = "createAdmin";
     final String GUILD_MEMBER__REQUESTS = "requests";
+    final String GUILD_MEMBER__FIND_BY_USER_MEMBER_ID = "findByUserMemberId";
 
 }

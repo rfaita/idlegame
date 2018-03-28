@@ -13,11 +13,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PvpRatingRepository extends MongoRepository<PvpRating, String> {
 
-    PvpRating findByPlayer(String player);
+    PvpRating findByUserId(String userId);
 
-    PvpRating findByPlayerAndId(String player, String id);
+    PvpRating findByUserIdAndId(String userId, String id);
 
-    List<PvpRating> findAllByPlayerNotAndRatingBetween(String player, Integer startRating, Integer endRating);
+    List<PvpRating> findAllByUserIdNotAndRatingBetween(String userId, Integer startRating, Integer endRating);
 
     List<PvpRating> findAllByOrderByRatingDesc(Pageable pageable);
 

@@ -1,10 +1,10 @@
 type GuildMember {
     id: ID!
     guildId: String!
-    userMemberId: String!
-    nameMember: String!
+    userId: String!
+    userNickname: String!
     since: Date!
     accepted: Boolean!
     type: String!
-    player: Player!
+    user: User!
 }

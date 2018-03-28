@@ -1,11 +1,9 @@
 package com.idle.game.server.controller;
 
 import com.idle.game.helper.ManualTokenHelper;
-import com.idle.game.helper.PlayerHelper;
 import com.idle.game.model.mongo.ChatJoined;
 import com.idle.game.model.mongo.ChatRoomUser;
 import com.idle.game.model.mongo.Message;
-import com.idle.game.model.Player;
 import com.idle.game.server.dto.Envelope;
 import com.idle.game.server.service.ChatJoinedService;
 import com.idle.game.server.service.ChatRoomService;
@@ -50,14 +48,14 @@ public class ChatController {
         manualTokenHelper.createAccessToken(principal);
 
         message.setChatRoom(chatRoom);
-        message.setFromUser(manualTokenHelper.getSubject());
-        message.setFromNickName(manualTokenHelper.getNickName());
-        message.setFromEmail(manualTokenHelper.getEmail());
-        message.setToUser(null);
-        message.setToNickName(null);
+        message.setFromUserId(manualTokenHelper.getUserId());
+        message.setFromUserNickName(manualTokenHelper.getNickName());
+        message.setFromUserEmail(manualTokenHelper.getEmail());
+        message.setToUserId(null);
+        message.setToUserNickName(null);
         message.setFromAdmin(Boolean.FALSE);
 
-        if (!chatJoinedService.userCanJoinToChatRoom(manualTokenHelper.getSubject(), chatRoom)) {
+        if (!chatJoinedService.userCanJoinToChatRoom(manualTokenHelper.getUserId(), chatRoom)) {
             throw new ValidationException("chat.room.not.joined");
         }
 
@@ -69,19 +67,19 @@ public class ChatController {
         manualTokenHelper.createAccessToken(principal);
 
         message.setChatRoom(null);
-        message.setFromUser(manualTokenHelper.getSubject());
-        message.setFromNickName(manualTokenHelper.getNickName());
-        message.setFromEmail(manualTokenHelper.getEmail());
-        message.setToUser(user);
+        message.setFromUserId(manualTokenHelper.getUserId());
+        message.setFromUserNickName(manualTokenHelper.getNickName());
+        message.setFromUserEmail(manualTokenHelper.getEmail());
+        message.setToUserId(user);
 
         message.setFromAdmin(Boolean.FALSE);
 
-        messageService.sendPrivateMessage(message, manualTokenHelper.getToken());
+        messageService.sendPrivateMessage(message);
     }
 
     @SubscribeMapping("/findAllChatsJoined")
     public List<ChatJoined> getChatsJoined() {
-        return chatJoinedService.findAllByUser(manualTokenHelper.getSubject());
+        return chatJoinedService.findAllByUser(manualTokenHelper.getUserId());
     }
 
     @SubscribeMapping("/findAllChatRoomUsers/{chatRoom}")
@@ -98,7 +96,7 @@ public class ChatController {
     public List<Message> findAllByToUserOrFromUserAndChatRoomIsNull(Principal principal) {
         manualTokenHelper.createAccessToken(principal);
 
-        return messageService.findAllByToUserOrFromUserAndChatRoomIsNull(manualTokenHelper.getSubject());
+        return messageService.findAllByToUserOrFromUserAndChatRoomIsNull(manualTokenHelper.getUserId());
     }
 
     @MessageExceptionHandler
@@ -107,7 +105,7 @@ public class ChatController {
         Envelope<Void> ret = new Envelope<>();
         ret.setError(exception.getMessage());
 
-        messageService.sendPrivateErrorMessage(manualTokenHelper.getSubject(), ret);
+        messageService.sendPrivateErrorMessage(manualTokenHelper.getUserId(), ret);
     }
 
 }

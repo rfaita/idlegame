@@ -1,7 +1,7 @@
 package com.idle.game.server.service;
 
 import static com.idle.game.constant.CacheConstants.*;
-import com.idle.game.helper.GuildMemberHelper;
+import com.idle.game.helper.client.guild.GuildMemberClient;
 import com.idle.game.model.Guild;
 import com.idle.game.model.GuildMember;
 import com.idle.game.server.repository.GuildRepository;
@@ -17,7 +17,7 @@ public class GuildService {
     private GuildRepository guildRepository;
 
     @Autowired
-    private GuildMemberHelper guildMemberHelper;
+    private GuildMemberClient guildMemberHelper;
 
     public Guild findByName(String name) {
         return guildRepository.findByName(name);
@@ -28,9 +28,9 @@ public class GuildService {
         return guildRepository.findOne(id);
     }
 
-    public Guild myGuild(String user) {
+    public Guild myGuild() {
 
-        GuildMember myGuildMember = guildMemberHelper.getMyGuildMember();
+        GuildMember myGuildMember = guildMemberHelper.myGuildMember().getData();
 
         if (myGuildMember == null) {
             return null;
@@ -42,7 +42,7 @@ public class GuildService {
 
     public Guild create(Guild guild) {
 
-        Guild guildExist = guildRepository.findByUserOwnerId(guild.getUserOwnerId());
+        Guild guildExist = guildRepository.findByOwnerUserId(guild.getOwnerUserId());
         if (guildExist != null) {
             throw new ValidationException("user.already.have.a.guild");
         }

@@ -1,0 +1,14 @@
+scalar Date
+
+type User {
+    id: ID!
+    name: String!
+    email: String
+    heroes(heroTypeName:String, quality:String): [Hero]
+    friends: [Friend]
+    guild: Guild
+}
+
+type Query { 
+    user(userId:String): User!    
+}

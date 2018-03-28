@@ -1,6 +1,7 @@
 package com.idle.game.server.rest;
 
 import static com.idle.game.constant.URIConstants.GUILD_MEMBER__CREATE_ADMIN;
+import static com.idle.game.constant.URIConstants.GUILD_MEMBER__FIND_BY_USER_MEMBER_ID;
 import static com.idle.game.constant.URIConstants.GUILD_MEMBER__REQUESTS;
 import com.idle.game.server.dto.Envelope;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,23 @@ public class GuildMemberRest {
     @Autowired
     private GuildMemberService guildMemberService;
 
-    @RequestMapping(path = "", method = RequestMethod.GET
-    )
+    @RequestMapping(path = "/" + GUILD_MEMBER__FIND_BY_USER_MEMBER_ID + "/{userMemberId}", method = RequestMethod.GET)
+    public @ResponseBody
+    Envelope<GuildMember> getGuildMember(@PathVariable("userMemberId") String userMemberId) {
+
+        Envelope<GuildMember> ret = new Envelope<>();
+        ret.setData(guildMemberService.findByUserId(userMemberId));
+
+        return ret;
+
+    }
+
+    @RequestMapping(path = "", method = RequestMethod.GET)
     public @ResponseBody
     Envelope<GuildMember> myGuildMember() {
 
         Envelope<GuildMember> ret = new Envelope<>();
-        ret.setData(guildMemberService.findByUserMemberId(tokenHelper.getSubject()));
+        ret.setData(guildMemberService.findByUserId(tokenHelper.getUserId()));
 
         return ret;
 
@@ -58,40 +69,40 @@ public class GuildMemberRest {
 
     }
 
-    @RequestMapping(path = "/{guildId}", method = RequestMethod.POST)
-    public void sendGuildMemberRequest(@PathVariable("guildId") String guildId) {
-
-        guildMemberService.sendGuildMemberRequest(guildId, tokenHelper.getSubject());
-    }
-
     @RequestMapping(path = "/" + GUILD_MEMBER__CREATE_ADMIN + "/{guildId}", method = RequestMethod.POST)
     public void createAdmin(@PathVariable("guildId") String guildId) {
 
-        guildMemberService.createAdmin(tokenHelper.getSubject(), guildId);
+        guildMemberService.createAdmin(tokenHelper.getUserId(), tokenHelper.getNickName(), guildId);
+    }
+
+    @RequestMapping(path = "/{guildId}", method = RequestMethod.POST)
+    public void sendGuildMemberRequest(@PathVariable("guildId") String guildId) {
+
+        guildMemberService.sendGuildMemberRequest(guildId, tokenHelper.getUserId(), tokenHelper.getNickName());
     }
 
     @RequestMapping(path = "/{memberId}", method = RequestMethod.DELETE)
     public void removeGuildMember(@PathVariable("memberId") String memberId) {
 
-        guildMemberService.removeGuildMember(tokenHelper.getSubject(), memberId);
+        guildMemberService.removeGuildMember(tokenHelper.getUserId(), memberId);
     }
 
     @RequestMapping(path = "/{memberRequestId}", method = RequestMethod.PUT)
     public void acceptGuildMemberRequest(@PathVariable("memberRequestId") String memberRequestId) {
 
-        guildMemberService.acceptGuildMemberRequest(tokenHelper.getSubject(), memberRequestId);
+        guildMemberService.acceptGuildMemberRequest(tokenHelper.getUserId(), memberRequestId);
     }
 
     @RequestMapping(path = "/promote/{memberId}", method = RequestMethod.PUT)
     public void promoteGuildMember(@PathVariable("memberId") String memberId) {
 
-        guildMemberService.promoteGuildMember(tokenHelper.getSubject(), memberId);
+        guildMemberService.promoteGuildMember(tokenHelper.getUserId(), memberId);
     }
 
     @RequestMapping(path = "/demote/{memberId}", method = RequestMethod.PUT)
     public void demoteGuildMember(@PathVariable("memberId") String memberId) {
 
-        guildMemberService.demoteGuildMember(tokenHelper.getSubject(), memberId);
+        guildMemberService.demoteGuildMember(tokenHelper.getUserId(), memberId);
     }
 
 }

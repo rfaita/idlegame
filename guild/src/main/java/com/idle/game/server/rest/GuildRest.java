@@ -27,10 +27,9 @@ public class GuildRest {
     Envelope<Guild> myGuild() {
 
         Envelope<Guild> ret = new Envelope<>();
-        ret.setData(guildService.myGuild(tokenHelper.getSubject()));
+        ret.setData(guildService.myGuild());
 
         return ret;
-
     }
 
     @RequestMapping(path = "", method = RequestMethod.POST)
@@ -38,7 +37,7 @@ public class GuildRest {
     public Envelope<Guild> create(@RequestBody Guild guild) throws Exception {
 
         guild.setId(null);
-        guild.setUserOwnerId(tokenHelper.getSubject());
+        guild.setOwnerUserId(tokenHelper.getUserId());
         guild.setLevel(1);
 
         return new Envelope<>(guildService.create(guild));

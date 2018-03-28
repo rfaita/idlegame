@@ -5,7 +5,6 @@ import com.idle.game.core.type.DefenseType;
 import com.idle.game.model.HeroType;
 import com.idle.game.core.type.DistanceType;
 import com.idle.game.model.Hero;
-import com.idle.game.model.Player;
 
 /**
  *
@@ -13,26 +12,16 @@ import com.idle.game.model.Player;
  */
 public class TestHelper {
 
-    public static Player createPlayer(String id) {
-        Player p1 = new Player();
-        p1.setId(id);
-        p1.setLevel(1);
-        p1.setLinkedUser(id);
-        p1.setName("test1");
-
-        return p1;
-    }
-
-    public static Hero createHero(String id, String playerId) {
+    public static Hero createHero(String id, String userId) {
         Hero ret = new Hero();
         ret.setId(id);
-        ret.setPlayerId(playerId);
+        ret.setUserId(userId);
         ret.setLevel(1);
         return ret;
     }
 
-    public static Hero createHeroMaxLevel(String id, String playerId) {
-        Hero ret = createHero(id, playerId);
+    public static Hero createHeroMaxLevel(String id, String userId) {
+        Hero ret = createHero(id, userId);
         ret.setLevel(IdleConstants.HERO_MAX_LEVEL);
         return ret;
     }

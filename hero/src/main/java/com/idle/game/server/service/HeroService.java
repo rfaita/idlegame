@@ -18,15 +18,12 @@ import com.idle.game.core.hero.type.HeroQuality;
 import com.idle.game.core.hero.type.HeroTypeFaction;
 import com.idle.game.core.hero.type.HeroTypeQuality;
 import com.idle.game.core.util.DiceUtil;
-import com.idle.game.helper.HeroTypeHelper;
-import com.idle.game.helper.LootRollHelper;
-import com.idle.game.helper.PlayerHelper;
+import com.idle.game.helper.client.hero.HeroTypeClient;
+import com.idle.game.helper.client.shop.LootRollClient;
 import com.idle.game.model.Hero;
 import com.idle.game.model.HeroType;
-import com.idle.game.model.Player;
 import com.idle.game.model.shop.LootRoll;
 import com.idle.game.server.repository.HeroRepository;
-import java.util.Optional;
 
 /**
  *
@@ -36,16 +33,13 @@ import java.util.Optional;
 public class HeroService {
 
     @Autowired
-    private HeroTypeHelper heroTypeHelper;
+    private HeroTypeClient heroTypeClient;
 
     @Autowired
     private HeroRepository heroRepository;
 
     @Autowired
-    private PlayerHelper playerHelper;
-
-    @Autowired
-    private LootRollHelper lootRollHelper;
+    private LootRollClient lootRollClient;
 
     @Cacheable(value = HERO_FIND_BY_ID, key = "'" + HERO_FIND_BY_ID + "' + #id")
     public Hero findById(String id) {
@@ -53,24 +47,24 @@ public class HeroService {
         return heroRepository.findOne(id);
     }
 
-    public List<Hero> findAllByPlayerId(String idPlayer) {
+    public List<Hero> findAllByUserId(String userId) {
 
-        return heroRepository.findAllByPlayerId(idPlayer);
+        return heroRepository.findAllByUserId(userId);
     }
 
-    public List<Hero> findAllByPlayerIdAndQuality(String idPlayer, HeroQuality quality) {
+    public List<Hero> findAllByUserIdAndQuality(String userId, HeroQuality quality) {
 
-        return heroRepository.findAllByPlayerIdAndQuality(idPlayer, quality);
+        return heroRepository.findAllByUserIdAndQuality(userId, quality);
     }
 
-    public List<Hero> findAllByPlayerIdAndHeroTypeIdAndQuality(String idPlayer, String heroTypeId, HeroQuality quality) {
+    public List<Hero> findAllByUserIdAndHeroTypeIdAndQuality(String userId, String heroTypeId, HeroQuality quality) {
 
-        return heroRepository.findAllByPlayerIdAndHeroTypeIdAndQuality(idPlayer, heroTypeId, quality);
+        return heroRepository.findAllByUserIdAndHeroTypeIdAndQuality(userId, heroTypeId, quality);
     }
 
-    public List<Hero> findAllByPlayerIdAndHeroTypeId(String idPlayer, String heroTypeId) {
+    public List<Hero> findAllByUserIdAndHeroTypeId(String userId, String heroTypeId) {
 
-        return heroRepository.findAllByPlayerIdAndHeroTypeId(idPlayer, heroTypeId);
+        return heroRepository.findAllByUserIdAndHeroTypeId(userId, heroTypeId);
     }
 
     @Caching(put
@@ -99,60 +93,47 @@ public class HeroService {
             evict
             = @CacheEvict(value = BATTLE_HERO_FIND_BY_ID, key = "'" + BATTLE_HERO_FIND_BY_ID + "' + #id")
     )
-    public Hero levelUp(String id, String user) {
+    public Hero levelUp(String id, String userId) {
 
-        Player player = playerHelper.getPlayerByLinkedUser(user);
+        Hero h = heroRepository.findOne(id);
 
-        if (player != null) {
-            Hero h = heroRepository.findOne(id);
+        validateLevelUp(h, userId);
 
-            validateLevelUp(h, player.getId());
+        h.setLevel(h.getLevel() + 1);
 
-            h.setLevel(h.getLevel() + 1);
-
-            heroRepository.save(h);
-            return h;
-        } else {
-            throw new ValidationException("player.not.found");
-        }
+        heroRepository.save(h);
+        return h;
     }
 
-    private void validateLevelUp(Hero h, String player) {
+    private void validateLevelUp(Hero h, String userId) {
         if (h == null) {
             throw new ValidationException("hero.not.found");
         }
-        if (!h.getPlayerId().equalsIgnoreCase(player)) {
-            throw new ValidationException("player.is.not.owner.of.this.hero");
+        if (!h.getUserId().equalsIgnoreCase(userId)) {
+            throw new ValidationException("user.is.not.owner.of.this.hero");
         }
         if (h.getLevel() + 1 > IdleConstants.HERO_MAX_LEVEL) {
             throw new ValidationException("hero.max.level.reached");
         }
     }
 
-    public Hero rollHero(String user, String lootRollId) {
-
-        Player player = playerHelper.getPlayerByLinkedUser(user);
-
-        if (player != null) {
-            return rollHero(player.getId(), null, null, lootRollId);
-        } else {
-            throw new ValidationException("player.not.found");
-        }
+    public Hero rollHero(String userId, String lootRollId) {
+        return rollHero(userId, null, null, lootRollId);
 
     }
 
-    public Hero customRollHero(String player, String customHeroType, String customHeroQuality) {
-        return rollHero(player, customHeroType, customHeroQuality, null);
+    public Hero customRollHero(String userId, String customHeroType, String customHeroQuality) {
+        return rollHero(userId, customHeroType, customHeroQuality, null);
     }
 
-    private Hero rollHero(String player, String customHeroType, String customHeroQuality, String lootRollId) {
+    private Hero rollHero(String userId, String customHeroType, String customHeroQuality, String lootRollId) {
 
         HeroType heroType;
         HeroQuality heroQuality;
 
         if (customHeroType == null && customHeroQuality == null) {
 
-            LootRoll lootRoll = lootRollHelper.buyLootRoll(lootRollId);
+            LootRoll lootRoll = lootRollClient.buyById(lootRollId).getData();
 
             if (lootRoll != null) {
 
@@ -161,9 +142,7 @@ public class HeroService {
                     HeroTypeFaction faction = HeroTypeFaction.valueOf(lootRoll.roll(HeroTypeFaction.class));
                     HeroTypeQuality quality = HeroTypeQuality.valueOf(lootRoll.roll(HeroTypeQuality.class));
 
-                    List<HeroType> heroTypes = heroTypeHelper.getHeroTypeByFactionAndQuality(
-                            faction, quality
-                    );
+                    List<HeroType> heroTypes = heroTypeClient.findAllByFactionAndQuality(faction.toString(), quality.toString()).getData();
 
                     if (heroTypes == null || heroTypes.isEmpty()) {
                         LOG.log(Level.SEVERE, "Hero Type not found for, FACTION: {0}, QUALITY: {1}", new Object[]{faction, quality});
@@ -181,7 +160,7 @@ public class HeroService {
             }
 
         } else {
-            heroType = heroTypeHelper.getHeroTypeById(customHeroType);
+            heroType = heroTypeClient.findById(customHeroType).getData();
             heroQuality = HeroQuality.valueOf(customHeroQuality);
         }
 
@@ -202,7 +181,7 @@ public class HeroService {
                 hero = rollHero(heroQuality, heroType);
         }
 
-        hero.setPlayerId(player);
+        hero.setUserId(userId);
         hero.setQuality(heroQuality);
         hero.setLevel(1);
         hero.setHeroTypeId(heroType.getId());

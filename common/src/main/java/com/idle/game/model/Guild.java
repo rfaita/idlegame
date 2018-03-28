@@ -21,7 +21,7 @@ public class Guild implements Serializable {
     private String id;
     private final Date date = new Date();
     @Indexed
-    private String userOwnerId;
+    private String ownerUserId;
     private String initialMessage;
     private Integer level;
     private String name;
@@ -59,12 +59,12 @@ public class Guild implements Serializable {
         this.id = id;
     }
 
-    public String getUserOwnerId() {
-        return userOwnerId;
+    public String getOwnerUserId() {
+        return ownerUserId;
     }
 
-    public void setUserOwnerId(String userOwnerId) {
-        this.userOwnerId = userOwnerId;
+    public void setOwnerUserId(String ownerUserId) {
+        this.ownerUserId = ownerUserId;
     }
 
     public String getInitialMessage() {

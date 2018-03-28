@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import java.util.Date;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -17,47 +16,52 @@ public class Friend implements Serializable {
 
     @Id
     private String id;
-    private String user;
-    private String userFriend;
-    private String nameFriend;
+    private String userId;
+    private String friendUserId;
+    private String friendUserNickName;
     private Date since;
     private Boolean reverse = Boolean.FALSE;
     private Boolean accepted = Boolean.FALSE;
 
-    @Transient
-    private transient Player playerFriend;
-
     public Friend() {
     }
 
-    public Friend(String user, String userFriend, String nameFriend) {
-        this.user = user;
-        this.userFriend = userFriend;
-        this.nameFriend = nameFriend;
-    }
-
-    public Boolean getReverse() {
-        return reverse;
-    }
-
-    public Player getPlayerFriend() {
-        return playerFriend;
-    }
-
-    public void setPlayerFriend(Player playerFriend) {
-        this.playerFriend = playerFriend;
+    public Friend(String userId, String friendUserId, String friendUserNickName) {
+        this.userId = userId;
+        this.friendUserId = friendUserId;
+        this.friendUserNickName = friendUserNickName;
     }
 
     public void setReverse(Boolean reverse) {
         this.reverse = reverse;
     }
 
-    public String getNameFriend() {
-        return nameFriend;
+    public Boolean getReverse() {
+        return reverse;
     }
 
-    public void setNameFriend(String nameFriend) {
-        this.nameFriend = nameFriend;
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getFriendUserId() {
+        return friendUserId;
+    }
+
+    public void setFriendUserId(String friendUserId) {
+        this.friendUserId = friendUserId;
+    }
+
+    public String getFriendUserNickName() {
+        return friendUserNickName;
+    }
+
+    public void setFriendUserNickName(String friendUserNickName) {
+        this.friendUserNickName = friendUserNickName;
     }
 
     public Date getSince() {
@@ -74,22 +78,6 @@ public class Friend implements Serializable {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public String getUserFriend() {
-        return userFriend;
-    }
-
-    public void setUserFriend(String userFriend) {
-        this.userFriend = userFriend;
     }
 
     public Boolean getAccepted() {

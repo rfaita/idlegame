@@ -1,13 +1,11 @@
 package com.idle.game.tests;
 
-import com.idle.game.helper.PlayerHelper;
+import com.idle.game.helper.client.shop.LootRollClient;
 import com.idle.game.model.Hero;
 import com.idle.game.server.repository.HeroRepository;
 import com.idle.game.server.service.HeroService;
-import static com.idle.game.tests.helper.TestHelper.createPlayer;
 import static com.idle.game.tests.helper.TestHelper.createHero;
 import static com.idle.game.tests.helper.TestHelper.createHeroMaxLevel;
-import java.util.Optional;
 import javax.validation.ValidationException;
 import org.junit.Assert;
 import org.junit.Rule;
@@ -28,34 +26,17 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class HeroServiceTest {
 
-    @MockBean
-    private PlayerHelper playerHelper;
-
-    @MockBean
+    @MockBean(name = "default")
     private HeroRepository heroRepository;
 
     @Autowired
     private HeroService heroService;
-
+    
     @Rule
     public ExpectedException expcetionExpect = ExpectedException.none();
 
     @Test
-    public void testHeroLevelUpPlayerNotFound() {
-
-        when(playerHelper.getPlayerByLinkedUser("1")).thenReturn(null);
-
-        expcetionExpect.expect(ValidationException.class);
-        expcetionExpect.expectMessage("player.not.found");
-
-        heroService.levelUp("1", "1");
-
-    }
-
-    @Test
     public void testHeroLevelUpHeroNotFound() {
-
-        when(playerHelper.getPlayerByLinkedUser("1")).thenReturn(createPlayer("1"));
 
         when(heroRepository.findOne("1")).thenReturn(null);
 
@@ -67,14 +48,12 @@ public class HeroServiceTest {
     }
 
     @Test
-    public void testHeroLevelUpPlayerNotOwnerOfHero() {
-
-        when(playerHelper.getPlayerByLinkedUser("1")).thenReturn(createPlayer("1"));
+    public void testHeroLevelUpUserIdNotOwnerOfHero() {
 
         when(heroRepository.findOne("1")).thenReturn(createHero("1", "2"));
 
         expcetionExpect.expect(ValidationException.class);
-        expcetionExpect.expectMessage("player.is.not.owner.of.this.hero");
+        expcetionExpect.expectMessage("user.is.not.owner.of.this.hero");
 
         heroService.levelUp("1", "1");
 
@@ -82,8 +61,6 @@ public class HeroServiceTest {
 
     @Test
     public void testHeroLevelUpMaxLevelReached() {
-
-        when(playerHelper.getPlayerByLinkedUser("1")).thenReturn(createPlayer("1"));
 
         when(heroRepository.findOne("1")).thenReturn(createHeroMaxLevel("1", "1"));
 
@@ -96,8 +73,6 @@ public class HeroServiceTest {
 
     @Test
     public void testHeroLevelUp() {
-
-        when(playerHelper.getPlayerByLinkedUser("1")).thenReturn(createPlayer("1"));
 
         when(heroRepository.findOne("1")).thenReturn(createHero("1", "1"));
 

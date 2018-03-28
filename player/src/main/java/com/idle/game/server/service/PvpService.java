@@ -4,15 +4,15 @@ import static com.idle.game.constant.CacheConstants.PVPRATING_FIND_PVP_RATINGS;
 import com.idle.game.core.battle.Battle;
 import static com.idle.game.core.formation.type.FormationAllocation.PVP_DEFENSE;
 import com.idle.game.core.util.DiceUtil;
-import com.idle.game.helper.BattleHelper;
-import com.idle.game.helper.FormationHelper;
-import com.idle.game.helper.PlayerHelper;
-import com.idle.game.helper.PlayerResourceHelper;
+import com.idle.game.helper.client.battle.BattleClient;
+import com.idle.game.helper.client.battle.FormationClient;
+import com.idle.game.helper.client.resource.UserResourceClient;
+import com.idle.game.helper.client.user.UserClient;
 import com.idle.game.model.Formation;
-import com.idle.game.model.Player;
 import com.idle.game.model.PvpRating;
 import com.idle.game.model.Resource;
 import com.idle.game.model.ResourceType;
+import com.idle.game.model.User;
 import com.idle.game.server.repository.PvpRatingRepository;
 import static com.idle.game.server.type.EloOutcome.LOSE;
 import static com.idle.game.server.type.EloOutcome.WIN;
@@ -34,16 +34,16 @@ public class PvpService {
     private PvpRatingRepository pvpRatingRepository;
 
     @Autowired
-    private PlayerHelper playerHelper;
+    private UserClient userClient;
 
     @Autowired
-    private PlayerResourceHelper playerResourceHelper;
+    private UserResourceClient userResourceClient;
 
     @Autowired
-    private FormationHelper formationHelper;
+    private FormationClient formationClient;
 
     @Autowired
-    private BattleHelper battleHelper;
+    private BattleClient battleClient;
 
     @Value("${idle.config.pvpRating.price}")
     private Long pvpRatingPrice;
@@ -55,67 +55,61 @@ public class PvpService {
     @Cacheable(value = PVPRATING_FIND_PVP_RATINGS,
             key = "'" + PVPRATING_FIND_PVP_RATINGS + "' + #user",
             unless = "#result.isEmpty()")
-    public List<PvpRating> findPvpRatings(String user) {
+    public List<PvpRating> findPvpRatings(String userId) {
 
-        Player player = playerHelper.getPlayerByLinkedUser(user);
+        PvpRating playerRating = pvpRatingRepository.findByUserId(userId);
 
-        if (player != null) {
+        if (playerRating == null) {
+            playerRating = new PvpRating();
+            playerRating.setRating(EloRating.INITIAL_RATING);
+            playerRating.setUserId(userId);
 
-            PvpRating playerRating = pvpRatingRepository.findByPlayer(player.getId());
+            User user = userClient.findById(userId).getData();
 
-            if (playerRating == null) {
-                playerRating = new PvpRating();
-                playerRating.setRating(EloRating.INITIAL_RATING);
-                playerRating.setPlayer(player.getId());
-                playerRating.setPlayerLevel(player.getLevel());
-                playerRating.setPlayerName(player.getName());
+            playerRating.setUserNickName(user.getNickName());
 
-                Formation pvpForm = formationHelper.getFormationByPlayerAndFormationAllocation(player.getId(), PVP_DEFENSE.toString());
+            Formation pvpForm = formationClient.findByUserIdAndFormationAllocation(userId, PVP_DEFENSE.toString()).getData();
 
-                if (pvpForm == null) {
-                    throw new ValidationException("formation.pvp.not.found");
-                }
-
-                playerRating.setFormation(pvpForm.getId());
-                playerRating = pvpRatingRepository.save(playerRating);
-
+            if (pvpForm == null) {
+                throw new ValidationException("formation.pvp.not.found");
             }
 
-            List<PvpRating> ret = new ArrayList<>(4);
+            playerRating.setFormation(pvpForm.getId());
+            playerRating = pvpRatingRepository.save(playerRating);
 
-            int[] vhr = EloRating.veryHardRatingRange(playerRating.getRating());
-            List<PvpRating> vhRatings = pvpRatingRepository.findAllByPlayerNotAndRatingBetween(player.getId(), vhr[0] - 1, vhr[1] + 1);
-
-            if (vhRatings != null && !vhRatings.isEmpty()) {
-                ret.add(vhRatings.get(DiceUtil.random(vhRatings.size() - 1)));
-            }
-
-            int[] hr = EloRating.hardRatingRange(playerRating.getRating());
-            List<PvpRating> hrRatings = pvpRatingRepository.findAllByPlayerNotAndRatingBetween(player.getId(), hr[0] - 1, hr[1] + 1);
-
-            if (hrRatings != null && !hrRatings.isEmpty()) {
-                ret.add(hrRatings.get(DiceUtil.random(hrRatings.size() - 1)));
-            }
-
-            int[] nr = EloRating.normalRatingRange(playerRating.getRating());
-            List<PvpRating> nrRatings = pvpRatingRepository.findAllByPlayerNotAndRatingBetween(player.getId(), nr[0] - 1, nr[1] + 1);
-
-            if (nrRatings != null && !nrRatings.isEmpty()) {
-                ret.add(nrRatings.get(DiceUtil.random(nrRatings.size() - 1)));
-            }
-
-            int[] er = EloRating.easyRatingRange(playerRating.getRating());
-            List<PvpRating> erRatings = pvpRatingRepository.findAllByPlayerNotAndRatingBetween(player.getId(), er[0] - 1, er[1] + 1);
-
-            if (erRatings != null && !erRatings.isEmpty()) {
-                ret.add(erRatings.get(DiceUtil.random(erRatings.size() - 1)));
-            }
-
-            return ret;
-
-        } else {
-            throw new ValidationException("player.not.found");
         }
+
+        List<PvpRating> ret = new ArrayList<>(4);
+
+        int[] vhr = EloRating.veryHardRatingRange(playerRating.getRating());
+        List<PvpRating> vhRatings = pvpRatingRepository.findAllByUserIdNotAndRatingBetween(userId, vhr[0] - 1, vhr[1] + 1);
+
+        if (vhRatings != null && !vhRatings.isEmpty()) {
+            ret.add(vhRatings.get(DiceUtil.random(vhRatings.size() - 1)));
+        }
+
+        int[] hr = EloRating.hardRatingRange(playerRating.getRating());
+        List<PvpRating> hrRatings = pvpRatingRepository.findAllByUserIdNotAndRatingBetween(userId, hr[0] - 1, hr[1] + 1);
+
+        if (hrRatings != null && !hrRatings.isEmpty()) {
+            ret.add(hrRatings.get(DiceUtil.random(hrRatings.size() - 1)));
+        }
+
+        int[] nr = EloRating.normalRatingRange(playerRating.getRating());
+        List<PvpRating> nrRatings = pvpRatingRepository.findAllByUserIdNotAndRatingBetween(userId, nr[0] - 1, nr[1] + 1);
+
+        if (nrRatings != null && !nrRatings.isEmpty()) {
+            ret.add(nrRatings.get(DiceUtil.random(nrRatings.size() - 1)));
+        }
+
+        int[] er = EloRating.easyRatingRange(playerRating.getRating());
+        List<PvpRating> erRatings = pvpRatingRepository.findAllByUserIdNotAndRatingBetween(userId, er[0] - 1, er[1] + 1);
+
+        if (erRatings != null && !erRatings.isEmpty()) {
+            ret.add(erRatings.get(DiceUtil.random(erRatings.size() - 1)));
+        }
+
+        return ret;
 
     }
 
@@ -125,40 +119,33 @@ public class PvpService {
         List<Resource> useResource = new ArrayList<>();
         useResource.add(new Resource(ResourceType.GEM, pvpRatingPrice));
 
-        playerResourceHelper.useResources(useResource);
+        userResourceClient.useResources(useResource);
     }
 
     @CacheEvict(value = PVPRATING_FIND_PVP_RATINGS, key = "'" + PVPRATING_FIND_PVP_RATINGS + "' + #user")
-    public Battle battlePvpRattings(String user, String idPvpRating) {
+    public Battle battlePvpRattings(String userId, String idPvpRating) {
 
-        Player player = playerHelper.getPlayerByLinkedUser(user);
+        PvpRating ratPlayer = pvpRatingRepository.findByUserId(userId);
+        PvpRating ratTarget = pvpRatingRepository.findOne(idPvpRating);
 
-        if (player != null) {
+        if (ratTarget != null) {
 
-            PvpRating ratPlayer = pvpRatingRepository.findByPlayer(player.getId());
-            PvpRating ratTarget = pvpRatingRepository.findOne(idPvpRating);
+            Battle battle = battleClient.doBattle(ratPlayer.getFormation(), ratTarget.getFormation()).getData();
 
-            if (ratTarget != null) {
+            Boolean playerWin = battle.isFormationAttackWinner();
 
-                Battle battle = battleHelper.doBattle(ratPlayer.getFormation(), ratTarget.getFormation());
+            Integer newPlayerRating = EloRating.calculate2PlayersRating(ratPlayer.getRating(), ratTarget.getRating(), playerWin ? WIN : LOSE);
+            ratTarget.setRating(EloRating.calculate2PlayersRating(ratTarget.getRating(), ratPlayer.getRating(), playerWin ? LOSE : WIN));
+            ratPlayer.setRating(newPlayerRating);
 
-                Boolean playerWin = battle.isFormationAttackWinner();
+            pvpRatingRepository.save(ratPlayer);
+            pvpRatingRepository.save(ratTarget);
 
-                Integer newPlayerRating = EloRating.calculate2PlayersRating(ratPlayer.getRating(), ratTarget.getRating(), playerWin ? WIN : LOSE);
-                ratTarget.setRating(EloRating.calculate2PlayersRating(ratTarget.getRating(), ratPlayer.getRating(), playerWin ? LOSE : WIN));
-                ratPlayer.setRating(newPlayerRating);
+            return battle;
 
-                pvpRatingRepository.save(ratPlayer);
-                pvpRatingRepository.save(ratTarget);
-
-                return battle;
-
-            } else {
-                throw new ValidationException("pvpRating.not.found");
-
-            }
         } else {
-            throw new ValidationException("player.not.found");
+            throw new ValidationException("pvpRating.not.found");
+
         }
 
     }

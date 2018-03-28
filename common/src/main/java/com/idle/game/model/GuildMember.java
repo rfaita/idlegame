@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import java.util.Date;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -18,30 +17,19 @@ public class GuildMember implements Serializable {
     @Id
     private String id;
     private String guildId;
-    private String userMemberId;
-    private String nameMember;
+    private String userId;
+    private String userNickname;
     private Date since;
     private Boolean accepted = Boolean.FALSE;
     private GuildMemberType type = GuildMemberType.MEMBER;
 
-    @Transient
-    private transient Player player;
-
     public GuildMember() {
     }
 
-    public GuildMember(String guildId, String userMemberId, String nameMember) {
+    public GuildMember(String guildId, String userId, String userNickname) {
         this.guildId = guildId;
-        this.userMemberId = userMemberId;
-        this.nameMember = nameMember;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
+        this.userId = userId;
+        this.userNickname = userNickname;
     }
 
     public GuildMemberType getType() {
@@ -68,20 +56,20 @@ public class GuildMember implements Serializable {
         this.guildId = guildId;
     }
 
-    public String getUserMemberId() {
-        return userMemberId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserMemberId(String userMemberId) {
-        this.userMemberId = userMemberId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getNameMember() {
-        return nameMember;
+    public String getUserNickname() {
+        return userNickname;
     }
 
-    public void setNameMember(String nameMember) {
-        this.nameMember = nameMember;
+    public void setUserNickname(String userNickname) {
+        this.userNickname = userNickname;
     }
 
     public Date getSince() {

@@ -2,14 +2,14 @@ package com.idle.game.tests;
 
 import com.idle.game.core.battle.Battle;
 import static com.idle.game.core.formation.type.FormationAllocation.PVP_DEFENSE;
-import com.idle.game.helper.BattleHelper;
-import com.idle.game.helper.FormationHelper;
-import com.idle.game.helper.PlayerHelper;
+import com.idle.game.helper.client.battle.BattleClient;
+import com.idle.game.helper.client.battle.FormationClient;
+import com.idle.game.helper.client.user.UserClient;
 import com.idle.game.model.PvpRating;
+import com.idle.game.server.dto.Envelope;
 import com.idle.game.server.repository.PvpRatingRepository;
 import com.idle.game.server.service.PvpService;
 import static com.idle.game.tests.helper.TestHelper.createFormation;
-import static com.idle.game.tests.helper.TestHelper.createPlayer;
 import static com.idle.game.tests.helper.TestHelper.createPvpRating1000;
 import static com.idle.game.tests.helper.TestHelper.createPvpRatingAnswerForSomeInput;
 import java.util.List;
@@ -30,7 +30,7 @@ import static com.idle.game.tests.helper.TestHelper.createListPvpRating1150;
 import static com.idle.game.tests.helper.TestHelper.createListPvpRating1550;
 import static com.idle.game.tests.helper.TestHelper.createListPvpRating950;
 import static com.idle.game.tests.helper.TestHelper.createPvpRatingWithId;
-import java.util.Optional;
+import static com.idle.game.tests.helper.TestHelper.createUser;
 import static org.mockito.Mockito.mock;
 
 /**
@@ -41,14 +41,14 @@ import static org.mockito.Mockito.mock;
 @SpringBootTest
 public class PvpServiceTest {
 
-    @MockBean
+    @MockBean(name = "default")
     private PvpRatingRepository pvpRatingRepository;
-    @MockBean
-    private BattleHelper battleHelper;
-    @MockBean
-    private PlayerHelper playerHelper;
-    @MockBean
-    private FormationHelper formationHelper;
+    @MockBean(name = "default")
+    private BattleClient battleClient;
+    @MockBean(name = "default")
+    private FormationClient formationClient;
+    @MockBean(name = "default")
+    private UserClient userClient;
 
     @Autowired
     private PvpService pvpService;
@@ -57,54 +57,38 @@ public class PvpServiceTest {
     public ExpectedException expcetionExpect = ExpectedException.none();
 
     @Test
-    public void testFindPvpRatingsPlayerNotFound() {
-
-        when(this.playerHelper.getPlayerByLinkedUser("2")).thenReturn(null);
-
-        expcetionExpect.expect(ValidationException.class);
-        expcetionExpect.expectMessage("player.not.found");
-
-        pvpService.findPvpRatings("2");
-
-    }
-
-    @Test
     public void testFindPvpRatings() {
 
-        when(this.playerHelper.getPlayerByLinkedUser("1")).thenReturn(createPlayer("1"));
+        when(this.pvpRatingRepository.findByUserId("1")).thenReturn(createPvpRating1000("1"));
 
-        when(this.pvpRatingRepository.findByPlayer("1")).thenReturn(createPvpRating1000("1"));
-
-        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 1499, 1651)).thenReturn(createListPvpRating1550("2"));
-        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 1099, 1211)).thenReturn(createListPvpRating1150("3"));
-        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 999, 1101)).thenReturn(createListPvpRating1050("4"));
-        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 899, 991)).thenReturn(createListPvpRating950("5"));
+        when(this.pvpRatingRepository.findAllByUserIdNotAndRatingBetween("1", 1499, 1651)).thenReturn(createListPvpRating1550("2"));
+        when(this.pvpRatingRepository.findAllByUserIdNotAndRatingBetween("1", 1099, 1211)).thenReturn(createListPvpRating1150("3"));
+        when(this.pvpRatingRepository.findAllByUserIdNotAndRatingBetween("1", 999, 1101)).thenReturn(createListPvpRating1050("4"));
+        when(this.pvpRatingRepository.findAllByUserIdNotAndRatingBetween("1", 899, 991)).thenReturn(createListPvpRating950("5"));
 
         List<PvpRating> ratings = pvpService.findPvpRatings("1");
 
         Assert.assertEquals(4, ratings.size());
 
-        Assert.assertEquals("player must be 2", "2", ratings.get(0).getPlayer());
+        Assert.assertEquals("player must be 2", "2", ratings.get(0).getUserId());
         Assert.assertEquals("player ratting must be 1550", new Integer(1550), ratings.get(0).getRating());
 
-        Assert.assertEquals("player must be 3", "3", ratings.get(1).getPlayer());
+        Assert.assertEquals("player must be 3", "3", ratings.get(1).getUserId());
         Assert.assertEquals("player ratting must be 1150", new Integer(1150), ratings.get(1).getRating());
 
-        Assert.assertEquals("player must be 4", "4", ratings.get(2).getPlayer());
+        Assert.assertEquals("player must be 4", "4", ratings.get(2).getUserId());
         Assert.assertEquals("player ratting must be 1050", new Integer(1050), ratings.get(2).getRating());
 
-        Assert.assertEquals("player must be 5", "5", ratings.get(3).getPlayer());
+        Assert.assertEquals("player must be 5", "5", ratings.get(3).getUserId());
         Assert.assertEquals("player ratting must be 950", new Integer(950), ratings.get(3).getRating());
     }
 
     @Test
     public void testFindPvpRatingsPvpFormationNotFound() {
 
-        when(this.playerHelper.getPlayerByLinkedUser("3")).thenReturn(createPlayer("3"));
+        when(this.pvpRatingRepository.findByUserId("3")).thenReturn(null);
 
-        when(this.pvpRatingRepository.findByPlayer("3")).thenReturn(null);
-
-        when(this.formationHelper.getFormationByPlayerAndFormationAllocation("3", PVP_DEFENSE.toString())).thenReturn(null);
+        when(this.formationClient.findByUserIdAndFormationAllocation("3", PVP_DEFENSE.toString())).thenReturn(null);
 
         expcetionExpect.expect(ValidationException.class);
         expcetionExpect.expectMessage("formation.pvp.not.found");
@@ -116,52 +100,38 @@ public class PvpServiceTest {
     @Test
     public void testFindPvpRatingsRatingNotFound() {
 
-        when(this.playerHelper.getPlayerByLinkedUser("1")).thenReturn(createPlayer("1"));
+        when(this.pvpRatingRepository.findByUserId("1")).thenReturn(null);
 
-        when(this.pvpRatingRepository.findByPlayer("1")).thenReturn(null);
-
-        when(this.formationHelper.getFormationByPlayerAndFormationAllocation("1", PVP_DEFENSE.toString())).thenReturn(createFormation("123"));
+        when(this.formationClient.findByUserIdAndFormationAllocation("1", PVP_DEFENSE.toString())).thenReturn(new Envelope(createFormation("123")));
 
         when(this.pvpRatingRepository.save(any(PvpRating.class))).thenAnswer(createPvpRatingAnswerForSomeInput());
 
-        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 1499, 1651)).thenReturn(createListPvpRating1550("2"));
-        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 1099, 1211)).thenReturn(createListPvpRating1150("3"));
-        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 999, 1101)).thenReturn(createListPvpRating1050("4"));
-        when(this.pvpRatingRepository.findAllByPlayerNotAndRatingBetween("1", 899, 991)).thenReturn(createListPvpRating950("5"));
+        when(this.pvpRatingRepository.findAllByUserIdNotAndRatingBetween("1", 1499, 1651)).thenReturn(createListPvpRating1550("2"));
+        when(this.pvpRatingRepository.findAllByUserIdNotAndRatingBetween("1", 1099, 1211)).thenReturn(createListPvpRating1150("3"));
+        when(this.pvpRatingRepository.findAllByUserIdNotAndRatingBetween("1", 999, 1101)).thenReturn(createListPvpRating1050("4"));
+        when(this.pvpRatingRepository.findAllByUserIdNotAndRatingBetween("1", 899, 991)).thenReturn(createListPvpRating950("5"));
+
+        when(this.userClient.findById("1")).thenReturn(new Envelope(createUser("1")));
 
         List<PvpRating> ratings = pvpService.findPvpRatings("1");
 
         Assert.assertEquals(4, ratings.size());
 
-        Assert.assertEquals("player must be 2", "2", ratings.get(0).getPlayer());
+        Assert.assertEquals("player must be 2", "2", ratings.get(0).getUserId());
         Assert.assertEquals("player ratting must be 1550", new Integer(1550), ratings.get(0).getRating());
 
-        Assert.assertEquals("player must be 3", "3", ratings.get(1).getPlayer());
+        Assert.assertEquals("player must be 3", "3", ratings.get(1).getUserId());
         Assert.assertEquals("player ratting must be 1150", new Integer(1150), ratings.get(1).getRating());
 
-        Assert.assertEquals("player must be 4", "4", ratings.get(2).getPlayer());
+        Assert.assertEquals("player must be 4", "4", ratings.get(2).getUserId());
         Assert.assertEquals("player ratting must be 1050", new Integer(1050), ratings.get(2).getRating());
 
-        Assert.assertEquals("player must be 5", "5", ratings.get(3).getPlayer());
+        Assert.assertEquals("player must be 5", "5", ratings.get(3).getUserId());
         Assert.assertEquals("player ratting must be 950", new Integer(950), ratings.get(3).getRating());
     }
 
     @Test
-    public void testPvpBattlePlayerNotFound() {
-
-        when(this.playerHelper.getPlayerByLinkedUser("1")).thenReturn(null);
-
-        expcetionExpect.expect(ValidationException.class);
-        expcetionExpect.expectMessage("player.not.found");
-
-        pvpService.battlePvpRattings("1", "1234");
-
-    }
-
-    @Test
     public void testPvpBattleTargetNotFound() {
-
-        when(this.playerHelper.getPlayerByLinkedUser("1")).thenReturn(createPlayer("1"));
 
         when(this.pvpRatingRepository.findOne("1234")).thenReturn(null);
 
@@ -175,14 +145,12 @@ public class PvpServiceTest {
     @Test
     public void testPvpBattle() {
 
-        when(this.playerHelper.getPlayerByLinkedUser("1")).thenReturn(createPlayer("1"));
-
-        when(this.pvpRatingRepository.findByPlayer("1")).thenReturn(createPvpRating1000("1", "5432"));
+        when(this.pvpRatingRepository.findByUserId("1")).thenReturn(createPvpRating1000("1", "5432"));
         when(this.pvpRatingRepository.findOne("1234")).thenReturn(createPvpRatingWithId("2", "1234", 1000, "4321"));
 
         Battle ret = mock(Battle.class);
 
-        when(this.battleHelper.doBattle("5432", "4321")).thenReturn(ret);
+        when(this.battleClient.doBattle("5432", "4321")).thenReturn(new Envelope(ret));
 
         when(ret.isFormationAttackWinner()).thenReturn(Boolean.TRUE);
 

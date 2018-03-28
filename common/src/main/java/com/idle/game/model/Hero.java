@@ -27,7 +27,7 @@ public class Hero implements Serializable {
     private String id;
     private String heroTypeId;
     @Indexed
-    private String playerId;
+    private String userId;
     private Integer level;
     private HeroQuality quality;
 
@@ -52,7 +52,15 @@ public class Hero implements Serializable {
     @Transient
     private transient HeroType heroType;
     @Transient
-    private transient Player player;
+    private transient User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public HeroType getHeroType() {
         return heroType;
@@ -60,14 +68,6 @@ public class Hero implements Serializable {
 
     public void setHeroType(HeroType heroType) {
         this.heroType = heroType;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
     }
 
     public String getId() {
@@ -110,12 +110,12 @@ public class Hero implements Serializable {
         this.heroTypeId = heroType;
     }
 
-    public String getPlayerId() {
-        return playerId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setPlayerId(String player) {
-        this.playerId = player;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public Integer getLevel() {

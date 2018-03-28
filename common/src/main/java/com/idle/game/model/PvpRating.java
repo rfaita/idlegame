@@ -16,9 +16,8 @@ public class PvpRating implements Serializable {
 
     @Id
     private String id;
-    private String player;
-    private String playerName;
-    private Integer playerLevel;
+    private String userId;
+    private String userNickName;
     private String formation;
     @Indexed
     private Integer rating;
@@ -34,28 +33,20 @@ public class PvpRating implements Serializable {
         this.id = id;
     }
 
-    public String getPlayer() {
-        return player;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setPlayer(String player) {
-        this.player = player;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getPlayerName() {
-        return playerName;
+    public String getUserNickName() {
+        return userNickName;
     }
 
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
-    public Integer getPlayerLevel() {
-        return playerLevel;
-    }
-
-    public void setPlayerLevel(Integer playerLevel) {
-        this.playerLevel = playerLevel;
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
     }
 
     public String getFormation() {

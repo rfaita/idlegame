@@ -1,22 +1,20 @@
 package com.idle.game.server.service;
 
-/**
- *
- * @author rafael
- */
-import com.idle.game.helper.PlayerHelper;
-import com.idle.game.helper.cb.PlayerCircuitBreakerService;
+import com.idle.game.helper.client.user.UserClient;
+import com.idle.game.model.User;
 import com.idle.game.model.mongo.Message;
-import com.idle.game.model.Player;
 import com.idle.game.server.dto.Envelope;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.idle.game.server.repository.MessageRepository;
 import com.idle.game.server.util.Destination;
-import javax.validation.ValidationException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
+/**
+ *
+ * @author rafael
+ */
 @Service
 public class MessageService {
 
@@ -27,7 +25,7 @@ public class MessageService {
     private MessageRepository messageRepository;
 
     @Autowired
-    private PlayerCircuitBreakerService playerCircuitBreakerService;
+    private UserClient userClient;
 
     public List<Message> findAllByChatRoom(String chatRoom) {
         return messageRepository.findAllByChatRoom(chatRoom);
@@ -45,22 +43,18 @@ public class MessageService {
         messageRepository.save(chatMessage);
     }
 
-    public void sendPrivateMessage(Message message, String token) {
+    public void sendPrivateMessage(Message message) {
 
-        Player player = playerCircuitBreakerService.getPlayerByLinkedUser(message.getToUser(), token);
+        User user = userClient.findById(message.getToUserId()).getData();
 
-        if (player == null) {
-            throw new ValidationException("player.not.found");
-        }
-
-        message.setToNickName(player.getName());
+        message.setToUserNickName(user.getNickName());
 
         webSocketMessagingTemplate.convertAndSend(
-                Destination.privateMessages(message.getToUser()),
+                Destination.privateMessages(message.getToUserId()),
                 message);
 
         webSocketMessagingTemplate.convertAndSend(
-                Destination.privateMessages(message.getFromUser()),
+                Destination.privateMessages(message.getFromUserId()),
                 message);
 
         messageRepository.save(message);

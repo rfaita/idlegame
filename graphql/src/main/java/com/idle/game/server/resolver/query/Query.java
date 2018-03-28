@@ -1,13 +1,10 @@
 package com.idle.game.server.resolver.query;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
-import com.idle.game.core.hero.type.HeroTypeFaction;
-import com.idle.game.core.hero.type.HeroTypeQuality;
-import com.idle.game.helper.HeroTypeHelper;
-import com.idle.game.helper.ManualTokenHelper;
-import com.idle.game.helper.cb.PlayerCircuitBreakerService;
+import com.idle.game.helper.client.hero.HeroTypeClient;
+import com.idle.game.helper.client.user.UserClient;
 import com.idle.game.model.HeroType;
-import com.idle.game.model.Player;
+import com.idle.game.model.User;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,35 +17,29 @@ import org.springframework.stereotype.Component;
 public class Query implements GraphQLQueryResolver {
 
     @Autowired
-    private PlayerCircuitBreakerService playerCircuitBreakerService;
+    private UserClient userClient;
 
     @Autowired
-    private HeroTypeHelper heroTypeHelper;
+    private HeroTypeClient heroTypeClient;
 
-    @Autowired
-    private ManualTokenHelper manualTokenHelper;
+    public User user(String userId) {
 
-    public Player player(String name) {
-
-        String token = manualTokenHelper.getToken();
-
-        return playerCircuitBreakerService.getPlayerByName(name, token);
+        return userClient.findById(userId).getData();
     }
 
     public List<HeroType> heroesType(String faction, String quality) {
-        String token = manualTokenHelper.getToken();
 
         if (faction == null) {
             if (quality == null) {
-                return heroTypeHelper.getAllHeroType(token);
+                return heroTypeClient.findAll().getData();
             } else {
-                return heroTypeHelper.getHeroTypeByQuality(HeroTypeQuality.valueOf(quality), token);
+                return heroTypeClient.findAllByQuality(quality).getData();
             }
         } else {
             if (quality == null) {
-                return heroTypeHelper.getHeroTypeByFaction(HeroTypeFaction.valueOf(faction), token);
+                return heroTypeClient.findAllByFaction(faction).getData();
             } else {
-                return heroTypeHelper.getHeroTypeByFactionAndQuality(HeroTypeFaction.valueOf(faction), HeroTypeQuality.valueOf(quality), token);
+                return heroTypeClient.findAllByFactionAndQuality(faction, quality).getData();
             }
         }
     }

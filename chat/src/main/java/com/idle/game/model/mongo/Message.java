@@ -24,37 +24,53 @@ public class Message implements Serializable {
     @Indexed(name = "expirationDate", expireAfterSeconds = 3600)
     private final Date date = new Date();
 
-    private String fromUser;
-    private String fromNickName;
-    private String fromEmail;
-    private String toUser;
-    private String toNickName;
+    private String fromUserId;
+    private String fromUserNickName;
+    private String fromUserEmail;
+    private String toUserId;
+    private String toUserNickName;
     private String text;
 
     private Boolean fromAdmin;
 
-    public String getFromEmail() {
-        return fromEmail;
+    public String getFromUserId() {
+        return fromUserId;
     }
 
-    public void setFromEmail(String fromEmail) {
-        this.fromEmail = fromEmail;
+    public void setFromUserId(String fromUserId) {
+        this.fromUserId = fromUserId;
     }
 
-    public String getFromNickName() {
-        return fromNickName;
+    public String getFromUserNickName() {
+        return fromUserNickName;
     }
 
-    public void setFromNickName(String fromNickName) {
-        this.fromNickName = fromNickName;
+    public void setFromUserNickName(String fromUserNickName) {
+        this.fromUserNickName = fromUserNickName;
     }
 
-    public String getToNickName() {
-        return toNickName;
+    public String getFromUserEmail() {
+        return fromUserEmail;
     }
 
-    public void setToNickName(String toNickName) {
-        this.toNickName = toNickName;
+    public void setFromUserEmail(String fromUserEmail) {
+        this.fromUserEmail = fromUserEmail;
+    }
+
+    public String getToUserId() {
+        return toUserId;
+    }
+
+    public void setToUserId(String toUserId) {
+        this.toUserId = toUserId;
+    }
+
+    public String getToUserNickName() {
+        return toUserNickName;
+    }
+
+    public void setToUserNickName(String toUserNickName) {
+        this.toUserNickName = toUserNickName;
     }
 
     public Boolean getFromAdmin() {
@@ -83,22 +99,6 @@ public class Message implements Serializable {
 
     public Date getDate() {
         return date;
-    }
-
-    public String getFromUser() {
-        return fromUser;
-    }
-
-    public void setFromUser(String fromUser) {
-        this.fromUser = fromUser;
-    }
-
-    public String getToUser() {
-        return toUser;
-    }
-
-    public void setToUser(String toUser) {
-        this.toUser = toUser;
     }
 
     public String getText() {

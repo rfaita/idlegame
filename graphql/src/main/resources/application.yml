@@ -22,10 +22,10 @@ idle:
             http://localhost:8081/formation
         friend:
             http://localhost:8085/friend
-        player:
-            http://localhost:8085/player
-        playerResource:
-            http://localhost:8085/playerResource
+        user:
+            http://localhost:8085/user
+        userResource:
+            http://localhost:8085/userResource
         mail:
             http://localhost:8084/mail
         battle:
@@ -37,6 +37,10 @@ idle:
         guildMember:
             http://localhost:8087/guildMember
     config:
+        #Redis
+        redis:
+            hostname: localhost
+            port: 6379
         #RabbitMQ message
         amq:
             hostname: localhost
@@ -73,3 +77,9 @@ spring:
         name: @pom.artifactId@
     jackson:
         default-property-inclusion: non_null
+        
+feign:
+    hystrix:
+        enabled: true
+hystrix:
+    shareSecurityContext: true

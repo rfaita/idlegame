@@ -34,7 +34,7 @@ public class ManualTokenHelper {
         return accessToken.getEmail();
     }
 
-    public String getSubject() {
+    public String getUserId() {
         return accessToken.getSubject();
     }
 

@@ -32,8 +32,8 @@ public class MailController {
     @MessageMapping("/sendPrivateMailSystem")
     public void sendPrivateMailSystem(@Payload Mail mail) throws Exception {
 
-        mail.setFromUser(SystemConstants.SYSTEM_USER);
-        mail.setFromNickName(SystemConstants.SYSTEM_USER);
+        mail.setFromUserId(SystemConstants.SYSTEM_USER);
+        mail.setFromUserNickName(SystemConstants.SYSTEM_USER);
         mail.setFromAdmin(Boolean.TRUE);
 
         mailService.sendPrivateMail(mail);
@@ -43,8 +43,8 @@ public class MailController {
     public void sendPrivateMail(Principal principal, @Payload Mail mail) throws Exception {
         manualTokenHelper.createAccessToken(principal);
 
-        mail.setFromUser(manualTokenHelper.getSubject());
-        mail.setFromNickName(manualTokenHelper.getNickName());
+        mail.setFromUserId(manualTokenHelper.getUserId());
+        mail.setFromUserNickName(manualTokenHelper.getNickName());
         mail.setFromAdmin(Boolean.FALSE);
         mail.setReward(null);
 
@@ -55,36 +55,37 @@ public class MailController {
     public void deletePrivateMail(@DestinationVariable("id") String id, Principal principal) throws Exception {
         manualTokenHelper.createAccessToken(principal);
 
-        mailService.deletePrivateMail(manualTokenHelper.getSubject(), id);
+        mailService.deletePrivateMail(manualTokenHelper.getUserId(), id);
     }
 
     @MessageMapping("/markAsReadPrivateMail/{id}")
     public void markAsReadPrivateMail(@DestinationVariable("id") String id, Principal principal) throws Exception {
         manualTokenHelper.createAccessToken(principal);
 
-        mailService.markAsReadPrivateMail(manualTokenHelper.getSubject(), id);
+        mailService.markAsReadPrivateMail(manualTokenHelper.getUserId(), id);
     }
+
     @MessageMapping("/collectReward/{id}")
     public void collectReward(@DestinationVariable("id") String id, Principal principal) throws Exception {
         manualTokenHelper.createAccessToken(principal);
 
-        mailService.collectReward(manualTokenHelper.getSubject(), id, manualTokenHelper.getToken());
+        mailService.collectReward(manualTokenHelper.getUserId(), id);
     }
 
     @SubscribeMapping("/findAllOldMail")
     public List<Mail> findAllByToUser(Principal principal) {
         manualTokenHelper.createAccessToken(principal);
 
-        return mailService.findAllByToUser(manualTokenHelper.getSubject());
+        return mailService.findAllByToUser(manualTokenHelper.getUserId());
     }
-    
+
     @MessageExceptionHandler
     public void handleException(Throwable exception) {
 
         Envelope<Void> ret = new Envelope<>();
         ret.setError(exception.getMessage());
 
-        mailService.sendPrivateMailError(manualTokenHelper.getSubject(), ret);
+        mailService.sendPrivateMailError(manualTokenHelper.getUserId(), ret);
     }
 
 }

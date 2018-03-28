@@ -1,12 +1,11 @@
 package com.idle.game.server.resolver;
 
 import com.coxautodev.graphql.tools.GraphQLResolver;
-import com.idle.game.helper.ManualTokenHelper;
-import com.idle.game.helper.cb.HeroTypeCircuitBreakerService;
-import com.idle.game.helper.cb.PlayerCircuitBreakerService;
+import com.idle.game.helper.client.hero.HeroTypeClient;
+import com.idle.game.helper.client.user.UserClient;
 import com.idle.game.model.Hero;
 import com.idle.game.model.HeroType;
-import com.idle.game.model.Player;
+import com.idle.game.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,20 +17,17 @@ import org.springframework.stereotype.Component;
 public class HeroResolver implements GraphQLResolver<Hero> {
 
     @Autowired
-    private HeroTypeCircuitBreakerService heroTypeCircuitBreakerService;
+    private HeroTypeClient heroTypeClient;
 
     @Autowired
-    private PlayerCircuitBreakerService playerCircuitBreakerService;
-
-    @Autowired
-    private ManualTokenHelper manualTokenHelper;
+    private UserClient userClient;
 
     public HeroType getHeroType(Hero hero) {
-        return heroTypeCircuitBreakerService.getHeroTypeById(hero.getHeroTypeId(), manualTokenHelper.getToken());
+        return heroTypeClient.findById(hero.getHeroTypeId()).getData();
     }
 
-    public Player getPlayer(Hero hero) {
-        return playerCircuitBreakerService.getPlayerById(hero.getPlayerId(), manualTokenHelper.getToken());
+    public User getUser(Hero hero) {
+        return userClient.findById(hero.getUserId()).getData();
     }
 
 }

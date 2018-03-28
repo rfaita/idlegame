@@ -50,22 +50,22 @@ public class ChatRest {
     @ResponseBody
     public Envelope<Void> joinRoom(@PathVariable("chatRoom") String chatRoom) throws Exception {
 
-        ChatRoomUser cru = new ChatRoomUser(tokenHelper.getSubject(),
+        ChatRoomUser cru = new ChatRoomUser(tokenHelper.getUserId(),
                 tokenHelper.getNickName(), tokenHelper.getEmail());
 
         chatRoomService.join(cru, chatRoom);
 
         Message message = new Message();
         message.setChatRoom(chatRoom);
-        message.setFromUser(tokenHelper.getSubject());
-        message.setFromNickName(tokenHelper.getNickName());
-        message.setFromEmail(tokenHelper.getEmail());
+        message.setFromUserId(tokenHelper.getUserId());
+        message.setFromUserNickName(tokenHelper.getNickName());
+        message.setFromUserEmail(tokenHelper.getEmail());
         message.setText(JOIN.getMessage());
 
         messageService.sendChatMessage(message);
 
         ChatJoined chatJoined = new ChatJoined();
-        chatJoined.setUser(tokenHelper.getSubject());
+        chatJoined.setUser(tokenHelper.getUserId());
         chatJoined.setChatRoom(chatRoom);
 
         chatJoinedService.save(chatJoined);
@@ -78,21 +78,21 @@ public class ChatRest {
     @ResponseBody
     public Envelope<Void> leaveRoom(@PathVariable("chatRoom") String chatRoom) throws Exception {
 
-        ChatRoomUser cru = new ChatRoomUser(tokenHelper.getSubject(),
+        ChatRoomUser cru = new ChatRoomUser(tokenHelper.getUserId(),
                 tokenHelper.getNickName(), tokenHelper.getEmail());
 
         chatRoomService.leave(cru, chatRoom);
 
         Message message = new Message();
         message.setChatRoom(chatRoom);
-        message.setFromUser(tokenHelper.getSubject());
-        message.setFromNickName(tokenHelper.getNickName());
-        message.setFromEmail(tokenHelper.getEmail());
+        message.setFromUserId(tokenHelper.getUserId());
+        message.setFromUserNickName(tokenHelper.getNickName());
+        message.setFromUserEmail(tokenHelper.getEmail());
         message.setText(LEAVE.getMessage());
 
         messageService.sendChatMessage(message);
 
-        chatJoinedService.delete(tokenHelper.getSubject(), chatRoom);
+        chatJoinedService.delete(tokenHelper.getUserId(), chatRoom);
         
         return new Envelope<>();
     }

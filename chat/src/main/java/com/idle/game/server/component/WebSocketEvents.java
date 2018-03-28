@@ -31,10 +31,10 @@ public class WebSocketEvents {
 
         manualTokenHelper.createAccessToken(event.getUser());
 
-        List<ChatJoined> chatsJoined = chatJoinedService.findAllByUser(manualTokenHelper.getSubject());
+        List<ChatJoined> chatsJoined = chatJoinedService.findAllByUser(manualTokenHelper.getUserId());
 
         chatsJoined.forEach((chat) -> {
-            ChatRoomUser cru = new ChatRoomUser(manualTokenHelper.getSubject()
+            ChatRoomUser cru = new ChatRoomUser(manualTokenHelper.getUserId()
                     , manualTokenHelper.getNickName(), manualTokenHelper.getEmail());
             chatRoomService.changeUserStatusToOnline(cru, chat.getChatRoom());
         });
@@ -46,10 +46,10 @@ public class WebSocketEvents {
 
         manualTokenHelper.createAccessToken(event.getUser());
 
-        List<ChatJoined> chatsJoined = chatJoinedService.findAllByUser(manualTokenHelper.getSubject());
+        List<ChatJoined> chatsJoined = chatJoinedService.findAllByUser(manualTokenHelper.getUserId());
 
         chatsJoined.forEach((chat) -> {
-           ChatRoomUser cru = new ChatRoomUser(manualTokenHelper.getSubject()
+           ChatRoomUser cru = new ChatRoomUser(manualTokenHelper.getUserId()
                     , manualTokenHelper.getNickName(), manualTokenHelper.getEmail());
             chatRoomService.changeUserStatusToOffline(cru, chat.getChatRoom());
 

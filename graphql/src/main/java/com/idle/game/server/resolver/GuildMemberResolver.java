@@ -1,10 +1,9 @@
 package com.idle.game.server.resolver;
 
 import com.coxautodev.graphql.tools.GraphQLResolver;
-import com.idle.game.helper.ManualTokenHelper;
-import com.idle.game.helper.cb.PlayerCircuitBreakerService;
+import com.idle.game.helper.client.user.UserClient;
 import com.idle.game.model.GuildMember;
-import com.idle.game.model.Player;
+import com.idle.game.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,15 +15,9 @@ import org.springframework.stereotype.Component;
 public class GuildMemberResolver implements GraphQLResolver<GuildMember> {
 
     @Autowired
-    private PlayerCircuitBreakerService playerCircuitBreakerService;
-    @Autowired
-    private ManualTokenHelper manualTokenHelper;
+    private UserClient userClient;
 
-    public Player getPlayer(GuildMember guildMember) {
-
-        String token = manualTokenHelper.getToken();
-
-        return playerCircuitBreakerService.getPlayerByLinkedUser(guildMember.getUserMemberId(), token);
+    public User getUser(GuildMember guildMember) {
+        return userClient.findById(guildMember.getUserId()).getData();
     }
-
 }

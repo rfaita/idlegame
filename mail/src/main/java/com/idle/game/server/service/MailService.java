@@ -4,7 +4,6 @@ package com.idle.game.server.service;
  *
  * @author rafael
  */
-import com.idle.game.helper.PlayerResourceHelper;
 import com.idle.game.model.Mail;
 import com.idle.game.model.Resource;
 import com.idle.game.server.dto.Envelope;
@@ -15,6 +14,7 @@ import com.idle.game.server.util.Destination;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import com.idle.game.server.repository.MailRepository;
 import java.util.ArrayList;
+import com.idle.game.helper.client.resource.UserResourceClient;
 
 @Service
 public class MailService {
@@ -23,7 +23,7 @@ public class MailService {
     private SimpMessagingTemplate webSocketMessagingTemplate;
 
     @Autowired
-    private PlayerResourceHelper playerResourceHelper;
+    private UserResourceClient userResourceClient;
 
     @Autowired
     private MailRepository mailRepository;
@@ -40,7 +40,7 @@ public class MailService {
         mail = mailRepository.save(mail);
 
         webSocketMessagingTemplate.convertAndSend(
-                Destination.privateMail(mail.getToUser()),
+                Destination.privateMail(mail.getToUserId()),
                 mail);
 
     }
@@ -68,13 +68,13 @@ public class MailService {
             mailRepository.save(mail);
 
             webSocketMessagingTemplate.convertAndSend(
-                    Destination.privateMailUpdate(mail.getToUser()),
+                    Destination.privateMailUpdate(mail.getToUserId()),
                     mail);
 
         }
     }
 
-    public void collectReward(String user, String id, String token) {
+    public void collectReward(String user, String id) {
         Mail mail = mailRepository.findByIdAndToUserAndCollected(id, user, Boolean.FALSE);
         if (mail != null) {
 
@@ -83,7 +83,7 @@ public class MailService {
                 mail.getReward().getRewards().stream().forEach((r) -> {
                     adds.add(new Resource(r.getResource(), r.getValue()));
                 });
-                playerResourceHelper.addResources(adds, token);
+                userResourceClient.addResources(adds);
             }
 
             mail.setReaded(Boolean.TRUE);
@@ -92,7 +92,7 @@ public class MailService {
             mail = mailRepository.save(mail);
 
             webSocketMessagingTemplate.convertAndSend(
-                    Destination.privateMailUpdate(mail.getToUser()),
+                    Destination.privateMailUpdate(mail.getToUserId()),
                     mail);
 
         }
@@ -104,7 +104,7 @@ public class MailService {
             mailRepository.delete(mail);
 
             webSocketMessagingTemplate.convertAndSend(
-                    Destination.privateMailDelete(mail.getToUser()),
+                    Destination.privateMailDelete(mail.getToUserId()),
                     mail);
         }
     }

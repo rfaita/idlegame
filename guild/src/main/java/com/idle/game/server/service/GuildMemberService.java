@@ -1,13 +1,11 @@
 package com.idle.game.server.service;
 
-import com.idle.game.helper.GuildHelper;
-import com.idle.game.helper.MailHelper;
-import com.idle.game.helper.PlayerHelper;
+import com.idle.game.helper.client.guild.GuildClient;
+import com.idle.game.helper.client.mail.MailClient;
 import com.idle.game.model.Guild;
 import com.idle.game.model.GuildMember;
 import com.idle.game.model.GuildMemberType;
 import com.idle.game.model.Mail;
-import com.idle.game.model.Player;
 import java.util.Date;
 import java.util.List;
 import javax.validation.ValidationException;
@@ -22,13 +20,10 @@ public class GuildMemberService {
     private GuildMemberRepository guildMemberRepository;
 
     @Autowired
-    private PlayerHelper playerHelper;
+    private GuildClient guildClient;
 
     @Autowired
-    private GuildHelper guildHelper;
-
-    @Autowired
-    private MailHelper mailHelper;
+    private MailClient mailClient;
 
     public List<GuildMember> getGuildMembers(String guildId) {
         return guildMemberRepository.findAllByGuildIdAndAccepted(guildId, Boolean.TRUE);
@@ -38,29 +33,24 @@ public class GuildMemberService {
         return guildMemberRepository.findAllByGuildIdAndAccepted(guildId, Boolean.FALSE);
     }
 
-    public void createAdmin(String userId, String guildId) {
+    public void createAdmin(String userId, String userNickName, String guildId) {
 
-        Guild guild = guildHelper.getGuildById(guildId);
+        Guild guild = guildClient.findById(guildId).getData();
         if (guild == null) {
             throw new ValidationException("guild.not.found");
         }
 
-        if (!userId.equals(guild.getUserOwnerId())) {
+        if (!userId.equals(guild.getOwnerUserId())) {
             throw new ValidationException("you.can.not.do.that");
         }
 
-        Player player = playerHelper.getPlayerByLinkedUser(userId);
-        if (player == null) {
-            throw new ValidationException("player.not.found");
-        }
-
-        GuildMember guildMemberAlready = guildMemberRepository.findByGuildIdAndUserMemberId(guild.getId(), userId);
+        GuildMember guildMemberAlready = guildMemberRepository.findByGuildIdAndUserId(guild.getId(), userId);
 
         if (guildMemberAlready != null) {
             throw new ValidationException("guild.member.admin.already.created");
         }
 
-        GuildMember member = new GuildMember(guild.getId(), userId, player.getName());
+        GuildMember member = new GuildMember(guild.getId(), userId, userNickName);
 
         member.setAccepted(Boolean.TRUE);
         member.setType(GuildMemberType.ADMIN);
@@ -69,44 +59,39 @@ public class GuildMemberService {
         guildMemberRepository.save(member);
     }
 
-    public void sendGuildMemberRequest(String guildId, String userId) {
+    public void sendGuildMemberRequest(String guildId, String userId, String userNickName) {
 
-        Guild guild = guildHelper.getGuildById(guildId);
+        Guild guild = guildClient.findById(guildId).getData();
         if (guild == null) {
             throw new ValidationException("guild.not.found");
         }
 
-        GuildMember guildMemberAlready = findByUserMemberId(userId);
+        GuildMember guildMemberAlready = findByUserId(userId);
 
         if (guildMemberAlready != null) {
             throw new ValidationException("guild.member.already");
         }
 
-        guildMemberAlready = guildMemberRepository.findByGuildIdAndUserMemberId(guild.getId(), userId);
+        guildMemberAlready = guildMemberRepository.findByGuildIdAndUserId(guild.getId(), userId);
 
         if (guildMemberAlready != null) {
             throw new ValidationException("you.already.send.a.request.to.this.guild");
         }
 
-        Player player = playerHelper.getPlayerByLinkedUser(userId);
-        if (player == null) {
-            throw new ValidationException("player.not.found");
-        }
-
-        GuildMember friend = new GuildMember(guildId, userId, player.getName());
+        GuildMember friend = new GuildMember(guildId, userId, userNickName);
 
         guildMemberRepository.save(friend);
 
         Mail mail = new Mail();
-        mail.setToUser(guild.getUserOwnerId());
+        mail.setToUserId(guild.getOwnerUserId());
         mail.setText("guild.request");
 
-        mailHelper.sendPrivateMail(mail);
+        mailClient.sendPrivateMail(mail);
 
     }
 
-    public GuildMember findByUserMemberId(String userId) {
-        return guildMemberRepository.findByUserMemberIdAndAccepted(userId, Boolean.TRUE);
+    public GuildMember findByUserId(String userId) {
+        return guildMemberRepository.findByUserIdAndAccepted(userId, Boolean.TRUE);
     }
 
     public void promoteGuildMember(String userId, String memberId) {
@@ -119,7 +104,7 @@ public class GuildMemberService {
 
     private void changeGuildMemberType(String userId, String memberId, Boolean promote) {
 
-        GuildMember myGuildMember = findByUserMemberId(userId);
+        GuildMember myGuildMember = findByUserId(userId);
 
         if (myGuildMember == null) {
             throw new ValidationException("your.guild.not.found");
@@ -129,7 +114,7 @@ public class GuildMemberService {
             throw new ValidationException("you.don.not.have.permission.to.promote.members");
         }
 
-        Guild guild = guildHelper.getGuildById(myGuildMember.getGuildId());
+        Guild guild = guildClient.findById(myGuildMember.getGuildId()).getData();
         if (guild == null) {
             throw new ValidationException("guild.not.found");
         }
@@ -159,7 +144,7 @@ public class GuildMemberService {
 
     public void acceptGuildMemberRequest(String user, String memberRequestId) {
 
-        GuildMember myGuildMember = findByUserMemberId(user);
+        GuildMember myGuildMember = findByUserId(user);
 
         if (myGuildMember == null) {
             throw new ValidationException("your.guild.not.found");
@@ -169,7 +154,7 @@ public class GuildMemberService {
             throw new ValidationException("you.don.not.have.permission.to.accept.new.members");
         }
 
-        Guild guild = guildHelper.getGuildById(myGuildMember.getGuildId());
+        Guild guild = guildClient.findById(myGuildMember.getGuildId()).getData();
         if (guild == null) {
             throw new ValidationException("guild.not.found");
         }
@@ -178,7 +163,7 @@ public class GuildMemberService {
 
         if (request != null) {
 
-            GuildMember guildMemberAlready = guildMemberRepository.findByUserMemberIdAndAccepted(request.getUserMemberId(), Boolean.TRUE);
+            GuildMember guildMemberAlready = guildMemberRepository.findByUserIdAndAccepted(request.getUserId(), Boolean.TRUE);
 
             if (guildMemberAlready != null) {
                 throw new ValidationException("user.already.in.another.guild");
@@ -192,10 +177,10 @@ public class GuildMemberService {
             guildMemberRepository.save(request);
 
             Mail mail = new Mail();
-            mail.setToUser(request.getUserMemberId());
+            mail.setToUserId(request.getUserId());
             mail.setText("guild.request.accepted");
 
-            mailHelper.sendPrivateMail(mail);
+            mailClient.sendPrivateMail(mail);
 
         } else {
             throw new ValidationException("guild.member.request.not.found");
@@ -205,7 +190,7 @@ public class GuildMemberService {
 
     public void removeGuildMember(String userId, String memberId) {
 
-        GuildMember myGuildMember = findByUserMemberId(userId);
+        GuildMember myGuildMember = findByUserId(userId);
 
         if (myGuildMember == null) {
             throw new ValidationException("your.guild.not.found");
@@ -215,7 +200,7 @@ public class GuildMemberService {
             throw new ValidationException("you.don.not.have.permission.to.kick.members");
         }
 
-        Guild guild = guildHelper.getGuildById(myGuildMember.getGuildId());
+        Guild guild = guildClient.findById(myGuildMember.getGuildId()).getData();
         if (guild == null) {
             throw new ValidationException("guild.not.found");
         }
@@ -231,7 +216,7 @@ public class GuildMemberService {
             guildMemberRepository.delete(member);
 
             Mail mail = new Mail();
-            mail.setToUser(member.getUserMemberId());
+            mail.setToUserId(member.getUserId());
             if (memberId.equals(myGuildMember.getId())) {
                 mail.setText("you.leave.from.your.guild");
             } else if (member.getAccepted()) {
@@ -240,7 +225,7 @@ public class GuildMemberService {
                 mail.setText("guild.reject.you");
             }
 
-            mailHelper.sendPrivateMail(mail);
+            mailClient.sendPrivateMail(mail);
 
         } else {
             throw new ValidationException("guild.member.not.found");

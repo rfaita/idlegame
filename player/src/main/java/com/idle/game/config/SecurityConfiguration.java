@@ -1,6 +1,5 @@
 package com.idle.game.config;
 
-import static com.idle.game.constant.URIConstants.PLAYERRESOURCE__ADD_RESOURCES;
 import javax.servlet.http.HttpServletRequest;
 import org.keycloak.KeycloakSecurityContext;
 import org.keycloak.adapters.KeycloakConfigResolver;
@@ -27,6 +26,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.cors.CorsUtils;
+import static com.idle.game.constant.URIConstants.USERRESOURCE__ADD_RESOURCES;
 
 /**
  *
@@ -80,7 +80,7 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                .antMatchers("/" + PLAYERRESOURCE__ADD_RESOURCES).hasIpAddress("127.0.0.1")
+                .antMatchers("/" + USERRESOURCE__ADD_RESOURCES).hasIpAddress("127.0.0.1")
                 .anyRequest().authenticated();
     }
 

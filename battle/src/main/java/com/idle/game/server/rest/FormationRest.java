@@ -37,21 +37,21 @@ public class FormationRest {
 
     @RequestMapping(path = "/" + FORMATION__FIND_BY_FORMATION_ALLOCATION + "/{formationAllocation}", method = RequestMethod.GET)
     public @ResponseBody
-    Envelope<Formation> findByUserAndFormationAllocation(@PathVariable("formationAllocation") String fa) {
+    Envelope<Formation> findByUserIdAndFormationAllocation(@PathVariable("formationAllocation") String fa) {
 
         Envelope<Formation> ret = new Envelope<>();
-        ret.setData(formationService.findByUserAndFormationAllocation(tokenHelper.getSubject(), FormationAllocation.valueOf(fa)));
+        ret.setData(formationService.findByUserIdAndFormationAllocation(tokenHelper.getUserId(), FormationAllocation.valueOf(fa)));
 
         return ret;
 
     }
 
-    @RequestMapping(path = "/{player}/{formationAllocation}", method = RequestMethod.GET)
+    @RequestMapping(path = "/{userId}/{formationAllocation}", method = RequestMethod.GET)
     public @ResponseBody
-    Envelope<Formation> findByPlayerAndFormationAllocation(@PathVariable("player") String player, @PathVariable("formationAllocation") String fa) {
+    Envelope<Formation> findByUserIdAndFormationAllocation(@PathVariable("userId") String userId, @PathVariable("formationAllocation") String fa) {
 
         Envelope<Formation> ret = new Envelope<>();
-        ret.setData(formationService.findByPlayerAndFormationAllocation(player, FormationAllocation.valueOf(fa)));
+        ret.setData(formationService.findByUserIdAndFormationAllocation(userId, FormationAllocation.valueOf(fa)));
 
         return ret;
 
@@ -61,7 +61,7 @@ public class FormationRest {
     public @ResponseBody
     Envelope<Formation> save(@RequestBody Formation f) throws Exception {
 
-        Envelope<Formation> ret = new Envelope<>(formationService.save(f, tokenHelper.getSubject(), tokenHelper.isAdmin()));
+        Envelope<Formation> ret = new Envelope<>(formationService.save(f, tokenHelper.getUserId(), tokenHelper.isAdmin()));
 
         return ret;
     }

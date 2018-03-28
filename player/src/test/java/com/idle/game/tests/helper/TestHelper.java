@@ -2,11 +2,11 @@ package com.idle.game.tests.helper;
 
 import com.idle.game.model.Formation;
 import com.idle.game.model.Friend;
-import com.idle.game.model.Player;
-import com.idle.game.model.PlayerResource;
+import com.idle.game.model.UserResource;
 import com.idle.game.model.PvpRating;
 import com.idle.game.model.Resource;
 import com.idle.game.model.ResourceType;
+import com.idle.game.model.User;
 import java.util.ArrayList;
 import java.util.List;
 import org.mockito.invocation.InvocationOnMock;
@@ -18,32 +18,30 @@ import org.mockito.stubbing.Answer;
  */
 public class TestHelper {
 
-    public static Player createPlayer(String id) {
-        Player p1 = new Player();
+    public static User createUser(String id) {
+        User p1 = new User();
         p1.setId(id);
-        p1.setLevel(1);
-        p1.setLinkedUser(id);
-        p1.setName("test1");
+        p1.setNickName("test1");
 
         return p1;
     }
 
-    public static PlayerResource createPlayerResource(String player) {
-        PlayerResource ret = new PlayerResource();
+    public static UserResource createUserResource(String userId) {
+        UserResource ret = new UserResource();
         ret.setResources(createBasicResources());
-        ret.setPlayer(player);
+        ret.setUserId(userId);
         return ret;
     }
 
-    public static PlayerResource createPlayerResourceWith50OfEachResources(String id) {
-        PlayerResource p1 = createPlayerResource(id);
+    public static UserResource createUserResourceWith50OfEachResources(String id) {
+        UserResource p1 = createUserResource(id);
         p1.setResources(create50OfEachResources());
 
         return p1;
     }
 
-    public static PlayerResource createPlayerResourceWith100OfEachResources(String id) {
-        PlayerResource p1 = createPlayerResource(id);
+    public static UserResource createUserResourceWith100OfEachResources(String id) {
+        UserResource p1 = createUserResource(id);
         p1.setResources(create100OfEachResources());
 
         return p1;
@@ -124,10 +122,10 @@ public class TestHelper {
         return new Resource(ResourceType.GEM, 50L);
     }
 
-    public static PvpRating createPvpRatingWithId(String id, String playerId, Integer rat, String formId) {
+    public static PvpRating createPvpRatingWithId(String id, String userId, Integer rat, String formId) {
         PvpRating ret = new PvpRating();
         ret.setId(id);
-        ret.setPlayer(playerId);
+        ret.setUserId(userId);
         ret.setRating(rat);
         ret.setFormation(formId);
         return ret;
@@ -179,15 +177,9 @@ public class TestHelper {
         return ret;
     }
 
-    public static Answer<PlayerResource> createPlayerResourceAnswerForSomeInput() {
+    public static Answer<UserResource> createUserResourceAnswerForSomeInput() {
         return (InvocationOnMock invocation) -> {
-            return (PlayerResource) invocation.getArguments()[0];
-        };
-    }
-
-    public static Answer<Player> createPlayerAnswerForSomeInput() {
-        return (InvocationOnMock invocation) -> {
-            return (Player) invocation.getArguments()[0];
+            return (UserResource) invocation.getArguments()[0];
         };
     }
 

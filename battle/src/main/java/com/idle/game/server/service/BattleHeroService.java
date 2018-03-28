@@ -2,8 +2,8 @@ package com.idle.game.server.service;
 
 import static com.idle.game.constant.CacheConstants.BATTLE_HERO_FIND_BY_ID;
 import com.idle.game.core.hero.BattleHero;
-import com.idle.game.helper.HeroHelper;
-import com.idle.game.helper.HeroTypeHelper;
+import com.idle.game.helper.client.hero.HeroClient;
+import com.idle.game.helper.client.hero.HeroTypeClient;
 import com.idle.game.model.Hero;
 import com.idle.game.model.HeroType;
 import javax.validation.ValidationException;
@@ -19,19 +19,19 @@ import org.springframework.stereotype.Service;
 public class BattleHeroService {
 
     @Autowired
-    private HeroHelper heroHelper;
+    private HeroClient heroClient;
 
     @Autowired
-    private HeroTypeHelper heroTypeHelper;
+    private HeroTypeClient heroTypeClient;
 
     @Cacheable(value = BATTLE_HERO_FIND_BY_ID, key = "'" + BATTLE_HERO_FIND_BY_ID + "' + #idHero")
-    public BattleHero getBattleHero(String idHero) {
+    public BattleHero getBattleHero(String heroId) {
 
-        Hero hero = heroHelper.getHeroById(idHero);
+        Hero hero = heroClient.findById(heroId).getData();
 
         if (hero != null) {
 
-            HeroType heroType = heroTypeHelper.getHeroTypeById(hero.getHeroTypeId());
+            HeroType heroType = heroTypeClient.findById(hero.getHeroTypeId()).getData();
 
             if (heroType != null) {
 

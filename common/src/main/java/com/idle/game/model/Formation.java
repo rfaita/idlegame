@@ -15,12 +15,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @author rafael
  */
 @Document(collection = "formation")
-@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Formation implements Serializable {
 
     @Id
     private String id;
-    private String player;
+    private String userId;
     @Size(min = 1, max = 9, message = "formation.min.size.max.size")
     private List<BattlePositionedHero> heroes;
     @NotNull(message = "formation.allocation.can.not.be.null")
@@ -39,12 +39,12 @@ public class Formation implements Serializable {
         this.id = id;
     }
 
-    public String getPlayer() {
-        return player;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setPlayer(String player) {
-        this.player = player;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public List<BattlePositionedHero> getHeroes() {

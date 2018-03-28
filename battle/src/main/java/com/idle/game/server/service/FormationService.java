@@ -1,7 +1,6 @@
 package com.idle.game.server.service;
 
 import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_ID;
-import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION;
 import com.idle.game.core.battle.BattlePositionedHero;
 import com.idle.game.core.formation.type.FormationAllocation;
 import com.idle.game.core.formation.type.FormationPosition;
@@ -11,17 +10,11 @@ import static com.idle.game.core.formation.type.FormationPosition.M_0;
 import static com.idle.game.core.formation.type.FormationPosition.M_1;
 import com.idle.game.core.hero.type.HeroTypeSize;
 import static com.idle.game.core.hero.type.HeroTypeSize.LARGE;
-import com.idle.game.helper.BattleHeroHelper;
-import com.idle.game.helper.HeroHelper;
-import com.idle.game.helper.HeroTypeHelper;
-import com.idle.game.helper.PlayerHelper;
 import com.idle.game.model.Formation;
 import com.idle.game.model.Hero;
 import com.idle.game.model.HeroType;
-import com.idle.game.model.Player;
 import com.idle.game.server.repository.FormationRepository;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -32,6 +25,10 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_USER_ID_AND_FORMATION_ALLOCATION;
+import com.idle.game.helper.client.battle.BattleHeroClient;
+import com.idle.game.helper.client.hero.HeroClient;
+import com.idle.game.helper.client.hero.HeroTypeClient;
 
 /**
  *
@@ -47,16 +44,13 @@ public class FormationService {
     private Validator validator;
 
     @Autowired
-    private HeroHelper heroHelper;
+    private HeroClient heroClient;
 
     @Autowired
-    private HeroTypeHelper heroTypeHelper;
+    private HeroTypeClient heroTypeClient;
 
     @Autowired
-    private BattleHeroHelper battleHeroHelper;
-
-    @Autowired
-    private PlayerHelper playerHelper;
+    private BattleHeroClient battleHeroClient;
 
     @Cacheable(value = FORMATION_FIND_BY_ID, key = "'" + FORMATION_FIND_BY_ID + "' + #id")
     public Formation findById(String id) {
@@ -65,7 +59,7 @@ public class FormationService {
 
         if (ret != null) {
             ret.getHeroes().forEach((h) -> {
-                h.setHero(battleHeroHelper.getBattleHeroById(h.getHero().getId()));
+                h.setHero(battleHeroClient.getBattleHero(h.getHero().getId()).getData());
             });
 
             return ret;
@@ -74,24 +68,13 @@ public class FormationService {
         }
     }
 
-    public Formation findByUserAndFormationAllocation(String user, FormationAllocation fa) {
+    @Cacheable(value = FORMATION_FIND_BY_USER_ID_AND_FORMATION_ALLOCATION, key = "'" + FORMATION_FIND_BY_USER_ID_AND_FORMATION_ALLOCATION + "' + #userId + #fa")
+    public Formation findByUserIdAndFormationAllocation(String userId, FormationAllocation fa) {
 
-        Player player = playerHelper.getPlayerByLinkedUser(user);
-
-        if (player != null) {
-            return findByPlayerAndFormationAllocation(player.getId(), fa);
-        } else {
-            throw new ValidationException("player.not.found");
-        }
-    }
-
-    @Cacheable(value = FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION, key = "'" + FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION + "' + #player + #fa")
-    public Formation findByPlayerAndFormationAllocation(String player, FormationAllocation fa) {
-
-        Formation ret = formationRepository.findByPlayerAndFormationAllocation(player, fa);
+        Formation ret = formationRepository.findByUserIdAndFormationAllocation(userId, fa);
 
         ret.getHeroes().forEach((h) -> {
-            h.setHero(battleHeroHelper.getBattleHeroById(h.getHero().getId()));
+            h.setHero(battleHeroClient.getBattleHero(h.getHero().getId()).getData());
         });
 
         return ret;
@@ -106,12 +89,12 @@ public class FormationService {
 
         for (BattlePositionedHero ph : f.getHeroes()) {
 
-            Hero hero = heroHelper.getHeroById(ph.getHero().getId());
-            if (hero == null || !hero.getPlayerId().equals(f.getPlayer())) {
-                throw new ValidationException("player.is.not.owner.of.this.hero");
+            Hero hero = heroClient.findById(ph.getHero().getId()).getData();
+            if (hero == null || !hero.getUserId().equals(f.getUserId())) {
+                throw new ValidationException("user.is.not.owner.of.this.hero");
             }
 
-            HeroType ht = heroTypeHelper.getHeroTypeById(hero.getHeroTypeId());
+            HeroType ht = heroTypeClient.findById(hero.getHeroTypeId()).getData();
 
             if (ht != null) {
                 HeroTypeSize hts = ht.getSize();
@@ -142,33 +125,26 @@ public class FormationService {
         @CachePut(value = FORMATION_FIND_BY_ID,
                 key = "'" + FORMATION_FIND_BY_ID + "' + #result.id")
         ,
-        @CachePut(value = FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION,
-                key = "'" + FORMATION_FIND_BY_PLAYER_AND_FORMATION_ALLOCATION + "' + #result.player + #result.formationAllocation")
+        @CachePut(value = FORMATION_FIND_BY_USER_ID_AND_FORMATION_ALLOCATION,
+                key = "'" + FORMATION_FIND_BY_USER_ID_AND_FORMATION_ALLOCATION + "' + #result.userId + #result.formationAllocation")
     })
-    public Formation save(Formation f, String user, Boolean admin) {
+    public Formation save(Formation f, String userId, Boolean admin) {
 
-        Player player = playerHelper.getPlayerByLinkedUser(user);
+        f.setUserId(userId);
 
-        if (player != null) {
-
-            f.setPlayer(player.getId());
-
-            if (!admin) {
-                validateSave(f);
-            }
-
-            Formation fFind = formationRepository.findByPlayerAndFormationAllocation(f.getPlayer(), f.getFormationAllocation());
-
-            if (fFind != null) {
-                f.setId(fFind.getId());
-            }
-
-            f = formationRepository.save(f);
-
-            return findById(f.getId());
-        } else {
-            throw new ValidationException("player.not.found");
+        if (!admin) {
+            validateSave(f);
         }
+
+        Formation fFind = formationRepository.findByUserIdAndFormationAllocation(f.getUserId(), f.getFormationAllocation());
+
+        if (fFind != null) {
+            f.setId(fFind.getId());
+        }
+
+        f = formationRepository.save(f);
+
+        return findById(f.getId());
 
     }
 

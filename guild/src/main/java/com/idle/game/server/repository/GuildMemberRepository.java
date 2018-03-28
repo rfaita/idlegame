@@ -14,9 +14,9 @@ public interface GuildMemberRepository extends MongoRepository<GuildMember, Stri
 
     List<GuildMember> findAllByGuildIdAndAccepted(String guild, Boolean accepted);
 
-    GuildMember findByGuildIdAndUserMemberId(String guild, String userMember);
+    GuildMember findByGuildIdAndUserId(String guild, String userMember);
     
-    GuildMember findByUserMemberIdAndAccepted(String userMember, Boolean accepted);
+    GuildMember findByUserIdAndAccepted(String userMember, Boolean accepted);
 
     GuildMember findByGuildIdAndIdAndAccepted(String guild, String id, Boolean accepted);
 
