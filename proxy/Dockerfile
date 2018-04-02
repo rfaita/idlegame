@@ -13,4 +13,4 @@ ADD ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
-HEALTHCHECK --interval=30s --timeout=30s --retries=5 CMD sh -c 'curl -s --connect-timeout 10 'http://localhost:9000' || exit 1'
+HEALTHCHECK --interval=30s --timeout=30s --retries=20 CMD sh -c 'curl -s --connect-timeout 10 'http://localhost:9000' || exit 1'
