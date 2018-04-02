@@ -1,6 +1,7 @@
 package com.idle.game.helper.client.user;
 
 import static com.idle.game.constant.CacheConstants.USER_FIND_BY_ID;
+import static com.idle.game.constant.CacheConstants.USER_FIND_BY_NICK_NAME;
 import com.idle.game.model.User;
 import com.idle.game.server.dto.Envelope;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,17 @@ public class UserClientImpl implements UserClient {
     @Override
     public Envelope<User> findById(String userId) {
         User ret = (User) redisTemplate.boundValueOps(USER_FIND_BY_ID + userId).get();
+        if (ret != null) {
+            return new Envelope(ret);
+        } else {
+            return new Envelope((User) null);
+        }
+    }
+
+    @Override
+    public Envelope<User> findByNickName(String nickName) {
+
+        User ret = (User) redisTemplate.boundValueOps(USER_FIND_BY_NICK_NAME + nickName).get();
         if (ret != null) {
             return new Envelope(ret);
         } else {

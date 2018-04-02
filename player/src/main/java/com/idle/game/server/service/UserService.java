@@ -1,6 +1,7 @@
 package com.idle.game.server.service;
 
 import static com.idle.game.constant.CacheConstants.USER_FIND_BY_ID;
+import static com.idle.game.constant.CacheConstants.USER_FIND_BY_NICK_NAME;
 import com.idle.game.model.User;
 import com.idle.game.server.repository.UserRepository;
 import javax.validation.ValidationException;
@@ -19,8 +20,9 @@ public class UserService {
         return userRepository.findOne(userId);
     }
 
-    public User findByNickName(String name) {
-        User ret = userRepository.findByNickName(name);
+    @Cacheable(value = USER_FIND_BY_NICK_NAME, key = "'" + USER_FIND_BY_NICK_NAME + "' + #nickName")
+    public User findByNickName(String nickName) {
+        User ret = userRepository.findByNickName(nickName);
 
         if (ret == null) {
             throw new ValidationException("user.not.found");

@@ -22,9 +22,12 @@ public class Query implements GraphQLQueryResolver {
     @Autowired
     private HeroTypeClient heroTypeClient;
 
-    public User user(String userId) {
-
-        return userClient.findById(userId).getData();
+    public User user(String id, String nickName) {
+        if (id != null) {
+            return userClient.findById(id).getData();
+        } else {
+            return userClient.findByNickName(nickName).getData();
+        }
     }
 
     public List<HeroType> heroesType(String faction, String quality) {

@@ -7,6 +7,7 @@ package com.idle.game.constant;
 public interface CacheConstants {
 
     final String USER_FIND_BY_ID = "userFindById";
+    final String USER_FIND_BY_NICK_NAME = "userFindByNickName";
     final String PVPRATING_FIND_PVP_RATINGS = "findPvpRatings";
     final String FORMATION_FIND_BY_ID = "formationFindById";
     final String FORMATION_FIND_BY_USER_ID_AND_FORMATION_ALLOCATION = "formationFindByUserIdAndFormationAllocation";

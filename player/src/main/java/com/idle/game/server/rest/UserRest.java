@@ -33,12 +33,12 @@ public class UserRest {
 
     }
 
-    @RequestMapping(path = "/" + USER__FIND_BY_NICK_NAME + "/{name}", method = RequestMethod.GET)
+    @RequestMapping(path = "/" + USER__FIND_BY_NICK_NAME + "/{nickName}", method = RequestMethod.GET)
     public @ResponseBody
-    Envelope<User> findByNickName(@PathVariable("name") String name) {
+    Envelope<User> findByNickName(@PathVariable("nickName") String nickName) {
 
         Envelope<User> ret = new Envelope<>();
-        ret.setData(userService.findByNickName(name));
+        ret.setData(userService.findByNickName(nickName));
 
         return ret;
 
