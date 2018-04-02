@@ -11,15 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import static com.idle.game.constant.URIConstants.USERRESOURCE__USE_RESOURCES;
 import static com.idle.game.constant.URIConstants.USERRESOURCE__ADD_RESOURCES;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Primary;
 
 /**
  *
  * @author rafael
  */
-@Primary
-@Qualifier(value = "default")
 @FeignClient(name = "resource-client", url = "${idle.url.userResource}", fallback = MailClientImpl.class)
 public interface UserResourceClient {
 

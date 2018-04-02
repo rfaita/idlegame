@@ -21,22 +21,22 @@ public class HeroTypeClientImpl implements HeroTypeClient {
 
     @Override
     public Envelope<List<HeroType>> findAllByQuality(String quality) {
-        return new Envelope(null);
+        return new Envelope("hero.type.service.is.down");
     }
 
     @Override
     public Envelope<List<HeroType>> findAllByFaction(String faction) {
-        return new Envelope(null);
+        return new Envelope("hero.type.service.is.down");
     }
 
     @Override
     public Envelope<List<HeroType>> findAllByFactionAndQuality(String faction, String quality) {
-        return new Envelope(null);
+        return new Envelope("hero.type.service.is.down");
     }
 
     @Override
     public Envelope<List<HeroType>> findAll() {
-        return new Envelope(null);
+        return new Envelope("hero.type.service.is.down");
     }
 
     @Override
@@ -45,7 +45,7 @@ public class HeroTypeClientImpl implements HeroTypeClient {
         if (ret != null) {
             return new Envelope(ret);
         } else {
-            return new Envelope(null);
+            return new Envelope((HeroType) null);
         }
     }
 
@@ -55,7 +55,7 @@ public class HeroTypeClientImpl implements HeroTypeClient {
         if (ret != null) {
             return new Envelope(ret);
         } else {
-            return new Envelope(null);
+            return new Envelope((HeroType) null);
         }
     }
 

@@ -5,6 +5,7 @@ import static com.idle.game.core.formation.type.FormationAllocation.PVP_DEFENSE;
 import com.idle.game.helper.client.battle.BattleClient;
 import com.idle.game.helper.client.battle.FormationClient;
 import com.idle.game.helper.client.user.UserClient;
+import com.idle.game.model.Formation;
 import com.idle.game.model.PvpRating;
 import com.idle.game.server.dto.Envelope;
 import com.idle.game.server.repository.PvpRatingRepository;
@@ -41,13 +42,16 @@ import static org.mockito.Mockito.mock;
 @SpringBootTest
 public class PvpServiceTest {
 
-    @MockBean(name = "default")
+    @MockBean
     private PvpRatingRepository pvpRatingRepository;
-    @MockBean(name = "default")
+
+    @MockBean
     private BattleClient battleClient;
-    @MockBean(name = "default")
+
+    @MockBean
     private FormationClient formationClient;
-    @MockBean(name = "default")
+
+    @MockBean
     private UserClient userClient;
 
     @Autowired
@@ -88,8 +92,10 @@ public class PvpServiceTest {
 
         when(this.pvpRatingRepository.findByUserId("3")).thenReturn(null);
 
-        when(this.formationClient.findByUserIdAndFormationAllocation("3", PVP_DEFENSE.toString())).thenReturn(null);
+        when(this.formationClient.findByUserIdAndFormationAllocation("3", PVP_DEFENSE.toString())).thenReturn(new Envelope((Formation) null));
 
+        when(userClient.findById("3")).thenReturn(new Envelope(createUser("3")));
+        
         expcetionExpect.expect(ValidationException.class);
         expcetionExpect.expectMessage("formation.pvp.not.found");
 
@@ -100,18 +106,18 @@ public class PvpServiceTest {
     @Test
     public void testFindPvpRatingsRatingNotFound() {
 
-        when(this.pvpRatingRepository.findByUserId("1")).thenReturn(null);
+        when(pvpRatingRepository.findByUserId("1")).thenReturn(null);
 
-        when(this.formationClient.findByUserIdAndFormationAllocation("1", PVP_DEFENSE.toString())).thenReturn(new Envelope(createFormation("123")));
+        when(formationClient.findByUserIdAndFormationAllocation("1", PVP_DEFENSE.toString())).thenReturn(new Envelope(createFormation("123")));
 
-        when(this.pvpRatingRepository.save(any(PvpRating.class))).thenAnswer(createPvpRatingAnswerForSomeInput());
+        when(pvpRatingRepository.save(any(PvpRating.class))).thenAnswer(createPvpRatingAnswerForSomeInput());
 
-        when(this.pvpRatingRepository.findAllByUserIdNotAndRatingBetween("1", 1499, 1651)).thenReturn(createListPvpRating1550("2"));
-        when(this.pvpRatingRepository.findAllByUserIdNotAndRatingBetween("1", 1099, 1211)).thenReturn(createListPvpRating1150("3"));
-        when(this.pvpRatingRepository.findAllByUserIdNotAndRatingBetween("1", 999, 1101)).thenReturn(createListPvpRating1050("4"));
-        when(this.pvpRatingRepository.findAllByUserIdNotAndRatingBetween("1", 899, 991)).thenReturn(createListPvpRating950("5"));
+        when(pvpRatingRepository.findAllByUserIdNotAndRatingBetween("1", 1499, 1651)).thenReturn(createListPvpRating1550("2"));
+        when(pvpRatingRepository.findAllByUserIdNotAndRatingBetween("1", 1099, 1211)).thenReturn(createListPvpRating1150("3"));
+        when(pvpRatingRepository.findAllByUserIdNotAndRatingBetween("1", 999, 1101)).thenReturn(createListPvpRating1050("4"));
+        when(pvpRatingRepository.findAllByUserIdNotAndRatingBetween("1", 899, 991)).thenReturn(createListPvpRating950("5"));
 
-        when(this.userClient.findById("1")).thenReturn(new Envelope(createUser("1")));
+        when(userClient.findById("1")).thenReturn(new Envelope(createUser("1")));
 
         List<PvpRating> ratings = pvpService.findPvpRatings("1");
 

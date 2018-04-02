@@ -2,6 +2,7 @@ package com.idle.game.tests;
 
 import com.idle.game.helper.client.guild.GuildClient;
 import com.idle.game.helper.client.mail.MailClient;
+import com.idle.game.model.Guild;
 import com.idle.game.model.GuildMember;
 import com.idle.game.model.Mail;
 import com.idle.game.server.dto.Envelope;
@@ -29,13 +30,13 @@ import com.idle.game.server.repository.GuildMemberRepository;
 @SpringBootTest
 public class GuildMemberServiceTest {
 
-    @MockBean(name = "default")
+    @MockBean
     private GuildMemberRepository guildMemberRepository;
 
-    @MockBean(name = "default")
+    @MockBean
     private GuildClient guildClient;
 
-    @MockBean(name = "default")
+    @MockBean
     private MailClient mailClient;
 
     @Autowired
@@ -47,7 +48,7 @@ public class GuildMemberServiceTest {
     @Test
     public void testSendGuildMemberRequestGuildNotFound() {
 
-        when(guildClient.findById("123")).thenReturn(null);
+        when(guildClient.findById("123")).thenReturn(new Envelope((Guild) null));
 
         exceptionExpect.expect(ValidationException.class);
         exceptionExpect.expectMessage("guild.not.found");
@@ -102,7 +103,7 @@ public class GuildMemberServiceTest {
 
         when(guildMemberRepository.findByUserIdAndAccepted("321", Boolean.TRUE)).thenReturn(createGuildMember("A", "321", "test321"));
 
-        when(guildClient.findById("A")).thenReturn(null);
+        when(guildClient.findById("A")).thenReturn(new Envelope((Guild) null));
 
         exceptionExpect.expect(ValidationException.class);
         exceptionExpect.expectMessage("you.don.not.have.permission.to.accept.new.members");
@@ -116,7 +117,7 @@ public class GuildMemberServiceTest {
 
         when(guildMemberRepository.findByUserIdAndAccepted("321", Boolean.TRUE)).thenReturn(createAdminGuildMember("A", "321", "test321"));
 
-        when(guildClient.findById("A")).thenReturn(null);
+        when(guildClient.findById("A")).thenReturn(new Envelope((Guild) null));
 
         exceptionExpect.expect(ValidationException.class);
         exceptionExpect.expectMessage("guild.not.found");
@@ -175,7 +176,7 @@ public class GuildMemberServiceTest {
 
         when(guildMemberRepository.findByUserIdAndAccepted("321", Boolean.TRUE)).thenReturn(createGuildMember("A", "321", "test321"));
 
-        when(guildClient.findById("A")).thenReturn(null);
+        when(guildClient.findById("A")).thenReturn(new Envelope((Guild) null));
 
         exceptionExpect.expect(ValidationException.class);
         exceptionExpect.expectMessage("you.don.not.have.permission.to.kick.members");
@@ -189,7 +190,7 @@ public class GuildMemberServiceTest {
 
         when(guildMemberRepository.findByUserIdAndAccepted("321", Boolean.TRUE)).thenReturn(createAdminGuildMember("A", "321", "test321"));
 
-        when(guildClient.findById("A")).thenReturn(null);
+        when(guildClient.findById("A")).thenReturn(new Envelope((Guild) null));
 
         exceptionExpect.expect(ValidationException.class);
         exceptionExpect.expectMessage("guild.not.found");

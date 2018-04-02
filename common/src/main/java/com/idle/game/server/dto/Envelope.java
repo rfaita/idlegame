@@ -18,6 +18,15 @@ public class Envelope<T> implements Serializable {
         this.data = data;
     }
 
+    public Envelope(List<String> errors) {
+        this.errors = errors;
+    }
+
+    public Envelope(String error) {
+        this.errors = new ArrayList<>();
+        this.errors.add(error);
+    }
+
     public Envelope() {
     }
 

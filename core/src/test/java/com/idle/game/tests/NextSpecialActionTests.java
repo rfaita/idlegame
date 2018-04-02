@@ -1,7 +1,6 @@
 package com.idle.game.tests;
 
 import com.idle.game.core.action.Action;
-import com.idle.game.core.battle.Battle;
 import com.idle.game.core.formation.type.FormationPosition;
 import static com.idle.game.core.type.DamageType.BLUNT;
 import static com.idle.game.core.type.DamageType.FIRE;

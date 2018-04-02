@@ -20,22 +20,22 @@ public class HeroClientImpl implements HeroClient {
 
     @Override
     public Envelope<List<Hero>> findAllByUserId(String userId) {
-        return new Envelope(null);
+        return new Envelope("hero.service.is.down");
     }
 
     @Override
     public Envelope<List<Hero>> findAllByUserIdAndHeroTypeId(String userId, String heroTypeId) {
-        return new Envelope(null);
+        return new Envelope("hero.service.is.down");
     }
 
     @Override
     public Envelope<List<Hero>> findAllByUserIdAndHeroTypeIdAndQuality(String userId, String quality, String heroTypeId) {
-        return new Envelope(null);
+        return new Envelope("hero.service.is.down");
     }
 
     @Override
     public Envelope<Hero> rollHero(String lootRollId) {
-        return new Envelope(null);
+        return new Envelope("hero.service.is.down");
     }
 
     @Override
@@ -44,7 +44,7 @@ public class HeroClientImpl implements HeroClient {
         if (ret != null) {
             return new Envelope(ret);
         } else {
-            return new Envelope(null);
+            return new Envelope((Hero) null);
         }
     }
 

@@ -32,10 +32,10 @@ import com.idle.game.server.repository.UserResourceRepository;
 @SpringBootTest
 public class UserResourceTest {
 
-    @MockBean(name = "default")
+    @MockBean
     private UserResourceRepository playerResourceRepository;
 
-    @MockBean(name = "default")
+    @MockBean
     private SimpMessagingTemplate simpMessagingTemplate;
 
     @Autowired

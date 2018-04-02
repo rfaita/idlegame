@@ -23,7 +23,7 @@ public class BattleHeroClientImpl implements BattleHeroClient {
         if (ret != null) {
             return new Envelope(ret);
         } else {
-            return new Envelope(null);
+            return new Envelope((BattleHero) null);
         }
     }
 

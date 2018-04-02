@@ -23,7 +23,7 @@ public class UserClientImpl implements UserClient {
         if (ret != null) {
             return new Envelope(ret);
         } else {
-            return new Envelope(null);
+            return new Envelope((User) null);
         }
     }
 

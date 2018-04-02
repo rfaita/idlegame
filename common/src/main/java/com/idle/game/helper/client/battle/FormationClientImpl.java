@@ -24,7 +24,7 @@ public class FormationClientImpl implements FormationClient {
         if (ret != null) {
             return new Envelope(ret);
         } else {
-            return new Envelope(null);
+            return new Envelope((Formation)null);
         }
     }
 
@@ -34,7 +34,7 @@ public class FormationClientImpl implements FormationClient {
         if (ret != null) {
             return new Envelope(ret);
         } else {
-            return new Envelope(null);
+            return new Envelope((Formation)null);
         }
     }
 

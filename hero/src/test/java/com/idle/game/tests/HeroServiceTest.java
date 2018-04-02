@@ -1,6 +1,5 @@
 package com.idle.game.tests;
 
-import com.idle.game.helper.client.shop.LootRollClient;
 import com.idle.game.model.Hero;
 import com.idle.game.server.repository.HeroRepository;
 import com.idle.game.server.service.HeroService;
@@ -26,7 +25,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class HeroServiceTest {
 
-    @MockBean(name = "default")
+    @MockBean
     private HeroRepository heroRepository;
 
     @Autowired

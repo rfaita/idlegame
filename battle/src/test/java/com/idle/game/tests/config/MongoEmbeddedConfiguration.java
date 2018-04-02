@@ -1,9 +1,7 @@
 package com.idle.game.tests.config;
 
 import com.github.fakemongo.Fongo;
-import com.github.fakemongo.FongoConnection;
 import com.mongodb.Mongo;
-import com.mongodb.MongoClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
