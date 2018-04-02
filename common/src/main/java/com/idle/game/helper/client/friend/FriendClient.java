@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  * @author rafael
  */
-@FeignClient(name = "friend-client", url = "${idle.url.friend}")
+@FeignClient(name = "friend-client", url = "${idle.url.friend}", fallback = FriendClientImpl.class)
 public interface FriendClient {
 
     @RequestMapping(path = "/{userId}", method = RequestMethod.GET)

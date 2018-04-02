@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @FeignClient(name = "user-client", url = "${idle.url.user}", fallback = UserClientImpl.class)
 public interface UserClient {
 
-    @RequestMapping(path = "/{userId}", method = RequestMethod.POST)
+    @RequestMapping(path = "/{userId}", method = RequestMethod.GET)
     public Envelope<User> findById(@PathVariable("userId") String userId);
 
 }

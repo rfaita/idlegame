@@ -5,7 +5,7 @@ export class Hero {
 
     public heroTypeName: String;
 
-    public playerId: String;
+    public userId: String;
     public level: Number;
     public quality: String;
 

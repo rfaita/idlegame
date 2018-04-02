@@ -1,8 +1,7 @@
 export class PvpRating {
     public id: String;
-    public player: String;
-    public playerName: String;
-    public playerLevel: Number;
+    public userId: String;
+    public userNickName: String;
     public formation: String;
 
     public rating: Number;

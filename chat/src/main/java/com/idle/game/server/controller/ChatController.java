@@ -43,11 +43,11 @@ public class ChatController {
         this.sendChatMessage("global", principal, message);
     }
 
-    @MessageMapping("/sendChatMessage/{chatRoom}")
-    public void sendChatMessage(@DestinationVariable("chatRoom") String chatRoom, Principal principal, @Payload Message message) throws Exception {
+    @MessageMapping("/sendChatMessage/{chatRoomId}")
+    public void sendChatMessage(@DestinationVariable("chatRoomId") String chatRoomId, Principal principal, @Payload Message message) throws Exception {
         manualTokenHelper.createAccessToken(principal);
 
-        message.setChatRoom(chatRoom);
+        message.setChatRoomId(chatRoomId);
         message.setFromUserId(manualTokenHelper.getUserId());
         message.setFromUserNickName(manualTokenHelper.getNickName());
         message.setFromUserEmail(manualTokenHelper.getEmail());
@@ -55,22 +55,22 @@ public class ChatController {
         message.setToUserNickName(null);
         message.setFromAdmin(Boolean.FALSE);
 
-        if (!chatJoinedService.userCanJoinToChatRoom(manualTokenHelper.getUserId(), chatRoom)) {
+        if (!chatJoinedService.userCanJoinToChatRoom(manualTokenHelper.getUserId(), chatRoomId)) {
             throw new ValidationException("chat.room.not.joined");
         }
 
         messageService.sendChatMessage(message);
     }
 
-    @MessageMapping("/sendPrivateMessage/{user}")
-    public void sendPrivateMessage(@DestinationVariable("user") String user, Principal principal, @Payload Message message) throws Exception {
+    @MessageMapping("/sendPrivateMessage/{userId}")
+    public void sendPrivateMessage(@DestinationVariable("userId") String userId, Principal principal, @Payload Message message) throws Exception {
         manualTokenHelper.createAccessToken(principal);
 
-        message.setChatRoom(null);
+        message.setChatRoomId(null);
         message.setFromUserId(manualTokenHelper.getUserId());
         message.setFromUserNickName(manualTokenHelper.getNickName());
         message.setFromUserEmail(manualTokenHelper.getEmail());
-        message.setToUserId(user);
+        message.setToUserId(userId);
 
         message.setFromAdmin(Boolean.FALSE);
 
@@ -79,7 +79,7 @@ public class ChatController {
 
     @SubscribeMapping("/findAllChatsJoined")
     public List<ChatJoined> getChatsJoined() {
-        return chatJoinedService.findAllByUser(manualTokenHelper.getUserId());
+        return chatJoinedService.findAllByUserId(manualTokenHelper.getUserId());
     }
 
     @SubscribeMapping("/findAllChatRoomUsers/{chatRoom}")
@@ -88,15 +88,15 @@ public class ChatController {
     }
 
     @SubscribeMapping("/findAllChatRoomMessages/{chatRoom}")
-    public List<Message> findAllByChatRoom(@DestinationVariable("chatRoom") String chatRoom) {
-        return messageService.findAllByChatRoom(chatRoom);
+    public List<Message> findAllByChatRoomId(@DestinationVariable("chatRoom") String chatRoom) {
+        return messageService.findAllByChatRoomId(chatRoom);
     }
 
     @SubscribeMapping("/findAllOldPrivateMessages")
-    public List<Message> findAllByToUserOrFromUserAndChatRoomIsNull(Principal principal) {
+    public List<Message> findAllByToUserIdOrFromUserIdAndChatRoomIdIsNull(Principal principal) {
         manualTokenHelper.createAccessToken(principal);
 
-        return messageService.findAllByToUserOrFromUserAndChatRoomIsNull(manualTokenHelper.getUserId());
+        return messageService.findAllByToUserIdOrFromUserIdAndChatRoomIdIsNull(manualTokenHelper.getUserId());
     }
 
     @MessageExceptionHandler

@@ -87,3 +87,9 @@ spring:
 logging:
     level:
         com.idle.game.core: WARN
+
+feign:
+    hystrix:
+        enabled: true
+hystrix:
+    shareSecurityContext: true

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Hero } from '../model/hero';
 import { HeroService } from '../service/hero.service';
-import { PlayerService } from '../service/player.service';
+import { UserService } from '../service/user.service';
 import { HeroTypeService } from '../service/herotype.service';
 import { HeroType } from '../model/herotype';
 import { KeycloakService } from 'keycloak-angular';
@@ -17,45 +17,45 @@ import { notificationConfig } from '../utils/helper';
 })
 export class HeroesComponent implements OnInit {
 
-  public player: String;
+  public nickName: String;
   public heroType: String;
   public heroes: Hero[];
   public heroTypes: HeroType[];
 
   constructor(private heroService: HeroService,
     private heroTypeService: HeroTypeService,
-    private playerService: PlayerService,
+    private userService: UserService,
     private keycloakService: KeycloakService,
     private snotifyService: SnotifyService) { }
 
   ngOnInit() {
 
-    this.player = this.keycloakService.getUsername()
+    this.nickName = this.keycloakService.getUsername()
     this.heroTypeService.findAll().subscribe(env => {
       this.heroTypes = env.data;
-      this.findAllByPlayer();
+      this.findAllByUser();
     });
 
 
   }
 
   public customRoll() {
-    this.playerService.findByName(this.player).subscribe(env => {
+    this.userService.findByNickName(this.nickName).subscribe(env => {
       this.heroService.customRoll(env.data.id, this.heroType, "UNIQUE").subscribe(env => {
-        this.findAllByPlayer();
+        this.findAllByUser();
       });
     });
   }
 
-  public keyDownFindAllByPlayer(event: any) {
+  public keyDownFindAllByUser(event: any) {
     if (event.keyCode == 13) {
-      this.findAllByPlayer();
+      this.findAllByUser();
     }
   }
 
-  public findAllByPlayer() {
-    this.playerService.findByName(this.player).subscribe(env => {
-      this.heroService.findAllByPlayer(env.data.id).subscribe(env => {
+  public findAllByUser() {
+    this.userService.findByNickName(this.nickName).subscribe(env => {
+      this.heroService.findAllByUser(env.data.id).subscribe(env => {
         this.heroes = env.data
         this.heroes.forEach(hero => {
           let heroType = this.heroTypes.filter(heroType => heroType.id === hero.heroTypeId)[0];
@@ -67,7 +67,7 @@ export class HeroesComponent implements OnInit {
 
   public delete(id: String) {
     this.heroService.delete(id).subscribe(env => {
-      this.findAllByPlayer();
+      this.findAllByUser();
       this.snotifyService.info("Hero deleted.", '', notificationConfig());
       
     });

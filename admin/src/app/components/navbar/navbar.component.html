@@ -11,8 +11,8 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <ng-container *ngIf="!!playerResource">
-                    <li *ngFor="let resource of playerResource.resources">
+                <ng-container *ngIf="!!userResource">
+                    <li *ngFor="let resource of userResource.resources">
                         <a href="#">
                             {{resource.type}} - {{resource.value | simpleNumber}}
                         </a>
@@ -33,13 +33,13 @@
                         <li *ngFor="let m of mails" [className]="m.readed?'mail-message-readed':''">
                             <a class="dropdown-item left clearfix mail-message" data-toggle="modal" data-target="#mailModal" (click)="markAsReadPrivateMail(m)">
                                 <span class="pull-left">
-                                    <ngx-avatar size=40 round=true [name]="m.fromNickName"></ngx-avatar>
+                                    <ngx-avatar size=40 round=true [name]="m.fromUserNickName"></ngx-avatar>
                                 </span>
                                 <div class="clearfix">
                                     <p>{{ (m.text.length > 20)? (m.text | slice:0:17)+'...':(m.text) }}
                                         <i *ngIf="!!m.reward" [className]="m.collected?'mail-message-collected material-icons pull-right':'material-icons pull-right'">card_giftcard</i>
                                     </p>
-                                    <div class="mail-message-sub pull-left">{{m.fromNickName}}</div>
+                                    <div class="mail-message-sub pull-left">{{m.fromUserNickName}}</div>
                                     <div class="mail-message-sub pull-right">{{m.date | date: 'MM/dd/yyyy'}}</div>
                                 </div>
                             </a>

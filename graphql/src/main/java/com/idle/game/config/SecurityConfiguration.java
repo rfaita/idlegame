@@ -79,6 +79,7 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                .antMatchers("/graphiql").permitAll()
                 .anyRequest().authenticated();
     }
 

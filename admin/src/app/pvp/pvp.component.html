@@ -4,7 +4,7 @@
             <div class="collapse navbar-collapse">
                 <form class="navbar-form navbar-right" role="search">
                     <div class="form-group form-black is-empty">
-                        <input type="text" class="form-control" placeholder="Player Name" name="player" [ngModel]="player" (ngModelChange)="player = $event">
+                        <input type="text" class="form-control" placeholder="Nick Name" name="nickName" [ngModel]="nickName" (ngModelChange)="nickName = $event">
                         <span class="material-input"></span>
                     </div>
                     <button type="button" class="btn btn-white btn-round btn-just-icon">
@@ -25,7 +25,7 @@
                 <h5>Battle</h5>
                 <button type="button" class="btn btn-danger btn-round" *ngFor="let pvpRatingRoll of pvpRatingsRoll" (click)="battle(pvpRatingRoll.id)">
                     <i class="material-icons">games</i>
-                    {{pvpRatingRoll.playerName}} - {{pvpRatingRoll.rating}}
+                    {{pvpRatingRoll.userNickName}} - {{pvpRatingRoll.rating}}
                     <div class="ripple-container"></div>
                 </button>
             </div>
@@ -39,16 +39,14 @@
                         <table class="table table-hover">
                             <thead class="text-info">
                                 <tr>
-                                    <th>Player</th>
-                                    <th>Level</th>
+                                    <th>NickName</th>
                                     <th>Rating</th>
 
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let pvpRating of pvpRatings">
-                                    <td>{{pvpRating.playerName}}</td>
-                                    <td>{{pvpRating.playerLevel}}</td>
+                                    <td>{{pvpRating.userNickName}}</td>
                                     <td>{{pvpRating.rating}}</td>
                                 </tr>
                             </tbody>

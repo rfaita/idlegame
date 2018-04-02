@@ -11,7 +11,15 @@ import org.springframework.context.annotation.Profile;
  */
 @Configuration
 @EnableCircuitBreaker
-@EnableFeignClients
+@EnableFeignClients(basePackages = {
+    "com.idle.game.helper.client.battle",
+    "com.idle.game.helper.client.friend",
+    "com.idle.game.helper.client.guild",
+    "com.idle.game.helper.client.hero",
+    "com.idle.game.helper.client.mail",
+    "com.idle.game.helper.client.resource",
+    "com.idle.game.helper.client.shop",
+    "com.idle.game.helper.client.user"})
 @Profile({"default"})
 public class CircuitBreakConfiguration {
 

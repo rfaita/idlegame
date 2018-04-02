@@ -15,8 +15,8 @@ public class ChatJoined implements Serializable {
 
     @Id
     private String id;
-    private String user;
-    private String chatRoom;
+    private String userId;
+    private String chatRoomId;
 
     public String getId() {
         return id;
@@ -26,22 +26,20 @@ public class ChatJoined implements Serializable {
         this.id = id;
     }
 
-    public String getUser() {
-        return user;
+    public String getChatRoomId() {
+        return chatRoomId;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setChatRoomId(String chatRoomId) {
+        this.chatRoomId = chatRoomId;
     }
 
-    public String getChatRoom() {
-        return chatRoom;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setChatRoom(String chatRoom) {
-        this.chatRoom = chatRoom;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
-    
-    
-    
+
 }

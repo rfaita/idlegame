@@ -14,16 +14,16 @@ export class HeroService {
 
     }
 
-    findAllByPlayer(player: String): Observable<Envelope<Hero[]>> {
-        return <Observable<Envelope<Hero[]>>>this.http.get(environment.API_BASE_URL + "hero/all/" + player);
+    findAllByUser(userId: String): Observable<Envelope<Hero[]>> {
+        return <Observable<Envelope<Hero[]>>>this.http.get(environment.API_BASE_URL + "hero/all/" + userId);
     }
 
     findById(id: String): Observable<Envelope<Hero>> {
         return <Observable<Envelope<Hero>>>this.http.get(environment.API_BASE_URL + "hero/" + id);
     }
 
-    customRoll(player: String, heroType: String, heroQuality: String): Observable<Envelope<Hero>> {
-        return <Observable<Envelope<Hero>>>this.http.get(environment.API_BASE_URL + "hero/customRoll/" + player + "/" + heroType + "/" + heroQuality);
+    customRoll(userId: String, heroType: String, heroQuality: String): Observable<Envelope<Hero>> {
+        return <Observable<Envelope<Hero>>>this.http.get(environment.API_BASE_URL + "hero/customRoll/" + userId + "/" + heroType + "/" + heroQuality);
     }
 
     save(hero: Hero): Observable<Envelope<Hero>> {

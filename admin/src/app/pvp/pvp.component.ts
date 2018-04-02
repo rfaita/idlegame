@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Hero } from '../model/hero';
 import { HeroService } from '../service/hero.service';
-import { PlayerService } from '../service/player.service';
+import { UserService } from '../service/user.service';
 import { HeroTypeService } from '../service/herotype.service';
 import { HeroType } from '../model/herotype';
 import { KeycloakService } from 'keycloak-angular';
@@ -19,20 +19,20 @@ import { PvpRating } from '../model/pvpRating';
 })
 export class PvpComponent implements OnInit {
 
-  public player: String;
+  public nickName: String;
 
   public pvpRatings: PvpRating[];
   public pvpRatingsRoll: PvpRating[];
 
 
   constructor(
-    private playerService: PlayerService,
+    private userService: UserService,
     private keycloakService: KeycloakService,
     private pvpService: PvpService) { }
 
   ngOnInit() {
 
-    this.player = this.keycloakService.getUsername();
+    this.nickName = this.keycloakService.getUsername();
     this.roll();
 
   }

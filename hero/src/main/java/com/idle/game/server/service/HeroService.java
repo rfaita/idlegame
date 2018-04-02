@@ -163,6 +163,10 @@ public class HeroService {
             heroType = heroTypeClient.findById(customHeroType).getData();
             heroQuality = HeroQuality.valueOf(customHeroQuality);
         }
+        
+        if (heroType == null) {
+            throw new ValidationException("hero.type.not.found");
+        }
 
         Hero hero;
 

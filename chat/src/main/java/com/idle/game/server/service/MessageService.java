@@ -27,17 +27,17 @@ public class MessageService {
     @Autowired
     private UserClient userClient;
 
-    public List<Message> findAllByChatRoom(String chatRoom) {
-        return messageRepository.findAllByChatRoom(chatRoom);
+    public List<Message> findAllByChatRoomId(String chatRoom) {
+        return messageRepository.findAllByChatRoomId(chatRoom);
     }
 
-    public List<Message> findAllByToUserOrFromUserAndChatRoomIsNull(String user) {
-        return messageRepository.findAllByToUserOrFromUserAndChatRoomIsNull(user, user);
+    public List<Message> findAllByToUserIdOrFromUserIdAndChatRoomIdIsNull(String user) {
+        return messageRepository.findAllByToUserIdOrFromUserIdAndChatRoomIdIsNull(user, user);
     }
 
     public void sendChatMessage(Message chatMessage) {
         webSocketMessagingTemplate.convertAndSend(
-                Destination.publicMessages(chatMessage.getChatRoom()),
+                Destination.publicMessages(chatMessage.getChatRoomId()),
                 chatMessage);
 
         messageRepository.save(chatMessage);

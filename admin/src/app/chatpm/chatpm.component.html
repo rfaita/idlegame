@@ -4,8 +4,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading top-bar">
                     <div class="col-md-8 col-xs-8">
-                        <p *ngIf="messages[0].fromNickName == username" class="panel-title">{{messages[0].toNickName}}</p>
-                        <p *ngIf="messages[0].toNickName == username" class="panel-title">{{messages[0].fromNickName}}</p>
+                        <p *ngIf="messages[0].fromUserNickName == nickName" class="panel-title">{{messages[0].toUserNickName}}</p>
+                        <p *ngIf="messages[0].toUserNickName == nickName" class="panel-title">{{messages[0].fromUserNickName}}</p>
                     </div>
                     <div class="col-md-4 col-xs-4">
                         <a (click)="changeMinimized()">
@@ -18,26 +18,26 @@
                 </div>
                 <div class="panel-body msg_container_base" #scrollMe [scrollTop]="scrollMe.scrollHeight" *ngIf="!minimized">
                     <ng-container *ngFor="let message of messages">
-                        <div class="row msg_container base_receive" *ngIf="!!message.text && message.fromNickName != username">
+                        <div class="row msg_container base_receive" *ngIf="!!message.text && message.fromUserNickName != nickName">
                             <div class="col-md-2 col-xs-2">
-                                <ngx-avatar [gravatarId]="message.fromEmail" size=30 round=true [name]="message.fromNickName"></ngx-avatar>
+                                <ngx-avatar [gravatarId]="message.fromUserEmail" size=30 round=true [name]="message.fromUserNickName"></ngx-avatar>
                             </div>
                             <div class="col-xs-10 col-md-10">
                                 <div class="messages msg_receive">
                                     <p>{{message.text}}</p>
-                                    <time>{{message.fromNickName}} • {{message.date | date: 'MM/dd/yyyy hh:mm:ss'}}</time>
+                                    <time>{{message.fromUserNickName}} • {{message.date | date: 'MM/dd/yyyy hh:mm:ss'}}</time>
                                 </div>
                             </div>
                         </div>
-                        <div class="row msg_container base_sent" *ngIf="!!message.text && message.fromNickName == username">
+                        <div class="row msg_container base_sent" *ngIf="!!message.text && message.fromUserNickName == nickName">
                             <div class="col-md-10 col-xs-10">
                                 <div class="messages msg_sent">
                                     <p>{{message.text}}</p>
-                                    <time>{{message.fromNickName}} • {{message.date | date: 'MM/dd/yyyy hh:mm:ss'}}</time>
+                                    <time>{{message.fromUserNickName}} • {{message.date | date: 'MM/dd/yyyy hh:mm:ss'}}</time>
                                 </div>
                             </div>
                             <div class="col-md-2 col-xs-2">
-                                <ngx-avatar [gravatarId]="message.fromEmail" size=30 round=true [name]="message.fromNickName"></ngx-avatar>
+                                <ngx-avatar [gravatarId]="message.fromUserEmail" size=30 round=true [name]="message.fromUserNickName"></ngx-avatar>
                             </div>
 
                         </div>

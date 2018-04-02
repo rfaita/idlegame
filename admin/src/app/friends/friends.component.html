@@ -4,7 +4,7 @@
             <div class="collapse navbar-collapse">
                 <form class="navbar-form navbar-right" role="search">
                     <div class="form-group form-black is-empty">
-                        <input type="text" class="form-control" placeholder="Player Name" name="player" [ngModel]="player" (ngModelChange)="player = $event"
+                        <input type="text" class="form-control" placeholder="Nick Name" name="nickName" [ngModel]="nickName" (ngModelChange)="nickName = $event"
                             (keydown)="keyDownAddFriend($event)">
                         <span class="material-input"></span>
                     </div>
@@ -32,7 +32,7 @@
 
                             <tbody>
                                 <tr *ngFor="let friend of friends">
-                                    <td>{{friend.nameFriend}}</td>
+                                    <td>{{friend.friendUserNickName}}</td>
                                     <td>{{friend.since | date: 'MM/dd/yyyy'}}</td>
                                     <td>
                                         <div class="checkbox">
@@ -48,7 +48,7 @@
                                             <i class="material-icons">done</i>
                                         </button>
                                         <button *ngIf="friend.accepted" type="button" rel="tooltip" title="Send Mail" class="btn btn-primary btn-simple btn-xs" data-toggle="modal"
-                                            data-target="#mailSendModal" (click)="toUser = friend.userFriend">
+                                            data-target="#mailSendModal" (click)="toUserId = friend.friendUserId">
                                             <i class="material-icons">mail</i>
                                         </button>
                                         <button type="button" rel="tooltip" title="Remove Friend" class="btn btn-primary btn-simple btn-xs" (click)="removeFriend(friend.id)">

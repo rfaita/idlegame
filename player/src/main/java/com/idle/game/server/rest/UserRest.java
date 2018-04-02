@@ -1,5 +1,6 @@
 package com.idle.game.server.rest;
 
+import static com.idle.game.constant.URIConstants.USER__FIND_BY_NICK_NAME;
 import com.idle.game.helper.TokenHelper;
 import com.idle.game.server.dto.Envelope;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,23 @@ public class UserRest {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(path = "/{userId}", method = RequestMethod.POST)
+    @RequestMapping(path = "/{userId}", method = RequestMethod.GET)
     public @ResponseBody
-    Envelope<User> addResources(@PathVariable("userId") String userId) {
+    Envelope<User> findById(@PathVariable("userId") String userId) {
 
         Envelope<User> ret = new Envelope<>();
         ret.setData(userService.findById(userId));
+
+        return ret;
+
+    }
+
+    @RequestMapping(path = "/" + USER__FIND_BY_NICK_NAME + "/{name}", method = RequestMethod.GET)
+    public @ResponseBody
+    Envelope<User> findByNickName(@PathVariable("name") String name) {
+
+        Envelope<User> ret = new Envelope<>();
+        ret.setData(userService.findByNickName(name));
 
         return ret;
 

@@ -10,10 +10,10 @@
                         <div class="card-content">
                             <div class="col-md-12">
                                 <div class="form-group form-black is-empty playerSearch">
-                                    <input type="text" class="form-control" placeholder="Name" name="playerAttack" [ngModel]="playerAttack" (ngModelChange)="playerAttack = $event"
-                                        (keydown)="keyDownFindAllByPlayerAttack($event)">
+                                    <input type="text" class="form-control" placeholder="Name" name="userNickNameAttack" [ngModel]="userNickNameAttack" (ngModelChange)="userNickNameAttack = $event"
+                                        (keydown)="keyDownFindAllByUserNickNameAttack($event)">
                                     <span class="material-input"></span>
-                                    <button type="button" class="btn btn-white btn-round btn-just-icon" (click)="findAllByPlayerAttack()">
+                                    <button type="button" class="btn btn-white btn-round btn-just-icon" (click)="findAllByUserNickNameAttack()">
                                         <i class="material-icons">search</i>
                                         <div class="ripple-container"></div>
                                     </button>
@@ -119,10 +119,10 @@
                         <div class="card-content">
                             <div class="col-md-12">
                                 <div class="form-group form-black is-empty playerSearch">
-                                    <input type="text" class="form-control" placeholder="Name" name="playerDefense" [ngModel]="playerDefense" (ngModelChange)="playerDefense = $event"
-                                        (keydown)="keyDownFindAllByPlayerDefense($event)">
+                                    <input type="text" class="form-control" placeholder="Name" name="userNickNameDefense" [ngModel]="userNickNameDefense" (ngModelChange)="userNickNameDefense = $event"
+                                        (keydown)="keyDownFindAllByUserNickNameDefense($event)">
                                     <span class="material-input"></span>
-                                    <button type="button" class="btn btn-white btn-round btn-just-icon" (click)="findAllByPlayerDefense()">
+                                    <button type="button" class="btn btn-white btn-round btn-just-icon" (click)="findAllByUserNickNameDefense()">
                                         <i class="material-icons">search</i>
                                         <div class="ripple-container"></div>
                                     </button>

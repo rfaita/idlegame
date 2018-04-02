@@ -2,9 +2,9 @@ type Friend {
     id: ID!
     userId: String
     friendUserId: String
-    friendNickName: String
+    friendUserNickName: String
     since: Date
     reverse: Boolean!
     accepted: Boolean!
-    friend: User!
+    user: User!
 }

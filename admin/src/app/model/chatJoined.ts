@@ -1,5 +1,5 @@
 export class ChatJoined {
     public id: String;
-    public user: String;
-    public chatRoom: String;
+    public userId: String;
+    public chatRoomId: String;
 }

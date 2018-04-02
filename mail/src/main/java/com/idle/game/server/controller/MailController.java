@@ -73,10 +73,10 @@ public class MailController {
     }
 
     @SubscribeMapping("/findAllOldMail")
-    public List<Mail> findAllByToUser(Principal principal) {
+    public List<Mail> findAllByToUserId(Principal principal) {
         manualTokenHelper.createAccessToken(principal);
 
-        return mailService.findAllByToUser(manualTokenHelper.getUserId());
+        return mailService.findAllByToUserId(manualTokenHelper.getUserId());
     }
 
     @MessageExceptionHandler

@@ -18,7 +18,7 @@ export class ChatPmComponent implements OnInit, OnDestroy {
 
   public text: String;
 
-  public username: String;
+  public nickName: String;
   public minimized = false;
 
 
@@ -46,7 +46,7 @@ export class ChatPmComponent implements OnInit, OnDestroy {
       let message: Message = new Message();
       message.text = this.text;
 
-      let dest: String = this.username == firstMessage.fromNickName ? firstMessage.toUser : firstMessage.fromUser;
+      let dest: String = this.nickName == firstMessage.fromUserNickName ? firstMessage.toUserId : firstMessage.fromUserId;
 
       this.chatService.sendPrivateMessage(dest, message);
 
@@ -59,7 +59,7 @@ export class ChatPmComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.username = this.keycloakService.getUsername();
+    this.nickName = this.keycloakService.getUsername();
   }
 
 

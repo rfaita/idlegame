@@ -42,6 +42,10 @@ public class FriendService {
 
         User user = userClient.findById(friendUserId).getData();
 
+        if (user == null) {
+            throw new ValidationException("user.not.found");
+        }
+
         Friend friend = new Friend(userId, friendUserId, user.getNickName());
 
         friendRepository.save(friend);

@@ -1,7 +1,7 @@
 export class ChatRoomUser {
-    public nickName: String;
     public online: Boolean;
     public email: String;
-    public user: String;
+    public userId: String;
+    public userNickName: String;
     public joinedAt: Date;
 }

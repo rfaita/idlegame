@@ -23,7 +23,7 @@ import { ActionEffectComponent } from './actionEffect/actionEffect.component';
 import { BuffEffectComponent } from './buffEffect/buffEffect.component';
 import { HeroService } from './service/hero.service';
 import { HeroesComponent } from './heroes/heroes.component';
-import { PlayerService } from './service/player.service';
+import { UserService } from './service/user.service';
 import { HeroComponent } from './hero/hero.component';
 import { HeroTypesService } from './service/herotypes.service';
 import { ChatService } from './service/chat.service';
@@ -41,8 +41,8 @@ import { FriendService } from './service/friend.service';
 import { FriendsComponent } from './friends/friends.component';
 import { PvpService } from './service/pvp.service';
 import { PvpComponent } from './pvp/pvp.component';
-import { PlayerResourceService } from './service/playerresource.service';
-import { PlayerResourceStompConfig, playerResourceStompConfigFactory } from './utils/playerStompConfigFactory';
+import { UserResourceService } from './service/userresource.service';
+import { UserResourceStompConfig, userResourceStompConfigFactory } from './utils/playerStompConfigFactory';
 import { KeysPipe } from './utils/pipe/keys.pipe';
 import { Guild } from './model/guild';
 import { GuildService } from './service/guild.service';
@@ -93,8 +93,8 @@ import { GuildMemberService } from './service/guildmember.service';
       deps: [KeycloakService]
     },
     {
-      provide: PlayerResourceStompConfig,
-      useFactory: playerResourceStompConfigFactory,
+      provide: UserResourceStompConfig,
+      useFactory: userResourceStompConfigFactory,
       deps: [KeycloakService]
     },
     {
@@ -110,14 +110,14 @@ import { GuildMemberService } from './service/guildmember.service';
     HeroTypeTypesService,
     HeroTypesService,
     ActionEffectTypesService,
-    PlayerService,
+    UserService,
     BattleService,
     FormationService,
     ChatService,
     MailService,
     FriendService,
     PvpService,
-    PlayerResourceService,
+    UserResourceService,
     GuildService,
     GuildMemberService
   ],

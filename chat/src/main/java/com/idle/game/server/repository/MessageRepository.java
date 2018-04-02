@@ -12,8 +12,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MessageRepository extends MongoRepository<Message, String> {
 
-    public List<Message> findAllByChatRoom(String chatRoom);
+    public List<Message> findAllByChatRoomId(String chatRoom);
 
-    public List<Message> findAllByToUserOrFromUserAndChatRoomIsNull(String toUser, String fromUser);
+    public List<Message> findAllByToUserIdOrFromUserIdAndChatRoomIdIsNull(String toUser, String fromUser);
 
 }

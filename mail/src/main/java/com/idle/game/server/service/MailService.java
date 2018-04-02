@@ -28,8 +28,8 @@ public class MailService {
     @Autowired
     private MailRepository mailRepository;
 
-    public List<Mail> findAllByToUser(String toUser) {
-        return mailRepository.findAllByToUser(toUser);
+    public List<Mail> findAllByToUserId(String toUser) {
+        return mailRepository.findAllByToUserId(toUser);
     }
 
     public List<Mail> findAllByPublicMail(Boolean publicMail) {
@@ -61,7 +61,7 @@ public class MailService {
 
     public void markAsReadPrivateMail(String user, String id) {
 
-        Mail mail = mailRepository.findByIdAndToUser(id, user);
+        Mail mail = mailRepository.findByIdAndToUserId(id, user);
         if (mail != null) {
             mail.setReaded(Boolean.TRUE);
 
@@ -75,7 +75,7 @@ public class MailService {
     }
 
     public void collectReward(String user, String id) {
-        Mail mail = mailRepository.findByIdAndToUserAndCollected(id, user, Boolean.FALSE);
+        Mail mail = mailRepository.findByIdAndToUserIdAndCollected(id, user, Boolean.FALSE);
         if (mail != null) {
 
             if (mail.getReward() != null) {
@@ -99,7 +99,7 @@ public class MailService {
     }
 
     public void deletePrivateMail(String user, String id) {
-        Mail mail = mailRepository.findByIdAndToUser(id, user);
+        Mail mail = mailRepository.findByIdAndToUserId(id, user);
         if (mail != null && mail.getReaded() && (mail.getReward() == null || mail.getCollected())) {
             mailRepository.delete(mail);
 

@@ -1,13 +1,14 @@
 export class Message {
     public id: String;
 
-    public chatRoom: String;
+    public chatRoomId: String;
 
     public date: Date;
 
-    public fromUser: String;
-    public fromNickName: String;
-    public toUser: String;
-    public toNickName: String;
+    public fromUserId: String;
+    public fromUserNickName: String;
+    public fromUserEmail: String;
+    public toUserId: String;
+    public toUserNickName: String;
     public text: String;
 }

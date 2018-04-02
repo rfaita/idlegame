@@ -9,8 +9,8 @@ import java.util.Objects;
  */
 public class ChatRoomUser implements Comparable<ChatRoomUser> {
 
-    private String user;
-    private String nickName;
+    private String userId;
+    private String userNickName;
     private String email;
     private Boolean online;
     private final Date joinedAt = new Date();
@@ -19,9 +19,9 @@ public class ChatRoomUser implements Comparable<ChatRoomUser> {
 
     }
 
-    public ChatRoomUser(String user, String nickName, String email) {
-        this.user = user;
-        this.nickName = nickName;
+    public ChatRoomUser(String userId, String userNickName, String email) {
+        this.userId = userId;
+        this.userNickName = userNickName;
         this.email = email;
         this.online = Boolean.FALSE;
     }
@@ -42,20 +42,20 @@ public class ChatRoomUser implements Comparable<ChatRoomUser> {
         this.online = online;
     }
 
-    public String getUser() {
-        return user;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getUserNickName() {
+        return userNickName;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
     }
 
     public Date getJoinedAt() {
@@ -64,19 +64,19 @@ public class ChatRoomUser implements Comparable<ChatRoomUser> {
 
     @Override
     public String toString() {
-        return this.nickName;
+        return this.getUserNickName();
     }
 
     @Override
     public int compareTo(ChatRoomUser chatRoomUser) {
-        return this.getUser().compareTo(chatRoomUser.getUser());
+        return this.getUserId().compareTo(chatRoomUser.getUserId());
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 13 * hash + Objects.hashCode(this.user);
-        hash = 13 * hash + Objects.hashCode(this.nickName);
+        hash = 13 * hash + Objects.hashCode(this.userId);
+        hash = 13 * hash + Objects.hashCode(this.userNickName);
         hash = 13 * hash + Objects.hashCode(this.email);
         return hash;
     }
@@ -93,10 +93,10 @@ public class ChatRoomUser implements Comparable<ChatRoomUser> {
             return false;
         }
         final ChatRoomUser other = (ChatRoomUser) obj;
-        if (!Objects.equals(this.user, other.user)) {
+        if (!Objects.equals(this.userId, other.userId)) {
             return false;
         }
-        if (!Objects.equals(this.nickName, other.nickName)) {
+        if (!Objects.equals(this.userNickName, other.userNickName)) {
             return false;
         }
         if (!Objects.equals(this.email, other.email)) {

@@ -2,7 +2,7 @@ import { BattlePositionedHero } from './battlePositionedHero';
 export class Formation {
 
     public id: String;
-    public player: String;
+    public userId: String;
 
     public heroes: BattlePositionedHero[];
 

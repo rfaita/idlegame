@@ -82,4 +82,10 @@ spring:
     application:
         name: @pom.artifactId@
     jackson:
-        defult-property-inclusion: non_null
+        default-property-inclusion: non_null
+        
+feign:
+    hystrix:
+        enabled: true
+hystrix:
+    shareSecurityContext: true

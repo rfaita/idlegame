@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * @author rafael
  */
 @Component
-public class BattleClienteImpl implements BattleClient {
+public class BattleClientImpl implements BattleClient {
 
     @Override
     public Envelope<Battle> doBattle(String att, String def) {

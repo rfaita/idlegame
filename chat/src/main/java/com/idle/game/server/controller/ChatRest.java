@@ -46,17 +46,17 @@ public class ChatRest {
         return new Envelope<>(chatRoomService.create(chatRoom));
     }
 
-    @RequestMapping(path = "/join/{chatRoom}", method = RequestMethod.POST)
+    @RequestMapping(path = "/join/{chatRoomId}", method = RequestMethod.POST)
     @ResponseBody
-    public Envelope<Void> joinRoom(@PathVariable("chatRoom") String chatRoom) throws Exception {
+    public Envelope<Void> joinRoom(@PathVariable("chatRoomId") String chatRoomId) throws Exception {
 
         ChatRoomUser cru = new ChatRoomUser(tokenHelper.getUserId(),
                 tokenHelper.getNickName(), tokenHelper.getEmail());
 
-        chatRoomService.join(cru, chatRoom);
+        chatRoomService.join(cru, chatRoomId);
 
         Message message = new Message();
-        message.setChatRoom(chatRoom);
+        message.setChatRoomId(chatRoomId);
         message.setFromUserId(tokenHelper.getUserId());
         message.setFromUserNickName(tokenHelper.getNickName());
         message.setFromUserEmail(tokenHelper.getEmail());
@@ -65,8 +65,8 @@ public class ChatRest {
         messageService.sendChatMessage(message);
 
         ChatJoined chatJoined = new ChatJoined();
-        chatJoined.setUser(tokenHelper.getUserId());
-        chatJoined.setChatRoom(chatRoom);
+        chatJoined.setUserId(tokenHelper.getUserId());
+        chatJoined.setChatRoomId(chatRoomId);
 
         chatJoinedService.save(chatJoined);
         
@@ -74,17 +74,17 @@ public class ChatRest {
 
     }
 
-    @RequestMapping(path = "/leave/{chatRoom}", method = RequestMethod.DELETE)
+    @RequestMapping(path = "/leave/{chatRoomId}", method = RequestMethod.DELETE)
     @ResponseBody
-    public Envelope<Void> leaveRoom(@PathVariable("chatRoom") String chatRoom) throws Exception {
+    public Envelope<Void> leaveRoom(@PathVariable("chatRoomId") String chatRoomId) throws Exception {
 
         ChatRoomUser cru = new ChatRoomUser(tokenHelper.getUserId(),
                 tokenHelper.getNickName(), tokenHelper.getEmail());
 
-        chatRoomService.leave(cru, chatRoom);
+        chatRoomService.leave(cru, chatRoomId);
 
         Message message = new Message();
-        message.setChatRoom(chatRoom);
+        message.setChatRoomId(chatRoomId);
         message.setFromUserId(tokenHelper.getUserId());
         message.setFromUserNickName(tokenHelper.getNickName());
         message.setFromUserEmail(tokenHelper.getEmail());
@@ -92,7 +92,7 @@ public class ChatRest {
 
         messageService.sendChatMessage(message);
 
-        chatJoinedService.delete(tokenHelper.getUserId(), chatRoom);
+        chatJoinedService.delete(tokenHelper.getUserId(), chatRoomId);
         
         return new Envelope<>();
     }

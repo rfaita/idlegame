@@ -33,12 +33,12 @@
                             <button class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-weixin" aria-hidden="true"></i>
                                 <span *ngIf="!chatJoined">Chats</span>
-                                <span *ngIf="!!chatJoined">{{chatJoined.chatRoom}}</span>
+                                <span *ngIf="!!chatJoined">{{chatJoined.chatRoomId}}</span>
                                 <span class="caret pull-right"></span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                 <li *ngFor="let chatJoined of chatsJoined">
-                                    <a (click)="openChat(chatJoined)">{{chatJoined.chatRoom}}</a>
+                                    <a (click)="openChat(chatJoined)">{{chatJoined.chatRoomId}}</a>
                                 </li>
                             </ul>
                         </div>
@@ -46,12 +46,12 @@
                             <ul class="list-unstyled">
                                 <li class="left clearfix" *ngFor="let chatUser of chatUsers ">
                                     <span class="chat-img pull-left">
-                                        <ngx-avatar [gravatarId]="chatUser.email" size=30 round=true [name]="chatUser.nickName"></ngx-avatar>
+                                        <ngx-avatar [gravatarId]="chatUser.email" size=30 round=true [name]="chatUser.userNickName"></ngx-avatar>
                                     </span>
                                     <div class="chat-body clearfix">
                                         <div class="header_sec">
-                                            <strong class="primary-font">{{chatUser.nickName}}</strong>
-                                            <button class="open_private_chat pull-right" *ngIf="chatUser.nickName != username" (click)="openPrivateChat(chatUser)">
+                                            <strong class="primary-font">{{chatUser.userNickName}}</strong>
+                                            <button class="open_private_chat pull-right" *ngIf="chatUser.userNickName != nickName" (click)="openPrivateChat(chatUser)">
                                                 <i class="material-icons">chat</i>
                                             </button>
                                         </div>
@@ -101,11 +101,11 @@
                             <ul class="list-unstyled">
                                 <li class="left clearfix" *ngFor="let chatMessage of chatMessages">
                                     <span class="chat-img1 pull-left">
-                                        <ngx-avatar [gravatarId]="chatMessage.fromEmail" size=40 round=true [name]="chatMessage.fromNickName"></ngx-avatar>
+                                        <ngx-avatar [gravatarId]="chatMessage.fromUserEmail" size=40 round=true [name]="chatMessage.fromUserNickName"></ngx-avatar>
                                     </span>
                                     <div class="chat-body1 clearfix">
                                         <p>{{chatMessage.text}}</p>
-                                        <div class="chat_nickname pull-left">{{chatMessage.fromNickName}}</div>
+                                        <div class="chat_nickname pull-left">{{chatMessage.fromUserNickName}}</div>
                                         <div class="chat_time pull-right">{{chatMessage.date | date: 'MM/dd/yyyy hh:mm:ss'}}</div>
                                     </div>
                                 </li>

@@ -3,9 +3,9 @@ import { StompConfig } from '@stomp/ng2-stompjs';
 import { KeycloakService } from 'keycloak-angular';
 import { environment } from '../../environments/environment';
 
-export function playerResourceStompConfigFactory(keycloakService: KeycloakService): PlayerResourceStompConfig {
+export function userResourceStompConfigFactory(keycloakService: KeycloakService): UserResourceStompConfig {
 
-  const stompConfig: PlayerResourceStompConfig = {
+  const stompConfig: UserResourceStompConfig = {
     // Which server?
     url: environment.WS_PLAYER_BASE_URL + "?access_token=" + keycloakService.getKeycloakInstance().token,
 
@@ -31,6 +31,6 @@ export function playerResourceStompConfigFactory(keycloakService: KeycloakServic
   return stompConfig;
 }
 
-export class PlayerResourceStompConfig extends StompConfig {
+export class UserResourceStompConfig extends StompConfig {
 
 }

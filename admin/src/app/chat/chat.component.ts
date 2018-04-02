@@ -41,28 +41,28 @@ export class ChatComponent implements OnInit, OnDestroy {
   private subscribePrivateErrorMessages: Subscription;
   private subscribePrivateMessages: Subscription;
 
-  private subject: String;
-  private username: String;
+  private userId: String;
+  private nickName: String;
 
   constructor(private keycloakService: KeycloakService,
     private chatService: ChatService,
     private snotifyService: SnotifyService) { }
 
   ngOnInit() {
-    this.subject = this.keycloakService.getKeycloakInstance().subject;
-    this.username = this.keycloakService.getUsername();
+    this.userId = this.keycloakService.getKeycloakInstance().subject;
+    this.nickName = this.keycloakService.getUsername();
 
     this.subscribeMonitor = this.chatService.subscribeMonitor().subscribe(state => {
       this.state = state;
     });
 
-    this.subscribePrivateErrorMessages = this.chatService.subscribePrivateErrorMessages(this.subject).subscribe(env => {
+    this.subscribePrivateErrorMessages = this.chatService.subscribePrivateErrorMessages(this.userId).subscribe(env => {
       this.snotifyService.error(env.errors[0].toString(), '', notificationConfig());
     });
 
     this.chatService.findAllOldPrivateMessages().subscribe(messages => {
       messages.forEach(message => this.handleMessage(message));
-      this.subscribePrivateMessages = this.chatService.subscribePrivateMessages(this.subject).subscribe(message => {
+      this.subscribePrivateMessages = this.chatService.subscribePrivateMessages(this.userId).subscribe(message => {
         this.handleMessage(message);
       });
     });
@@ -72,7 +72,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   private handleMessage(message: Message) {
-    let index: String = this.username == message.toNickName ? message.fromUser : message.toUser;
+    let index: String = this.nickName == message.toUserNickName ? message.fromUserId : message.toUserId;
 
     if (!this.privateMessages.has(index)) {
       this.privateMessages.set(index, []);
@@ -86,7 +86,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   private loadChatsJoined() {
     this.chatService.subscribeChatList().subscribe(chatsJoined => {
       this.chatsJoined = chatsJoined;
-      let chatJoinedGlobal: ChatJoined[] = chatsJoined.filter(chatJoined => chatJoined.chatRoom === "global")
+      let chatJoinedGlobal: ChatJoined[] = chatsJoined.filter(chatJoined => chatJoined.chatRoomId === "global")
       if (chatJoinedGlobal.length > 0) {
         this.openChat(chatJoinedGlobal[0]);
       }
@@ -98,41 +98,41 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.chatUsers = [];
     this.chatMessages = [];
 
-    this.chatService.findAllChatRoomUsers(chatJoined.chatRoom).subscribe(chatUsers => {
+    this.chatService.findAllChatRoomUsers(chatJoined.chatRoomId).subscribe(chatUsers => {
       this.chatUsers = chatUsers;
       if (this.subscribeChatUsers != null) {
         this.subscribeChatUsers.unsubscribe();
       }
-      this.subscribeChatUsers = this.chatService.subscribeChatUsers(chatJoined.chatRoom).subscribe(chatUsers => {
+      this.subscribeChatUsers = this.chatService.subscribeChatUsers(chatJoined.chatRoomId).subscribe(chatUsers => {
         this.chatUsers = chatUsers;
       });
     });
 
-    this.chatService.findAllChatRoomMessages(chatJoined.chatRoom).subscribe(messages => {
+    this.chatService.findAllChatRoomMessages(chatJoined.chatRoomId).subscribe(messages => {
       this.chatMessages = messages;
       if (this.subscribeChatMessage != null) {
         this.subscribeChatMessage.unsubscribe();
       }
-      this.subscribeChatMessage = this.chatService.subscribeChatMessage(chatJoined.chatRoom).subscribe(message => {
+      this.subscribeChatMessage = this.chatService.subscribeChatMessage(chatJoined.chatRoomId).subscribe(message => {
         this.chatMessages.push(message);
       });
     });
   }
 
   public openPrivateChat(user: ChatRoomUser) {
-    if (!this.privateMessages.has(user.user)) {
-      this.privateMessages.set(user.user, []);
-      this.privateMessagesKeys.push(user.user);
+    if (!this.privateMessages.has(user.userId)) {
+      this.privateMessages.set(user.userId, []);
+      this.privateMessagesKeys.push(user.userId);
 
       let message: Message = new Message();
 
-      message.fromUser = this.subject;
-      message.fromNickName = this.username;
-      message.toUser = user.user;
-      message.toNickName = user.nickName;
+      message.fromUserId = this.userId;
+      message.fromUserNickName = this.nickName;
+      message.toUserId = user.userId;
+      message.toUserNickName = user.userNickName;
       message.text = null;
 
-      this.privateMessages.get(user.user).push(message);
+      this.privateMessages.get(user.userId).push(message);
     }
   }
 
@@ -140,7 +140,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     if (this.text != null && this.text != "") {
       let message: Message = new Message();
       message.text = this.text;
-      this.chatService.sendChatMessage(this.chatJoined.chatRoom, message);
+      this.chatService.sendChatMessage(this.chatJoined.chatRoomId, message);
       this.text = "";
     }
   }
@@ -164,7 +164,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.chatService.joinChat(this.chatToJoin).subscribe(env => {
 
         let chatJoined: ChatJoined = new ChatJoined();
-        chatJoined.chatRoom = this.chatToJoin;
+        chatJoined.chatRoomId = this.chatToJoin;
 
         this.chatsJoined.push(chatJoined);
 
@@ -182,8 +182,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     if (this.subscribeChatMessage != null) {
       this.subscribeChatMessage.unsubscribe();
     }
-    this.chatService.leaveChat(this.chatJoined.chatRoom).subscribe(env => {
-      this.chatsJoined = this.chatsJoined.filter(chatJoined => chatJoined.chatRoom != this.chatJoined.chatRoom);
+    this.chatService.leaveChat(this.chatJoined.chatRoomId).subscribe(env => {
+      this.chatsJoined = this.chatsJoined.filter(chatJoined => chatJoined.chatRoomId != this.chatJoined.chatRoomId);
       this.chatJoined = null;
       this.chatUsers = [];
       this.chatMessages = [];

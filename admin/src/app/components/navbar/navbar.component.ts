@@ -8,9 +8,9 @@ import { KeycloakService } from 'keycloak-angular';
 import { MailService } from '../../service/mail.service';
 import { SnotifyService } from 'ng-snotify';
 import { notificationConfig } from '../../utils/helper';
-import { PlayerResourceService } from '../../service/playerresource.service';
-import { PlayerResource } from '../../model/playerResource';
-import { PlayerService } from '../../service/player.service';
+import { UserResourceService } from '../../service/userresource.service';
+import { UserResource } from '../../model/userResource';
+import { UserService } from '../../service/user.service';
 
 @Component({
     selector: 'app-navbar',
@@ -23,13 +23,13 @@ export class NavbarComponent implements OnInit {
     private toggleButton: any;
     private sidebarVisible: boolean;
 
-    public playerResource: PlayerResource;
+    public userResource: UserResource;
 
     public mails: Mail[];
     public mail: Mail;
 
     public profile: KeycloakProfile;
-    public subject: String;
+    public userId: String;
 
     private subscribePrivateMail: Subscription;
     private subscribePrivateMailDelete: Subscription;
@@ -42,8 +42,8 @@ export class NavbarComponent implements OnInit {
         private keycloakService: KeycloakService,
         private mailService: MailService,
         private snotifyService: SnotifyService,
-        private playerService: PlayerService,
-        private playerResourceService: PlayerResourceService) {
+        private userService: UserService,
+        private userResourceService: UserResourceService) {
 
         this.location = location;
         this.sidebarVisible = false;
@@ -56,22 +56,22 @@ export class NavbarComponent implements OnInit {
 
         this.keycloakService.loadUserProfile().then(profile => { this.profile = profile });
 
-        this.playerService.create().subscribe();
+        this.userService.create().subscribe();
 
-        this.subject = this.keycloakService.getKeycloakInstance().subject;
+        this.userId = this.keycloakService.getKeycloakInstance().subject;
 
         
         this.mailService.findAllOldMail().subscribe(mails => {
             this.mails = mails.reverse();
             if (this.subscribePrivateMail == null) {
-                this.subscribePrivateMail = this.mailService.subscribePrivateMail(this.subject).subscribe(mail => {
-                    this.snotifyService.info("from: " + mail.fromNickName, "New mail", notificationConfig());
+                this.subscribePrivateMail = this.mailService.subscribePrivateMail(this.userId).subscribe(mail => {
+                    this.snotifyService.info("from: " + mail.fromUserNickName, "New mail", notificationConfig());
                     this.mails.push(mail);
                 });
             }
         });
 
-        this.subscribePrivateMailDelete = this.mailService.subscribePrivateMailDelete(this.subject).subscribe(mailDeleted => {
+        this.subscribePrivateMailDelete = this.mailService.subscribePrivateMailDelete(this.userId).subscribe(mailDeleted => {
             for (let i = 0; i < this.mails.length; i++) {
                 if (this.mails[i].id === mailDeleted.id) {
                     this.mails.splice(i, 1);
@@ -82,7 +82,7 @@ export class NavbarComponent implements OnInit {
             }
         });
 
-        this.subscribePrivateMailUpdate = this.mailService.subscribePrivateMailUpdate(this.subject).subscribe(mailUpdated => {
+        this.subscribePrivateMailUpdate = this.mailService.subscribePrivateMailUpdate(this.userId).subscribe(mailUpdated => {
             for (let i = 0; i < this.mails.length; i++) {
                 if (this.mails[i].id === mailUpdated.id) {
                     this.mails[i] = mailUpdated;
@@ -93,7 +93,7 @@ export class NavbarComponent implements OnInit {
             }
         });
 
-        this.subscribePrivateMailError = this.mailService.subscribePrivateMailError(this.subject).subscribe(env => {
+        this.subscribePrivateMailError = this.mailService.subscribePrivateMailError(this.userId).subscribe(env => {
             this.snotifyService.error(env.errors[0].toString(), '', notificationConfig());
         });
 
@@ -102,11 +102,11 @@ export class NavbarComponent implements OnInit {
     }
 
     loadResources() {
-        this.playerResourceService.computeResources().subscribe(env => {
-            this.playerResource = env.data;
+        this.userResourceService.computeResources().subscribe(env => {
+            this.userResource = env.data;
             if (this.subscribeResourceRefresh == null) {
-                this.subscribeResourceRefresh = this.playerResourceService.subscribeResourceRefresh(this.subject).subscribe(playerResource => {
-                    this.playerResource = playerResource;
+                this.subscribeResourceRefresh = this.userResourceService.subscribeResourceRefresh(this.userId).subscribe(playerResource => {
+                    this.userResource = playerResource;
                 });
             }
 

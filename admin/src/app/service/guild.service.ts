@@ -6,7 +6,6 @@ import 'rxjs/add/operator/map';
 import { environment } from '../../environments/environment';
 import { HeroType } from '../model/herotype';
 import { Envelope } from '../model/envelope';
-import { Player } from '../model/player';
 import { Guild } from '../model/guild';
 
 @Injectable()

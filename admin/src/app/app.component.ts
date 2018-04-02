@@ -6,7 +6,6 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { SnotifyService } from 'ng-snotify';
-import { PlayerService } from './service/player.service';
 
 declare const $: any;
 

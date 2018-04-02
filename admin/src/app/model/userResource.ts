@@ -1,7 +1,7 @@
 import { Resource } from './resource';
-export class PlayerResource {
+export class UserResource {
     public id: String;
-    public player: String;
+    public userId: String;
     public lastTimeResourcesCollected: Date;
     public resources: Resource[];
 }

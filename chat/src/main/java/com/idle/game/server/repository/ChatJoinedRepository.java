@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ChatJoinedRepository extends MongoRepository<ChatJoined, String> {
 
-    ChatJoined findByUserAndChatRoom(String id, String chatRoom);
+    ChatJoined findByUserIdAndChatRoomId(String id, String chatRoom);
 
-    List<ChatJoined> findAllByUser(String id);
+    List<ChatJoined> findAllByUserId(String id);
 }

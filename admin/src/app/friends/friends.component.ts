@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Hero } from '../model/hero';
 import { HeroService } from '../service/hero.service';
-import { PlayerService } from '../service/player.service';
+import { UserService } from '../service/user.service';
 import { HeroTypeService } from '../service/herotype.service';
 import { HeroType } from '../model/herotype';
 import { KeycloakService } from 'keycloak-angular';
@@ -18,14 +18,14 @@ import { MailService } from '../service/mail.service';
 })
 export class FriendsComponent implements OnInit {
 
-  public player: String;
+  public nickName: String;
   public friends: Friend[];
 
-  public toUser: String;
+  public toUserId: String;
   public message: String;
 
   constructor(private friendService: FriendService,
-    private playerService: PlayerService,
+    private userService: UserService,
     private mailService: MailService,
     private keycloakService: KeycloakService) { }
 
@@ -40,9 +40,9 @@ export class FriendsComponent implements OnInit {
   }
 
   addFriend() {
-    this.playerService.findByName(this.player).subscribe(env => {
+    this.userService.findByNickName(this.nickName).subscribe(env => {
 
-      this.friendService.sendFriendRequest(env.data.linkedUser).subscribe(env => {
+      this.friendService.sendFriendRequest(env.data.id).subscribe(env => {
         this.loadFriends();
       });
     });
@@ -67,11 +67,11 @@ export class FriendsComponent implements OnInit {
   sendPrivateMail() {
     let mail: Mail = new Mail();
     mail.text = this.message;
-    mail.toUser = this.toUser;
+    mail.toUserId = this.toUserId;
 
     this.mailService.sendPrivateMail(mail).subscribe(env => {
       this.message = "";
-      this.toUser = "";
+      this.toUserId = "";
     });
   }
 

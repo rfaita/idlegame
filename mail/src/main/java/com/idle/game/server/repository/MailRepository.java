@@ -12,12 +12,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MailRepository extends MongoRepository<Mail, String> {
 
-    public List<Mail> findAllByToUser(String toUser);
+    public List<Mail> findAllByToUserId(String toUserId);
 
     public List<Mail> findAllByPublicMail(Boolean publicMail);
 
-    public Mail findByIdAndToUser(String id, String toUser);
+    public Mail findByIdAndToUserId(String id, String toUserId);
 
-    public Mail findByIdAndToUserAndCollected(String id, String toUser, Boolean collected);
+    public Mail findByIdAndToUserIdAndCollected(String id, String toUserId, Boolean collected);
 
 }

@@ -19,7 +19,7 @@ public class Message implements Serializable {
     private String id;
 
     @Indexed
-    private String chatRoom;
+    private String chatRoomId;
 
     @Indexed(name = "expirationDate", expireAfterSeconds = 3600)
     private final Date date = new Date();
@@ -89,13 +89,14 @@ public class Message implements Serializable {
         this.id = id;
     }
 
-    public String getChatRoom() {
-        return chatRoom;
+    public String getChatRoomId() {
+        return chatRoomId;
     }
 
-    public void setChatRoom(String chatRoom) {
-        this.chatRoom = chatRoom;
+    public void setChatRoomId(String chatRoomId) {
+        this.chatRoomId = chatRoomId;
     }
+
 
     public Date getDate() {
         return date;

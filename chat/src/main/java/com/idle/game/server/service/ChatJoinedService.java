@@ -17,7 +17,7 @@ public class ChatJoinedService {
     private ChatJoinedRepository chatJoinedRepository;
 
     public boolean userCanJoinToChatRoom(String user, String chatRoom) {
-        return chatJoinedRepository.findByUserAndChatRoom(user, chatRoom) != null;
+        return chatJoinedRepository.findByUserIdAndChatRoomId(user, chatRoom) != null;
     }
 
     public ChatJoined save(ChatJoined chatJoined) {
@@ -25,14 +25,14 @@ public class ChatJoinedService {
     }
 
     public void delete(String user, String chatRoom) {
-        chatJoinedRepository.delete(findByUserAndChatRoom(user, chatRoom));
+        chatJoinedRepository.delete(findByUserIdAndChatRoomId(user, chatRoom));
     }
 
-    public ChatJoined findByUserAndChatRoom(String user, String chatRoom) {
-        return chatJoinedRepository.findByUserAndChatRoom(user, chatRoom);
+    public ChatJoined findByUserIdAndChatRoomId(String user, String chatRoom) {
+        return chatJoinedRepository.findByUserIdAndChatRoomId(user, chatRoom);
     }
 
-    public List<ChatJoined> findAllByUser(String user) {
-        return chatJoinedRepository.findAllByUser(user);
+    public List<ChatJoined> findAllByUserId(String user) {
+        return chatJoinedRepository.findAllByUserId(user);
     }
 }

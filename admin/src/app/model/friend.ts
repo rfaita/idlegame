@@ -1,8 +1,8 @@
 export class Friend {
     public id: String;
-    public user: String;
-    public userFriend: String;
-    public nameFriend: String;
+    public userId: String;
+    public friendUserId: String;
+    public friendUserNickName: String;
     public since: Date;
     public accepted: Boolean;
 

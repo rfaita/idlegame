@@ -6,7 +6,7 @@ import { HeroType } from '../model/herotype';
 import { HeroTypeService } from '../service/herotype.service';
 import { HeroService } from '../service/hero.service';
 import { Hero } from '../model/hero';
-import { PlayerService } from '../service/player.service';
+import { UserService } from '../service/user.service';
 import { BattleService } from '../service/battle.service';
 import { Formation } from '../model/formation';
 import { BattlePositionedHero } from '../model/battlePositionedHero';
@@ -25,8 +25,8 @@ import { KeycloakService } from 'keycloak-angular';
 export class BattleComponent implements OnInit, OnDestroy {
 
 
-  public playerAttack: String;
-  public playerDefense: String;
+  public userNickNameAttack: String;
+  public userNickNameDefense: String;
 
   public heroesAttack: Hero[];
   public heroesDefense: Hero[];
@@ -42,14 +42,14 @@ export class BattleComponent implements OnInit, OnDestroy {
     private location: Location,
     private heroService: HeroService,
     private heroTypeService: HeroTypeService,
-    private playerService: PlayerService,
+    private userService: UserService,
     private formationService: FormationService,
     private battleService: BattleService,
     private keycloakService: KeycloakService) { }
 
   ngOnInit() {
-    this.playerAttack = this.keycloakService.getUsername();
-    this.playerDefense = this.keycloakService.getUsername();
+    this.userNickNameAttack = this.keycloakService.getUsername();
+    this.userNickNameDefense = this.keycloakService.getUsername();
     this.findAll();
   }
 
@@ -57,27 +57,27 @@ export class BattleComponent implements OnInit, OnDestroy {
 
     this.heroTypeService.findAll().subscribe(env => {
       this.heroTypes = env.data;
-      if (this.playerAttack != null) {
-        this.findAllByPlayerAttack()
+      if (this.userNickNameAttack != null) {
+        this.findAllByUserNickNameAttack()
       }
 
-      if (this.playerDefense != null) {
-        this.findAllByPlayerDefense()
+      if (this.userNickNameDefense != null) {
+        this.findAllByUserNickNameDefense()
       }
     });
 
 
   }
 
-  public keyDownFindAllByPlayerDefense(event: any) {
+  public keyDownFindAllByUserNickNameDefense(event: any) {
     if (event.keyCode == 13) {
-      this.findAllByPlayerDefense();
+      this.findAllByUserNickNameDefense();
     }
   }
 
-  public findAllByPlayerDefense() {
-    this.playerService.findByName(this.playerDefense).subscribe(env => {
-      this.heroService.findAllByPlayer(env.data.id).subscribe(env => {
+  public findAllByUserNickNameDefense() {
+    this.userService.findByNickName(this.userNickNameDefense).subscribe(env => {
+      this.heroService.findAllByUser(env.data.id).subscribe(env => {
         this.heroesDefense = env.data;
         this.heroesDefense.forEach(hero => {
           let heroType = this.heroTypes.filter(heroType => heroType.id === hero.heroTypeId)[0];
@@ -88,15 +88,15 @@ export class BattleComponent implements OnInit, OnDestroy {
   }
 
 
-  public keyDownFindAllByPlayerAttack(event: any) {
+  public keyDownFindAllByUserNickNameAttack(event: any) {
     if (event.keyCode == 13) {
-      this.findAllByPlayerAttack();
+      this.findAllByUserNickNameAttack();
     }
   }
 
-  public findAllByPlayerAttack() {
-    this.playerService.findByName(this.playerAttack).subscribe(env => {
-      this.heroService.findAllByPlayer(env.data.id).subscribe(env => {
+  public findAllByUserNickNameAttack() {
+    this.userService.findByNickName(this.userNickNameAttack).subscribe(env => {
+      this.heroService.findAllByUser(env.data.id).subscribe(env => {
         this.heroesAttack = env.data;
         this.heroesAttack.forEach(hero => {
           let heroType = this.heroTypes.filter(heroType => heroType.id === hero.heroTypeId)[0];

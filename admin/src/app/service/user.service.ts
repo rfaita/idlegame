@@ -6,21 +6,21 @@ import 'rxjs/add/operator/map';
 import { environment } from '../../environments/environment';
 import { HeroType } from '../model/herotype';
 import { Envelope } from '../model/envelope';
-import { Player } from '../model/player';
+import { User } from '../model/user';
 
 @Injectable()
-export class PlayerService {
+export class UserService {
 
 
     constructor(private http: HttpClient) {
     }
 
-    findByName(name: String): Observable<Envelope<Player>> {
-        return <Observable<Envelope<Player>>>this.http.get(environment.API_BASE_URL + "player/findByName/" + name);
+    findByNickName(name: String): Observable<Envelope<User>> {
+        return <Observable<Envelope<User>>>this.http.get(environment.API_BASE_URL + "user/findByNickName/" + name);
     }
 
-    create(): Observable<Envelope<Player>> {
-        return <Observable<Envelope<Player>>>this.http.post(environment.API_BASE_URL + "player", null);
+    create(): Observable<Envelope<User>> {
+        return <Observable<Envelope<User>>>this.http.post(environment.API_BASE_URL + "user", null);
     }
 
 }

@@ -1,6 +1,5 @@
 package com.idle.game.helper.client.resource;
 
-import com.idle.game.helper.client.mail.*;
 import com.idle.game.model.UserResource;
 import com.idle.game.model.Resource;
 import com.idle.game.server.dto.Envelope;
@@ -16,7 +15,7 @@ import static com.idle.game.constant.URIConstants.USERRESOURCE__ADD_RESOURCES;
  *
  * @author rafael
  */
-@FeignClient(name = "resource-client", url = "${idle.url.userResource}", fallback = MailClientImpl.class)
+@FeignClient(name = "resource-client", url = "${idle.url.userResource}", fallback = UserResourceClientImpl.class)
 public interface UserResourceClient {
 
     @RequestMapping(path = "/" + USERRESOURCE__USE_RESOURCES, method = RequestMethod.POST)

@@ -58,6 +58,8 @@ export class HeroComponent implements OnInit, OnDestroy {
 
   public save(data: any) {
     data.id = this.hero.id;
+    data.baseDefenses = this.hero.baseDefenses;
+    data.maxLevelDefenses = this.hero.maxLevelDefenses;
 
     this.heroService.save(data).subscribe(env => {
       this.hero = env.data;
