@@ -17,7 +17,7 @@ public class GuildService {
     private GuildRepository guildRepository;
 
     @Autowired
-    private GuildMemberClient guildMemberHelper;
+    private GuildMemberClient guildMemberClient;
 
     public Guild findByName(String name) {
         return guildRepository.findByName(name);
@@ -30,7 +30,7 @@ public class GuildService {
 
     public Guild myGuild() {
 
-        GuildMember myGuildMember = guildMemberHelper.myGuildMember().getData();
+        GuildMember myGuildMember = guildMemberClient.myGuildMember().getData();
 
         if (myGuildMember == null) {
             return null;
@@ -54,7 +54,7 @@ public class GuildService {
 
         guild = this.guildRepository.save(guild);
 
-        guildMemberHelper.createAdmin(guild.getId());
+        guildMemberClient.createAdmin(guild.getId());
 
         return guild;
     }
