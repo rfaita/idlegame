@@ -25,8 +25,6 @@ public class Formation implements Serializable {
     private List<BattlePositionedHero> heroes;
     @NotNull(message = "formation.allocation.can.not.be.null")
     private FormationAllocation formationAllocation;
-    private String nextLevelFormation;
-    private Reward reward;
 
     public Formation() {
     }
@@ -61,22 +59,6 @@ public class Formation implements Serializable {
 
     public void setFormationAllocation(FormationAllocation formationAllocation) {
         this.formationAllocation = formationAllocation;
-    }
-
-    public String getNextLevelFormation() {
-        return nextLevelFormation;
-    }
-
-    public void setNextLevelFormation(String nextLevelFormation) {
-        this.nextLevelFormation = nextLevelFormation;
-    }
-
-    public Reward getReward() {
-        return reward;
-    }
-
-    public void setReward(Reward reward) {
-        this.reward = reward;
     }
 
 }

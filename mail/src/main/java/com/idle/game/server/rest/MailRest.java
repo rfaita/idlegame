@@ -1,5 +1,7 @@
 package com.idle.game.server.rest;
 
+import com.idle.game.constant.SystemConstants;
+import static com.idle.game.constant.URIConstants.MAIL__SEND_PRIVATE_INTERNAL_MAIL;
 import static com.idle.game.constant.URIConstants.MAIL__SEND_PRIVATE_MAIL;
 import com.idle.game.helper.TokenHelper;
 import com.idle.game.model.Mail;
@@ -36,6 +38,15 @@ public class MailRest {
         mail.setFromUserNickName(tokenHelper.getNickName());
         mail.setFromAdmin(Boolean.FALSE);
         mail.setReward(null);
+
+        rabbitTemplate.convertAndSend(mailExchange, sendMailQueue, mail);
+    }
+
+    @RequestMapping(path = "/" + MAIL__SEND_PRIVATE_INTERNAL_MAIL, method = RequestMethod.POST)
+    public void sendPrivateInternalMail(@RequestBody Mail mail) {
+
+        mail.setFromUserNickName(SystemConstants.SYSTEM_USER);
+        mail.setFromAdmin(Boolean.TRUE);
 
         rabbitTemplate.convertAndSend(mailExchange, sendMailQueue, mail);
     }

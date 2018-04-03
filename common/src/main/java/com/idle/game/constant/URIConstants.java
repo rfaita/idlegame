@@ -17,6 +17,7 @@ public interface URIConstants {
     final String USERRESOURCE__USE_RESOURCES = "useResources";
     final String USERRESOURCE__ADD_RESOURCES = "addResources";
     final String MAIL__SEND_PRIVATE_MAIL = "sendPrivateMail";
+    final String MAIL__SEND_PRIVATE_INTERNAL_MAIL = "sendPrivateInternalMail";
     final String FORMATION__FIND_BY_FORMATION_ALLOCATION = "findByFormationAllocation";
     final String SHOP__BUY_LOOT_ROLL = "buyLootRoll";
     final String GUILD_MEMBER__CREATE_ADMIN = "createAdmin";

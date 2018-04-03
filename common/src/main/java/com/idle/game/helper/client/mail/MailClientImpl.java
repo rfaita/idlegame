@@ -25,4 +25,9 @@ public class MailClientImpl implements MailClient {
         rabbitTemplate.convertAndSend(mailExchange, sendMailQueue, mail);
     }
 
+    @Override
+    public void sendPrivateInternalMail(Mail mail) {
+        rabbitTemplate.convertAndSend(mailExchange, sendMailQueue, mail);
+    }
+
 }

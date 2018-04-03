@@ -1,6 +1,6 @@
 package com.idle.game.server.rest;
 
-import com.idle.game.core.battle.Battle;
+import com.idle.game.model.battle.BattleField;
 import com.idle.game.server.service.*;
 import com.idle.game.server.dto.Envelope;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/battle")
-public class BattleRest {
+@RequestMapping("/battleField")
+public class BattleFieldRest {
 
     @Autowired
-    private BattleService battleService;
+    private BattleFieldService battleFieldService;
 
-    @RequestMapping(path = "/{att}/{def}", method = RequestMethod.GET)
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public @ResponseBody
-    Envelope<Battle> doBattle(@PathVariable("att") String att, @PathVariable("def") String def) {
+    Envelope<BattleField> findById(@PathVariable("id") String id) {
 
-        Envelope<Battle> ret = new Envelope<>();
-        ret.setData(battleService.doBattle(att, def));
+        Envelope<BattleField> ret = new Envelope<>();
+        ret.setData(battleFieldService.findById(id));
 
         return ret;
 

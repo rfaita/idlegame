@@ -18,7 +18,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories("com.idle.game.server.repository")
 public class MongoEmbeddedConfiguration extends AbstractMongoConfiguration {
 
-    @Value("${idle.config..mongodb.database}")
+    @Value("${idle.config.mongodb.database}")
     private String mongoDB;
 
     @Override
@@ -36,7 +36,7 @@ public class MongoEmbeddedConfiguration extends AbstractMongoConfiguration {
 //    public MongoClient mongoClient() {
 //        return new Fongo(getDatabaseName()).getMongo();
 //    }
-    
+
     @Override
     protected String getMappingBasePackage() {
         return "com.idle.game.model.mongo";

@@ -6,6 +6,9 @@ package com.idle.game.constant;
  */
 public interface CacheConstants {
 
+    final String BATTLE_FIELD_FIND_BY_ID = "battleFieldPathFindById";
+    final String CAMPAIGN_PATH_INITAL_PATH = "campaignPathInitialPath";
+    final String CAMPAIGN_PATH_FIND_BY_ID = "campaignPathFindById";
     final String USER_FIND_BY_ID = "userFindById";
     final String USER_FIND_BY_NICK_NAME = "userFindByNickName";
     final String PVPRATING_FIND_PVP_RATINGS = "findPvpRatings";
