@@ -34,7 +34,7 @@ public class BattleFieldServiceTest {
     public ExpectedException expcetionExpect = ExpectedException.none();
 
     @Test
-    public void test() {
+    public void testSuccess1() {
 
         when(battleFieldRepository.findOne("1")).thenReturn(createBattleField("1"));
 
@@ -42,6 +42,19 @@ public class BattleFieldServiceTest {
 
         Assert.assertEquals("13", ret.get(0).getFormationId());
         Assert.assertEquals("04", ret.get(1).getFormationId());
+        Assert.assertEquals("01", ret.get(2).getFormationId());
+
+    }
+
+    @Test
+    public void testSuccess2() {
+
+        when(battleFieldRepository.findOne("1")).thenReturn(createBattleField("1"));
+
+        List<BattleSite> ret = battleFieldService.showPath("1", "10");
+
+        Assert.assertEquals("10", ret.get(0).getFormationId());
+        Assert.assertEquals("03", ret.get(1).getFormationId());
         Assert.assertEquals("01", ret.get(2).getFormationId());
 
     }
