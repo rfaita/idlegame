@@ -139,7 +139,37 @@ public class TestHelper {
         ret.add(createGemPSResource());
         ret.add(createRunePSResource());
         ret.add(createGoldPSResource());
+        ret.add(createGemPHResource());
+        ret.add(createRunePHResource());
+        ret.add(createGoldPHResource());
+        ret.add(createGemPDResource());
+        ret.add(createRunePDResource());
+        ret.add(createGoldPDResource());
         return ret;
+    }
+
+    public static Resource createGoldPDResource() {
+        return new Resource(ResourceType.GOLD_PD, 100L);
+    }
+
+    public static Resource createRunePDResource() {
+        return new Resource(ResourceType.RUNE_PD, 10L);
+    }
+
+    public static Resource createGemPDResource() {
+        return new Resource(ResourceType.GEM_PD, 1L);
+    }
+
+    public static Resource createGoldPHResource() {
+        return new Resource(ResourceType.GOLD_PH, 100L);
+    }
+
+    public static Resource createRunePHResource() {
+        return new Resource(ResourceType.RUNE_PH, 10L);
+    }
+
+    public static Resource createGemPHResource() {
+        return new Resource(ResourceType.GEM_PH, 1L);
     }
 
     public static Resource createGoldPSResource() {

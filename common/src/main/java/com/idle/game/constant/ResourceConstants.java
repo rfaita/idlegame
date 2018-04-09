@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class ResourceConstants {
 
-    public static final Long INITIAL_GOLD_PS = 5L;
-    public static final Long INITIAL_RUNE_PS = 5L;
+    public static final Long INITIAL_GOLD_PS = 1L;
+    public static final Long INITIAL_RUNE_PS = 1L;
 
     public static List<Resource> defaultResources() {
 

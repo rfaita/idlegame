@@ -13,12 +13,14 @@ import com.idle.game.model.PvpRating;
 import com.idle.game.model.Resource;
 import com.idle.game.model.ResourceType;
 import com.idle.game.model.User;
+import com.idle.game.model.campaign.CampaignPath;
 import com.idle.game.server.repository.PvpRatingRepository;
 import static com.idle.game.server.type.EloOutcome.LOSE;
 import static com.idle.game.server.type.EloOutcome.WIN;
 import com.idle.game.server.util.EloRating;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -122,11 +124,21 @@ public class PvpService {
         userResourceClient.useResources(useResource);
     }
 
+    private PvpRating findById(String idPvpRating) {
+        Optional<PvpRating> ret = pvpRatingRepository.findById(idPvpRating);
+
+        if (ret.isPresent()) {
+            return ret.get();
+        } else {
+            return null;
+        }
+    }
+
     @CacheEvict(value = PVPRATING_FIND_PVP_RATINGS, key = "'" + PVPRATING_FIND_PVP_RATINGS + "' + #user")
     public Battle battlePvpRattings(String userId, String idPvpRating) {
 
         PvpRating ratPlayer = pvpRatingRepository.findByUserId(userId);
-        PvpRating ratTarget = pvpRatingRepository.findOne(idPvpRating);
+        PvpRating ratTarget = findById(idPvpRating);
 
         if (ratTarget != null) {
 

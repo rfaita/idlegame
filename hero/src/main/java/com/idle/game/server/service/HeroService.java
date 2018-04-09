@@ -24,6 +24,7 @@ import com.idle.game.model.Hero;
 import com.idle.game.model.HeroType;
 import com.idle.game.model.shop.LootRoll;
 import com.idle.game.server.repository.HeroRepository;
+import java.util.Optional;
 
 /**
  *
@@ -44,7 +45,13 @@ public class HeroService {
     @Cacheable(value = HERO_FIND_BY_ID, key = "'" + HERO_FIND_BY_ID + "' + #id")
     public Hero findById(String id) {
 
-        return heroRepository.findOne(id);
+        Optional<Hero> ret = heroRepository.findById(id);
+
+        if (ret.isPresent()) {
+            return ret.get();
+        } else {
+            return null;
+        }
     }
 
     public List<Hero> findAllByUserId(String userId) {
@@ -95,7 +102,7 @@ public class HeroService {
     )
     public Hero levelUp(String id, String userId) {
 
-        Hero h = heroRepository.findOne(id);
+        Hero h = findById(id);
 
         validateLevelUp(h, userId);
 
@@ -163,7 +170,7 @@ public class HeroService {
             heroType = heroTypeClient.findById(customHeroType).getData();
             heroQuality = HeroQuality.valueOf(customHeroQuality);
         }
-        
+
         if (heroType == null) {
             throw new ValidationException("hero.type.not.found");
         }

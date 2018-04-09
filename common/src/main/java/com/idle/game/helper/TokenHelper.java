@@ -19,10 +19,6 @@ public class TokenHelper {
         return accessToken.getPreferredUsername();
     }
 
-    public String getToken() {
-        return accessToken.getAccessTokenHash();
-    }
-
     public String getUserId() {
         return accessToken.getSubject();
     }

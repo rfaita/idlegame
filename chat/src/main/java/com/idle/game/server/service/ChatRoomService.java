@@ -8,6 +8,8 @@ import com.idle.game.model.mongo.ChatRoom;
 import com.idle.game.model.mongo.ChatRoomUser;
 import com.idle.game.server.repository.ChatRoomRepository;
 import com.idle.game.server.util.Destination;
+import java.util.Observable;
+import java.util.Optional;
 import javax.validation.ValidationException;
 
 /**
@@ -32,7 +34,13 @@ public class ChatRoomService {
     }
 
     public ChatRoom findById(String chatRoom) {
-        return chatRoomRepository.findOne(chatRoom);
+        Optional<ChatRoom> ret = chatRoomRepository.findById(chatRoom);
+
+        if (ret.isPresent()) {
+            return ret.get();
+        } else {
+            return null;
+        }
     }
 
     public List<ChatRoom> findAll() {

@@ -29,6 +29,7 @@ import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_USER_ID_AN
 import com.idle.game.helper.client.battle.BattleHeroClient;
 import com.idle.game.helper.client.hero.HeroClient;
 import com.idle.game.helper.client.hero.HeroTypeClient;
+import java.util.Optional;
 
 /**
  *
@@ -55,14 +56,14 @@ public class FormationService {
     @Cacheable(value = FORMATION_FIND_BY_ID, key = "'" + FORMATION_FIND_BY_ID + "' + #id")
     public Formation findById(String id) {
 
-        Formation ret = formationRepository.findOne(id);
+        Optional<Formation> ret = formationRepository.findById(id);
 
-        if (ret != null) {
-            ret.getHeroes().forEach((h) -> {
+        if (ret.isPresent()) {
+            ret.get().getHeroes().forEach((h) -> {
                 h.setHero(battleHeroClient.getBattleHero(h.getHero().getId()).getData());
             });
 
-            return ret;
+            return ret.get();
         } else {
             throw new ValidationException("formation.not.found");
         }

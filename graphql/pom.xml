@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.idle.game</groupId>
     <artifactId>graphql</artifactId>
-    <version>0.0.2-ALPHA</version>
+    <version>0.0.3-ALPHA</version>
     <packaging>jar</packaging>
     
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.10.RELEASE</version>
+        <version>2.0.1.RELEASE</version>
         <relativePath/>
     </parent>
    
@@ -54,7 +54,7 @@
         <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-spring-boot-starter</artifactId>
-            <version>3.4.3.Final</version>
+            <version>4.0.0.Beta1</version>
         </dependency>
         
         <dependency>
@@ -65,23 +65,17 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-hystrix</artifactId>
-            <version>1.4.3.RELEASE</version>
         </dependency>
         
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-feign</artifactId>
-            <version>1.4.3.RELEASE</version>
         </dependency>
-        
-        
-        
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-
 
         <dependency>
             <groupId>com.idle.game</groupId>
@@ -105,17 +99,17 @@
         
     </dependencies>
     
-    <!--    <dependencyManagement>
+    <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Finchley.M8</version>
+                <version>Edgware.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
         </dependencies>
-    </dependencyManagement>-->
+    </dependencyManagement>
     
     <build>
         <plugins>

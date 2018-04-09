@@ -16,6 +16,9 @@ public interface IdleConstants {
 
     final Logger LOG = Logger.getLogger(IdleConstants.LOG_NAME);
 
+    final Integer SECONDS_IN_HOUR = 3600;
+    final Integer SECONDS_IN_DAY = SECONDS_IN_HOUR * 24;
+
     final Integer MAX_ENERGY = 100;
     final Integer MIN_ENERGY = 0;
     final Integer ENERGY_GAIN_ON_BATTLE_START = MAX_ENERGY / 2;

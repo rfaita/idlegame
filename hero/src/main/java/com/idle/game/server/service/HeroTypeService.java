@@ -18,6 +18,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import static com.idle.game.constant.CacheConstants.FORMATION_FIND_BY_USER_ID_AND_FORMATION_ALLOCATION;
+import com.idle.game.model.Hero;
+import java.util.Optional;
 
 /**
  *
@@ -36,7 +38,14 @@ public class HeroTypeService {
 
     @Cacheable(value = HERO_TYPE_FIND_BY_ID, key = "'" + HERO_TYPE_FIND_BY_ID + "' + #id")
     public HeroType findById(String id) {
-        return heroTypeRepository.findOne(id);
+
+        Optional<HeroType> ret = heroTypeRepository.findById(id);
+
+        if (ret.isPresent()) {
+            return ret.get();
+        } else {
+            return null;
+        }
     }
 
     @Caching(put

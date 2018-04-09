@@ -50,6 +50,8 @@ public class UserResourceTest {
         UserResource pr1 = createUserResource("3");
 
         pr1.setLastTimeResourcesCollected(Date.from(LocalDateTime.now().minus(1, ChronoUnit.SECONDS).atZone(ZoneId.systemDefault()).toInstant()));
+        pr1.setLastTimeResourcesCollectedHour(pr1.getLastTimeResourcesCollected());
+        pr1.setLastTimeResourcesCollectedDay(pr1.getLastTimeResourcesCollected());
 
         when(this.playerResourceRepository.findByUserId("3")).thenReturn(pr1);
 
@@ -63,6 +65,171 @@ public class UserResourceTest {
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PS).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PS).getValue());
         Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PS).getValue());
+        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PH).getValue());
+        Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PH).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PH).getValue());
+        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PD).getValue());
+        Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PD).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PD).getValue());
+
+    }
+
+    @Test
+    public void testComputeResources3600Second() {
+
+        UserResource pr1 = createUserResource("4");
+
+        pr1.setLastTimeResourcesCollected(Date.from(LocalDateTime.now().minus(3600, ChronoUnit.SECONDS).atZone(ZoneId.systemDefault()).toInstant()));
+        pr1.setLastTimeResourcesCollectedHour(pr1.getLastTimeResourcesCollected());
+        pr1.setLastTimeResourcesCollectedDay(pr1.getLastTimeResourcesCollected());
+
+        when(this.playerResourceRepository.findByUserId("4")).thenReturn(pr1);
+
+        when(this.playerResourceRepository.save(any(UserResource.class))).thenAnswer(createUserResourceAnswerForSomeInput());
+
+        UserResource pr1Expected = playerResourceService.computeResources("4");
+
+        Assert.assertEquals("4", pr1Expected.getUserId());
+
+        Assert.assertEquals(new Long(36010L), pr1Expected.getResource(ResourceType.RUNE).getValue());
+        Assert.assertEquals(new Long(360100L), pr1Expected.getResource(ResourceType.GOLD).getValue());
+        Assert.assertEquals(new Long(3601L), pr1Expected.getResource(ResourceType.GEM).getValue());
+        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PS).getValue());
+        Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PS).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PS).getValue());
+        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PH).getValue());
+        Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PH).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PH).getValue());
+        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PD).getValue());
+        Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PD).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PD).getValue());
+
+    }
+
+    @Test
+    public void testComputeResources4200Second() {
+
+        UserResource pr1 = createUserResource("4");
+
+        pr1.setLastTimeResourcesCollected(Date.from(LocalDateTime.now().minus(4200, ChronoUnit.SECONDS).atZone(ZoneId.systemDefault()).toInstant()));
+        pr1.setLastTimeResourcesCollectedHour(pr1.getLastTimeResourcesCollected());
+        pr1.setLastTimeResourcesCollectedDay(pr1.getLastTimeResourcesCollected());
+
+        when(this.playerResourceRepository.findByUserId("4")).thenReturn(pr1);
+
+        when(this.playerResourceRepository.save(any(UserResource.class))).thenAnswer(createUserResourceAnswerForSomeInput());
+
+        UserResource pr1Expected = playerResourceService.computeResources("4");
+
+        Assert.assertEquals("4", pr1Expected.getUserId());
+
+        Assert.assertEquals(new Long(42010L), pr1Expected.getResource(ResourceType.RUNE).getValue());
+        Assert.assertEquals(new Long(420100L), pr1Expected.getResource(ResourceType.GOLD).getValue());
+        Assert.assertEquals(new Long(4201L), pr1Expected.getResource(ResourceType.GEM).getValue());
+        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PS).getValue());
+        Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PS).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PS).getValue());
+        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PH).getValue());
+        Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PH).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PH).getValue());
+        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PD).getValue());
+        Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PD).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PD).getValue());
+
+    }
+
+    @Test
+    public void testComputeResources86400Second() {
+
+        UserResource pr1 = createUserResource("4");
+
+        pr1.setLastTimeResourcesCollected(Date.from(LocalDateTime.now().minus(86400, ChronoUnit.SECONDS).atZone(ZoneId.systemDefault()).toInstant()));
+        pr1.setLastTimeResourcesCollectedHour(pr1.getLastTimeResourcesCollected());
+        pr1.setLastTimeResourcesCollectedDay(pr1.getLastTimeResourcesCollected());
+
+        when(this.playerResourceRepository.findByUserId("4")).thenReturn(pr1);
+
+        when(this.playerResourceRepository.save(any(UserResource.class))).thenAnswer(createUserResourceAnswerForSomeInput());
+
+        UserResource pr1Expected = playerResourceService.computeResources("4");
+
+        Assert.assertEquals("4", pr1Expected.getUserId());
+
+        Assert.assertEquals(new Long(288090L), pr1Expected.getResource(ResourceType.RUNE).getValue());
+        Assert.assertEquals(new Long(2880900L), pr1Expected.getResource(ResourceType.GOLD).getValue());
+        Assert.assertEquals(new Long(28809L), pr1Expected.getResource(ResourceType.GEM).getValue());
+        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PS).getValue());
+        Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PS).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PS).getValue());
+        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PH).getValue());
+        Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PH).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PH).getValue());
+        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PD).getValue());
+        Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PD).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PD).getValue());
+
+    }
+
+    @Test
+    public void testComputeResources100000Second() {
+
+        UserResource pr1 = createUserResource("4");
+
+        pr1.setLastTimeResourcesCollected(Date.from(LocalDateTime.now().minus(100000, ChronoUnit.SECONDS).atZone(ZoneId.systemDefault()).toInstant()));
+        pr1.setLastTimeResourcesCollectedHour(pr1.getLastTimeResourcesCollected());
+        pr1.setLastTimeResourcesCollectedDay(pr1.getLastTimeResourcesCollected());
+
+        when(this.playerResourceRepository.findByUserId("4")).thenReturn(pr1);
+
+        when(this.playerResourceRepository.save(any(UserResource.class))).thenAnswer(createUserResourceAnswerForSomeInput());
+
+        UserResource pr1Expected = playerResourceService.computeResources("4");
+
+        Assert.assertEquals("4", pr1Expected.getUserId());
+
+        Assert.assertEquals(new Long(288090L), pr1Expected.getResource(ResourceType.RUNE).getValue());
+        Assert.assertEquals(new Long(2880900L), pr1Expected.getResource(ResourceType.GOLD).getValue());
+        Assert.assertEquals(new Long(28809L), pr1Expected.getResource(ResourceType.GEM).getValue());
+        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PS).getValue());
+        Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PS).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PS).getValue());
+        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PH).getValue());
+        Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PH).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PH).getValue());
+        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PD).getValue());
+        Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PD).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PD).getValue());
+
+    }
+    @Test
+    public void testComputeResources216000Second() {
+
+        UserResource pr1 = createUserResource("4");
+
+        pr1.setLastTimeResourcesCollected(Date.from(LocalDateTime.now().minus(216000, ChronoUnit.SECONDS).atZone(ZoneId.systemDefault()).toInstant()));
+        pr1.setLastTimeResourcesCollectedHour(pr1.getLastTimeResourcesCollected());
+        pr1.setLastTimeResourcesCollectedDay(pr1.getLastTimeResourcesCollected());
+
+        when(this.playerResourceRepository.findByUserId("4")).thenReturn(pr1);
+
+        when(this.playerResourceRepository.save(any(UserResource.class))).thenAnswer(createUserResourceAnswerForSomeInput());
+
+        UserResource pr1Expected = playerResourceService.computeResources("4");
+
+        Assert.assertEquals("4", pr1Expected.getUserId());
+
+        Assert.assertEquals(new Long(288100L), pr1Expected.getResource(ResourceType.RUNE).getValue());
+        Assert.assertEquals(new Long(2881000L), pr1Expected.getResource(ResourceType.GOLD).getValue());
+        Assert.assertEquals(new Long(28810L), pr1Expected.getResource(ResourceType.GEM).getValue());
+        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PS).getValue());
+        Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PS).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PS).getValue());
+        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PH).getValue());
+        Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PH).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PH).getValue());
+        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PD).getValue());
+        Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PD).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PD).getValue());
 
     }
 
@@ -72,6 +239,8 @@ public class UserResourceTest {
         UserResource pr1 = createUserResource("4");
 
         pr1.setLastTimeResourcesCollected(Date.from(LocalDateTime.now().minus(10, ChronoUnit.SECONDS).atZone(ZoneId.systemDefault()).toInstant()));
+        pr1.setLastTimeResourcesCollectedHour(pr1.getLastTimeResourcesCollected());
+        pr1.setLastTimeResourcesCollectedDay(pr1.getLastTimeResourcesCollected());
 
         when(this.playerResourceRepository.findByUserId("4")).thenReturn(pr1);
 
@@ -87,6 +256,12 @@ public class UserResourceTest {
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PS).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PS).getValue());
         Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PS).getValue());
+        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PH).getValue());
+        Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PH).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PH).getValue());
+        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PD).getValue());
+        Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PD).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PD).getValue());
 
     }
 
@@ -96,6 +271,8 @@ public class UserResourceTest {
         UserResource pr1 = createUserResource("5");
 
         pr1.setLastTimeResourcesCollected(Date.from(LocalDateTime.now().minus(5, ChronoUnit.SECONDS).atZone(ZoneId.systemDefault()).toInstant()));
+        pr1.setLastTimeResourcesCollectedHour(pr1.getLastTimeResourcesCollected());
+        pr1.setLastTimeResourcesCollectedDay(pr1.getLastTimeResourcesCollected());
 
         when(this.playerResourceRepository.findByUserId("5")).thenReturn(pr1);
 
@@ -111,6 +288,12 @@ public class UserResourceTest {
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PS).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PS).getValue());
         Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PS).getValue());
+        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PH).getValue());
+        Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PH).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PH).getValue());
+        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PD).getValue());
+        Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PD).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PD).getValue());
 
     }
 

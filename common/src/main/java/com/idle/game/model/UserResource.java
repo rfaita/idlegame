@@ -5,9 +5,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Stream;
 import javax.validation.ValidationException;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -26,6 +26,8 @@ public class UserResource implements Serializable {
     @Indexed
     private String userId;
     private Date lastTimeResourcesCollected = new Date();
+    private Date lastTimeResourcesCollectedHour = new Date();
+    private Date lastTimeResourcesCollectedDay = new Date();
     private List<Resource> resources = new ArrayList<>();
 
     public UserResource() {
@@ -40,6 +42,10 @@ public class UserResource implements Serializable {
         return resources;
     }
 
+    private Stream<Resource> getNotTimeResources() {
+        return resources.stream().filter((r) -> !r.getType().isTimeResource());
+    }
+
     public void setResources(List<Resource> resources) {
         this.resources = resources;
     }
@@ -49,9 +55,9 @@ public class UserResource implements Serializable {
             return t.getType().equals(resourceType);
         }).findFirst();
 
-        try {
+        if (ret.isPresent()) {
             return ret.get();
-        } catch (NoSuchElementException e) {
+        } else {
             return null;
         }
     }
@@ -91,11 +97,36 @@ public class UserResource implements Serializable {
 
     public void computeResoucers(Long seconds) {
 
-        this.getResources().stream().forEach((resource) -> {
-            Resource resourcePS = this.getResource(resource.getType().getResourcePS());
-            if (resourcePS != null) {
-                resource.setValue(resource.getValue() + (seconds * resourcePS.getValue()));
+        this.getNotTimeResources().forEach((resource) -> {
+            Resource resourcePerSecond = this.getResource(resource.getType().getResourcePerSecond());
+            if (resourcePerSecond != null) {
+                resource.setValue(resource.getValue() + (seconds * resourcePerSecond.getValue()));
             }
+
+        });
+
+    }
+
+    public void computeHourResoucers(Long hours) {
+
+        this.getNotTimeResources().forEach((resource) -> {
+            Resource resourcePerHour = this.getResource(resource.getType().getResourcePerHour());
+            if (resourcePerHour != null) {
+                resource.setValue(resource.getValue() + (hours * resourcePerHour.getValue()));
+            }
+
+        });
+
+    }
+
+    public void computeDayResoucers(Long days) {
+
+        this.getNotTimeResources().forEach((resource) -> {
+            Resource resourcePerDay = this.getResource(resource.getType().getResourcePerDay());
+            if (resourcePerDay != null) {
+                resource.setValue(resource.getValue() + (days * resourcePerDay.getValue()));
+            }
+
         });
 
     }
@@ -114,6 +145,22 @@ public class UserResource implements Serializable {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public Date getLastTimeResourcesCollectedHour() {
+        return lastTimeResourcesCollectedHour;
+    }
+
+    public void setLastTimeResourcesCollectedHour(Date lastTimeResourcesCollectedHour) {
+        this.lastTimeResourcesCollectedHour = lastTimeResourcesCollectedHour;
+    }
+
+    public Date getLastTimeResourcesCollectedDay() {
+        return lastTimeResourcesCollectedDay;
+    }
+
+    public void setLastTimeResourcesCollectedDay(Date lastTimeResourcesCollectedDay) {
+        this.lastTimeResourcesCollectedDay = lastTimeResourcesCollectedDay;
     }
 
     public Date getLastTimeResourcesCollected() {

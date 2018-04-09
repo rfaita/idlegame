@@ -7,6 +7,7 @@ import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.idle.game.helper.client.resource.UserResourceClient;
+import java.util.Optional;
 
 /**
  *
@@ -26,7 +27,15 @@ public class LootRollService {
     }
 
     public LootRoll findById(String id) {
-        return lootRollRepository.findOne(id);
+
+        Optional<LootRoll> ret = lootRollRepository.findById(id);
+
+        if (ret.isPresent()) {
+            return ret.get();
+        } else {
+            return null;
+        }
+
     }
 
     public LootRoll buyById(String id) {

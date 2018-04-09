@@ -5,6 +5,7 @@ import com.idle.game.server.repository.BattleFieldRepository;
 import com.idle.game.server.service.BattleFieldService;
 import static com.idle.game.tests.helper.TestHelper.createBattleField;
 import java.util.List;
+import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -36,7 +37,7 @@ public class BattleFieldServiceTest {
     @Test
     public void testSuccess1() {
 
-        when(battleFieldRepository.findOne("1")).thenReturn(createBattleField("1"));
+        when(battleFieldRepository.findById("1")).thenReturn(Optional.of(createBattleField("1")));
 
         List<BattleSite> ret = battleFieldService.showPath("1", "13");
 
@@ -49,7 +50,7 @@ public class BattleFieldServiceTest {
     @Test
     public void testSuccess2() {
 
-        when(battleFieldRepository.findOne("1")).thenReturn(createBattleField("1"));
+        when(battleFieldRepository.findById("1")).thenReturn(Optional.of(createBattleField("1")));
 
         List<BattleSite> ret = battleFieldService.showPath("1", "10");
 

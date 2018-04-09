@@ -2,8 +2,10 @@ package com.idle.game.server.service;
 
 import static com.idle.game.constant.CacheConstants.USER_FIND_BY_ID;
 import static com.idle.game.constant.CacheConstants.USER_FIND_BY_NICK_NAME;
+import com.idle.game.model.PvpRating;
 import com.idle.game.model.User;
 import com.idle.game.server.repository.UserRepository;
+import java.util.Optional;
 import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -17,7 +19,14 @@ public class UserService {
 
     @Cacheable(value = USER_FIND_BY_ID, key = "'" + USER_FIND_BY_ID + "' + #userId")
     public User findById(String userId) {
-        return userRepository.findOne(userId);
+
+        Optional<User> ret = userRepository.findById(userId);
+
+        if (ret.isPresent()) {
+            return ret.get();
+        } else {
+            return null;
+        }
     }
 
     @Cacheable(value = USER_FIND_BY_NICK_NAME, key = "'" + USER_FIND_BY_NICK_NAME + "' + #nickName")

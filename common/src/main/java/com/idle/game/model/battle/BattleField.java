@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.validation.ValidationException;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -20,7 +21,28 @@ public class BattleField implements Serializable {
     @Id
     private String id;
 
+    @Indexed
+    private String guildId;
+    @Indexed
+    private String userId;
+
     private final List<BattleLayer> layers = new ArrayList<>();
+
+    public String getGuildId() {
+        return guildId;
+    }
+
+    public void setGuildId(String guildId) {
+        this.guildId = guildId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getId() {
         return id;

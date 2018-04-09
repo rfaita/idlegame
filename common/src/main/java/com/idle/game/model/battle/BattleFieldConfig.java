@@ -4,7 +4,10 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import javax.validation.ValidationException;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -19,8 +22,30 @@ public class BattleFieldConfig implements Serializable {
     private String id;
 
     private Integer maxLayerSize = 3;
-    private final Map<Integer, Integer> maxSitesSize = new HashMap<>();
-    
+    @Transient
+    private transient final Map<Integer, Integer> maxSitesSize = new HashMap<>();
+
+    @Indexed
+    private String guildId;
+    @Indexed
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getGuildId() {
+        return guildId;
+    }
+
+    public void setGuildId(String guildId) {
+        this.guildId = guildId;
+    }
+
     public String getId() {
         return id;
     }
@@ -38,10 +63,16 @@ public class BattleFieldConfig implements Serializable {
     }
 
     public Integer getMaxSiteSize(Integer layer) {
+        if (layer > maxLayerSize - 1) {
+            throw new ValidationException("layer.greater.max.layer.size");
+        }
         return maxSitesSize.getOrDefault(layer, 1);
     }
 
     public void setMaxSiteSize(Integer layer, Integer maxSiteSize) {
+        if (layer > maxLayerSize - 1) {
+            throw new ValidationException("layer.greater.max.layer.size");
+        }
         this.maxSitesSize.put(layer, maxSiteSize);
     }
 

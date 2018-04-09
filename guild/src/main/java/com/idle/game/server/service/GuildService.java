@@ -5,6 +5,7 @@ import com.idle.game.helper.client.guild.GuildMemberClient;
 import com.idle.game.model.Guild;
 import com.idle.game.model.GuildMember;
 import com.idle.game.server.repository.GuildRepository;
+import java.util.Optional;
 import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
@@ -25,7 +26,13 @@ public class GuildService {
 
     @Cacheable(value = GUILD_FIND_BY_ID, key = "'" + GUILD_FIND_BY_ID + "' + #id")
     public Guild findById(String id) {
-        return guildRepository.findOne(id);
+        Optional<Guild> ret = guildRepository.findById(id);
+
+        if (ret.isPresent()) {
+            return ret.get();
+        } else {
+            return null;
+        }
     }
 
     public Guild myGuild() {

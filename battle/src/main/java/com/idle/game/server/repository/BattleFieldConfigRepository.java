@@ -11,4 +11,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BattleFieldConfigRepository extends MongoRepository<BattleFieldConfig, String> {
 
+    BattleFieldConfig findByGuildId(String guildId);
+
+    BattleFieldConfig findByUserId(String userId);
+
 }

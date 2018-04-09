@@ -56,15 +56,15 @@ public class RedisConfiguration {
         return redisTemplate;
     }
 
-    @Bean
-    RedisCacheManager cacheManager() {
-        RedisCacheManager redisCacheManager = new RedisCacheManager(redisTemplate());
-
-        Map<String, Long> cacheExpiresPolice = new HashMap<>();
-
-        cacheExpiresPolice.put(PVPRATING_FIND_PVP_RATINGS, pvpRatingCache);
-
-        redisCacheManager.setExpires(cacheExpiresPolice);
-        return redisCacheManager;
-    }
+//    @Bean
+//    RedisCacheManager cacheManager() {
+//        RedisCacheManager redisCacheManager = RedisCacheManager.create(jedisConnectionFactory());
+//
+//        Map<String, Long> cacheExpiresPolice = new HashMap<>();
+//
+//        cacheExpiresPolice.put(PVPRATING_FIND_PVP_RATINGS, pvpRatingCache);
+//
+//        redisCacheManager.setExpires(cacheExpiresPolice);
+//        return redisCacheManager;
+//    }
 }

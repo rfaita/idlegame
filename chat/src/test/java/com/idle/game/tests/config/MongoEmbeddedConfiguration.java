@@ -1,7 +1,6 @@
 package com.idle.game.tests.config;
 
 import com.github.fakemongo.Fongo;
-import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -29,14 +28,9 @@ public class MongoEmbeddedConfiguration extends AbstractMongoConfiguration {
 
     @Override
     @Bean
-    public Mongo mongo() throws Exception {
+    public MongoClient mongoClient() {
         return new Fongo(getDatabaseName()).getMongo();
     }
-//    @Override
-//    @Bean
-//    public MongoClient mongoClient() {
-//        return new Fongo(getDatabaseName()).getMongo();
-//    }
 
     @Override
     protected String getMappingBasePackage() {
