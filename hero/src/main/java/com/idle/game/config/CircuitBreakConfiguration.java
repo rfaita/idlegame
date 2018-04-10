@@ -1,6 +1,7 @@
 package com.idle.game.config;
 
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.Profile;
  */
 @Configuration
 @EnableCircuitBreaker
+@EnableHystrix
 @EnableFeignClients(basePackages = {
     "com.idle.game.helper.client.battle",
     "com.idle.game.helper.client.friend",

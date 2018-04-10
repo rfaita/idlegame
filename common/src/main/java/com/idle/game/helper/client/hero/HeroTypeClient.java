@@ -6,7 +6,7 @@ import static com.idle.game.constant.URIConstants.HEROTYPE__FIND_BY_NAME;
 import com.idle.game.model.HeroType;
 import com.idle.game.server.dto.Envelope;
 import java.util.List;
-import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
