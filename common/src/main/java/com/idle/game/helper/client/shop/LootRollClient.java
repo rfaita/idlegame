@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  * @author rafael
  */
-@FeignClient(name = "loot-roll-client", url = "${idle.url.shop}", fallback = LootRollClientImpl.class)
+@FeignClient(name = "shop-service", path = "/shop", fallback = LootRollClientImpl.class)
 public interface LootRollClient {
 
     @RequestMapping(path = "/" + SHOP__BUY_LOOT_ROLL + "/{id}", method = RequestMethod.GET)

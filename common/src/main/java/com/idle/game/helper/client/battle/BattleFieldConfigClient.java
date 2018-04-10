@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  * @author rafael
  */
-@FeignClient(name = "battle-field-config-client", url = "${idle.url.battleFieldConfig}", fallback = BattleFieldConfigClientImpl.class)
+@FeignClient(name = "battle-service", path = "/battleFieldConfig", fallback = BattleFieldConfigClientImpl.class)
 public interface BattleFieldConfigClient {
 
     @RequestMapping(path = "", method = RequestMethod.GET)

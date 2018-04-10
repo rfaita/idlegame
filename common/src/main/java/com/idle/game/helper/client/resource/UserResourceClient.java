@@ -15,7 +15,7 @@ import org.springframework.cloud.openfeign.FeignClient;
  *
  * @author rafael
  */
-@FeignClient(name = "resource-client", url = "${idle.url.userResource}", fallback = UserResourceClientImpl.class)
+@FeignClient(name = "player-service", path = "/userResource", fallback = UserResourceClientImpl.class)
 public interface UserResourceClient {
 
     @RequestMapping(path = "/" + USERRESOURCE__USE_RESOURCES, method = RequestMethod.POST)

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  * @author rafael
  */
-@FeignClient(name = "guild-client", url = "${idle.url.guild}", fallback = GuildClientImpl.class)
+@FeignClient(name = "guild-service", path = "/guild", fallback = GuildClientImpl.class)
 public interface GuildClient {
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)

@@ -1,6 +1,3 @@
-info:
-    version: @pom.version@
-    stage: dev
 server:
     port: 8081
     compression:
@@ -10,36 +7,38 @@ server:
 management: 
     security: 
         enabled: false
+keycloak:
+    auth-server-url: http://localhost:8180/auth
+    realm: idlerealm
+    resource: idlegame
+    public-client: true
+
+#Spring Boot Config            
+spring:
+    profiles:
+        active: default
+    jackson:
+        default-property-inclusion: non_null
+        
+eureka:         #tells about the Eureka server details and its refresh time
+    instance:
+        leaseRenewalIntervalInSeconds: 1
+        leaseExpirationDurationInSeconds: 2
+    client:
+        serviceUrl:
+            defaultZone: ${EUREKASERVER:http://localhost:8761/eureka/}
+        healthcheck:
+            enabled: true
+        lease:
+            duration: 5
+        
+feign:
+    hystrix:
+        enabled: true
+hystrix:
+    shareSecurityContext: true
+    
 idle:
-    url:
-        heroType:
-            http://localhost:8082/heroType
-        hero:
-            http://localhost:8082/hero
-        battleHero:
-            http://localhost:8081/battleHero
-        formation:
-            http://localhost:8081/formation
-        friend:
-            http://localhost:8085/friend
-        user:
-            http://localhost:8085/user
-        userResource:
-            http://localhost:8085/userResource
-        mail:
-            http://localhost:8084/mail
-        battle:
-            http://localhost:8081/battle
-        shop:
-            http://localhost:8086/shop
-        guild:
-            http://localhost:8087/guild
-        guildMember:
-            http://localhost:8087/guildMember
-        battleField:
-            http://localhost:8081/battleField
-        battleFieldConfig:
-            http://localhost:8081/battleFieldConfig
     config:
         #Redis
         redis:
@@ -63,7 +62,7 @@ idle:
             port: 5672
             username: admin
             password: admin123
-        
+            
         battleFieldConfig:
             guildMaxLayerSize: 5
             defaultGuildMaxLayerSize: 3
@@ -72,7 +71,7 @@ idle:
             userMaxLayerSize: 3
             defaultUserMaxLayerSize: 2
             growthFactorUserMaxSitesSize: 2
-        
+            
         pvpRating:
             expire: 1800
             price: 20
@@ -81,28 +80,3 @@ idle:
             exchange: idle.game.mail.exchange
             sendDLQQueue: idle.game.mail.sendDLQQueue
             sendQueue: idle.game.mail.sendQueue
-
-keycloak:
-    auth-server-url: http://localhost:8180/auth
-    realm: idlerealm
-    resource: idlegame
-    public-client: true
-
-#Spring Boot Config            
-spring:
-    profiles:
-        active: default
-    application:
-        name: @pom.artifactId@
-    jackson:
-        default-property-inclusion: non_null
-        
-logging:
-    level:
-        com.idle.game.core: WARN
-
-feign:
-    hystrix:
-        enabled: true
-hystrix:
-    shareSecurityContext: true

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  * @author rafael
  */
-@FeignClient(name = "hero-client", url = "${idle.url.hero}", fallback = HeroClientImpl.class)
+@FeignClient(name = "hero-service", path = "/hero", fallback = HeroClientImpl.class)
 public interface HeroClient {
 
     @RequestMapping(path = "/" + HERO__FIND_ALL_BY_USER_ID + "/{userId}", method = RequestMethod.GET)

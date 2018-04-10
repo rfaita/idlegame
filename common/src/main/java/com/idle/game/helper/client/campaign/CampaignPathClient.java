@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  * @author rafael
  */
-@FeignClient(name = "campaign-path-client", url = "${idle.url.campaignPath}", fallback = CampaignPathClientImpl.class)
+@FeignClient(name = "player-service", path = "/campaignPath", fallback = CampaignPathClientImpl.class)
 public interface CampaignPathClient {
 
     @RequestMapping(path = "", method = RequestMethod.GET)

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  * @author rafael
  */
-@FeignClient(name = "hero-type-client", url = "${idle.url.heroType}", fallback = HeroTypeClientImpl.class)
+@FeignClient(name = "hero-service", path = "/heroType", fallback = HeroTypeClientImpl.class)
 public interface HeroTypeClient {
 
     @RequestMapping(path = "/" + HEROTYPE__FIND_ALL_BY_QUALITY + "/{quality}", method = RequestMethod.GET)

@@ -1,6 +1,3 @@
-info:
-    version: @pom.version@
-    stage: dev
 server:
     port: 9000
 
@@ -13,80 +10,107 @@ zuul:
     friend:
         path: /friend/**
         sensitiveHeaders:
-        url: http://localhost:8085/friend
+        serviceId: player-service
+        stripPrefix: false
     actionEffectTypes:
         path: /actionEffectTypes/**
         sensitiveHeaders:
-        url: http://localhost:8082/actionEffectTypes
+        serviceId: hero-service
+        stripPrefix: false
     heroTypes:
         path: /heroTypes/**
         sensitiveHeaders:
-        url: http://localhost:8082/heroTypes
+        serviceId: hero-service
+        stripPrefix: false
     heroTypeTypes:
         path: /heroTypeTypes/**
         sensitiveHeaders:
-        url: http://localhost:8082/heroTypeTypes
+        serviceId: hero-service
+        stripPrefix: false
     heroType:
         path: /heroType/**
         sensitiveHeaders:
-        url: http://localhost:8082/heroType
+        serviceId: hero-service
+        stripPrefix: false
     hero:
         path: /hero/**
         sensitiveHeaders:
-        url: http://localhost:8082/hero
+        serviceId: hero-service
+        stripPrefix: false
     battleHero:
         path: /battleHero/**
         sensitiveHeaders:
-        url: http://localhost:8081/battleHero
+        serviceId: battle-service
+        stripPrefix: false
     formation:
         path: /formation/**
         sensitiveHeaders:
-        url: http://localhost:8081/formation
+        serviceId: battle-service
+        stripPrefix: false
     user:
         path: /user/**
         sensitiveHeaders:
-        url: http://localhost:8085/user
+        serviceId: player-service
+        stripPrefix: false
     userResource:
         path: /userResource/**
         sensitiveHeaders:
-        url: http://localhost:8085/userResource
+        serviceId: player-service
+        stripPrefix: false
     mail:
         path: /mail/**
         sensitiveHeaders:
-        url: http://localhost:8084/mail
+        serviceId: mail-service
+        stripPrefix: false
     battle:
         path: /battle/**
         sensitiveHeaders:
-        url: http://localhost:8081/battle
+        serviceId: battle-service
+        stripPrefix: false
     shop:
         path: /shop/**
         sensitiveHeaders:
-        url: http://localhost:8086/shop
+        serviceId: shop-service
+        stripPrefix: false
     chat:
         path: /chat/**
         sensitiveHeaders:
-        url: http://localhost:8083/chat
+        serviceId: chat-service
+        stripPrefix: false
     pvp:
         path: /pvp/**
         sensitiveHeaders:
-        url: http://localhost:8085/pvp
+        serviceId: player-service
+        stripPrefix: false
     guild:
         path: /guild/**
         sensitiveHeaders:
-        url: http://localhost:8087/guild
+        serviceId: guild-service
+        stripPrefix: false
     guildMember:
         path: /guildMember/**
         sensitiveHeaders:
-        url: http://localhost:8087/guildMember
+        serviceId: guild-service
+        stripPrefix: false
     
 #Spring Boot Config            
 spring:
     profiles:
         active: default
-    application:
-        name: @pom.artifactId@
     jackson:
         default-property-inclusion: non_null
+        
+eureka:         #tells about the Eureka server details and its refresh time
+    instance:
+        leaseRenewalIntervalInSeconds: 1
+        leaseExpirationDurationInSeconds: 2
+    client:
+        serviceUrl:
+            defaultZone: ${EUREKASERVER:http://localhost:8761/eureka/}
+        healthcheck:
+            enabled: true
+        lease:
+            duration: 5
         
 feign:
     hystrix:

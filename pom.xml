@@ -29,6 +29,8 @@
         <module>proxy</module>
         <module>guild</module>
         <module>graphql</module>
+        <module>eureka</module>
+        <module>config</module>
     </modules>
 
 </project>
