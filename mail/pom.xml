@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.idle.game</groupId>
     <artifactId>mail</artifactId>
-    <version>0.0.3-ALPHA</version>
+    <version>0.0.4-ALPHA</version>
     <packaging>jar</packaging>
     
     <parent>

@@ -1,8 +1,8 @@
 package com.idle.game.tests;
 
 import com.idle.game.model.battle.BattleField;
-import com.idle.game.model.battle.BattleFieldConfig;
 import com.idle.game.model.battle.BattleSite;
+import com.idle.game.model.battle.pve.PveBattleFieldConfig;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -16,8 +16,8 @@ public class BattleFieldTest {
     @Rule
     public ExpectedException expcetionExpect = ExpectedException.none();
 
-    private BattleFieldConfig getDefaultConfig() {
-        BattleFieldConfig ret = new BattleFieldConfig();
+    private PveBattleFieldConfig getDefaultConfig() {
+        PveBattleFieldConfig ret = new PveBattleFieldConfig();
         ret.setMaxSiteSize(0, 1);
         ret.setMaxSiteSize(1, 3);
         ret.setMaxSiteSize(2, 9);

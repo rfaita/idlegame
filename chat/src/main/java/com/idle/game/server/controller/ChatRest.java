@@ -1,5 +1,6 @@
 package com.idle.game.server.controller;
 
+import static com.idle.game.constant.URIConstants.CHAT;
 import com.idle.game.helper.TokenHelper;
 import com.idle.game.model.mongo.ChatJoined;
 import com.idle.game.model.mongo.ChatRoom;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author rafael
  */
 @RestController
-@RequestMapping("/chat")
+@RequestMapping(CHAT)
 public class ChatRest {
 
     @Autowired

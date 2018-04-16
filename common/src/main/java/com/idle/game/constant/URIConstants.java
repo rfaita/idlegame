@@ -6,7 +6,30 @@ package com.idle.game.constant;
  */
 public interface URIConstants {
 
-    final String BATTLEFIELDCONFIG_UPDATE_MAX_LAYER_SIZE = "updateMaxLayerSize";
+    final String CAMPAIGN_PATH = "/campaignPath";
+    final String USER = "/user";
+    final String USER_RESOURCE = "/userResource";
+    final String USER_CAMPAIGN_PATH = "/userCampaighPath";
+    final String PVP = "/pvp";
+    final String MAIL = "/mail";
+    final String SHOP = "/shop";
+    final String INVENTORY = "/inventory";
+    final String HERO_TYPE_TYPES = "/heroTypeTypes";
+    final String HERO_TYPES = "/heroTypes";
+    final String HERO_TYPE = "/heroType";
+    final String HERO = "/hero";
+    final String GUILD = "/guild";
+    final String GUILD_MEMBER = "/guildMember";
+    final String FRIEND = "/friend";
+    final String FORMATION = "/formation";
+    final String CHAT = "/chat";
+    final String BATTLE = "/battle";
+    final String BATTLE_HERO = "/battleHero";
+    final String BATTLE_FIELD = "/battleField";
+    final String ACTION_EFFECT_TYPES = "/actionEffectTypes";
+    final String PVE_BATTLE_FIELD_CONFIG = "/pveBattleFieldConfig";
+
+    final String PVE_BATTLEFIELDCONFIG_UPGRADE = "upgrade";
     final String USER__FIND_BY_NICK_NAME = "findByNickName";
     final String HEROTYPE__FIND_ALL_BY_QUALITY = "findAllByQuality";
     final String HEROTYPE__FIND_ALL_BY_FACTION = "findAllByFaction";

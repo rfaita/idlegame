@@ -1,5 +1,6 @@
 package com.idle.game.helper.client.guild;
 
+import static com.idle.game.constant.URIConstants.GUILD;
 import com.idle.game.model.Guild;
 import com.idle.game.server.dto.Envelope;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  * @author rafael
  */
-@FeignClient(name = "guild-service", path = "/guild", fallback = GuildClientImpl.class)
+@FeignClient(name = "guild-service", path = GUILD, fallback = GuildClientImpl.class)
 public interface GuildClient {
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)

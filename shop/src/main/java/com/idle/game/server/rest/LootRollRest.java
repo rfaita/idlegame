@@ -1,5 +1,6 @@
 package com.idle.game.server.rest;
 
+import static com.idle.game.constant.URIConstants.SHOP;
 import static com.idle.game.constant.URIConstants.SHOP__BUY_LOOT_ROLL;
 import com.idle.game.model.shop.LootRoll;
 import com.idle.game.server.dto.Envelope;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author rafael
  */
 @RestController
-@RequestMapping("/shop")
+@RequestMapping(SHOP)
 public class LootRollRest {
 
     @Autowired
@@ -31,7 +32,6 @@ public class LootRollRest {
         ret.setData(lootRollService.findAll());
 
         return ret;
-
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)

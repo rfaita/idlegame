@@ -1,5 +1,6 @@
 package com.idle.game.helper.client.guild;
 
+import static com.idle.game.constant.URIConstants.GUILD_MEMBER;
 import static com.idle.game.constant.URIConstants.GUILD_MEMBER__CREATE_ADMIN;
 import static com.idle.game.constant.URIConstants.GUILD_MEMBER__FIND_BY_USER_MEMBER_ID;
 import static com.idle.game.constant.URIConstants.GUILD_MEMBER__REQUESTS;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  * @author rafael
  */
-@FeignClient(name = "guild-service", path = "/guildMember", fallback = GuildMemberClientImpl.class)
+@FeignClient(name = "guild-service", path = GUILD_MEMBER, fallback = GuildMemberClientImpl.class)
 public interface GuildMemberClient {
 
     @RequestMapping(path = "/" + GUILD_MEMBER__CREATE_ADMIN + "/{guildId}", method = RequestMethod.POST)

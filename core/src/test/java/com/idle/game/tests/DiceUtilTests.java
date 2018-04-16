@@ -1,8 +1,6 @@
 package com.idle.game.tests;
 
-import static com.idle.game.core.constant.IdleConstants.LOG;
 import com.idle.game.core.util.DiceUtil;
-import java.util.logging.Level;
 import org.junit.Assert;
 import org.junit.Test;
 

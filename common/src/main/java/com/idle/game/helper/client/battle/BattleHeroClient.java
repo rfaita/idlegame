@@ -1,5 +1,6 @@
 package com.idle.game.helper.client.battle;
 
+import static com.idle.game.constant.URIConstants.BATTLE_HERO;
 import com.idle.game.core.hero.BattleHero;
 import com.idle.game.server.dto.Envelope;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  * @author rafael
  */
-@FeignClient(name = "battle-service", path = "/battleHero", fallback = BattleHeroClientImpl.class)
+@FeignClient(name = "battle-service", path = BATTLE_HERO, fallback = BattleHeroClientImpl.class)
 public interface BattleHeroClient {
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)

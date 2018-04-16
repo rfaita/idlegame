@@ -1,6 +1,7 @@
 package com.idle.game.server.rest;
 
 import com.idle.game.constant.SystemConstants;
+import static com.idle.game.constant.URIConstants.MAIL;
 import static com.idle.game.constant.URIConstants.MAIL__SEND_PRIVATE_INTERNAL_MAIL;
 import static com.idle.game.constant.URIConstants.MAIL__SEND_PRIVATE_MAIL;
 import com.idle.game.helper.TokenHelper;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author rafael
  */
 @RestController
-@RequestMapping("/mail")
+@RequestMapping(MAIL)
 public class MailRest {
 
     @Autowired

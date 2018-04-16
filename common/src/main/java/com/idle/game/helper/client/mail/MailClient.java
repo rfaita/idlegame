@@ -1,5 +1,6 @@
 package com.idle.game.helper.client.mail;
 
+import static com.idle.game.constant.URIConstants.MAIL;
 import static com.idle.game.constant.URIConstants.MAIL__SEND_PRIVATE_INTERNAL_MAIL;
 import static com.idle.game.constant.URIConstants.MAIL__SEND_PRIVATE_MAIL;
 import com.idle.game.model.Mail;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  * @author rafael
  */
-@FeignClient(name = "mail-service", path = "/mail", fallback = MailClientImpl.class)
+@FeignClient(name = "mail-service", path = MAIL, fallback = MailClientImpl.class)
 public interface MailClient {
 
     @RequestMapping(path = "/" + MAIL__SEND_PRIVATE_MAIL, method = RequestMethod.POST)

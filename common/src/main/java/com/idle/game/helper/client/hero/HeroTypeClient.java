@@ -3,6 +3,7 @@ package com.idle.game.helper.client.hero;
 import com.idle.game.constant.URIConstants;
 import static com.idle.game.constant.URIConstants.HEROTYPE__FIND_ALL_BY_QUALITY;
 import static com.idle.game.constant.URIConstants.HEROTYPE__FIND_BY_NAME;
+import static com.idle.game.constant.URIConstants.HERO_TYPE;
 import com.idle.game.model.HeroType;
 import com.idle.game.server.dto.Envelope;
 import java.util.List;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  * @author rafael
  */
-@FeignClient(name = "hero-service", path = "/heroType", fallback = HeroTypeClientImpl.class)
+@FeignClient(name = "hero-service", path = HERO_TYPE, fallback = HeroTypeClientImpl.class)
 public interface HeroTypeClient {
 
     @RequestMapping(path = "/" + HEROTYPE__FIND_ALL_BY_QUALITY + "/{quality}", method = RequestMethod.GET)

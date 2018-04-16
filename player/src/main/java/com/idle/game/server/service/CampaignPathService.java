@@ -1,7 +1,6 @@
 package com.idle.game.server.service;
 
 import static com.idle.game.constant.CacheConstants.*;
-import com.idle.game.model.Hero;
 import com.idle.game.model.campaign.CampaignPath;
 import com.idle.game.server.repository.CampaignPathRepository;
 import java.util.Optional;

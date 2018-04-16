@@ -1,5 +1,6 @@
 package com.idle.game.server.rest;
 
+import static com.idle.game.constant.URIConstants.GUILD_MEMBER;
 import static com.idle.game.constant.URIConstants.GUILD_MEMBER__CREATE_ADMIN;
 import static com.idle.game.constant.URIConstants.GUILD_MEMBER__FIND_BY_USER_MEMBER_ID;
 import static com.idle.game.constant.URIConstants.GUILD_MEMBER__REQUESTS;
@@ -16,7 +17,7 @@ import com.idle.game.server.service.GuildMemberService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/guildMember")
+@RequestMapping(GUILD_MEMBER)
 public class GuildMemberRest {
 
     @Autowired

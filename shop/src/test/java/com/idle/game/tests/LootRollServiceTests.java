@@ -2,8 +2,10 @@ package com.idle.game.tests;
 
 import static com.idle.game.core.constant.IdleConstants.LOG;
 import com.idle.game.core.hero.type.HeroQuality;
+import com.idle.game.model.shop.FormationItem;
 import com.idle.game.model.shop.LootRoll;
 import com.idle.game.model.shop.LootRollValue;
+import com.idle.game.model.shop.Roll;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -71,8 +73,40 @@ public class LootRollServiceTests {
 
         expcetionExpect.expect(ValidationException.class);
         expcetionExpect.expectMessage("loot.roll.invalid");
-        
+
         lr.roll(HeroQuality.class);
+
+    }
+
+    @Test
+    public void testLootRollNoArgsSuccess() {
+
+        LootRoll lr = new LootRoll();
+
+        lr.addRoll(FormationItem.class, new LootRollValue("123", 100.0));
+
+        Roll roll = lr.roll();
+
+        Assert.assertEquals("123", roll.getValue());
+
+    }
+
+    @Test
+    public void testLootRollNoArgsSuccess2() {
+
+        LootRoll lr = new LootRoll();
+
+        lr.addRoll("1", new LootRollValue("123", 33.0));
+        lr.addRoll("1", new LootRollValue("124", 33.0));
+        lr.addRoll("1", new LootRollValue("125", 34.0));
+        lr.addRoll("2", new LootRollValue("126", 100.0));
+        lr.addRoll("3", new LootRollValue("127", 100.0));
+
+        Roll roll = lr.roll();
+
+        Assert.assertTrue("1".contains(roll.getRollType())
+                || "2".contains(roll.getRollType())
+                || "3".contains(roll.getRollType()));
 
     }
 

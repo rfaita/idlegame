@@ -1,5 +1,6 @@
 package com.idle.game.server.rest;
 
+import static com.idle.game.constant.URIConstants.PVP;
 import com.idle.game.core.battle.Battle;
 import com.idle.game.server.dto.Envelope;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
-@RequestMapping("/pvp")
+@RequestMapping(PVP)
 public class PvpRest {
 
     @Autowired

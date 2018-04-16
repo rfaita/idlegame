@@ -1,5 +1,6 @@
 package com.idle.game.helper.client.friend;
 
+import static com.idle.game.constant.URIConstants.FRIEND;
 import com.idle.game.model.Friend;
 import com.idle.game.server.dto.Envelope;
 import java.util.List;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  * @author rafael
  */
-@FeignClient(name = "player-service", path = "/friend", fallback = FriendClientImpl.class)
+@FeignClient(name = "player-service", path = FRIEND, fallback = FriendClientImpl.class)
 public interface FriendClient {
 
     @RequestMapping(path = "/{userId}", method = RequestMethod.GET)

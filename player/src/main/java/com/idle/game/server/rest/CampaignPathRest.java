@@ -1,5 +1,6 @@
 package com.idle.game.server.rest;
 
+import static com.idle.game.constant.URIConstants.CAMPAIGN_PATH;
 import com.idle.game.server.dto.Envelope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +12,7 @@ import com.idle.game.server.service.CampaignPathService;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
-@RequestMapping("/campaignPath")
+@RequestMapping(CAMPAIGN_PATH)
 public class CampaignPathRest {
 
     @Autowired

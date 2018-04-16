@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import static com.idle.game.constant.URIConstants.USERRESOURCE__USE_RESOURCES;
 import static com.idle.game.constant.URIConstants.USERRESOURCE__ADD_RESOURCES;
+import static com.idle.game.constant.URIConstants.USER_RESOURCE;
 import org.springframework.cloud.openfeign.FeignClient;
 
 /**
  *
  * @author rafael
  */
-@FeignClient(name = "player-service", path = "/userResource", fallback = UserResourceClientImpl.class)
+@FeignClient(name = "player-service", path = USER_RESOURCE, fallback = UserResourceClientImpl.class)
 public interface UserResourceClient {
 
     @RequestMapping(path = "/" + USERRESOURCE__USE_RESOURCES, method = RequestMethod.POST)

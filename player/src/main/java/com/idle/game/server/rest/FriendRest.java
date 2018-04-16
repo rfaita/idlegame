@@ -1,5 +1,6 @@
 package com.idle.game.server.rest;
 
+import static com.idle.game.constant.URIConstants.FRIEND;
 import com.idle.game.server.dto.Envelope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +14,7 @@ import com.idle.game.server.service.FriendService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/friend")
+@RequestMapping(FRIEND)
 public class FriendRest {
 
     @Autowired

@@ -63,14 +63,15 @@ idle:
             username: admin
             password: admin123
             
-        battleFieldConfig:
-            guildMaxLayerSize: 5
-            defaultGuildMaxLayerSize: 3
-            growthFactorGuildMaxSitesSize: 3
-            
-            userMaxLayerSize: 3
-            defaultUserMaxLayerSize: 2
-            growthFactorUserMaxSitesSize: 2
+        pveBattleFieldConfig:
+            maxLayerSize: 3
+            defaultMaxLayerSize: 2
+            growthFactorMaxSitesSize: 2
+        
+        guildBattleFieldConfig:
+            maxLayerSize: 5
+            defaultMaxLayerSize: 3
+            growthFactorMaxSitesSize: 3
             
         pvpRating:
             expire: 1800

@@ -64,6 +64,20 @@ public class LootRoll implements Serializable {
         this.id = id;
     }
 
+    public Roll roll() {
+
+        List<String> keys = new ArrayList<>(getRolls().keySet());
+
+        Integer index = DiceUtil.random(keys.size() - 1);
+
+        Roll ret = new Roll();
+        ret.setRollType(keys.get(index));
+        ret.setValue(roll(keys.get(index)));
+
+        return ret;
+
+    }
+
     public String roll(Class clazz) {
         return roll(clazz.getSimpleName());
     }

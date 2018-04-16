@@ -6,13 +6,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import static com.idle.game.constant.URIConstants.HERO_TYPES;
 
 /**
  *
  * @author rafael
  */
 @RestController
-@RequestMapping("/heroTypes")
+@RequestMapping(HERO_TYPES)
 public class HeroTypesRest {
 
     @RequestMapping(path = "", method = RequestMethod.GET)

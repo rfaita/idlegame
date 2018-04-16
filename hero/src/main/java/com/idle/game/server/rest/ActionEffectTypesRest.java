@@ -1,5 +1,6 @@
 package com.idle.game.server.rest;
 
+import static com.idle.game.constant.URIConstants.ACTION_EFFECT_TYPES;
 import com.idle.game.server.dto.ActionEffectTypes;
 import com.idle.game.server.dto.Envelope;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping("/actionEffectTypes")
+@RequestMapping(ACTION_EFFECT_TYPES)
 public class ActionEffectTypesRest {
     
      @RequestMapping(path = "", method = RequestMethod.GET)

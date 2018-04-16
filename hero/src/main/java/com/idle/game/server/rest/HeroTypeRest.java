@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.idle.game.core.hero.type.HeroTypeFaction;
 import static com.idle.game.constant.URIConstants.HEROTYPE__FIND_ALL_BY_QUALITY;
 import static com.idle.game.constant.URIConstants.HEROTYPE__FIND_BY_NAME;
+import static com.idle.game.constant.URIConstants.HERO_TYPE;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
-@RequestMapping("/heroType")
+@RequestMapping(HERO_TYPE)
 public class HeroTypeRest {
 
     @Autowired

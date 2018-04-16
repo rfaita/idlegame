@@ -1,5 +1,6 @@
 package com.idle.game.server.rest;
 
+import static com.idle.game.constant.URIConstants.FORMATION;
 import static com.idle.game.constant.URIConstants.FORMATION__FIND_BY_FORMATION_ALLOCATION;
 import com.idle.game.core.formation.type.FormationAllocation;
 import com.idle.game.helper.TokenHelper;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/formation")
+@RequestMapping(FORMATION)
 public class FormationRest {
 
     @Autowired

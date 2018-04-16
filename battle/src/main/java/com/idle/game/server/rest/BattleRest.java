@@ -1,5 +1,6 @@
 package com.idle.game.server.rest;
 
+import static com.idle.game.constant.URIConstants.BATTLE;
 import com.idle.game.core.battle.Battle;
 import com.idle.game.server.service.*;
 import com.idle.game.server.dto.Envelope;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/battle")
+@RequestMapping(BATTLE)
 public class BattleRest {
 
     @Autowired

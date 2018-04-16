@@ -1,5 +1,6 @@
 package com.idle.game.helper.client.user;
 
+import static com.idle.game.constant.URIConstants.USER;
 import static com.idle.game.constant.URIConstants.USER__FIND_BY_NICK_NAME;
 import com.idle.game.model.User;
 import com.idle.game.server.dto.Envelope;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  * @author rafael
  */
-@FeignClient(name = "player-service", path = "/user", fallback = UserClientImpl.class)
+@FeignClient(name = "player-service", path = USER, fallback = UserClientImpl.class)
 public interface UserClient {
 
     @RequestMapping(path = "/{userId}", method = RequestMethod.GET)

@@ -1,5 +1,6 @@
 package com.idle.game.helper.client.battle;
 
+import static com.idle.game.constant.URIConstants.FORMATION;
 import com.idle.game.model.Formation;
 import com.idle.game.server.dto.Envelope;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  * @author rafael
  */
-@FeignClient(name = "battle-service", path = "/formation", fallback = FormationClientImpl.class)
+@FeignClient(name = "battle-service", path = FORMATION, fallback = FormationClientImpl.class)
 public interface FormationClient {
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)

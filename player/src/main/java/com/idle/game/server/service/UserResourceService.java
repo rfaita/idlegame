@@ -24,11 +24,7 @@ public class UserResourceService {
 
     public UserResource addResources(String userId, List<Resource> resources) {
 
-        UserResource playerResource = playerRepositoryRepository.findByUserId(userId);
-
-        if (playerResource == null) {
-            playerResource = new UserResource(userId, defaultResources());
-        }
+        UserResource playerResource = computeResources(userId);
 
         playerResource.addResources(resources);
 
@@ -41,67 +37,63 @@ public class UserResourceService {
 
     public UserResource useResources(String userId, List<Resource> resources) {
 
-        UserResource playerResource = playerRepositoryRepository.findByUserId(userId);
+        UserResource userResource = computeResources(userId);
 
-        if (playerResource == null) {
-            playerResource = new UserResource(userId, defaultResources());
-        }
-
-        playerResource.useResources(resources);
+        userResource.useResources(resources);
 
         webSocketMessagingTemplate.convertAndSend(
-                Destination.resourceRefresh(userId), playerResource);
+                Destination.resourceRefresh(userId), userResource);
 
-        return playerRepositoryRepository.save(playerResource);
+        return playerRepositoryRepository.save(userResource);
 
     }
 
     public UserResource computeResources(String userId) {
 
-        UserResource playerResource = playerRepositoryRepository.findByUserId(userId);
+        UserResource userResource = playerRepositoryRepository.findByUserId(userId);
 
         long seconds;
         long secondsHour;
         long secondsDay;
-        if (playerResource == null) {
-            playerResource = new UserResource(userId, defaultResources());
+        if (userResource == null) {
+            userResource = new UserResource(userId, defaultResources());
             seconds = 5;
             secondsHour = 0;
             secondsDay = 0;
         } else {
-            seconds = DateUtil.secondsFrom(playerResource.getLastTimeResourcesCollected());
-            secondsHour = DateUtil.secondsFrom(playerResource.getLastTimeResourcesCollectedHour());
-            secondsDay = DateUtil.secondsFrom(playerResource.getLastTimeResourcesCollectedDay());
+            seconds = DateUtil.secondsFrom(userResource.getLastTimeResourcesCollected());
+            secondsHour = DateUtil.secondsFrom(userResource.getLastTimeResourcesCollectedHour());
+            secondsDay = DateUtil.secondsFrom(userResource.getLastTimeResourcesCollectedDay());
         }
 
         if (seconds >= 5) {
             if (seconds > SECONDS_IN_HOUR * 8) {
                 seconds = SECONDS_IN_HOUR * 8;
             }
-            playerResource.setLastTimeResourcesCollected(new Date());
-            playerResource.computeResoucers(seconds);
-            playerResource = playerRepositoryRepository.save(playerResource);
+            userResource.setLastTimeResourcesCollected(new Date());
+            userResource.computeResoucers(seconds);
+            userResource = playerRepositoryRepository.save(userResource);
         }
 
         if (secondsHour >= SECONDS_IN_HOUR) {
             if (secondsHour > SECONDS_IN_HOUR * 8) {
                 secondsHour = SECONDS_IN_HOUR * 8;
             }
-            playerResource.setLastTimeResourcesCollectedHour(new Date());
-            playerResource.computeHourResoucers((Long) secondsHour / SECONDS_IN_HOUR);
-            playerResource = playerRepositoryRepository.save(playerResource);
+            userResource.setLastTimeResourcesCollectedHour(new Date());
+            userResource.computeHourResoucers((Long) secondsHour / SECONDS_IN_HOUR);
+            userResource = playerRepositoryRepository.save(userResource);
         }
 
         if (secondsDay >= SECONDS_IN_DAY) {
             if (secondsDay > SECONDS_IN_DAY * 7) {
                 secondsDay = SECONDS_IN_DAY * 7;
             }
-            playerResource.setLastTimeResourcesCollectedDay(new Date());
-            playerResource.computeDayResoucers((Long) secondsDay / SECONDS_IN_DAY);
-            playerResource = playerRepositoryRepository.save(playerResource);
+            userResource.setLastTimeResourcesCollectedDay(new Date());
+            userResource.computeDayResoucers((Long) secondsDay / SECONDS_IN_DAY);
+            userResource = playerRepositoryRepository.save(userResource);
         }
 
-        return playerResource;
+        return userResource;
 
     }
 

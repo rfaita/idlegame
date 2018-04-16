@@ -1,5 +1,6 @@
 package com.idle.game.server.rest;
 
+import static com.idle.game.constant.URIConstants.HERO;
 import static com.idle.game.constant.URIConstants.HERO__ROLL;
 import com.idle.game.core.hero.type.HeroQuality;
 import com.idle.game.helper.TokenHelper;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import static com.idle.game.constant.URIConstants.HERO__FIND_ALL_BY_USER_ID;
 
 @RestController
-@RequestMapping("/hero")
+@RequestMapping(HERO)
 public class HeroRest {
 
     @Autowired

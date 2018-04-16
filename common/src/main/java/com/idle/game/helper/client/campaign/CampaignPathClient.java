@@ -1,5 +1,6 @@
 package com.idle.game.helper.client.campaign;
 
+import static com.idle.game.constant.URIConstants.CAMPAIGN_PATH;
 import com.idle.game.model.campaign.CampaignPath;
 import com.idle.game.server.dto.Envelope;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  * @author rafael
  */
-@FeignClient(name = "player-service", path = "/campaignPath", fallback = CampaignPathClientImpl.class)
+@FeignClient(name = "player-service", path = CAMPAIGN_PATH, fallback = CampaignPathClientImpl.class)
 public interface CampaignPathClient {
 
     @RequestMapping(path = "", method = RequestMethod.GET)
