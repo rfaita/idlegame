@@ -29,6 +29,7 @@ public interface URIConstants {
     final String ACTION_EFFECT_TYPES = "/actionEffectTypes";
     final String PVE_BATTLE_FIELD_CONFIG = "/pveBattleFieldConfig";
 
+    final String INVENTORY_ROLL_ITEM = "rollItem";
     final String PVE_BATTLEFIELDCONFIG_UPGRADE = "upgrade";
     final String USER__FIND_BY_NICK_NAME = "findByNickName";
     final String HEROTYPE__FIND_ALL_BY_QUALITY = "findAllByQuality";
@@ -43,7 +44,6 @@ public interface URIConstants {
     final String MAIL__SEND_PRIVATE_MAIL = "sendPrivateMail";
     final String MAIL__SEND_PRIVATE_INTERNAL_MAIL = "sendPrivateInternalMail";
     final String FORMATION__FIND_BY_FORMATION_ALLOCATION = "findByFormationAllocation";
-    final String SHOP__BUY_LOOT_ROLL = "buyLootRoll";
     final String GUILD_MEMBER__CREATE_ADMIN = "createAdmin";
     final String GUILD_MEMBER__REQUESTS = "requests";
     final String GUILD_MEMBER__FIND_BY_USER_MEMBER_ID = "findByUserMemberId";

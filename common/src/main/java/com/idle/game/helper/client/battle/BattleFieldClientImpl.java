@@ -29,7 +29,7 @@ public class BattleFieldClientImpl implements BattleFieldClient {
 
     @Override
     public Envelope<BattleField> update(BattleField battleField) {
-        return new Envelope("battle.field.service.is.down");
+        return new Envelope();
     }
 
 }

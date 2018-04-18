@@ -99,8 +99,7 @@ public class IdleShopApplication {
             lr.setType(LootRollType.HERO);
 
             lootRollRepository.save(lr);
-            
-            
+
             lr = new LootRoll();
 
             lr.setId("3");
@@ -109,6 +108,36 @@ public class IdleShopApplication {
             lr.addRoll(FormationItem.class, new LootRollValue("1002", 34.0));
 
             lr.addCost(new Resource(ResourceType.GEM, 150L));
+
+            lr.setName("base.formation.help.2");
+
+            lr.setType(LootRollType.ITEM);
+
+            lootRollRepository.save(lr);
+
+            lr = new LootRoll();
+
+            lr.setId("4");
+            lr.addRoll(FormationItem.class, new LootRollValue("2000", 33.0));
+            lr.addRoll(FormationItem.class, new LootRollValue("2001", 33.0));
+            lr.addRoll(FormationItem.class, new LootRollValue("2002", 34.0));
+
+            lr.addCost(new Resource(ResourceType.GEM, 150L));
+
+            lr.setName("base.formation.help.3");
+
+            lr.setType(LootRollType.ITEM);
+
+            lootRollRepository.save(lr);
+
+            lr = new LootRoll();
+
+            lr.setId("5");
+            lr.addRoll(FormationItem.class, new LootRollValue("3000", 33.0));
+            lr.addRoll(FormationItem.class, new LootRollValue("3001", 33.0));
+            lr.addRoll(FormationItem.class, new LootRollValue("3002", 34.0));
+
+            lr.addCost(new Resource(ResourceType.GOLD, 10000L));
 
             lr.setName("base.formation.help");
 

@@ -14,16 +14,16 @@ public class InventoryClientImpl implements InventoryClient {
 
     @Override
     public Envelope<Inventory> findByUserId() {
-        return new Envelope("inventory.service.is.down");
+        return new Envelope();
     }
 
     @Override
     public Envelope<Inventory> addItem(InventoryItem item) {
-        return new Envelope("inventory.service.is.down");
+        return new Envelope();
     }
 
     @Override
     public Envelope<Inventory> removeItem(InventoryItem item) {
-        return new Envelope("inventory.service.is.down");
+        return new Envelope();
     }
 }

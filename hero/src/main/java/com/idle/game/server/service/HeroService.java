@@ -19,6 +19,7 @@ import com.idle.game.core.hero.type.HeroTypeFaction;
 import com.idle.game.core.hero.type.HeroTypeQuality;
 import com.idle.game.core.util.DiceUtil;
 import com.idle.game.helper.client.hero.HeroTypeClient;
+import com.idle.game.helper.client.resource.UserResourceClient;
 import com.idle.game.helper.client.shop.LootRollClient;
 import com.idle.game.model.Hero;
 import com.idle.game.model.HeroType;
@@ -38,6 +39,9 @@ public class HeroService {
 
     @Autowired
     private HeroRepository heroRepository;
+
+    @Autowired
+    private UserResourceClient userResourceClient;
 
     @Autowired
     private LootRollClient lootRollClient;
@@ -140,11 +144,13 @@ public class HeroService {
 
         if (customHeroType == null && customHeroQuality == null) {
 
-            LootRoll lootRoll = lootRollClient.buyById(lootRollId).getData();
+            LootRoll lootRoll = lootRollClient.findById(lootRollId).getData();
 
             if (lootRoll != null) {
 
                 if (lootRoll.getType().equals(HERO)) {
+
+                    userResourceClient.useResources(lootRoll.getCost());
 
                     HeroTypeFaction faction = HeroTypeFaction.valueOf(lootRoll.roll(HeroTypeFaction.class));
                     HeroTypeQuality quality = HeroTypeQuality.valueOf(lootRoll.roll(HeroTypeQuality.class));

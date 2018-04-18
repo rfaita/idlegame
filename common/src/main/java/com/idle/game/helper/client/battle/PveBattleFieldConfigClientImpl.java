@@ -33,12 +33,12 @@ public class PveBattleFieldConfigClientImpl implements PveBattleFieldConfigClien
 
     @Override
     public Envelope<PveBattleFieldConfig> create() {
-        return new Envelope("battle.field.config.service.is.down");
+        return new Envelope();
     }
 
     @Override
     public Envelope<PveBattleFieldConfig> upgrade() {
-        return new Envelope("battle.field.config.service.is.down");
+        return new Envelope();
     }
 
 }

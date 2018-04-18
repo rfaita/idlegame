@@ -1,5 +1,6 @@
 package com.idle.game.server.service;
 
+import com.idle.game.helper.client.resource.UserResourceClient;
 import com.idle.game.helper.client.shop.LootRollClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,9 @@ public class InventoryService {
 
     @Autowired
     private InventoryRepository inventoryRepository;
+    
+    @Autowired
+    private UserResourceClient userResourceClient;
 
     @Autowired
     private LootRollClient lootRollClient;
@@ -86,12 +90,14 @@ public class InventoryService {
 
     public Inventory buyItem(String userId, String lootRollId) {
 
-        LootRoll lootRoll = lootRollClient.buyById(lootRollId).getData();
+        LootRoll lootRoll = lootRollClient.findById(lootRollId).getData();
 
         if (lootRoll != null) {
 
             if (lootRoll.getType().equals(ITEM)) {
 
+                userResourceClient.useResources(lootRoll.getCost());
+                
                 InventoryItem inventoryItem = new InventoryItem();
 
                 Roll ret = lootRoll.roll();
@@ -99,7 +105,7 @@ public class InventoryService {
                 inventoryItem.setItemClassName(ret.getRollType());
                 inventoryItem.setItemId(ret.getValue());
                 inventoryItem.setAmount(1L);
-
+                
                 return addItem(userId, inventoryItem);
 
             } else {

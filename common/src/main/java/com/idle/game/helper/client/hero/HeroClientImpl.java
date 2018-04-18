@@ -20,22 +20,22 @@ public class HeroClientImpl implements HeroClient {
 
     @Override
     public Envelope<List<Hero>> findAllByUserId(String userId) {
-        return new Envelope("hero.service.is.down");
+        return new Envelope();
     }
 
     @Override
     public Envelope<List<Hero>> findAllByUserIdAndHeroTypeId(String userId, String heroTypeId) {
-        return new Envelope("hero.service.is.down");
+        return new Envelope();
     }
 
     @Override
     public Envelope<List<Hero>> findAllByUserIdAndHeroTypeIdAndQuality(String userId, String quality, String heroTypeId) {
-        return new Envelope("hero.service.is.down");
+        return new Envelope();
     }
 
     @Override
     public Envelope<Hero> rollHero(String lootRollId) {
-        return new Envelope("hero.service.is.down");
+        return new Envelope();
     }
 
     @Override

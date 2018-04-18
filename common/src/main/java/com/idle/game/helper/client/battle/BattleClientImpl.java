@@ -13,7 +13,7 @@ public class BattleClientImpl implements BattleClient {
 
     @Override
     public Envelope<Battle> doBattle(String att, String def) {
-        return new Envelope("battle.service.is.down");
+        return new Envelope();
     }
 
 }

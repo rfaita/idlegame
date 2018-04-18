@@ -21,7 +21,8 @@ import { NumberPipe } from '../utils/pipe/number.pipe';
   ],
   exports: [
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    NumberPipe
   ]
 })
 export class ComponentsModule { }

@@ -1,0 +1,41 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+            <div class="collapse navbar-collapse">
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="form-group form-black is-empty">
+                        <input type="text" class="form-control" placeholder="Hero Type">
+                        <span class="material-input"></span>
+                    </div>
+                    <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                        <i class="material-icons">search</i>
+                        <div class="ripple-container"></div>
+                    </button>
+                    <button type="button" class="btn btn-white btn-round btn-just-icon" [routerLink]="['/heroType', 'new']">
+                        <i class="material-icons">add</i>
+                        <div class="ripple-container"></div>
+                    </button>
+                </form>
+            </div>
+        </nav>
+        <div class="row" *ngIf="!!lootRolls">
+            <div class="col-md-3" *ngFor="let lootRoll of lootRolls">
+                <div class="card">
+                    <div class="card-header">
+                        {{lootRoll.name}}
+                    </div>
+                    <div class="card-body item text-right">
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            <ng-container *ngFor="let cost of lootRoll.cost">
+                                {{cost.type}} - {{cost.value | simpleNumber}}
+                            </ng-container>
+                        </h6>
+                        <p class="card-text">{{lootRoll.desc}}</p>
+                        <a (click)="buyItem(lootRoll.id)" class="card-link btn btn-sm btn-primary">Buy</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

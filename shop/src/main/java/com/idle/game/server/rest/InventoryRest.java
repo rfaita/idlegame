@@ -1,11 +1,10 @@
 package com.idle.game.server.rest;
 
 import static com.idle.game.constant.URIConstants.INVENTORY;
-import static com.idle.game.constant.URIConstants.SHOP__BUY_LOOT_ROLL;
+import static com.idle.game.constant.URIConstants.INVENTORY_ROLL_ITEM;
 import com.idle.game.helper.TokenHelper;
 import com.idle.game.model.shop.Inventory;
 import com.idle.game.model.shop.InventoryItem;
-import com.idle.game.model.shop.LootRoll;
 import com.idle.game.server.dto.Envelope;
 import com.idle.game.server.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +35,17 @@ public class InventoryRest {
 
         Envelope<Inventory> ret = new Envelope<>();
         ret.setData(inventoryService.findByUserId(tokenHelper.getUserId()));
+
+        return ret;
+
+    }
+
+    @RequestMapping(path = "/" + INVENTORY_ROLL_ITEM, method = RequestMethod.POST)
+    public @ResponseBody
+    Envelope<Inventory> rollItem(@RequestBody InventoryItem item) {
+
+        Envelope<Inventory> ret = new Envelope<>();
+        ret.setData(inventoryService.rollItem(tokenHelper.getUserId(), item));
 
         return ret;
 

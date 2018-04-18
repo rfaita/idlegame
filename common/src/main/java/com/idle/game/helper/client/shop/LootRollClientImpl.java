@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 public class LootRollClientImpl implements LootRollClient {
 
     @Override
-    public Envelope<LootRoll> buyById(String id) {
-        return new Envelope("loot.roll.service.is.down");
+    public Envelope<LootRoll> findById(String id) {
+        return new Envelope();
     }
 
 }

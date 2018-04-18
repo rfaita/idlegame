@@ -81,3 +81,13 @@ idle:
             exchange: idle.game.mail.exchange
             sendDLQQueue: idle.game.mail.sendDLQQueue
             sendQueue: idle.game.mail.sendQueue
+            
+        useResource:
+            exchange: idle.game.useResource.exchange
+            sendDLQQueue: idle.game.useResource.sendDLQQueue
+            sendQueue: idle.game.useResource.sendQueue
+            
+        addResource:
+            exchange: idle.game.addResource.exchange
+            sendDLQQueue: idle.game.addResource.sendDLQQueue
+            sendQueue: idle.game.addResource.sendQueue

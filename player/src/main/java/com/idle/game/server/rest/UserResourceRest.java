@@ -24,14 +24,14 @@ public class UserResourceRest {
     private TokenHelper tokenHelper;
 
     @Autowired
-    private UserResourceService playerResourceService;
+    private UserResourceService userResourceService;
 
     @RequestMapping(path = "/" + USERRESOURCE__COMPUTE_RESOURCES, method = RequestMethod.GET)
     public @ResponseBody
     Envelope<UserResource> computeResources() {
 
         Envelope<UserResource> ret = new Envelope<>();
-        ret.setData(playerResourceService.computeResources(tokenHelper.getUserId()));
+        ret.setData(userResourceService.computeResources(tokenHelper.getUserId()));
 
         return ret;
 
@@ -42,7 +42,7 @@ public class UserResourceRest {
     Envelope<UserResource> useResources(@RequestBody List<Resource> resources) {
 
         Envelope<UserResource> ret = new Envelope<>();
-        ret.setData(playerResourceService.useResources(tokenHelper.getUserId(), resources));
+        ret.setData(userResourceService.useResources(tokenHelper.getUserId(), resources));
 
         return ret;
 
@@ -53,7 +53,7 @@ public class UserResourceRest {
     Envelope<UserResource> addResources(@RequestBody List<Resource> resources) {
 
         Envelope<UserResource> ret = new Envelope<>();
-        ret.setData(playerResourceService.addResources(tokenHelper.getUserId(), resources));
+        ret.setData(userResourceService.addResources(tokenHelper.getUserId(), resources));
 
         return ret;
 

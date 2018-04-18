@@ -1,5 +1,6 @@
 package com.idle.game.tests;
 
+import com.idle.game.helper.client.resource.UserResourceClient;
 import com.idle.game.helper.client.shop.LootRollClient;
 import com.idle.game.model.shop.Inventory;
 import com.idle.game.model.shop.InventoryItem;
@@ -9,6 +10,7 @@ import com.idle.game.server.dto.Envelope;
 import com.idle.game.server.repository.InventoryRepository;
 import com.idle.game.server.service.InventoryService;
 import static com.idle.game.tests.helper.TestHelper.*;
+import java.util.List;
 import javax.validation.ValidationException;
 import org.junit.Assert;
 import org.junit.Rule;
@@ -36,6 +38,9 @@ public class InventoryServiceTests {
     @MockBean
     private InventoryRepository inventoryRepository;
 
+    @MockBean
+    private UserResourceClient userResourceClient;
+
     @Autowired
     private InventoryService inventoryService;
 
@@ -45,7 +50,7 @@ public class InventoryServiceTests {
     @Test
     public void testBuyItemLootRollNotFound() {
 
-        when(lootRollClient.buyById("321")).thenReturn(new Envelope((LootRoll) null));
+        when(lootRollClient.findById("321")).thenReturn(new Envelope((LootRoll) null));
 
         expcetionExpect.expect(ValidationException.class);
         expcetionExpect.expectMessage("loot.roll.not.found");
@@ -57,7 +62,7 @@ public class InventoryServiceTests {
     @Test
     public void testBuyItemLootRollMustBeItem() {
 
-        when(lootRollClient.buyById("321")).thenReturn(new Envelope(createLootRollToHero("456")));
+        when(lootRollClient.findById("321")).thenReturn(new Envelope(createLootRollToHero("456")));
 
         expcetionExpect.expect(ValidationException.class);
         expcetionExpect.expectMessage("loot.roll.type.must.be.item");
@@ -69,7 +74,9 @@ public class InventoryServiceTests {
     @Test
     public void testBuyItemLootSuccess() {
 
-        when(lootRollClient.buyById("321")).thenReturn(new Envelope(createLootRollToItem("456")));
+        when(lootRollClient.findById("321")).thenReturn(new Envelope(createLootRollToItem("456")));
+
+        when(userResourceClient.useResources(any(List.class))).thenReturn(new Envelope());
         when(inventoryRepository.save(any(Inventory.class))).thenAnswer(createInventoryAnswerForSomeInput());
 
         Inventory inv = inventoryService.buyItem("123", "321");
@@ -125,7 +132,9 @@ public class InventoryServiceTests {
 
         when(inventoryRepository.findByUserId("123")).thenReturn(inv);
 
-        when(lootRollClient.buyById("001")).thenReturn(new Envelope(createLootRollToItem("456")));
+        when(lootRollClient.findById("001")).thenReturn(new Envelope(createLootRollToItem("456")));
+        when(userResourceClient.useResources(any(List.class))).thenReturn(new Envelope());
+
         when(inventoryRepository.save(any(Inventory.class))).thenAnswer(createInventoryAnswerForSomeInput());
 
         Inventory ret = inventoryService.rollItem("123", new LootRollItem("001"));

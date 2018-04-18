@@ -48,6 +48,10 @@ import { Guild } from './model/guild';
 import { GuildService } from './service/guild.service';
 import { GuildComponent } from './guild/guild.component';
 import { GuildMemberService } from './service/guildmember.service';
+import { InventoryComponent } from './inventory/inventory.component';
+import { InventoryService } from './service/inventory.service';
+import { ShopService } from './service/shop.service';
+import { ShopComponent } from './shop/shop.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +65,8 @@ import { GuildMemberService } from './service/guildmember.service';
     FriendsComponent,
     PvpComponent,
     GuildComponent,
+    InventoryComponent,
+    ShopComponent,
     KeysPipe
   ],
   imports: [
@@ -119,7 +125,9 @@ import { GuildMemberService } from './service/guildmember.service';
     PvpService,
     UserResourceService,
     GuildService,
-    GuildMemberService
+    GuildMemberService,
+    InventoryService,
+    ShopService
   ],
   bootstrap: [AppComponent]
 })

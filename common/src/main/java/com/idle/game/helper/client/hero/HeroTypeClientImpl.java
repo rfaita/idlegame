@@ -21,22 +21,22 @@ public class HeroTypeClientImpl implements HeroTypeClient {
 
     @Override
     public Envelope<List<HeroType>> findAllByQuality(String quality) {
-        return new Envelope("hero.type.service.is.down");
+        return new Envelope();
     }
 
     @Override
     public Envelope<List<HeroType>> findAllByFaction(String faction) {
-        return new Envelope("hero.type.service.is.down");
+        return new Envelope();
     }
 
     @Override
     public Envelope<List<HeroType>> findAllByFactionAndQuality(String faction, String quality) {
-        return new Envelope("hero.type.service.is.down");
+        return new Envelope();
     }
 
     @Override
     public Envelope<List<HeroType>> findAll() {
-        return new Envelope("hero.type.service.is.down");
+        return new Envelope();
     }
 
     @Override

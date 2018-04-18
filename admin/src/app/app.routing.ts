@@ -12,8 +12,11 @@ import { ChatComponent } from './chat/chat.component';
 import { FriendsComponent } from './friends/friends.component';
 import { PvpComponent } from './pvp/pvp.component';
 import { GuildComponent } from './guild/guild.component';
+import { InventoryComponent } from './inventory/inventory.component';
+import { ShopComponent } from './shop/shop.component';
 
 const routes: Routes = [
+  { path: 'shop', component: ShopComponent },
   { path: 'guild', component: GuildComponent },
   { path: 'friends', component: FriendsComponent },
   { path: 'chat', component: ChatComponent },
@@ -23,6 +26,7 @@ const routes: Routes = [
   { path: 'hero/:id', component: HeroComponent },
   { path: 'heroTypes', component: HeroTypesComponent },
   { path: 'heroType/:id', component: HeroTypeComponent },
+  { path: 'inventory', component: InventoryComponent },
   { path: '', redirectTo: 'friends', pathMatch: 'full' }
 ];
 

@@ -20,22 +20,22 @@ public class GuildMemberClientImpl implements GuildMemberClient {
 
     @Override
     public Envelope<GuildMember> myGuildMember() {
-        return new Envelope("guild.member.service.is.down");
+        return new Envelope();
     }
 
     @Override
     public Envelope<GuildMember> getGuildMember(String userMemberId) {
-        return new Envelope("guild.member.service.is.down");
+        return new Envelope();
     }
 
     @Override
     public Envelope<List<GuildMember>> getGuildMembers(String guildId) {
-        return new Envelope("guild.member.service.is.down");
+        return new Envelope();
     }
 
     @Override
     public Envelope<List<GuildMember>> getGuildMembersRequests(String guildId) {
-        return new Envelope("guild.member.service.is.down");
+        return new Envelope();
     }
 
 }

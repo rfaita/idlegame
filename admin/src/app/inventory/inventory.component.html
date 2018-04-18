@@ -1,0 +1,55 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+            <div class="collapse navbar-collapse">
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="form-group form-black is-empty">
+                        <input type="text" class="form-control" placeholder="Hero Type">
+                        <span class="material-input"></span>
+                    </div>
+                    <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                        <i class="material-icons">search</i>
+                        <div class="ripple-container"></div>
+                    </button>
+                    <button type="button" class="btn btn-white btn-round btn-just-icon" [routerLink]="['/heroType', 'new']">
+                        <i class="material-icons">add</i>
+                        <div class="ripple-container"></div>
+                    </button>
+                </form>
+            </div>
+        </nav>
+        <div class="row" *ngIf="!!inventory">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-content table-responsive">
+                        <table class="table table-hover">
+                            <thead class="text-info">
+                                <tr>
+                                    <th>ClassName</th>
+                                    <th>ItemId</th>
+                                    <th>Amount</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let i of inventory.items">
+                                    <td>{{i.itemClassName}}</td>
+                                    <td>{{i.itemId}}</td>
+                                    <td>{{i.amount}}</td>
+                                    <td class="td-actions text-right">
+                                        <button type="button" rel="tooltip" [routerLink]="['/heroType', i.id]" title="Edit Hero Type" class="btn btn-primary btn-simple btn-xs">
+                                            <i class="material-icons">edit</i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

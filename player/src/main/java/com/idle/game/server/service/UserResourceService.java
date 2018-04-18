@@ -17,7 +17,7 @@ import com.idle.game.server.repository.UserResourceRepository;
 public class UserResourceService {
 
     @Autowired
-    private UserResourceRepository playerRepositoryRepository;
+    private UserResourceRepository userRepositoryRepository;
 
     @Autowired
     private SimpMessagingTemplate webSocketMessagingTemplate;
@@ -31,7 +31,7 @@ public class UserResourceService {
         webSocketMessagingTemplate.convertAndSend(
                 Destination.resourceRefresh(userId), playerResource);
 
-        return playerRepositoryRepository.save(playerResource);
+        return userRepositoryRepository.save(playerResource);
 
     }
 
@@ -44,13 +44,13 @@ public class UserResourceService {
         webSocketMessagingTemplate.convertAndSend(
                 Destination.resourceRefresh(userId), userResource);
 
-        return playerRepositoryRepository.save(userResource);
+        return userRepositoryRepository.save(userResource);
 
     }
 
     public UserResource computeResources(String userId) {
 
-        UserResource userResource = playerRepositoryRepository.findByUserId(userId);
+        UserResource userResource = userRepositoryRepository.findByUserId(userId);
 
         long seconds;
         long secondsHour;
@@ -72,7 +72,7 @@ public class UserResourceService {
             }
             userResource.setLastTimeResourcesCollected(new Date());
             userResource.computeResoucers(seconds);
-            userResource = playerRepositoryRepository.save(userResource);
+            userResource = userRepositoryRepository.save(userResource);
         }
 
         if (secondsHour >= SECONDS_IN_HOUR) {
@@ -81,7 +81,7 @@ public class UserResourceService {
             }
             userResource.setLastTimeResourcesCollectedHour(new Date());
             userResource.computeHourResoucers((Long) secondsHour / SECONDS_IN_HOUR);
-            userResource = playerRepositoryRepository.save(userResource);
+            userResource = userRepositoryRepository.save(userResource);
         }
 
         if (secondsDay >= SECONDS_IN_DAY) {
@@ -90,7 +90,7 @@ public class UserResourceService {
             }
             userResource.setLastTimeResourcesCollectedDay(new Date());
             userResource.computeDayResoucers((Long) secondsDay / SECONDS_IN_DAY);
-            userResource = playerRepositoryRepository.save(userResource);
+            userResource = userRepositoryRepository.save(userResource);
         }
 
         return userResource;

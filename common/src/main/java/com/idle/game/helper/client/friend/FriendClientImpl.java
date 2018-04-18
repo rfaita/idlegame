@@ -9,13 +9,12 @@ import org.springframework.stereotype.Component;
  *
  * @author rafael
  */
-
 @Component
-public class FriendClientImpl implements FriendClient{
+public class FriendClientImpl implements FriendClient {
 
     @Override
     public Envelope<List<Friend>> getFriends(String userId) {
-        return new Envelope("friend.service.is.down");
+        return new Envelope();
     }
-    
+
 }

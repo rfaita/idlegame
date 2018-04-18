@@ -1,11 +1,6 @@
 package com.idle.game.config;
 
 import org.springframework.amqp.core.AmqpAdmin;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.QueueBuilder;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
@@ -28,13 +23,6 @@ import org.springframework.messaging.handler.annotation.support.DefaultMessageHa
 @Profile({"default"})
 @EnableRabbit
 public class RabbitMqConfiguration implements RabbitListenerConfigurer {
-
-    @Value("${idle.config.mail.exchange}")
-    private String mailExchange;
-    @Value("${idle.config.mail.sendDLQQueue}")
-    private String sendMailDLQQueue;
-    @Value("${idle.config.mail.sendQueue}")
-    private String sendMailQueue;
 
     @Value("${idle.config.amq.hostname}")
     private String hostAmq;
@@ -69,56 +57,6 @@ public class RabbitMqConfiguration implements RabbitListenerConfigurer {
     @Bean
     public AmqpAdmin amqpAdmin() {
         return new RabbitAdmin(connectionFactory());
-    }
-
-    /**
-     * Metodo responsavel por criar um Direce Exchange da fila de mensagens
-     * padrao.
-     *
-     * @return DirectExchange - Objeto para executar o encaminhamento de
-     * mensagens que possuem exatamente a mesma rota das filas associadas a este
-     * exchange.
-     */
-    @Bean
-    public DirectExchange mailExchange() {
-        return new DirectExchange(mailExchange, true, false);
-    }
-
-    /**
-     * Metodo responsavel por criar, caso não exista no RabbitMq, a fila de
-     * mensagens padrão.
-     *
-     * @return Queue - Objeto que possui os dados da fila padrão criada.
-     */
-    @Bean
-    public Queue sendMailQueue() {
-        return QueueBuilder.durable(sendMailQueue)
-                .withArgument("x-dead-letter-exchange", "")
-                .withArgument("x-dead-letter-routing-key", sendMailDLQQueue)
-                .build();
-    }
-
-    /**
-     * Metodo responsavel por criar caso não exista no RabbitMq, a fila de
-     * mensagens de dlq.
-     *
-     * @return Queue - Objeto que possui os dados da fila DLQ criada.
-     */
-    @Bean
-    public Queue sendMailDLQQueue() {
-        return new Queue(sendMailDLQQueue, true, false, false);
-    }
-
-    /**
-     * Metodo responsavel por criar um Binding com o Direct Exchange para a fila
-     * de mensagem padrão.
-     *
-     * @return Binding - Objeto que possui os dados do Binding obtidod através
-     * do Direct Exchance do RabbitMQ
-     */
-    @Bean
-    public Binding sendMailBinding() {
-        return BindingBuilder.bind(sendMailQueue()).to(mailExchange()).with(sendMailQueue);
     }
 
     /**

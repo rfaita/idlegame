@@ -8,7 +8,6 @@ import com.idle.game.model.battle.BattleLayer;
 import com.idle.game.model.battle.BattleSite;
 import com.idle.game.model.battle.pve.PveBattleField;
 import com.idle.game.model.battle.pve.PveBattleFieldConfig;
-import com.idle.game.model.shop.FormationItem;
 import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -2,7 +2,6 @@ package com.idle.game.server.service;
 
 import static com.idle.game.constant.CacheConstants.USER_FIND_BY_ID;
 import static com.idle.game.constant.CacheConstants.USER_FIND_BY_NICK_NAME;
-import com.idle.game.model.PvpRating;
 import com.idle.game.model.User;
 import com.idle.game.server.repository.UserRepository;
 import java.util.Optional;
