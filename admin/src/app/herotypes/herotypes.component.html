@@ -18,41 +18,26 @@
                 </form>
             </div>
         </nav>
-        <div class="row">
-            <div class="col-md-12">
+
+
+        <div class="row" *ngIf="!!heroesType">
+            <div class="col-md-2" *ngFor="let heroType of heroesType">
                 <div class="card">
-
-                    <div class="card-content table-responsive">
-                        <table class="table table-hover">
-                            <thead class="text-info">
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Quality</th>
-                                    <th>Role</th>
-                                    <th>Faction</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let heroType of heroesType">
-                                    <td>{{heroType.name}}</td>
-                                    <td>{{heroType.quality}}</td>
-                                    <td>{{heroType.role}}</td>
-                                    <td>{{heroType.faction}}</td>
-                                    <td class="td-actions text-right">
-                                        <button type="button" rel="tooltip" [routerLink]="['/heroType', heroType.id]" title="Edit Hero Type" class="btn btn-primary btn-simple btn-xs">
-                                            <i class="material-icons">edit</i>
-                                        </button>
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-
+                    <img class="card-img-top" src="http://via.placeholder.com/250x150" alt="Card image cap">
+                    <div class="card-body item text-right">
+                        <h5 class="card-title">{{heroType.name}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            {{heroType.role}} - {{heroType.quality}} - {{heroType.faction}}
+                        </h6>
+                        <button type="button" rel="tooltip" [routerLink]="['/heroType', heroType.id]" title="Edit Hero Type" class="card-link btn btn-sm btn-primary">
+                            <i class="material-icons">edit</i>
+                        </button>
                     </div>
                 </div>
             </div>
 
         </div>
+
+
     </div>
 </div>

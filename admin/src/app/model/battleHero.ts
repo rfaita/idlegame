@@ -1,6 +1,9 @@
 import { Defense } from './defense';
+import { BattleHeroType } from './battleHeroType';
 export class BattleHero {
     public id: String;
+    public heroType: BattleHeroType;
+
     public level: Number;
 
     public dmg: Number;

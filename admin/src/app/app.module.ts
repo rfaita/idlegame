@@ -52,6 +52,9 @@ import { InventoryComponent } from './inventory/inventory.component';
 import { InventoryService } from './service/inventory.service';
 import { ShopService } from './service/shop.service';
 import { ShopComponent } from './shop/shop.component';
+import { BattleHeroService } from './service/battleHero.service';
+import { BattleHero } from './model/battleHero';
+import { HeroDetailComponent } from './heroDetail/heroDetail.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +70,7 @@ import { ShopComponent } from './shop/shop.component';
     GuildComponent,
     InventoryComponent,
     ShopComponent,
+    HeroDetailComponent,
     KeysPipe
   ],
   imports: [
@@ -127,7 +131,8 @@ import { ShopComponent } from './shop/shop.component';
     GuildService,
     GuildMemberService,
     InventoryService,
-    ShopService
+    ShopService,
+    BattleHeroService
   ],
   bootstrap: [AppComponent]
 })

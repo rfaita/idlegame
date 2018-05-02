@@ -4,3 +4,7 @@ nav {
     z-index: 90;
     margin: 0px;
 }
+
+.item {
+    padding: 1em;
+}

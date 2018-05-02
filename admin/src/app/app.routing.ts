@@ -14,6 +14,7 @@ import { PvpComponent } from './pvp/pvp.component';
 import { GuildComponent } from './guild/guild.component';
 import { InventoryComponent } from './inventory/inventory.component';
 import { ShopComponent } from './shop/shop.component';
+import { HeroDetailComponent } from './heroDetail/heroDetail.component';
 
 const routes: Routes = [
   { path: 'shop', component: ShopComponent },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'hero/:id', component: HeroComponent },
   { path: 'heroTypes', component: HeroTypesComponent },
   { path: 'heroType/:id', component: HeroTypeComponent },
+  { path: 'heroDetail/:id', component: HeroDetailComponent },
   { path: 'inventory', component: InventoryComponent },
   { path: '', redirectTo: 'friends', pathMatch: 'full' }
 ];

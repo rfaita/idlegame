@@ -1,0 +1,33 @@
+<div class="main-content" *ngIf="!!battleHero">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <img class="card-img-left" src="http://via.placeholder.com/250x150" alt="Card image cap">
+                    <div class="card-body item">
+                        <h5 class="card-title">{{battleHero.heroType.name}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">
+                            <span>{{battleHero.heroType.role}}</span>
+                            <span>{{battleHero.heroType.quality}}</span>
+                            <span>{{battleHero.heroType.faction}}</span>
+                        </h6>
+                        <p class="col-md-3">
+                            <span>HP: </span>{{battleHero.hp}}</p>
+                        <p class="col-md-3">
+                            <span>Damage: </span>{{battleHero.dmg}}</p>
+                        <p class="col-md-3">
+                            <span>Ability Power: </span>{{battleHero.ap}}</p>
+                        <p class="col-md-3">
+                            <span>Speed: </span>{{battleHero.speed}}</p>
+                        <p class="col-md-1" *ngFor="let def of battleHero.defenses">
+                            <span>{{def.type}}:</span> {{def.value}}</p>
+                        <button type="button" rel="tooltip" title="Level Up" class="card-link btn btn-sm btn-primary">
+                            <i class="material-icons">plus</i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

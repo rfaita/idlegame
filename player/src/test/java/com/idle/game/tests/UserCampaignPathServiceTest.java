@@ -51,9 +51,6 @@ public class UserCampaignPathServiceTest {
     @MockBean
     private BattleClient battleClient;
 
-    @MockBean
-    private MailClient mailClient;
-
     @Autowired
     private UserCampaignPathService userCampaignPathService;
 

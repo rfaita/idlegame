@@ -66,7 +66,7 @@
         <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-spring-boot-2-starter</artifactId>
-            <version>4.0.0.Beta2-SNAPSHOT</version>
+            <version>4.0.0.Beta2</version>
         </dependency>
         
         

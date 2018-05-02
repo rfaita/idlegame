@@ -2,18 +2,14 @@ package com.idle.game.server.service;
 
 import static com.idle.game.constant.CacheConstants.*;
 import com.idle.game.model.battle.BattleField;
-import com.idle.game.model.battle.BattleFieldConfig;
 import com.idle.game.model.battle.BattleSite;
 import com.idle.game.server.repository.BattleFieldRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
-import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import com.idle.game.helper.client.battle.PveBattleFieldConfigClient;
 
 /**
  *

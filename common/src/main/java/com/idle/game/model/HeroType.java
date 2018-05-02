@@ -15,6 +15,7 @@ import com.idle.game.core.hero.type.HeroTypeSize;
 import com.idle.game.core.type.DefenseType;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;

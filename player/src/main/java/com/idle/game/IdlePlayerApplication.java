@@ -1,5 +1,13 @@
 package com.idle.game;
 
+import com.idle.game.model.ResourceType;
+import com.idle.game.model.Reward;
+import com.idle.game.model.RewardValue;
+import com.idle.game.model.battle.BattleField;
+import com.idle.game.model.battle.BattleSite;
+import com.idle.game.model.campaign.CampaignPath;
+import com.idle.game.server.repository.CampaignPathRepository;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -26,6 +34,28 @@ public class IdlePlayerApplication {
     @Bean
     public javax.validation.Validator localValidatorFactoryBean() {
         return new LocalValidatorFactoryBean();
+    }
+
+    @Bean
+    public CommandLineRunner init(CampaignPathRepository campaignPathRepository) {
+
+        return args -> {
+
+            Reward r = new Reward();
+            r.addReward(new RewardValue(ResourceType.GEM, 500L));
+
+            CampaignPath cp = new CampaignPath();
+
+            cp.setId("camp1");
+            cp.setInitialPath(Boolean.TRUE);
+            cp.setReward(r);
+            cp.setBattleFieldId("camp1");
+            cp.setNextCampaignPathId(null);
+
+            campaignPathRepository.save(cp);
+
+        };
+
     }
 
 }

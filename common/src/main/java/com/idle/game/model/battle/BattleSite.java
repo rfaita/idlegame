@@ -1,7 +1,6 @@
 package com.idle.game.model.battle;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  *
