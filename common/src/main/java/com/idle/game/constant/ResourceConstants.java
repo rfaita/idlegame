@@ -18,7 +18,7 @@ public class ResourceConstants {
 
         List<Resource> ret = new ArrayList<>();
 
-        ret.add(new Resource(ResourceType.GEM, 0L));
+        ret.add(new Resource(ResourceType.ASHARD, 0L));
         ret.add(new Resource(ResourceType.RUNE, 0L));
         ret.add(new Resource(ResourceType.GOLD, 0L));
         ret.add(new Resource(ResourceType.RUNE_PS, INITIAL_GOLD_PS));

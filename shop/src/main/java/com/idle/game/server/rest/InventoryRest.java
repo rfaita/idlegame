@@ -1,12 +1,12 @@
 package com.idle.game.server.rest;
 
-import static com.idle.game.constant.URIConstants.INVENTORY;
-import static com.idle.game.constant.URIConstants.INVENTORY_ROLL_ITEM;
+import static com.idle.game.constant.URIConstants.*;
 import com.idle.game.helper.TokenHelper;
 import com.idle.game.model.shop.Inventory;
 import com.idle.game.model.shop.InventoryItem;
 import com.idle.game.server.dto.Envelope;
 import com.idle.game.server.service.InventoryService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,6 +40,28 @@ public class InventoryRest {
 
     }
 
+    @RequestMapping(path = "/" + INVENTORY_CHANGE_ITEMS_AMOUNT_IN_USE, method = RequestMethod.PUT)
+    public @ResponseBody
+    Envelope<Inventory> changeItemsAmountInUse(@RequestBody List<InventoryItem> items) {
+
+        Envelope<Inventory> ret = new Envelope<>();
+        ret.setData(inventoryService.changeItemsAmountInUse(tokenHelper.getUserId(), items));
+
+        return ret;
+
+    }
+
+    @RequestMapping(path = "/" + INVENTORY_ADD_ITEMS + "/{userId}", method = RequestMethod.PUT)
+    public @ResponseBody
+    Envelope<Inventory> addItems(@PathVariable("userId") String userId, @RequestBody List<InventoryItem> items) {
+
+        Envelope<Inventory> ret = new Envelope<>();
+        ret.setData(inventoryService.addItems(userId, items));
+
+        return ret;
+
+    }
+
     @RequestMapping(path = "/" + INVENTORY_ROLL_ITEM, method = RequestMethod.POST)
     public @ResponseBody
     Envelope<Inventory> rollItem(@RequestBody InventoryItem item) {
@@ -64,10 +86,10 @@ public class InventoryRest {
 
     @RequestMapping(path = "", method = RequestMethod.DELETE)
     public @ResponseBody
-    Envelope<Inventory> removeItem(@RequestBody InventoryItem item) {
+    Envelope<Inventory> removeItems(@RequestBody List<InventoryItem> items) {
 
         Envelope<Inventory> ret = new Envelope<>();
-        ret.setData(inventoryService.removeItem(tokenHelper.getUserId(), item));
+        ret.setData(inventoryService.removeItems(tokenHelper.getUserId(), items));
 
         return ret;
 

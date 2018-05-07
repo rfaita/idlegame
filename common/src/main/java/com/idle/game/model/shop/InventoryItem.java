@@ -17,6 +17,8 @@ public class InventoryItem implements Serializable {
     //TODO: ItemCategoryEnum
     @Positive(message = "item.ammout.must.be.greater.than.zero")
     private Long amount;
+    @Positive(message = "item.ammout.in.use.must.be.greater.than.zero")
+    private Long amountInUse = 0l;
 
     public InventoryItem(String itemClassName, String itemId) {
         this.itemClassName = itemClassName;
@@ -24,6 +26,14 @@ public class InventoryItem implements Serializable {
     }
 
     public InventoryItem() {
+    }
+
+    public Long getAmountInUse() {
+        return amountInUse;
+    }
+
+    public void setAmountInUse(Long amountInUse) {
+        this.amountInUse = amountInUse;
     }
 
     public String getItemId() {

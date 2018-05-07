@@ -11,10 +11,10 @@ import java.util.Date;
  */
 public class DateUtil {
 
-    public static Long secondsFrom(Date d) {
-        LocalDateTime lastTime = LocalDateTime.ofInstant(d.toInstant(), ZoneId.systemDefault());
+    public static Long secondsFrom(Date date) {
+        LocalDateTime localDate = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
 
-        return lastTime.until(LocalDateTime.now(), ChronoUnit.SECONDS);
+        return localDate.until(LocalDateTime.now(), ChronoUnit.SECONDS);
     }
 
 }

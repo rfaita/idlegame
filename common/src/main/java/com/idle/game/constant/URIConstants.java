@@ -13,6 +13,7 @@ public interface URIConstants {
     final String PVP = "/pvp";
     final String MAIL = "/mail";
     final String SHOP = "/shop";
+    final String AUCTION = "/auction";
     final String INVENTORY = "/inventory";
     final String HERO_TYPE_TYPES = "/heroTypeTypes";
     final String HERO_TYPES = "/heroTypes";
@@ -29,6 +30,8 @@ public interface URIConstants {
     final String ACTION_EFFECT_TYPES = "/actionEffectTypes";
     final String PVE_BATTLE_FIELD_CONFIG = "/pveBattleFieldConfig";
 
+    final String INVENTORY_CHANGE_ITEMS_AMOUNT_IN_USE = "changeItemsAmountInUse";
+    final String INVENTORY_ADD_ITEMS = "addItems";
     final String INVENTORY_ROLL_ITEM = "rollItem";
     final String PVE_BATTLEFIELDCONFIG_UPGRADE = "upgrade";
     final String USER__FIND_BY_NICK_NAME = "findByNickName";

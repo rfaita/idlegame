@@ -1,0 +1,93 @@
+server:
+    port: 8086
+    compression:
+        enabled: true
+        mime-types: application/json
+
+management: 
+    security: 
+        enabled: false
+keycloak:
+    auth-server-url: http://localhost:8180/auth
+    realm: idlerealm
+    resource: idlegame
+    public-client: true
+
+#Spring Boot Config            
+spring:
+    profiles:
+        active: default
+    jackson:
+        default-property-inclusion: non_null
+        
+eureka:         #tells about the Eureka server details and its refresh time
+    instance:
+        leaseRenewalIntervalInSeconds: 1
+        leaseExpirationDurationInSeconds: 2
+    client:
+        serviceUrl:
+            defaultZone: ${EUREKASERVER:http://localhost:8761/eureka/}
+        healthcheck:
+            enabled: true
+        lease:
+            duration: 5
+        
+feign:
+    hystrix:
+        enabled: true
+hystrix:
+    shareSecurityContext: true
+    
+idle:
+    config:
+        #Redis
+        redis:
+            hostname: localhost
+            port: 6379
+        #Mongo
+        mongodb:
+            hostname: localhost
+            port: 11111
+            database: test
+        #RabbitMQ relay
+        relay:
+            hostname: localhost
+            port: 61613
+            username: admin
+            password: admin123
+            
+        #RabbitMQ message
+        amq:
+            hostname: localhost
+            port: 5672
+            username: admin
+            password: admin123
+            
+        pveBattleFieldConfig:
+            maxLayerSize: 3
+            defaultMaxLayerSize: 2
+            growthFactorMaxSitesSize: 2
+        
+        guildBattleFieldConfig:
+            maxLayerSize: 5
+            defaultMaxLayerSize: 3
+            growthFactorMaxSitesSize: 3
+            
+        pvpRating:
+            expire: 1800
+            price: 20
+           
+        mail:
+            exchange: idle.game.mail.exchange
+            sendDLQQueue: idle.game.mail.sendDLQQueue
+            sendQueue: idle.game.mail.sendQueue
+            
+        useResource:
+            exchange: idle.game.useResource.exchange
+            sendDLQQueue: idle.game.useResource.sendDLQQueue
+            sendQueue: idle.game.useResource.sendQueue
+            
+        addResource:
+            exchange: idle.game.addResource.exchange
+            sendDLQQueue: idle.game.addResource.sendDLQQueue
+            sendQueue: idle.game.addResource.sendQueue

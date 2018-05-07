@@ -157,7 +157,7 @@ public class TestHelper {
     }
 
     public static Resource createGemPDResource() {
-        return new Resource(ResourceType.GEM_PD, 1L);
+        return new Resource(ResourceType.ASHARD_PD, 1L);
     }
 
     public static Resource createGoldPHResource() {
@@ -169,7 +169,7 @@ public class TestHelper {
     }
 
     public static Resource createGemPHResource() {
-        return new Resource(ResourceType.GEM_PH, 1L);
+        return new Resource(ResourceType.ASHARD_PH, 1L);
     }
 
     public static Resource createGoldPSResource() {
@@ -181,7 +181,7 @@ public class TestHelper {
     }
 
     public static Resource createGemPSResource() {
-        return new Resource(ResourceType.GEM_PS, 1L);
+        return new Resource(ResourceType.ASHARD_PS, 1L);
     }
 
     public static Resource createGoldResource() {
@@ -193,7 +193,7 @@ public class TestHelper {
     }
 
     public static Resource createGemResource() {
-        return new Resource(ResourceType.GEM, 0L);
+        return new Resource(ResourceType.ASHARD, 0L);
     }
 
     public static Resource create100GoldResource() {
@@ -205,7 +205,7 @@ public class TestHelper {
     }
 
     public static Resource create100GemResource() {
-        return new Resource(ResourceType.GEM, 100L);
+        return new Resource(ResourceType.ASHARD, 100L);
     }
 
     public static Resource create50GoldResource() {
@@ -217,7 +217,7 @@ public class TestHelper {
     }
 
     public static Resource create50GemResource() {
-        return new Resource(ResourceType.GEM, 50L);
+        return new Resource(ResourceType.ASHARD, 50L);
     }
 
     public static PvpRating createPvpRatingWithId(String id, String userId, Integer rat, String formId) {

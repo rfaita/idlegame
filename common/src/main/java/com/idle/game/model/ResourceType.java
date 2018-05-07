@@ -8,10 +8,10 @@ import static java.lang.Boolean.*;
  */
 public enum ResourceType {
 
-    GOLD_PD(TRUE, null, null, null), GEM_PD(TRUE, null, null, null), RUNE_PD(TRUE, null, null, null),
-    GOLD_PH(TRUE, null, null, null), GEM_PH(TRUE, null, null, null), RUNE_PH(TRUE, null, null, null),
-    GOLD_PS(TRUE, null, null, null), GEM_PS(TRUE, null, null, null), RUNE_PS(TRUE, null, null, null),
-    GOLD(FALSE, GOLD_PS, GOLD_PH, GOLD_PD), GEM(FALSE, GEM_PS, GEM_PH, GEM_PD), RUNE(FALSE, RUNE_PS, RUNE_PH, RUNE_PD);
+    GOLD_PD(TRUE, null, null, null), ASHARD_PD(TRUE, null, null, null), RUNE_PD(TRUE, null, null, null),
+    GOLD_PH(TRUE, null, null, null), ASHARD_PH(TRUE, null, null, null), RUNE_PH(TRUE, null, null, null),
+    GOLD_PS(TRUE, null, null, null), ASHARD_PS(TRUE, null, null, null), RUNE_PS(TRUE, null, null, null),
+    GOLD(FALSE, GOLD_PS, GOLD_PH, GOLD_PD), ASHARD(FALSE, ASHARD_PS, ASHARD_PH, ASHARD_PD), RUNE(FALSE, RUNE_PS, RUNE_PH, RUNE_PD);
 
     private final Boolean timeResource;
     private final ResourceType resourcePerSecond;

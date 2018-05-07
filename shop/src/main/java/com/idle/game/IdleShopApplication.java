@@ -92,7 +92,7 @@ public class IdleShopApplication {
             lr.addRoll(HeroTypeQuality.class, new LootRollValue(HeroTypeQuality.AVERAGE.toString(), 30.0));
             lr.addRoll(HeroTypeQuality.class, new LootRollValue(HeroTypeQuality.BEST.toString(), 10.0));
 
-            lr.addCost(new Resource(ResourceType.GEM, 150L));
+            lr.addCost(new Resource(ResourceType.ASHARD, 150L));
 
             lr.setName("loot.roll.better");
 
@@ -107,7 +107,7 @@ public class IdleShopApplication {
             lr.addRoll(FormationItem.class, new LootRollValue("1001", 33.0));
             lr.addRoll(FormationItem.class, new LootRollValue("1002", 34.0));
 
-            lr.addCost(new Resource(ResourceType.GEM, 150L));
+            lr.addCost(new Resource(ResourceType.ASHARD, 150L));
 
             lr.setName("base.formation.help.2");
 
@@ -122,7 +122,7 @@ public class IdleShopApplication {
             lr.addRoll(FormationItem.class, new LootRollValue("2001", 33.0));
             lr.addRoll(FormationItem.class, new LootRollValue("2002", 34.0));
 
-            lr.addCost(new Resource(ResourceType.GEM, 150L));
+            lr.addCost(new Resource(ResourceType.ASHARD, 150L));
 
             lr.setName("base.formation.help.3");
 

@@ -61,16 +61,16 @@ public class UserResourceTest {
 
         Assert.assertEquals(new Long(0L), pr1Expected.getResource(ResourceType.RUNE).getValue());
         Assert.assertEquals(new Long(0L), pr1Expected.getResource(ResourceType.GOLD).getValue());
-        Assert.assertEquals(new Long(0L), pr1Expected.getResource(ResourceType.GEM).getValue());
+        Assert.assertEquals(new Long(0L), pr1Expected.getResource(ResourceType.ASHARD).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PS).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PS).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PS).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PS).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PH).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PH).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PH).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PH).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PD).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PD).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PD).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PD).getValue());
 
     }
 
@@ -93,16 +93,16 @@ public class UserResourceTest {
 
         Assert.assertEquals(new Long(36010L), pr1Expected.getResource(ResourceType.RUNE).getValue());
         Assert.assertEquals(new Long(360100L), pr1Expected.getResource(ResourceType.GOLD).getValue());
-        Assert.assertEquals(new Long(3601L), pr1Expected.getResource(ResourceType.GEM).getValue());
+        Assert.assertEquals(new Long(3601L), pr1Expected.getResource(ResourceType.ASHARD).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PS).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PS).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PS).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PS).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PH).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PH).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PH).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PH).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PD).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PD).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PD).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PD).getValue());
 
     }
 
@@ -125,16 +125,16 @@ public class UserResourceTest {
 
         Assert.assertEquals(new Long(42010L), pr1Expected.getResource(ResourceType.RUNE).getValue());
         Assert.assertEquals(new Long(420100L), pr1Expected.getResource(ResourceType.GOLD).getValue());
-        Assert.assertEquals(new Long(4201L), pr1Expected.getResource(ResourceType.GEM).getValue());
+        Assert.assertEquals(new Long(4201L), pr1Expected.getResource(ResourceType.ASHARD).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PS).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PS).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PS).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PS).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PH).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PH).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PH).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PH).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PD).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PD).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PD).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PD).getValue());
 
     }
 
@@ -157,16 +157,16 @@ public class UserResourceTest {
 
         Assert.assertEquals(new Long(288090L), pr1Expected.getResource(ResourceType.RUNE).getValue());
         Assert.assertEquals(new Long(2880900L), pr1Expected.getResource(ResourceType.GOLD).getValue());
-        Assert.assertEquals(new Long(28809L), pr1Expected.getResource(ResourceType.GEM).getValue());
+        Assert.assertEquals(new Long(28809L), pr1Expected.getResource(ResourceType.ASHARD).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PS).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PS).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PS).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PS).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PH).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PH).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PH).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PH).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PD).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PD).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PD).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PD).getValue());
 
     }
 
@@ -189,16 +189,16 @@ public class UserResourceTest {
 
         Assert.assertEquals(new Long(288090L), pr1Expected.getResource(ResourceType.RUNE).getValue());
         Assert.assertEquals(new Long(2880900L), pr1Expected.getResource(ResourceType.GOLD).getValue());
-        Assert.assertEquals(new Long(28809L), pr1Expected.getResource(ResourceType.GEM).getValue());
+        Assert.assertEquals(new Long(28809L), pr1Expected.getResource(ResourceType.ASHARD).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PS).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PS).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PS).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PS).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PH).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PH).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PH).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PH).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PD).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PD).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PD).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PD).getValue());
 
     }
     @Test
@@ -220,16 +220,16 @@ public class UserResourceTest {
 
         Assert.assertEquals(new Long(288100L), pr1Expected.getResource(ResourceType.RUNE).getValue());
         Assert.assertEquals(new Long(2881000L), pr1Expected.getResource(ResourceType.GOLD).getValue());
-        Assert.assertEquals(new Long(28810L), pr1Expected.getResource(ResourceType.GEM).getValue());
+        Assert.assertEquals(new Long(28810L), pr1Expected.getResource(ResourceType.ASHARD).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PS).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PS).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PS).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PS).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PH).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PH).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PH).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PH).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PD).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PD).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PD).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PD).getValue());
 
     }
 
@@ -252,16 +252,16 @@ public class UserResourceTest {
 
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.RUNE).getValue());
         Assert.assertEquals(new Long(1000L), pr1Expected.getResource(ResourceType.GOLD).getValue());
-        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.GEM).getValue());
+        Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.ASHARD).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PS).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PS).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PS).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PS).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PH).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PH).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PH).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PH).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PD).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PD).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PD).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PD).getValue());
 
     }
 
@@ -284,16 +284,16 @@ public class UserResourceTest {
 
         Assert.assertEquals(new Long(50L), pr1Expected.getResource(ResourceType.RUNE).getValue());
         Assert.assertEquals(new Long(500L), pr1Expected.getResource(ResourceType.GOLD).getValue());
-        Assert.assertEquals(new Long(5L), pr1Expected.getResource(ResourceType.GEM).getValue());
+        Assert.assertEquals(new Long(5L), pr1Expected.getResource(ResourceType.ASHARD).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PS).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PS).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PS).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PS).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PH).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PH).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PH).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PH).getValue());
         Assert.assertEquals(new Long(10L), pr1Expected.getResource(ResourceType.RUNE_PD).getValue());
         Assert.assertEquals(new Long(100L), pr1Expected.getResource(ResourceType.GOLD_PD).getValue());
-        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.GEM_PD).getValue());
+        Assert.assertEquals(new Long(1L), pr1Expected.getResource(ResourceType.ASHARD_PD).getValue());
 
     }
 
@@ -312,7 +312,7 @@ public class UserResourceTest {
 
         Assert.assertEquals(new Long(50L), pr1Expected.getResource(ResourceType.RUNE).getValue());
         Assert.assertEquals(new Long(50L), pr1Expected.getResource(ResourceType.GOLD).getValue());
-        Assert.assertEquals(new Long(50L), pr1Expected.getResource(ResourceType.GEM).getValue());
+        Assert.assertEquals(new Long(50L), pr1Expected.getResource(ResourceType.ASHARD).getValue());
 
     }
 
@@ -331,7 +331,7 @@ public class UserResourceTest {
 
         Assert.assertEquals(new Long(0L), pr1Expected.getResource(ResourceType.RUNE).getValue());
         Assert.assertEquals(new Long(0L), pr1Expected.getResource(ResourceType.GOLD).getValue());
-        Assert.assertEquals(new Long(0L), pr1Expected.getResource(ResourceType.GEM).getValue());
+        Assert.assertEquals(new Long(0L), pr1Expected.getResource(ResourceType.ASHARD).getValue());
 
     }
 

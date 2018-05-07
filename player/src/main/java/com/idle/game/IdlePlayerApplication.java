@@ -42,7 +42,7 @@ public class IdlePlayerApplication {
         return args -> {
 
             Reward r = new Reward();
-            r.addReward(new RewardValue(ResourceType.GEM, 500L));
+            r.addReward(new RewardValue(ResourceType.ASHARD, 500L));
 
             CampaignPath cp = new CampaignPath();
 

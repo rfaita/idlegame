@@ -10,6 +10,7 @@ import com.idle.game.model.shop.LootRoll;
 import static com.idle.game.model.shop.LootRollType.ITEM;
 import com.idle.game.model.shop.Roll;
 import com.idle.game.server.repository.InventoryRepository;
+import java.util.List;
 import javax.validation.ValidationException;
 
 /**
@@ -21,7 +22,7 @@ public class InventoryService {
 
     @Autowired
     private InventoryRepository inventoryRepository;
-    
+
     @Autowired
     private UserResourceClient userResourceClient;
 
@@ -48,6 +49,28 @@ public class InventoryService {
 
     }
 
+    public Inventory addItems(String userId, List<InventoryItem> inventoryItems) {
+        Inventory inventory = findByUserId(userId);
+
+        inventoryItems.forEach((inventoryItem) -> {
+            inventory.addItem(inventoryItem);
+        });
+
+        return inventoryRepository.save(inventory);
+
+    }
+
+    public Inventory removeItems(String userId, List<InventoryItem> inventoryItems) {
+        Inventory inventory = findByUserId(userId);
+
+        inventoryItems.forEach((inventoryItem) -> {
+            inventory.removeItem(inventoryItem);
+        });
+
+        return inventoryRepository.save(inventory);
+
+    }
+
     private Inventory addItem(String userId, InventoryItem inventoryItem) {
         Inventory inventory = findByUserId(userId);
 
@@ -57,7 +80,7 @@ public class InventoryService {
 
     }
 
-    public Inventory removeItem(String userId, InventoryItem inventoryItem) {
+    private Inventory removeItem(String userId, InventoryItem inventoryItem) {
 
         Inventory inventory = findByUserId(userId);
 
@@ -97,7 +120,7 @@ public class InventoryService {
             if (lootRoll.getType().equals(ITEM)) {
 
                 userResourceClient.useResources(lootRoll.getCost());
-                
+
                 InventoryItem inventoryItem = new InventoryItem();
 
                 Roll ret = lootRoll.roll();
@@ -105,7 +128,7 @@ public class InventoryService {
                 inventoryItem.setItemClassName(ret.getRollType());
                 inventoryItem.setItemId(ret.getValue());
                 inventoryItem.setAmount(1L);
-                
+
                 return addItem(userId, inventoryItem);
 
             } else {
@@ -115,6 +138,22 @@ public class InventoryService {
             throw new ValidationException("loot.roll.not.found");
         }
 
+    }
+
+    public Inventory changeItemsAmountInUse(String userId, List<InventoryItem> items) {
+        Inventory inventory = findByUserId(userId);
+
+        for (InventoryItem item : items) {
+            if (inventory.containsItem(item)) {
+                if (!inventory.canItemAmountPutInUse(item)) {
+                    throw new ValidationException("you.can.not.use.more.items.you.have");
+                }
+                InventoryItem inventoryItem = inventory.getItem(item);
+                inventoryItem.setAmountInUse(inventoryItem.getAmountInUse() + item.getAmountInUse());
+            }
+        }
+
+        return inventoryRepository.save(inventory);
     }
 
 }

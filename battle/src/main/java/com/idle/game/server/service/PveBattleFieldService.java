@@ -59,6 +59,7 @@ public class PveBattleFieldService {
                 if (!inventory.containsFormationItem(site.getFormationId())) {
                     throw new ValidationException("you.do.not.have.this.formation.in.your.inventory");
                 }
+                //TODO - marcar o item como utilizado
             }
         }
 

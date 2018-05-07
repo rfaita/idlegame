@@ -119,7 +119,7 @@ public class PvpService {
     public void removePvpRatings(String user) {
 
         List<Resource> useResource = new ArrayList<>();
-        useResource.add(new Resource(ResourceType.GEM, pvpRatingPrice));
+        useResource.add(new Resource(ResourceType.ASHARD, pvpRatingPrice));
 
         userResourceClient.useResources(useResource);
     }

@@ -69,6 +69,16 @@ public class Inventory {
         changeItem(i, Boolean.FALSE);
     }
 
+    public Boolean canItemAmountPutInUse(InventoryItem i) {
+        InventoryItem inventoryItem = getItem(i.getItemClassName(), i.getItemId());
+
+        if (inventoryItem != null) {
+            return inventoryItem.getAmount() - (inventoryItem.getAmountInUse() + i.getAmountInUse()) >= 0;
+        } else {
+            throw new ValidationException("inventory.item.not.found");
+        }
+    }
+
     public Boolean containsItem(InventoryItem i) {
         return getItem(i.getItemClassName(), i.getItemId()) != null;
     }
