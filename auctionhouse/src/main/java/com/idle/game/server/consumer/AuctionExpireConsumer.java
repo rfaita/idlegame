@@ -5,12 +5,14 @@ import com.idle.game.server.service.AuctionService;
 import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 /**
  *
  * @author rafael
  */
+@Profile({"default"})
 @Component
 public class AuctionExpireConsumer {
 

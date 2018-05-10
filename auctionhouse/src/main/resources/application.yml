@@ -1,5 +1,5 @@
 server:
-    port: 8086
+    port: 8090
     compression:
         enabled: true
         mime-types: application/json
@@ -91,3 +91,8 @@ idle:
             exchange: idle.game.addResource.exchange
             sendDLQQueue: idle.game.addResource.sendDLQQueue
             sendQueue: idle.game.addResource.sendQueue
+        
+        auction:
+            exchange: idle.game.auction.exchange
+            expireDLQQueue: idle.game.auction.expireDLQQueue
+            expireQueue: idle.game.auction.expireQueue

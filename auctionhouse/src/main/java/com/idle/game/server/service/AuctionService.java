@@ -41,6 +41,7 @@ public class AuctionService {
 
     @Autowired
     private AuctionRepository auctionRepository;
+
     @Autowired
     private AuctionBidRepository auctionBidRepository;
 
@@ -55,9 +56,43 @@ public class AuctionService {
 
     @Autowired
     private HeroClient heroClient;
-    
+
     @Autowired
     private AuctionExpireProducer auctionExpireProducer;
+
+    public Auction cancel(String auctionId) {
+        Auction auction = findById(auctionId);
+
+        if (auction != null) {
+
+            if (auction.getCancelAt() != null) {
+                throw new ValidationException("auction.canceled");
+            }
+
+            if (auction.getExpireAt().before(new Date())) {
+                throw new ValidationException("auction.already.expire");
+            }
+
+            if (auction.getCurrentAuctionBid() != null) {
+                throw new ValidationException("auction.already.have.a.bid");
+            }
+
+            auction.setCancelAt(new Date());
+
+            inventoryClient.addItems(auction.getUserId(), auction.getAuctionReward().getItems());
+
+            Mail m = new Mail();
+            m.setToUserId(auction.getUserId());
+            m.setText("your.auction.has.been.canceled");
+
+            mailClient.sendPrivateInternalMail(m);
+
+            return auctionRepository.save(auction);
+
+        } else {
+            throw new ValidationException("auction.not.found");
+        }
+    }
 
     public Auction create(Auction auction) {
 
@@ -72,7 +107,7 @@ public class AuctionService {
             throw new ValidationException("inventory.not.found");
         }
 
-        if (auction.getAuctionReward() != null && auction.getAuctionReward().getItems() != null) {
+        if (auction.getAuctionReward().getItems() != null && !auction.getAuctionReward().getItems().isEmpty()) {
             for (InventoryItem inventoryItem : auction.getAuctionReward().getItems()) {
                 if (!inventory.containsItem(inventoryItem)) {
                     throw new ValidationException("you.must.be.owner.of.item");
@@ -103,7 +138,7 @@ public class AuctionService {
         userResourceClient.useResources(auctionPrice);
 
         auctionExpireProducer.sendMessage(auction);
-        
+
         return auctionRepository.save(auction);
 
     }
@@ -122,6 +157,15 @@ public class AuctionService {
         Auction auction = findById(auctionBid.getAuctionId());
 
         if (auction != null) {
+
+            if (auction.getCancelAt() != null) {
+                throw new ValidationException("auction.canceled");
+            }
+
+            if (auction.getExpireAt().before(new Date())) {
+                throw new ValidationException("auction.already.expire");
+            }
+
             List<Resource> resources = new ArrayList<>();
             resources.add(auctionBid);
 
@@ -131,7 +175,7 @@ public class AuctionService {
                     throw new ValidationException("auction.bid.resource.can.not.be.different.than.min.resource");
                 }
 
-                if (auctionBid.getValue() < auction.getMinAuctionBid().getValue()) {
+                if (auctionBid.getValue() <= auction.getMinAuctionBid().getValue()) {
                     throw new ValidationException("auction.bid.resource.must.be.greater.or.equal.than.min.resource");
                 }
 
@@ -145,7 +189,7 @@ public class AuctionService {
                     throw new ValidationException("auction.bid.resource.can.not.be.different.than.current.bid.resource");
                 }
 
-                if (auctionBid.getValue() < currAuctionBid.getValue()) {
+                if (auctionBid.getValue() <= currAuctionBid.getValue()) {
                     throw new ValidationException("auction.bid.resource.must.be.greater.or.equal.than.current.bid.resource");
                 }
 
@@ -164,9 +208,9 @@ public class AuctionService {
 
             auctionBid.setDate(new Date());
 
-            auction.setCurrentAuctionBid(auctionBid);
-
             auctionBidRepository.save(auctionBid);
+
+            auction.setCurrentAuctionBid(auctionBid);
 
             return auctionRepository.save(auction);
         } else {
@@ -179,6 +223,19 @@ public class AuctionService {
         Auction auction = findById(auctionId);
 
         if (auction != null) {
+
+            if (auction.getCancelAt() != null) {
+                throw new ValidationException("auction.canceled");
+            }
+
+            if (auction.getExpireAt().before(new Date())) {
+                throw new ValidationException("auction.already.expire");
+            }
+
+            if (auction.getAuctionBuyout() == null) {
+                throw new ValidationException("auction.do.not.have.buyout");
+            }
+
             List<Resource> resources = new ArrayList<>();
             resources.add(auction.getAuctionBuyout());
 
@@ -214,7 +271,7 @@ public class AuctionService {
             auction.setDoneAt(new Date());
 
             auctionRepository.save(auction);
-            
+
             return expire(auctionId);
         } else {
             throw new ValidationException("auction.not.found");
@@ -227,39 +284,42 @@ public class AuctionService {
 
         if (auction != null) {
 
-            if (auction.getCurrentAuctionBid() != null) {
+            if (auction.getCancelAt() == null) {
+                if (auction.getCurrentAuctionBid() != null) {
 
-                AuctionBid currAuctionBid = auction.getCurrentAuctionBid();
+                    AuctionBid currAuctionBid = auction.getCurrentAuctionBid();
 
-                inventoryClient.addItems(currAuctionBid.getUserId(), auction.getAuctionReward().getItems());
+                    inventoryClient.addItems(currAuctionBid.getUserId(), auction.getAuctionReward().getItems());
 
-                Mail m = new Mail();
-                m.setToUserId(currAuctionBid.getUserId());
-                m.setText("you.win.auction.reward.already.add.to.your.inventory");
+                    Mail m = new Mail();
+                    m.setToUserId(currAuctionBid.getUserId());
+                    m.setText("you.win.auction.reward.already.add.to.your.inventory");
 
-                mailClient.sendPrivateInternalMail(m);
-                
-                m = new Mail();
-                m.setToUserId(auction.getUserId());
-                m.setText("your.reward.from.auction");
-                
-                Reward r = new Reward();
-                r.addReward(new RewardValue(currAuctionBid.getType(), currAuctionBid.getValue()));
-                m.setReward(r);
-                
-                mailClient.sendPrivateInternalMail(m);
+                    mailClient.sendPrivateInternalMail(m);
 
-            } else {
-                inventoryClient.addItems(auction.getUserId(), auction.getAuctionReward().getItems());
+                    m = new Mail();
+                    m.setToUserId(auction.getUserId());
+                    m.setText("your.resources.from.auction.sell");
 
-                Mail m = new Mail();
-                m.setToUserId(auction.getUserId());
-                m.setText("you.auction.end.without.a.bid.reward.already.add.to.your.inventory");
+                    Reward r = new Reward();
+                    r.addReward(new RewardValue(currAuctionBid.getType(), currAuctionBid.getValue()));
+                    m.setReward(r);
 
-                mailClient.sendPrivateInternalMail(m);
+                    mailClient.sendPrivateInternalMail(m);
+
+                } else {
+                    inventoryClient.addItems(auction.getUserId(), auction.getAuctionReward().getItems());
+
+                    Mail m = new Mail();
+                    m.setToUserId(auction.getUserId());
+                    m.setText("your.auction.end.without.a.bid.reward.already.add.to.your.inventory");
+
+                    mailClient.sendPrivateInternalMail(m);
+                }
+
+                auction.setDoneAt(new Date());
+
             }
-
-            auction.setDoneAt(new Date());
 
             return auctionRepository.save(auction);
         } else {

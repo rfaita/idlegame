@@ -27,6 +27,7 @@ public class Auction implements Serializable {
     private Date expireAt;
     private Date buyoutAt;
     private Date doneAt;
+    private Date cancelAt;
 
     @NotNull(message = "min.auction.bid.must.be.set")
     private MinAuctionBid minAuctionBid;
@@ -42,6 +43,14 @@ public class Auction implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Date getCancelAt() {
+        return cancelAt;
+    }
+
+    public void setCancelAt(Date cancelAt) {
+        this.cancelAt = cancelAt;
     }
 
     public Date getBuyoutAt() {

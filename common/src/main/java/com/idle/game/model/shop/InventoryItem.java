@@ -20,6 +20,12 @@ public class InventoryItem implements Serializable {
     @Positive(message = "item.ammout.in.use.must.be.greater.than.zero")
     private Long amountInUse = 0l;
 
+    public InventoryItem(String itemClassName, String itemId, Long amount) {
+        this.itemClassName = itemClassName;
+        this.itemId = itemId;
+        this.amount = amount;
+    }
+
     public InventoryItem(String itemClassName, String itemId) {
         this.itemClassName = itemClassName;
         this.itemId = itemId;
