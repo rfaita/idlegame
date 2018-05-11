@@ -7,16 +7,18 @@ import com.idle.game.model.Mail;
 import com.idle.game.model.actionhouse.Auction;
 import com.idle.game.model.actionhouse.AuctionBid;
 import com.idle.game.model.shop.Inventory;
+import com.idle.game.model.shop.InventoryItem;
 import com.idle.game.server.dto.Envelope;
 import com.idle.game.server.producer.AuctionExpireProducer;
 import com.idle.game.server.repository.AuctionBidRepository;
 import com.idle.game.server.repository.AuctionRepository;
 import com.idle.game.server.service.AuctionService;
 import static com.idle.game.tests.helper.TestHelper.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.ValidationException;
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -247,6 +249,97 @@ public class AuctionServiceTest {
 
         Assert.assertEquals(new Long(1100l), ret.getCurrentAuctionBid().getValue());
         Assert.assertEquals("123", ret.getCurrentAuctionBid().getUserId());
+    }
+
+    @Test
+    public void testCancelAuctionNotFound() {
+
+        when(auctionRepository.findById("1000")).thenReturn(Optional.empty());
+
+        expcetionExpect.expect(ValidationException.class);
+        expcetionExpect.expectMessage("auction.not.found");
+
+        auctionService.cancel("1000");
+    }
+
+    @Test
+    public void testCancelAuctionCanceled() {
+
+        when(auctionRepository.findById("1000")).thenReturn(Optional.of(createCanceledAuction("321")));
+
+        expcetionExpect.expect(ValidationException.class);
+        expcetionExpect.expectMessage("auction.canceled");
+
+        auctionService.cancel("1000");
+    }
+
+    @Test
+    public void testCancelAuctionAlreadyExpire() {
+
+        when(auctionRepository.findById("1000")).thenReturn(Optional.of(createExpiredAuction("321")));
+
+        expcetionExpect.expect(ValidationException.class);
+        expcetionExpect.expectMessage("auction.already.expire");
+
+        auctionService.cancel("1000");
+    }
+
+    @Test
+    public void testCancelAuctionAlreadyHaveABid() {
+
+        when(auctionRepository.findById("1000")).thenReturn(Optional.of(createAuctionBidAuction("321")));
+
+        expcetionExpect.expect(ValidationException.class);
+        expcetionExpect.expectMessage("auction.already.have.a.bid");
+
+        auctionService.cancel("1000");
+    }
+
+    @Test
+    public void testCancelSuccess() {
+
+        when(auctionRepository.findById("1000")).thenReturn(Optional.of(createBasicAuction("321")));
+
+        List<InventoryItem> items = new ArrayList<>();
+
+        items.add(createInventoryItem("123"));
+
+        when(inventoryClient.addItems("321", items)).thenReturn(new Envelope((Inventory) null));
+
+        doNothing().when(this.mailClient).sendPrivateInternalMail(any(Mail.class));
+
+        when(auctionRepository.save(any(Auction.class))).thenAnswer(createAuctionAnswerForSomeInput());
+
+        Auction ret = auctionService.cancel("1000");
+
+        Assert.assertNotNull(ret.getCancelAt());
+        Assert.assertNull(ret.getBuyoutAt());
+        Assert.assertNull(ret.getDoneAt());
+    }
+
+    @Test
+    public void textExpireAuctionNotFound() {
+
+        when(auctionRepository.findById("1000")).thenReturn(Optional.empty());
+
+        expcetionExpect.expect(ValidationException.class);
+        expcetionExpect.expectMessage("auction.not.found");
+
+        auctionService.expire("1000");
+
+    }
+
+    @Test
+    public void textExpireAuctionCanceled() {
+
+        when(auctionRepository.findById("1000")).thenReturn(Optional.of(createCanceledAuction("321")));
+
+        when(auctionRepository.save(any(Auction.class))).thenAnswer(createAuctionAnswerForSomeInput());
+
+        Auction ret = auctionService.expire("1000");
+
+        Assert.assertNull(ret.getDoneAt());
+
     }
 
 }
