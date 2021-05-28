@@ -2,10 +2,6 @@ package com.idle.game.core.formation.type;
 
 import static com.idle.game.core.formation.type.FormationPositionType.*;
 
-/**
- *
- * @author rafael
- */
 public enum FormationPosition {
 
     B_2(2, 2, B), M_2(1, 2, M), F_2(0, 2, F),
@@ -28,7 +24,8 @@ public enum FormationPosition {
         return y;
     }
 
-    private FormationPosition(Integer x, Integer y, FormationPositionType type) {
+
+    FormationPosition(Integer x, Integer y, FormationPositionType type) {
         this.x = x;
         this.y = y;
         this.type = type;

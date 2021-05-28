@@ -1,13 +1,8 @@
 package com.idle.game.core.type;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-/**
- *
- * @author rafael
- */
-public class Defense implements Serializable {
+public class Defense {
 
     private DefenseType type;
     private Integer value;

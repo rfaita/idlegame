@@ -1,9 +1,5 @@
 package com.idle.game.core.type;
 
-/**
- *
- * @author rafael
- */
 public enum DamageType {
 
     SLASH(DefenseType.SLASH), BLUNT(DefenseType.BLUNT), PIERCE(DefenseType.PIERCE),

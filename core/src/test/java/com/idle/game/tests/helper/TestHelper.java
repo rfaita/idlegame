@@ -1,9 +1,5 @@
 package com.idle.game.tests.helper;
 
-import com.idle.game.core.formation.type.FormationPosition;
-import com.idle.game.core.type.DamageType;
-import com.idle.game.core.formation.BattleFormation;
-import com.idle.game.core.hero.BattleHero;
 import com.idle.game.core.action.Action;
 import com.idle.game.core.action.ActionEffect;
 import com.idle.game.core.action.type.ActionType;
@@ -13,19 +9,25 @@ import com.idle.game.core.battle.type.BattleTeamType;
 import com.idle.game.core.buff.BuffEffect;
 import com.idle.game.core.buff.type.BuffEffectType;
 import com.idle.game.core.constant.IdleConstants;
-import static com.idle.game.core.formation.type.FormationPosition.*;
+import com.idle.game.core.formation.BattleFormation;
+import com.idle.game.core.formation.type.FormationPosition;
 import com.idle.game.core.formation.type.FormationPositionType;
-import static com.idle.game.core.formation.type.FormationPositionType.*;
-import com.idle.game.core.hero.type.HeroTypeSize;
+import com.idle.game.core.hero.BattleHero;
+import com.idle.game.core.hero.type.HeroSize;
 import com.idle.game.core.type.BattleHeroType;
+import com.idle.game.core.type.DamageType;
 import com.idle.game.core.type.DefenseType;
 import com.idle.game.core.type.TargetType;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static com.idle.game.core.formation.type.FormationPosition.F_0;
+import static com.idle.game.core.formation.type.FormationPosition.F_1;
+import static com.idle.game.core.formation.type.FormationPositionType.*;
+
 /**
- *
  * @author rafael
  */
 public class TestHelper {
@@ -114,7 +116,7 @@ public class TestHelper {
 
     private static BattleHeroType createHeroTypeSmall() {
         BattleHeroType ret = new BattleHeroType();
-        ret.setSize(HeroTypeSize.SMALL);
+        ret.setSize(HeroSize.SMALL);
         return ret;
     }
 
@@ -124,7 +126,7 @@ public class TestHelper {
 
     private static BattleHeroType createHeroTypeMedium() {
         BattleHeroType ret = new BattleHeroType();
-        ret.setSize(HeroTypeSize.MEDIUM);
+        ret.setSize(HeroSize.MEDIUM);
         return ret;
     }
 
@@ -134,7 +136,7 @@ public class TestHelper {
 
     private static BattleHeroType createHeroTypeLarge() {
         BattleHeroType ret = new BattleHeroType();
-        ret.setSize(HeroTypeSize.LARGE);
+        ret.setSize(HeroSize.LARGE);
         return ret;
     }
 
@@ -144,7 +146,7 @@ public class TestHelper {
 
     private static BattleHeroType createHeroTypeBlunt() {
         BattleHeroType ret = new BattleHeroType();
-        ret.setSize(HeroTypeSize.SMALL);
+        ret.setSize(HeroSize.SMALL);
         ret.getSpecialActions().add(createBasicDmgBluntAction(ALL_LINES));
         return ret;
     }
@@ -386,36 +388,47 @@ public class TestHelper {
         return new Battle(attForm, defForm);
     }
 
+    public static List<BattlePositionedHero> createBattlePositionedHeroes(FormationPosition[] pos) {
+        List<BattlePositionedHero> ret = new ArrayList<>();
+        for (FormationPosition fp : pos) {
+            BattlePositionedHero bph = createBasicPositionedHero(fp, createBasicBluntNoCritNoDodge100HpHero());
+            bph.setBattleTeamType(BattleTeamType.DEFENSE_TEAM);
+            ret.add(bph);
+        }
+
+        return ret;
+    }
+
     public static Battle createBasicBattleWithPositionsBiggerAndLowerHp(FormationPosition[] attForms, FormationPosition[] defForms) {
         Battle ret = createBasicBattle(attForms, defForms);
 
         ret.prepareToBattle();
 
-        List<BattlePositionedHero> tAll
-                = ret.getTargetsOfActionEffect(
-                        createBasicActionEffect(TargetType.ALL),
-                        createBasicAttackPositionedHero(F_0, createBasicFireNoCritNoDodge100HpHero())
-                );
+//        List<BattlePositionedHero> tAll
+//                = ret.getTargetsOfActionEffect(
+//                createBasicActionEffect(TargetType.ALL),
+//                createBasicAttackPositionedHero(F_0, createBasicFireNoCritNoDodge100HpHero())
+//        );
 
-        tAll.forEach((t) -> {
-            t.getHero().setCurrHp(90);
-        });
+//        tAll.forEach((t) -> {
+//            t.getHero().setCurrHp(90);
+//        });
 
-        List<BattlePositionedHero> tBigger
-                = ret.getTargetsOfActionEffect(
-                        createBasicActionEffect(TargetType.IN_FRONT),
-                        createBasicAttackPositionedHero(F_0, createBasicFireNoCritNoDodge100HpHero())
-                );
+//        List<BattlePositionedHero> tBigger
+//                = ret.getTargetsOfActionEffect(
+//                createBasicActionEffect(TargetType.IN_FRONT),
+//                createBasicAttackPositionedHero(F_0, createBasicFireNoCritNoDodge100HpHero())
+//        );
 
-        tBigger.get(0).getHero().setCurrHp(100);
+//        tBigger.get(0).getHero().setCurrHp(100);
 
-        List<BattlePositionedHero> tLower
-                = ret.getTargetsOfActionEffect(
-                        createBasicActionEffect(TargetType.IN_FRONT),
-                        createBasicAttackPositionedHero(F_1, createBasicFireNoCritNoDodge100HpHero())
-                );
+//        List<BattlePositionedHero> tLower
+//                = ret.getTargetsOfActionEffect(
+//                createBasicActionEffect(TargetType.IN_FRONT),
+//                createBasicAttackPositionedHero(F_1, createBasicFireNoCritNoDodge100HpHero())
+//        );
 
-        tLower.get(0).getHero().setCurrHp(80);
+//        tLower.get(0).getHero().setCurrHp(80);
 
         return ret;
     }

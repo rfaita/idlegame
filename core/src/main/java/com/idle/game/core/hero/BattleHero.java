@@ -1,29 +1,20 @@
 package com.idle.game.core.hero;
 
-import com.idle.game.core.type.Defense;
-import static com.idle.game.core.constant.IdleConstants.LOG;
+import com.idle.game.core.buff.Buff;
+import com.idle.game.core.item.Item;
+import com.idle.game.core.item.ItemType;
+import com.idle.game.core.type.*;
+import com.idle.game.core.util.DiceUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.logging.Level;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.idle.game.core.buff.Buff;
-import com.idle.game.core.item.Item;
-import com.idle.game.core.item.ItemType;
-import com.idle.game.core.type.AttributeType;
-import com.idle.game.core.type.BattleHeroType;
-import com.idle.game.core.type.DefenseType;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import static com.idle.game.core.constant.IdleConstants.LOG;
 
-/**
- *
- * @author rafael
- */
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class BattleHero implements Serializable {
 
     private String id;
@@ -96,9 +87,9 @@ public class BattleHero implements Serializable {
     public Defense getDefense(DefenseType dt) {
 
         Optional<Defense> ret = this.getDefenses().stream().filter((d) -> d.getType().equals(dt)).findFirst();
-        try {
+        if (ret.isPresent()) {
             return ret.get();
-        } catch (NoSuchElementException e) {
+        } else {
             this.getDefenses().add(new Defense(dt, 0));
             return getDefense(dt);
         }
@@ -116,9 +107,9 @@ public class BattleHero implements Serializable {
     public Defense getCurrDefense(DefenseType dt) {
 
         Optional<Defense> ret = this.getCurrDefenses().stream().filter((d) -> d.getType().equals(dt)).findFirst();
-        try {
+        if (ret.isPresent()) {
             return ret.get();
-        } catch (NoSuchElementException e) {
+        } else {
             this.getCurrDefenses().add(new Defense(dt, 0));
             return getCurrDefense(dt);
         }
@@ -317,6 +308,21 @@ public class BattleHero implements Serializable {
             currHp = 0;
         }
         this.currHp = currHp;
+    }
+
+
+    public Double getCriticalHit() {
+        Double dmgModifier = 1.0d;
+
+        if (this.getCurrCritChance() > 0 && DiceUtil.random(100) <= this.getCurrCritChance()) {
+            dmgModifier += this.getCurrCritDamage() / 100d;
+        }
+
+        return dmgModifier;
+    }
+
+    public Double getDmgDefenseReduction(DamageType dmgType) {
+        return 6000d / (6000d + this.getCurrDefense(dmgType.getDefenseType()).getValue());
     }
 
     public void setBoot(Item i) throws Exception {

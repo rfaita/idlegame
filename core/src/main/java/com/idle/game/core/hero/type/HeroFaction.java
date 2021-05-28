@@ -1,9 +1,5 @@
 package com.idle.game.core.hero.type;
 
-/**
- *
- * @author rafael
- */
-public enum HeroTypeFaction {
+public enum HeroFaction {
     HOLY, DARK, FIRE, WATER, EARTH, AIR, ARCANE
 }

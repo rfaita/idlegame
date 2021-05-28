@@ -3,14 +3,21 @@ package com.idle.game.core.battle;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.idle.game.core.action.Action;
 import com.idle.game.core.hero.BattleHero;
+
+import static com.idle.game.core.action.type.SubActionType.DEATH;
 import static com.idle.game.core.constant.IdleConstants.LOG;
+
 import com.idle.game.core.battle.type.BattleTeamType;
 import com.idle.game.core.constant.IdleConstants;
+
 import static com.idle.game.core.constant.IdleConstants.DEFAULT_ACTION;
 import static com.idle.game.core.constant.IdleConstants.DEFAULT_SPECIAL_ACTION;
+
 import com.idle.game.core.formation.type.FormationPosition;
 import com.idle.game.core.formation.type.FormationPositionType;
+
 import static com.idle.game.core.formation.type.FormationPositionType.ALL_LINES;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -20,11 +27,6 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.logging.Level;
 
-/**
- *
- * @author rafael
- */
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class BattlePositionedHero implements Serializable {
 
     private Integer energy = 0;
@@ -152,6 +154,26 @@ public class BattlePositionedHero implements Serializable {
         return null;
     }
 
+    public Boolean dmg(Integer value) {
+        Integer newHp = this.getHero().getCurrHp() + value;
+        if (newHp < 0) {
+            this.getHero().setCurrHp(0);
+            this.setEnergy(0);
+            return Boolean.TRUE;
+        } else {
+            this.getHero().setCurrHp(newHp);
+            if (this.getEnergy() < IdleConstants.MAX_ENERGY) {
+                this.setEnergy(this.getEnergy() + IdleConstants.ENERGY_GAIN_ON_ATTACK);
+            }
+            return Boolean.FALSE;
+        }
+    }
+
+    public void heal(Integer value) {
+        this.getHero().setCurrHp(this.getHero().getCurrHp() + value);
+    }
+
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -181,5 +203,6 @@ public class BattlePositionedHero implements Serializable {
         }
         return Objects.equals(this.hero, other.hero);
     }
+
 
 }

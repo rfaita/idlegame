@@ -24,7 +24,7 @@ public class DoDamageTests {
 
         BattleEvent be = new BattleEvent();
 
-        ActionEffect ae = createBasicActionEffect(TargetType.ALL);
+        ActionEffect ae = createBasicActionEffect(TargetType.RANDOM);
 
         BattlePositionedHero aPositionedHero = createBasicAttackPositionedHero(FormationPosition.F_0, createBasicBluntNoCritNoDodge100HpHero());
         BattlePositionedHero tPositionedHero = createBasicDefensePositionedHero(FormationPosition.F_0, createBasicBluntNoCritNoDodge100HpHero());
@@ -42,7 +42,7 @@ public class DoDamageTests {
 
         BattleEvent be = new BattleEvent();
 
-        ActionEffect ae = createBasicActionEffect(TargetType.ALL);
+        ActionEffect ae = createBasicActionEffect(TargetType.RANDOM);
 
         BattlePositionedHero aPositionedHero = createBasicAttackPositionedHero(FormationPosition.F_0, createBasicBlunt100CritNoDodge100HpHero());
         BattlePositionedHero tPositionedHero = createBasicDefensePositionedHero(FormationPosition.F_0, createBasicBluntNoCritNoDodge100HpHero());
@@ -60,7 +60,7 @@ public class DoDamageTests {
 
         BattleEvent be = new BattleEvent();
 
-        ActionEffect ae = createFireActionEffect(TargetType.ALL);
+        ActionEffect ae = createFireActionEffect(TargetType.RANDOM);
 
         BattlePositionedHero aPositionedHero = createBasicAttackPositionedHero(FormationPosition.F_0, createBasicBluntNoCritNoDodge100HpHero());
         BattlePositionedHero tPositionedHero = createBasicDefensePositionedHero(FormationPosition.F_0, createBasicBluntNoCritNoDodge100HpHero());
@@ -78,7 +78,7 @@ public class DoDamageTests {
 
         BattleEvent be = new BattleEvent();
 
-        ActionEffect ae = createFireActionEffect(TargetType.ALL);
+        ActionEffect ae = createFireActionEffect(TargetType.RANDOM);
 
         BattlePositionedHero aPositionedHero = createBasicAttackPositionedHero(FormationPosition.F_0, createBasicBlunt100CritNoDodge100HpHero());
         BattlePositionedHero tPositionedHero = createBasicDefensePositionedHero(FormationPosition.F_0, createBasicBluntNoCritNoDodge100HpHero());

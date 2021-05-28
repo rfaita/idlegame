@@ -1,9 +1,5 @@
 package com.idle.game.core.battle.type;
 
-/**
- *
- * @author rafael
- */
 public enum BattleTeamType {
 
     ATTACK_TEAM, DEFENSE_TEAM;

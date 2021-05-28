@@ -5,16 +5,12 @@ import com.idle.game.core.formation.type.FormationPositionType;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author rafael
- */
 public class Action extends BaseObject {
 
     private Boolean special = Boolean.FALSE;
     private Boolean passive = Boolean.FALSE;
     private ActionEffect mainActionEffect;
-    private List<ActionEffect> secundaryActionsEffects = new ArrayList<>();
+    private List<ActionEffect> secondaryActionsEffects = new ArrayList<>();
     
     private FormationPositionType formationPositionType;
 
@@ -31,7 +27,7 @@ public class Action extends BaseObject {
 
     public Action(ActionEffect ma, List<ActionEffect> se, Boolean special) {
         this.mainActionEffect = ma;
-        this.secundaryActionsEffects = se;
+        this.secondaryActionsEffects = se;
         this.special = special;
     }
 
@@ -59,12 +55,12 @@ public class Action extends BaseObject {
         this.mainActionEffect = ma;
     }
 
-    public List<ActionEffect> getSecundaryActionsEffects() {
-        return secundaryActionsEffects;
+    public List<ActionEffect> getSecondaryActionsEffects() {
+        return secondaryActionsEffects;
     }
 
-    public void addSecundaryActionsEffects(ActionEffect se) {
-        this.secundaryActionsEffects.add(se);
+    public void addSecondaryActionsEffects(ActionEffect se) {
+        this.secondaryActionsEffects.add(se);
     }
 
     public Boolean getPassive() {
@@ -77,7 +73,7 @@ public class Action extends BaseObject {
 
     @Override
     public String toString() {
-        return (special ? "AS" : passive ? "PA" : "A") + "{" + "ma=" + mainActionEffect + ", sas=" + secundaryActionsEffects + '}';
+        return (special ? "AS" : passive ? "PA" : "A") + "{" + "ma=" + mainActionEffect + ", sas=" + secondaryActionsEffects + '}';
     }
 
 }

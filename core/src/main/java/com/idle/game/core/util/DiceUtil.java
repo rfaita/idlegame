@@ -1,10 +1,10 @@
 package com.idle.game.core.util;
 
 import com.idle.game.core.hero.type.HeroQuality;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- *
  * @author rafael
  */
 public class DiceUtil {
@@ -15,6 +15,14 @@ public class DiceUtil {
 
     public static Integer random(Integer minValue, Integer maxValue) {
         return ThreadLocalRandom.current().nextInt(minValue, maxValue + 1);
+    }
+
+    public static Long random(Long maxValue) {
+        return random(0l, maxValue);
+    }
+
+    public static Long random(Long minValue, Long maxValue) {
+        return ThreadLocalRandom.current().nextLong(minValue, maxValue + 1l);
     }
 
     public static Double randomPercentage() {

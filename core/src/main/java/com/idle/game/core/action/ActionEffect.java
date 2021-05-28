@@ -8,10 +8,6 @@ import com.idle.game.core.type.TargetType;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author rafael
- */
 public class ActionEffect extends BaseObject {
 
     private ActionType type;

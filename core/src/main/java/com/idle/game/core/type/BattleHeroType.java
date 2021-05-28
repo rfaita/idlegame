@@ -1,29 +1,25 @@
 package com.idle.game.core.type;
 
-import com.idle.game.core.hero.type.HeroTypeQuality;
 import com.idle.game.core.action.Action;
 import com.idle.game.core.constant.IdleConstants;
 import com.idle.game.core.formation.type.FormationPositionType;
-import com.idle.game.core.hero.type.HeroTypeFaction;
-import com.idle.game.core.hero.type.HeroTypeRole;
-import com.idle.game.core.hero.type.HeroTypeSize;
+import com.idle.game.core.hero.type.HeroFaction;
+import com.idle.game.core.hero.type.HeroQuality;
+import com.idle.game.core.hero.type.HeroRole;
+import com.idle.game.core.hero.type.HeroSize;
 import com.idle.game.core.passive.Passive;
-import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-/**
- *
- * @author rafael
- */
-public class BattleHeroType implements Serializable {
+public class BattleHeroType {
 
-    private HeroTypeQuality quality;
-    private HeroTypeFaction faction;
-    private HeroTypeRole role;
-    private HeroTypeSize size;
+    private HeroQuality quality;
+    private HeroFaction faction;
+    private HeroRole role;
+    private HeroSize size;
     private String name;
     private List<Action> specialActions = new ArrayList<>();
     private List<Action> defaultActions = new ArrayList<>();
@@ -35,35 +31,35 @@ public class BattleHeroType implements Serializable {
     public BattleHeroType() {
     }
 
-    public HeroTypeSize getSize() {
+    public HeroSize getSize() {
         return size;
     }
 
-    public void setSize(HeroTypeSize size) {
+    public void setSize(HeroSize size) {
         this.size = size;
     }
 
-    public HeroTypeQuality getQuality() {
+    public HeroQuality getQuality() {
         return quality;
     }
 
-    public void setQuality(HeroTypeQuality quality) {
+    public void setQuality(HeroQuality quality) {
         this.quality = quality;
     }
 
-    public HeroTypeFaction getFaction() {
+    public HeroFaction getFaction() {
         return faction;
     }
 
-    public void setFaction(HeroTypeFaction faction) {
+    public void setFaction(HeroFaction faction) {
         this.faction = faction;
     }
 
-    public HeroTypeRole getRole() {
+    public HeroRole getRole() {
         return role;
     }
 
-    public void setRole(HeroTypeRole role) {
+    public void setRole(HeroRole role) {
         this.role = role;
     }
 
@@ -117,20 +113,20 @@ public class BattleHeroType implements Serializable {
 
     public Action getDefaultAction(FormationPositionType fpt) {
 
-        Optional<Action> ret = this.getDefaultActions().stream().filter((d) -> d.getFormationPositionType().equals(fpt)).findFirst();
-        try {
+        Optional<Action> ret = this.getDefaultActions().stream().filter(d -> d.getFormationPositionType().equals(fpt)).findFirst();
+        if (ret.isPresent()) {
             return ret.get();
-        } catch (NoSuchElementException e) {
+        } else {
             return null;
         }
     }
 
     public Action getSpecialAction(FormationPositionType fpt) {
 
-        Optional<Action> ret = this.getSpecialActions().stream().filter((d) -> d.getFormationPositionType().equals(fpt)).findFirst();
-        try {
+        Optional<Action> ret = this.getSpecialActions().stream().filter(d -> d.getFormationPositionType().equals(fpt)).findFirst();
+        if (ret.isPresent()) {
             return ret.get();
-        } catch (NoSuchElementException e) {
+        } else {
             return null;
         }
     }

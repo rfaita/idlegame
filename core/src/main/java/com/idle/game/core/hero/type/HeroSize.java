@@ -1,10 +1,6 @@
 package com.idle.game.core.hero.type;
 
-/**
- *
- * @author rafael
- */
-public enum HeroTypeSize {
+public enum HeroSize {
 
     SMALL(1, 1), MEDIUM(2, 2), LARGE(3, 3);
 
@@ -23,7 +19,7 @@ public enum HeroTypeSize {
         return x * y;
     }
 
-    private HeroTypeSize(Integer x, Integer y) {
+    private HeroSize(Integer x, Integer y) {
         this.x = x;
         this.y = y;
     }

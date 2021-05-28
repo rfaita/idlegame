@@ -1,10 +1,6 @@
 package com.idle.game.core.hero.type;
 
-/**
- *
- * @author rafael
- */
-public enum HeroTypeRole {
+public enum HeroRole {
 
     WARRIOR, MAGE, PRIEST, RANGER, ASSASSIN
 }

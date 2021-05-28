@@ -1,43 +1,34 @@
 package com.idle.game.core.battle;
 
 import com.idle.game.core.BaseObject;
-import com.idle.game.core.formation.BattleFormation;
-import com.idle.game.core.hero.BattleHero;
-import com.idle.game.core.constant.IdleConstants;
-import com.idle.game.core.battle.type.BattleTeamType;
-import com.idle.game.core.type.DamageType;
-import com.idle.game.core.formation.type.FormationType;
-import com.idle.game.core.action.type.SubActionType;
-import com.idle.game.core.buff.Buff;
-import com.idle.game.core.action.ActionEffect;
 import com.idle.game.core.action.Action;
+import com.idle.game.core.action.ActionEffect;
 import com.idle.game.core.action.type.ActionType;
-import static com.idle.game.core.action.type.ActionType.*;
+import com.idle.game.core.action.type.SubActionType;
+import com.idle.game.core.battle.type.BattleTeamType;
+import com.idle.game.core.buff.Buff;
+import com.idle.game.core.constant.IdleConstants;
+import com.idle.game.core.formation.BattleFormation;
+import com.idle.game.core.formation.type.FormationType;
+import com.idle.game.core.hero.BattleHero;
+import com.idle.game.core.type.AttributeType;
 import com.idle.game.core.util.DiceUtil;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
+import java.util.logging.Handler;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import static com.idle.game.core.action.type.ActionType.*;
+import static com.idle.game.core.action.type.SubActionType.DEATH;
 import static com.idle.game.core.battle.type.BattleTeamType.ATTACK_TEAM;
 import static com.idle.game.core.battle.type.BattleTeamType.DEFENSE_TEAM;
-import static com.idle.game.core.action.type.SubActionType.DEATH;
 import static com.idle.game.core.constant.IdleConstants.LOG;
-import com.idle.game.core.formation.type.FormationPosition;
-import com.idle.game.core.formation.type.FormationPositionType;
 import static com.idle.game.core.formation.type.FormationType.ATTACK;
-import com.idle.game.core.passive.Passive;
-import com.idle.game.core.type.AttributeType;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
-import static com.idle.game.core.formation.type.FormationPositionType.*;
 
-/**
- *
- * @author rafael
- */
 public class Battle extends BaseObject {
 
     static {
@@ -96,11 +87,11 @@ public class Battle extends BaseObject {
 
         this.battlePositionedHeroes = new ArrayList<>();
 
-        this.attackFormation.getHeroes().forEach((t) -> {
+        this.attackFormation.getHeroes().forEach(t -> {
             t.setBattleTeamType(ATTACK_TEAM);
             this.battlePositionedHeroes.add(t.duplicate(Boolean.FALSE));
         });
-        this.defenseFormation.getHeroes().forEach((t) -> {
+        this.defenseFormation.getHeroes().forEach(t -> {
             t.setBattleTeamType(DEFENSE_TEAM);
             this.battlePositionedHeroes.add(t.duplicate(Boolean.FALSE));
         });
@@ -136,7 +127,7 @@ public class Battle extends BaseObject {
                 if (bl.getBattleEvent().getSubType() != null) {
                     LOG.log(Level.INFO, "[{0}][{1}] value={2}, target{3}",
                             new Object[]{bl.getBattleEvent().getActionType(), bl.getBattleEvent().getSubType(),
-                                bl.getBattleEvent().getValue(), bl.getHeroesTarget()});
+                                    bl.getBattleEvent().getValue(), bl.getHeroesTarget()});
                 } else {
                     LOG.log(Level.INFO, "[{0}] value={1}, target{2}",
                             new Object[]{bl.getBattleEvent().getActionType(), bl.getBattleEvent().getValue(), bl.getHeroesTarget()});
@@ -203,7 +194,7 @@ public class Battle extends BaseObject {
 
         addBattleLog(new BattleLog(this.turn, new BattleEvent(COMPUTE_BUFF_START)));
         computeBuffs(turnActionRated);
-        addBattleLog(new BattleLog(this.turn, new BattleEvent(ActionType.COMPUTE_BUFF_END)));
+        addBattleLog(new BattleLog(this.turn, new BattleEvent(COMPUTE_BUFF_END)));
 
         if (this.winner == null) {
             for (int i = 0; i < turnActionRated.size(); i++) {
@@ -243,11 +234,11 @@ public class Battle extends BaseObject {
     }
 
     private BattleFormation verifyWinner() {
-        if (getHeroesByTeamTypeAndAlive(ATTACK_TEAM).count() <= 0) {
-            return defenseFormation;
-        } else if (getHeroesByTeamTypeAndAlive(DEFENSE_TEAM).count() <= 0) {
-            return attackFormation;
-        }
+//        if (getHeroesByTeamTypeAndAlive(ATTACK_TEAM).count() <= 0) {
+//            return defenseFormation;
+//        } else if (getHeroesByTeamTypeAndAlive(DEFENSE_TEAM).count() <= 0) {
+//            return attackFormation;
+//        }
         return null;
     }
 
@@ -277,71 +268,62 @@ public class Battle extends BaseObject {
 
     }
 
-    private Double criticalDamage(BattleEvent ret, BattleHero aHero) {
-        Double dmgModifier = 1.0d;
-
-        if (aHero.getCurrCritChance() > 0
-                && DiceUtil.random(100) <= aHero.getCurrCritChance()) {
-            dmgModifier += aHero.getCurrCritDamage() / 100d;
-            ret.setSubType(SubActionType.CRITICAL);
-        }
-
-        return dmgModifier;
-    }
-
     public void doDamage(BattleEvent be, BattlePositionedHero aPositionedHero,
-            ActionEffect ae, BattlePositionedHero tPositionedHero, Boolean special) {
+                         ActionEffect ae, BattlePositionedHero tPositionedHero, Boolean special) {
 
         assert ae.getDamageType() != null : "DamageType can not be null, BUG";
 
-        Double dmgReduction = getDmgDefenseReduction(tPositionedHero.getHero(), ae.getDamageType());
+        Double dmgReduction = tPositionedHero.getHero().getDmgDefenseReduction(ae.getDamageType());
 
-        Double critDmgModifier = criticalDamage(be, aPositionedHero.getHero());
+        Double critDmgModifier = aPositionedHero.getHero().getCriticalHit();
+        if (critDmgModifier >= 1.0) {
+            be.setSubType(SubActionType.CRITICAL);
+        }
 
         Integer dmgModifier = special ? aPositionedHero.getHero().getCurrAp() : aPositionedHero.getHero().getCurrDmg();
 
-        assert dmgModifier != null : "DmgModigier is null. BUG";
+        assert dmgModifier != null : "DmgModifier is null. BUG";
 
         be.setValue(-(int) ((dmgModifier * critDmgModifier * ae.getPercentage() / 100f) * dmgReduction));
         be.setDamageType(ae.getDamageType());
 
-        Integer newHp = tPositionedHero.getHero().getCurrHp() + be.getValue();
-        if (newHp < 0) {
-            tPositionedHero.getHero().setCurrHp(0);
-            tPositionedHero.setEnergy(0);
+        if (tPositionedHero.dmg(be.getValue())) {
             be.setSubType(DEATH);
-        } else {
-            tPositionedHero.getHero().setCurrHp(newHp);
-            if (tPositionedHero.getEnergy() < IdleConstants.MAX_ENERGY) {
-                tPositionedHero.setEnergy(tPositionedHero.getEnergy() + IdleConstants.ENERGY_GAIN_ON_ATTACK);
-            }
         }
+
 
     }
 
     public void doHeal(BattleEvent be, BattlePositionedHero aPositionedHero,
-            ActionEffect ae, BattlePositionedHero tPositionedHero, Boolean special) {
+                       ActionEffect ae, BattlePositionedHero tPositionedHero, Boolean special) {
 
         Integer dmgModifier = special ? aPositionedHero.getHero().getCurrAp() : aPositionedHero.getHero().getCurrDmg();
 
         be.setValue((int) ((dmgModifier * ae.getPercentage() / 100f)));
         be.setDamageType(ae.getDamageType());
 
-        tPositionedHero.getHero().setCurrHp(tPositionedHero.getHero().getCurrHp() + be.getValue());
+        tPositionedHero.heal(be.getValue());
         LOG.log(Level.INFO, "[HEAL, value={0}] HEAL {0} TO HERO {1}", new Object[]{be.getValue(), tPositionedHero.getHero()});
 
     }
 
-    private void calculateActionEffect(BattlePositionedHero aPositionedHero, ActionEffect ae, Boolean special) {
+    private List<BattlePositionedHero> getTargets(BattlePositionedHero aPositionedHero, ActionEffect ae) {
         assert ae.getTargetType() != null : "Target of action can not be null, BUG";
 
-        List<BattlePositionedHero> targets = getTargetsOfActionEffect(ae, aPositionedHero);
+        BattleTeamType battleTeamTypeTarget = ae.getOverSameTeam() ? aPositionedHero.getBattleTeamType() : aPositionedHero.getBattleTeamType().getOpposite();
+
+        return  ae.getTargetType().getTarget().get(battleTeamTypeTarget, battlePositionedHeroes, aPositionedHero);
+    }
+
+    private void calculateActionEffect(BattlePositionedHero aPositionedHero, ActionEffect ae, Boolean special) {
+
+        List<BattlePositionedHero> targets = getTargets(aPositionedHero, ae);
 
         if (targets != null && !targets.isEmpty()) {
 
             final Integer energyGain = IdleConstants.ENERGY_GAIN_DOING_ATTACK / targets.size();
 
-            targets.forEach((tPositionedHero) -> {
+            targets.forEach(tPositionedHero -> {
 
                 BattleEvent be = new BattleEvent(ae.getType());
 
@@ -387,10 +369,10 @@ public class Battle extends BaseObject {
     }
 
     private void calculateSecondaryActions(BattlePositionedHero aPositionedHero, Action a) {
-        final List<ActionEffect> secondaryActions = a.getSecundaryActionsEffects();
+        final List<ActionEffect> secondaryActions = a.getSecondaryActionsEffects();
 
         if (secondaryActions != null) {
-            secondaryActions.forEach((sa) -> {
+            secondaryActions.forEach(sa -> {
                 LOG.log(Level.INFO, "[SECONDARY_ACTION_EFFECT] {0}", sa);
 
                 calculateActionEffect(aPositionedHero, sa, a.getSpecial());
@@ -475,499 +457,28 @@ public class Battle extends BaseObject {
 
     }
 
-    private Double getDmgDefenseReduction(BattleHero h, DamageType dmgType) {
-        return 6000d / (6000d + h.getCurrDefense(dmgType.getDefenseType()).getValue());
-    }
-
-    public List<BattlePositionedHero> getTargetsOfActionEffect(ActionEffect ae, BattlePositionedHero self) {
-        BattleTeamType battleTeamTypeTarget = ae.getOverSameTeam() ? self.getBattleTeamType() : self.getBattleTeamType().getOpposite();
-
-        List<BattlePositionedHero> targets = new ArrayList<>();
-        List<BattlePositionedHero> tempTs;
-        BattlePositionedHero t;
-        switch (ae.getTargetType()) {
-            case SELF:
-                targets.add(self);
-                break;
-            case FRONT_LINE:
-                t = getHeroByFrontLineAndRandom(battleTeamTypeTarget);
-                if (t != null) {
-                    targets.add(t);
-                } else {
-                    t = getHeroByMiddleLineAndRandom(battleTeamTypeTarget);
-                    if (t != null) {
-                        targets.add(t);
-                    } else {
-                        t = getHeroByBackLineAndRandom(battleTeamTypeTarget);
-                        if (t != null) {
-                            targets.add(t);
-                        }
-                    }
-
-                }
-                break;
-            case FRONT_LINE_NO_SELF:
-                t = getHeroByFrontLineAndRandom(battleTeamTypeTarget, self.getPosition());
-                if (t != null) {
-                    targets.add(t);
-                } else {
-                    t = getHeroByMiddleLineAndRandom(battleTeamTypeTarget, self.getPosition());
-                    if (t != null) {
-                        targets.add(t);
-                    } else {
-                        t = getHeroByBackLineAndRandom(battleTeamTypeTarget, self.getPosition());
-                        if (t != null) {
-                            targets.add(t);
-                        }
-                    }
-
-                }
-                break;
-            case MIDDLE_LINE:
-                t = getHeroByMiddleLineAndRandom(battleTeamTypeTarget);
-                if (t != null) {
-                    targets.add(t);
-                } else {
-                    t = getHeroByBackLineAndRandom(battleTeamTypeTarget);
-                    if (t != null) {
-                        targets.add(t);
-                    } else {
-                        t = getHeroByFrontLineAndRandom(battleTeamTypeTarget);
-                        if (t != null) {
-                            targets.add(t);
-                        }
-                    }
-
-                }
-                break;
-            case MIDDLE_LINE_NO_SELF:
-                t = getHeroByMiddleLineAndRandom(battleTeamTypeTarget, self.getPosition());
-                if (t != null) {
-                    targets.add(t);
-                } else {
-                    t = getHeroByBackLineAndRandom(battleTeamTypeTarget, self.getPosition());
-                    if (t != null) {
-                        targets.add(t);
-                    } else {
-                        t = getHeroByFrontLineAndRandom(battleTeamTypeTarget, self.getPosition());
-                        if (t != null) {
-                            targets.add(t);
-                        }
-                    }
-
-                }
-                break;
-            case BACK_LINE:
-                t = getHeroByBackLineAndRandom(battleTeamTypeTarget);
-                if (t != null) {
-                    targets.add(t);
-                } else {
-                    t = getHeroByFrontLineAndRandom(battleTeamTypeTarget);
-                    if (t != null) {
-                        targets.add(t);
-                    } else {
-                        t = getHeroByMiddleLineAndRandom(battleTeamTypeTarget);
-                        if (t != null) {
-                            targets.add(t);
-                        }
-                    }
-
-                }
-                break;
-            case BACK_LINE_NO_SELF:
-                t = getHeroByBackLineAndRandom(battleTeamTypeTarget, self.getPosition());
-                if (t != null) {
-                    targets.add(t);
-                } else {
-                    t = getHeroByFrontLineAndRandom(battleTeamTypeTarget, self.getPosition());
-                    if (t != null) {
-                        targets.add(t);
-                    } else {
-                        t = getHeroByMiddleLineAndRandom(battleTeamTypeTarget, self.getPosition());
-                        if (t != null) {
-                            targets.add(t);
-                        }
-                    }
-
-                }
-                break;
-            case RANDOM:
-                t = getHeroByRandom(battleTeamTypeTarget);
-                if (t != null) {
-                    targets.add(t);
-                }
-                break;
-            case TWO_RANDOM:
-                targets.addAll(getHeroByRandom(battleTeamTypeTarget, 2));
-                break;
-            case THREE_RANDOM:
-                targets.addAll(getHeroByRandom(battleTeamTypeTarget, 3));
-                break;
-            case FOUR_RANDOM:
-                targets.addAll(getHeroByRandom(battleTeamTypeTarget, 4));
-                break;
-            case RANDOM_NO_SELF:
-                t = getHeroByRandom(battleTeamTypeTarget, self.getPosition());
-                if (t != null) {
-                    targets.add(t);
-                }
-                break;
-            case NO_FRONT_LINE:
-                targets.addAll(getHeroesByBackLine(battleTeamTypeTarget));
-                targets.addAll(getHeroesByMiddleLine(battleTeamTypeTarget));
-                if (targets.isEmpty()) {
-                    targets.addAll(getHeroesByFrontLine(battleTeamTypeTarget));
-                }
-                break;
-
-            case IN_FRONT:
-                tempTs = getHeroesByFront(battleTeamTypeTarget, self.getPosition().getY());
-                if (tempTs != null && !tempTs.isEmpty()) {
-                    targets.add(tempTs.get(0));
-                }
-                break;
-            case IN_FRONT_PILLAR:
-                targets.addAll(getHeroesByFront(battleTeamTypeTarget, self.getPosition().getY()));
-                break;
-            case IN_FRONT_SMALL_PILLAR:
-                tempTs = getHeroesByFront(battleTeamTypeTarget, self.getPosition().getY());
-                if (tempTs != null && !tempTs.isEmpty()) {
-                    targets.add(tempTs.get(0));
-                    if (tempTs.size() > 1) {
-                        targets.add(tempTs.get(1));
-                    }
-                }
-                break;
-            case LOWER_LIFE:
-                t = getHeroByLessLifePerc(battleTeamTypeTarget);
-                if (t != null) {
-                    targets.add(t);
-                }
-                break;
-            case BIGGER_LIFE:
-                t = getHeroByMoreLifePerc(battleTeamTypeTarget);
-                if (t != null) {
-                    targets.add(t);
-                }
-                break;
-            case ALL:
-                targets.addAll(getHeroes(battleTeamTypeTarget));
-                break;
-            case ALL_FRONT_LINE:
-                targets.addAll(getHeroesByFrontLine(battleTeamTypeTarget));
-                if (targets.isEmpty()) {
-                    targets.addAll(getHeroesByMiddleLine(battleTeamTypeTarget));
-                    if (targets.isEmpty()) {
-                        targets.addAll(getHeroesByBackLine(battleTeamTypeTarget));
-                    }
-                }
-                break;
-            case ALL_MIDDLE_LINE:
-                targets.addAll(getHeroesByMiddleLine(battleTeamTypeTarget));
-                if (targets.isEmpty()) {
-                    targets.addAll(getHeroesByBackLine(battleTeamTypeTarget));
-                    if (targets.isEmpty()) {
-                        targets.addAll(getHeroesByFrontLine(battleTeamTypeTarget));
-                    }
-                }
-                break;
-            case ALL_BACK_LINE:
-                targets.addAll(getHeroesByBackLine(battleTeamTypeTarget));
-                if (targets.isEmpty()) {
-                    targets.addAll(getHeroesByFrontLine(battleTeamTypeTarget));
-                    if (targets.isEmpty()) {
-                        targets.addAll(getHeroesByMiddleLine(battleTeamTypeTarget));
-                    }
-                }
-                break;
-            case DEAD:
-                t = getHeroDeadByRandom(battleTeamTypeTarget);
-                if (t != null) {
-                    targets.add(t);
-                }
-                break;
-            case RANDOM_ADJACENT:
-                t = getHeroByRandom(battleTeamTypeTarget);
-                if (t != null) {
-                    targets.add(t);
-                    targets.addAll(getHeroesByAdjacent(battleTeamTypeTarget, t.getPosition()));
-                }
-                break;
-        }
-        return removeTargetClones(targets);
-    }
-
-    private BattlePositionedHero findOriginalTarget(BattlePositionedHero bph) {
-        Optional<BattlePositionedHero> ret
-                = this.battlePositionedHeroes.stream()
-                        .filter((t) -> !t.getClone()
-                        && t.getBattleTeamType().equals(bph.getBattleTeamType())
-                        && t.getHero().getId().equals(bph.getHero().getId())).findFirst();
-
-        if (ret != null && ret.isPresent()) {
-            return ret.get();
-        }
-
-        return null;
-    }
-
-    private List<BattlePositionedHero> removeTargetClones(List<BattlePositionedHero> targets) {
-        List<BattlePositionedHero> ret = targets.stream().filter((t) -> !t.getClone()).collect(Collectors.toList());
-
-        targets.stream().filter((t) -> t.getClone()).forEach((t) -> {
-            ret.add(this.findOriginalTarget(t));
-        });
-
-        return ret.stream().distinct().collect(Collectors.toList());
-    }
-
-    private BattlePositionedHero getHeroByLessLifePerc(BattleTeamType battleTeamType) {
-        Optional<BattlePositionedHero> ret = getHeroesByTeamTypeAndAlive(battleTeamType).reduce((h, h2) -> {
-            return h.getHero().getCurrHp() / (h.getHero().getHp() * 1f) < h2.getHero().getCurrHp() / (h2.getHero().getHp() * 1f) ? h : h2;
-        });
-
-        if (ret != null && ret.isPresent()) {
-            return ret.get();
-        }
-
-        return null;
-
-    }
-
-    private BattlePositionedHero getHeroByMoreLifePerc(BattleTeamType battleTeamType) {
-        Optional<BattlePositionedHero> ret = getHeroesByTeamTypeAndAlive(battleTeamType).reduce((h, h2) -> {
-            return h.getHero().getCurrHp() / (h.getHero().getHp() * 1f) > h2.getHero().getCurrHp() / (h2.getHero().getHp() * 1f) ? h : h2;
-        });
-
-        if (ret != null && ret.isPresent()) {
-            return ret.get();
-        }
-
-        return null;
-
-    }
-
-    private List<BattlePositionedHero> getHeroByRandom(BattleTeamType battleTeamType, Integer num) {
-
-        int size = (int) getHeroesByTeamTypeAndAlive(battleTeamType).count();
-
-        if (size <= num) {
-            return getHeroesByTeamTypeAndAlive(battleTeamType).collect(Collectors.toList());
-        }
-
-        List<Integer> rolls = new ArrayList<>(num);
-
-        while (rolls.size() < num) {
-            Integer roll = DiceUtil.random(size - 1);
-            if (!rolls.contains(roll)) {
-                rolls.add(roll);
-            }
-        }
-
-        List<BattlePositionedHero> ret = new ArrayList<>(num);
-        rolls.forEach((roll) -> {
-            Optional<BattlePositionedHero> hero = getHeroesByTeamTypeAndAlive(battleTeamType).skip(roll).findFirst();
-            if (hero != null && hero.isPresent()) {
-                ret.add(hero.get());
-            }
-        });
-        return ret;
-
-    }
-
-    private BattlePositionedHero getHeroByRandom(BattleTeamType battleTeamType) {
-        return getHeroByRandom(battleTeamType, (FormationPosition) null);
-    }
-
-    private BattlePositionedHero getHeroByRandom(BattleTeamType battleTeamType, FormationPosition selfFp) {
-
-        int size = (int) getHeroesByTeamTypeAndAlive(battleTeamType, selfFp).count();
-
-        if (size > 0) {
-            Optional<BattlePositionedHero> ret = getHeroesByTeamTypeAndAlive(battleTeamType, selfFp).skip(DiceUtil.random(size - 1)).findFirst();
-            if (ret != null && ret.isPresent()) {
-                return ret.get();
-            }
-
-        }
-        return null;
-    }
-
-    private BattlePositionedHero getHeroDeadByRandom(BattleTeamType battleTeamType) {
-
-        int size = (int) getHeroesByTeamTypeAndDead(battleTeamType).count();
-
-        if (size > 0) {
-            Optional<BattlePositionedHero> ret = getHeroesByTeamTypeAndDead(battleTeamType)
-                    .skip(DiceUtil.random(size - 1)).findFirst();
-            if (ret != null && ret.isPresent()) {
-                return ret.get();
-            }
-
-        }
-        return null;
-    }
-
-    private BattlePositionedHero getHeroByMiddleLineAndRandom(BattleTeamType battleTeamType, FormationPosition selfFp) {
-        return getHeroByLineAndRandom(battleTeamType, M, selfFp);
-    }
-
-    private BattlePositionedHero getHeroByBackLineAndRandom(BattleTeamType battleTeamType, FormationPosition selfFp) {
-        return getHeroByLineAndRandom(battleTeamType, B, selfFp);
-    }
-
-    private BattlePositionedHero getHeroByFrontLineAndRandom(BattleTeamType battleTeamType, FormationPosition selfFp) {
-        return getHeroByLineAndRandom(battleTeamType, F, selfFp);
-    }
-
-    private BattlePositionedHero getHeroByMiddleLineAndRandom(BattleTeamType battleTeamType) {
-        return getHeroByLineAndRandom(battleTeamType, M);
-    }
-
-    private BattlePositionedHero getHeroByBackLineAndRandom(BattleTeamType battleTeamType) {
-        return getHeroByLineAndRandom(battleTeamType, B);
-    }
-
-    private BattlePositionedHero getHeroByFrontLineAndRandom(BattleTeamType battleTeamType) {
-        return getHeroByLineAndRandom(battleTeamType, F);
-    }
-
-    private BattlePositionedHero getHeroByLineAndRandom(BattleTeamType battleTeamType, FormationPositionType fpt) {
-        return getHeroByLineAndRandom(battleTeamType, fpt, null);
-    }
-
-    private BattlePositionedHero getHeroByLineAndRandom(BattleTeamType battleTeamType, FormationPositionType fpt, FormationPosition selfFp) {
-
-        int size = (int) getHeroesByLine(battleTeamType, fpt, selfFp).count();
-
-        if (size > 0) {
-            Optional<BattlePositionedHero> ret = getHeroesByLine(battleTeamType, fpt, selfFp).skip(DiceUtil.random(size - 1)).findFirst();
-
-            if (ret != null && ret.isPresent()) {
-                return ret.get();
-            }
-
-        }
-        return null;
-    }
-
-    private List<BattlePositionedHero> getHeroesByFront(BattleTeamType battleTeamType, Integer col) {
-
-        if (getHeroesByColumn(battleTeamType, col).count() > 0) {
-            return getHeroesByColumn(battleTeamType, col).collect(Collectors.toList());
-        } else {
-            int i = 0;
-            int j = 1;
-            if (col == 0) {
-                i = 1;
-                j = 2;
-            } else if (col == 1) {
-                j = 2;
-            }
-            if (getHeroesByColumn(battleTeamType, i).count() >= getHeroesByColumn(battleTeamType, j).count()) {
-                return getHeroesByColumn(battleTeamType, i).collect(Collectors.toList());
-            } else if (getHeroesByColumn(battleTeamType, j).count() > 0) {
-                return getHeroesByColumn(battleTeamType, j).collect(Collectors.toList());
-            } else {
-                return null;
-            }
-
-        }
-    }
-
-    public List<BattlePositionedHero> getHeroesByAdjacent(BattleTeamType battleTeamType, FormationPosition fp) {
-        final int minY = fp.getY() - 1;
-        final int maxY = fp.getY() + 1;
-        final int minX = fp.getX() - 1;
-        final int maxX = fp.getX() + 1;
-        return this.getHeroesByTeamTypeAndAlive(battleTeamType).filter((ph) -> {
-            return ph.getPosition().getY() >= minY && ph.getPosition().getY() <= maxY
-                    && ph.getPosition().getX() >= minX && ph.getPosition().getX() <= maxX;
-        }).collect(Collectors.toList());
-    }
-
-    private Stream<BattlePositionedHero> getHeroesByColumn(BattleTeamType battleTeamType, Integer col) {
-        return this.getHeroesByTeamTypeAndAlive(battleTeamType).filter((ph) -> {
-            return ph.getPosition().getY().equals(col);
-        });
-    }
-
-    private Stream<BattlePositionedHero> getHeroesByLine(BattleTeamType battleTeamType, FormationPositionType fpt) {
-        return getHeroesByLine(battleTeamType, fpt, null);
-    }
-
-    private Stream<BattlePositionedHero> getHeroesByLine(BattleTeamType battleTeamType, FormationPositionType fpt, FormationPosition selfFp) {
-        return this.getHeroesByTeamTypeAndAlive(battleTeamType, selfFp).filter((ph) -> {
-            return ph.getPosition().getType().equals(fpt);
-        });
-    }
-
-    private List<BattlePositionedHero> getHeroesByMiddleLine(BattleTeamType battleTeamType) {
-        return getHeroesByLine(battleTeamType, M).collect(Collectors.toList());
-    }
-
-    private List<BattlePositionedHero> getHeroesByBackLine(BattleTeamType battleTeamType) {
-        return getHeroesByLine(battleTeamType, B).collect(Collectors.toList());
-    }
-
-    private List<BattlePositionedHero> getHeroesByFrontLine(BattleTeamType battleTeamType) {
-        return getHeroesByLine(battleTeamType, F).collect(Collectors.toList());
-    }
-
-    private List<BattlePositionedHero> getHeroes(BattleTeamType battleTeamType) {
-        return getHeroesByTeamTypeAndAlive(battleTeamType).collect(Collectors.toList());
-    }
-
-    private Stream<BattlePositionedHero> getHeroesByTeamTypeAndAlive(BattleTeamType battleTeamType) {
-        return getHeroesByTeamTypeAndAlive(battleTeamType, null);
-    }
-
-    private Stream<BattlePositionedHero> getHeroesByTeamTypeAndAlive(BattleTeamType battleTeamType, FormationPosition selfFp) {
-        return this.getHeroesByBattleTeamType(battleTeamType).filter((BattlePositionedHero t) -> {
-            return this.findOriginalTarget(t).getHero().getCurrHp() > 0 && (selfFp == null || !t.getPosition().equals(selfFp));
-        });
-    }
-
-    private Stream<BattlePositionedHero> getHeroesByTeamTypeAndDead(BattleTeamType battleTeamType) {
-        return this.getHeroesByBattleTeamType(battleTeamType).filter((BattlePositionedHero t) -> {
-            return this.findOriginalTarget(t).getHero().getCurrHp() <= 0;
-        });
-    }
-
-    private Stream<BattlePositionedHero> getHeroesByBattleTeamType(BattleTeamType battleTeamType) {
-        return this.battlePositionedHeroes.stream().filter((BattlePositionedHero t) -> {
-            return t.getBattleTeamType().equals(battleTeamType);
-        }).sorted((BattlePositionedHero t, BattlePositionedHero t1) -> {
-            return t1.getPosition().compareTo(t.getPosition());
-        });
-    }
 
     private List<BattlePositionedHero> getTurnActionRated() {
 
-        return this.battlePositionedHeroes.stream().filter((BattlePositionedHero t) -> {
-            return !t.getClone() && t.getHero().getCurrHp() > 0;
-        }).sorted((BattlePositionedHero t, BattlePositionedHero t1) -> {
-            if (t1.getHero().getCurrSpeed() - t.getHero().getCurrSpeed() != 0) {
-                return t1.getHero().getCurrSpeed() - t.getHero().getCurrSpeed();
-            } else {
-                //Velocidade empatada attack team tem vantagem
-                return t1.getBattleTeamType().equals(BattleTeamType.ATTACK_TEAM) ? 1 : -1;
-            }
-        }).collect(Collectors.toList());
+        return this.battlePositionedHeroes.stream()
+                .filter(t -> !t.getClone() && t.getHero().getCurrHp() > 0)
+                .sorted((t, t1) ->
+                        (t1.getHero().getCurrSpeed() - t.getHero().getCurrSpeed() != 0) ?
+                                t1.getHero().getCurrSpeed() - t.getHero().getCurrSpeed()
+                                : t1.getBattleTeamType().equals(BattleTeamType.ATTACK_TEAM) ? 1 : -1)
+                .collect(Collectors.toList());
 
     }
 
     public void prepareToBattle() {
-        this.battlePositionedHeroes.forEach((h) -> {
+        this.battlePositionedHeroes.forEach(h -> {
             h.getHero().prepareToBattle();
             h.setEnergy(IdleConstants.ENERGY_GAIN_ON_BATTLE_START);
         });
     }
 
     private void prepareToTurn(List<BattlePositionedHero> bphs) {
-        bphs.forEach((h) -> {
-            h.getHero().prepareToTurn();
-        });
+        bphs.forEach(h -> h.getHero().prepareToTurn());
     }
 
     private void computeBuffs(List<BattlePositionedHero> bphs) {
@@ -1050,10 +561,8 @@ public class Battle extends BaseObject {
 
             if (!h.getClone() && hero.getHeroType().getPassives() != null) {
                 hero.getHeroType().getPassives().stream()
-                        .filter((Passive p) -> {
-                            return (p.getCondiction().getActionType().equals(actionType));
-                        })
-                        .forEach((Passive p) -> {
+                        .filter(p -> p.getCondiction().getActionType().equals(actionType))
+                        .forEach(p -> {
                             LOG.log(Level.INFO, "[COMPUTE_PASSIVES][type] {0}", p.getPassiveType());
 
                             switch (p.getPassiveType()) {
