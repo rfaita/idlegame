@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Action extends BaseObject {
 
-    private Boolean special = Boolean.FALSE;
     private Boolean passive = Boolean.FALSE;
     private ActionEffect mainActionEffect;
     private List<ActionEffect> secondaryActionsEffects = new ArrayList<>();
@@ -18,17 +17,12 @@ public class Action extends BaseObject {
     }
 
     public Action(ActionEffect mainActionEffect) {
-        this(mainActionEffect, Boolean.FALSE);
+        this(mainActionEffect, null);
     }
 
-    public Action(ActionEffect mainActionEffect, Boolean special) {
-        this(mainActionEffect, null, special);
-    }
-
-    public Action(ActionEffect ma, List<ActionEffect> se, Boolean special) {
+    public Action(ActionEffect ma, List<ActionEffect> se) {
         this.mainActionEffect = ma;
         this.secondaryActionsEffects = se;
-        this.special = special;
     }
 
     public FormationPositionType getFormationPositionType() {
@@ -39,14 +33,6 @@ public class Action extends BaseObject {
         this.formationPositionType = formationPositionType;
     }
     
-    public Boolean getSpecial() {
-        return special;
-    }
-
-    public void setSpecial(Boolean special) {
-        this.special = special;
-    }
-
     public ActionEffect getMainActionEffect() {
         return mainActionEffect;
     }
@@ -73,7 +59,7 @@ public class Action extends BaseObject {
 
     @Override
     public String toString() {
-        return (special ? "AS" : passive ? "PA" : "A") + "{" + "ma=" + mainActionEffect + ", sas=" + secondaryActionsEffects + '}';
+        return (passive ? "PA" : "A") + "{" + "ma=" + mainActionEffect + ", sas=" + secondaryActionsEffects + '}';
     }
 
 }

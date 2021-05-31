@@ -4,14 +4,10 @@ import com.idle.game.core.BaseObject;
 import com.idle.game.core.buff.type.BuffEffectType;
 import com.idle.game.core.type.AttributeType;
 
-/**
- *
- * @author rafael
- */
 public class BuffEffect extends BaseObject {
 
     //Percentual do dano que sera utilizado no efeito caso o mesmo necessite
-    private Integer percentage;
+    private Integer value;
     //Percentual do efeito ocorrer;
     private Integer chance;
     //Numero de turnos que o efeito persiste
@@ -35,12 +31,12 @@ public class BuffEffect extends BaseObject {
         this.effectType = effectType;
     }
 
-    public Integer getPercentage() {
-        return percentage;
+    public Integer getValue() {
+        return value;
     }
 
-    public void setPercentage(Integer percentage) {
-        this.percentage = percentage;
+    public void setValue(Integer value) {
+        this.value = value;
     }
 
     public Integer getChance() {
@@ -60,7 +56,7 @@ public class BuffEffect extends BaseObject {
     }
 
     public BuffEffect(BuffEffectType effectType, Integer percentage, Integer chance, Integer duration, AttributeType attributeType) {
-        this.percentage = percentage;
+        this.value = percentage;
         this.chance = chance;
         this.duration = duration;
         this.effectType = effectType;
@@ -76,7 +72,7 @@ public class BuffEffect extends BaseObject {
 
     @Override
     public String toString() {
-        return "BE{p=" + percentage + ", c=" + chance + ", d=" + duration + ", et=" + effectType + '}';
+        return "BE{v=" + value + ", c=" + chance + ", d=" + duration + ", et=" + effectType + '}';
     }
 
 }

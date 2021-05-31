@@ -13,7 +13,7 @@ import com.idle.game.core.hero.type.HeroSize;
 
 import java.util.*;
 
-public class FormationPositionRelation {
+public class FormationPositionSize {
 
     public static final Map<FormationPosition, Map<HeroSize, List<FormationPosition>>> DATA = new HashMap<>();
 

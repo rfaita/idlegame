@@ -4,10 +4,6 @@ import com.idle.game.core.passive.type.PassiveType;
 import com.idle.game.core.BaseObject;
 import com.idle.game.core.action.Action;
 
-/**
- *
- * @author rafael
- */
 public class Passive extends BaseObject {
 
     private PassiveType passiveType;

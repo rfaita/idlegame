@@ -8,11 +8,7 @@ import com.idle.game.core.buff.type.BuffEffectType;
 import com.idle.game.core.type.AttributeType;
 import java.io.Serializable;
 
-/**
- *
- * @author rafael
- */
-public class BattleEvent implements Serializable {
+public class Event {
 
     private ActionType actionType;
     private BuffEffectType buffEffectType;
@@ -81,14 +77,14 @@ public class BattleEvent implements Serializable {
         this.damageType = damageType;
     }
 
-    public BattleEvent() {
+    public Event() {
     }
 
-    public BattleEvent(ActionType type) {
+    public Event(ActionType type) {
         this.actionType = type;
     }
     
-    public BattleEvent(ActionType type, BuffEffectType buffEffectType) {
+    public Event(ActionType type, BuffEffectType buffEffectType) {
         this.buffEffectType = buffEffectType;
     }
 

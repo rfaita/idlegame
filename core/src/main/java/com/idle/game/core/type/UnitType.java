@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-public class BattleHeroType {
+public class UnitType {
 
     private HeroQuality quality;
     private HeroFaction faction;
@@ -28,7 +28,7 @@ public class BattleHeroType {
 
     private Integer maxLevel = IdleConstants.HERO_MAX_LEVEL;
 
-    public BattleHeroType() {
+    public UnitType() {
     }
 
     public HeroSize getSize() {

@@ -4,9 +4,6 @@ import com.idle.game.core.hero.type.HeroQuality;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-/**
- * @author rafael
- */
 public class DiceUtil {
 
     public static Integer random(Integer maxValue) {

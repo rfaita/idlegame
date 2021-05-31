@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Defense {
 
     private DefenseType type;
-    private Integer value;
+    private Double value;
 
     public Defense() {
     }
@@ -14,7 +14,7 @@ public class Defense {
         this.type = type;
     }
 
-    public Defense(DefenseType type, Integer value) {
+    public Defense(DefenseType type, Double value) {
         this.type = type;
         this.value = value;
     }
@@ -27,11 +27,11 @@ public class Defense {
         this.type = type;
     }
 
-    public Integer getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 

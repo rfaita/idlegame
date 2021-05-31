@@ -1,16 +1,5 @@
 package com.idle.game.tests;
 
-import com.idle.game.core.action.type.ActionType;
-import com.idle.game.core.battle.Battle;
-import com.idle.game.core.buff.type.BuffEffectType;
-import com.idle.game.core.formation.type.FormationPosition;
-import com.idle.game.core.buff.type.BuffType;
-import com.idle.game.core.formation.BattleFormation;
-import com.idle.game.core.hero.BattleHero;
-import static com.idle.game.tests.helper.TestHelper.*;
-import junit.framework.Assert;
-import org.junit.Test;
-
 /**
  *
  * @author rafael

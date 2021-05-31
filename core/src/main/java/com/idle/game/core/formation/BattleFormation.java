@@ -1,6 +1,6 @@
 package com.idle.game.core.formation;
 
-import com.idle.game.core.battle.BattlePositionedHero;
+import com.idle.game.core.battle.BattleUnit;
 import com.idle.game.core.formation.type.FormationPosition;
 import com.idle.game.core.constant.IdleConstants;
 import com.idle.game.core.formation.type.FormationAllocation;
@@ -10,7 +10,7 @@ import static com.idle.game.core.formation.type.FormationPosition.F_1;
 import static com.idle.game.core.formation.type.FormationPosition.M_0;
 import static com.idle.game.core.formation.type.FormationPosition.M_1;
 
-import com.idle.game.core.formation.type.FormationPositionRelation;
+import com.idle.game.core.formation.type.FormationPositionSize;
 import com.idle.game.core.formation.type.FormationType;
 import com.idle.game.core.hero.type.HeroSize;
 
@@ -28,32 +28,32 @@ public class BattleFormation {
     private FormationAllocation formationAllocation;
     private FormationType formationType;
     private Integer size = 0;
-    private final List<BattlePositionedHero> heroes = new ArrayList<>(IdleConstants.MAX_SIZE_FORMATION);
+    private final List<BattleUnit> heroes = new ArrayList<>(IdleConstants.MAX_SIZE_FORMATION);
 
     public BattleFormation() {
     }
 
-    public BattleFormation(List<BattlePositionedHero> heroes) {
+    public BattleFormation(List<BattleUnit> heroes) {
         heroes.forEach(h -> this.addBattlePositionedHero(h));
     }
 
-    public BattleFormation(BattlePositionedHero[] heroes) {
+    public BattleFormation(BattleUnit[] heroes) {
         this(Arrays.asList(heroes));
     }
 
-    public BattleFormation(FormationAllocation fa, List<BattlePositionedHero> heroes) {
+    public BattleFormation(FormationAllocation fa, List<BattleUnit> heroes) {
         this(heroes);
         this.formationAllocation = fa;
     }
 
-    public BattleFormation(FormationAllocation fa, BattlePositionedHero[] heroes) {
+    public BattleFormation(FormationAllocation fa, BattleUnit[] heroes) {
         this(heroes);
         this.formationAllocation = fa;
     }
 
-    public void addBattlePositionedHero(BattlePositionedHero bph) {
+    public void addBattlePositionedHero(BattleUnit bph) {
 
-        HeroSize heroSize = bph.getHero().getHeroType().getSize();
+        HeroSize heroSize = bph.getUnit().getUnitType().getSize();
         FormationPosition fp = bph.getPosition();
 
         assert this.size + heroSize.size() <= IdleConstants.MAX_SIZE_FORMATION : "Formation max size reached, BUG";
@@ -76,8 +76,8 @@ public class BattleFormation {
             this.heroes.add(bph);
         } else {
             this.heroes.add(bph);
-            FormationPositionRelation.DATA.get(fp).get(heroSize).forEach((fpClone) -> {
-                BattlePositionedHero bphClone = bph.duplicate();
+            FormationPositionSize.DATA.get(fp).get(heroSize).forEach((fpClone) -> {
+                BattleUnit bphClone = bph.duplicate();
                 bphClone.setClone(Boolean.TRUE);
                 bphClone.setPosition(fpClone);
                 this.heroes.add(bphClone);
@@ -86,16 +86,16 @@ public class BattleFormation {
     }
 
     public void removedBattlePositionedHero(FormationPosition p) {
-        Optional<BattlePositionedHero> ret = heroes.stream().filter(
+        Optional<BattleUnit> ret = heroes.stream().filter(
                 (ph) -> (ph.getPosition().equals(p))
         ).findFirst();
         if (ret.isPresent()) {
-            this.size -= ret.get().getHero().getHeroType().getSize().size();
+            this.size -= ret.get().getUnit().getUnitType().getSize().size();
             this.heroes.remove(ret.get());
         }
     }
 
-    public List<BattlePositionedHero> getHeroes() {
+    public List<BattleUnit> getHeroes() {
         return heroes;
     }
 

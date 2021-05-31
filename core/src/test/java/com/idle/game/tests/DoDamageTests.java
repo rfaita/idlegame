@@ -2,8 +2,8 @@ package com.idle.game.tests;
 
 import com.idle.game.core.action.ActionEffect;
 import com.idle.game.core.battle.Battle;
-import com.idle.game.core.battle.BattleEvent;
-import com.idle.game.core.battle.BattlePositionedHero;
+import com.idle.game.core.battle.Event;
+import com.idle.game.core.battle.BattleUnit;
 import com.idle.game.core.formation.type.FormationPosition;
 import static com.idle.game.core.type.DamageType.BLUNT;
 import static com.idle.game.core.type.DamageType.FIRE;
@@ -22,12 +22,12 @@ public class DoDamageTests {
     public void testBasicDmg() {
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattleEvent be = new BattleEvent();
+        Event be = new Event();
 
         ActionEffect ae = createBasicActionEffect(TargetType.RANDOM);
 
-        BattlePositionedHero aPositionedHero = createBasicAttackPositionedHero(FormationPosition.F_0, createBasicBluntNoCritNoDodge100HpHero());
-        BattlePositionedHero tPositionedHero = createBasicDefensePositionedHero(FormationPosition.F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit aPositionedHero = createBasicAttackPositionedHero(FormationPosition.F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit tPositionedHero = createBasicDefensePositionedHero(FormationPosition.F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         b.doDamage(be, aPositionedHero, ae, tPositionedHero, Boolean.FALSE);
 
@@ -40,12 +40,12 @@ public class DoDamageTests {
     public void testCritDmg() {
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattleEvent be = new BattleEvent();
+        Event be = new Event();
 
         ActionEffect ae = createBasicActionEffect(TargetType.RANDOM);
 
-        BattlePositionedHero aPositionedHero = createBasicAttackPositionedHero(FormationPosition.F_0, createBasicBlunt100CritNoDodge100HpHero());
-        BattlePositionedHero tPositionedHero = createBasicDefensePositionedHero(FormationPosition.F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit aPositionedHero = createBasicAttackPositionedHero(FormationPosition.F_0, createBasicBlunt100CritNoDodge100HpHero());
+        BattleUnit tPositionedHero = createBasicDefensePositionedHero(FormationPosition.F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         b.doDamage(be, aPositionedHero, ae, tPositionedHero, Boolean.FALSE);
 
@@ -58,12 +58,12 @@ public class DoDamageTests {
     public void testBasicSpecialDmg() {
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattleEvent be = new BattleEvent();
+        Event be = new Event();
 
         ActionEffect ae = createFireActionEffect(TargetType.RANDOM);
 
-        BattlePositionedHero aPositionedHero = createBasicAttackPositionedHero(FormationPosition.F_0, createBasicBluntNoCritNoDodge100HpHero());
-        BattlePositionedHero tPositionedHero = createBasicDefensePositionedHero(FormationPosition.F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit aPositionedHero = createBasicAttackPositionedHero(FormationPosition.F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit tPositionedHero = createBasicDefensePositionedHero(FormationPosition.F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         b.doDamage(be, aPositionedHero, ae, tPositionedHero, Boolean.TRUE);
 
@@ -76,12 +76,12 @@ public class DoDamageTests {
     public void testCritSpecialDmg() {
         Battle b = createBasicBattleWithPositions(FormationPosition.values(), FormationPosition.values());
 
-        BattleEvent be = new BattleEvent();
+        Event be = new Event();
 
         ActionEffect ae = createFireActionEffect(TargetType.RANDOM);
 
-        BattlePositionedHero aPositionedHero = createBasicAttackPositionedHero(FormationPosition.F_0, createBasicBlunt100CritNoDodge100HpHero());
-        BattlePositionedHero tPositionedHero = createBasicDefensePositionedHero(FormationPosition.F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit aPositionedHero = createBasicAttackPositionedHero(FormationPosition.F_0, createBasicBlunt100CritNoDodge100HpHero());
+        BattleUnit tPositionedHero = createBasicDefensePositionedHero(FormationPosition.F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         b.doDamage(be, aPositionedHero, ae, tPositionedHero, Boolean.TRUE);
 

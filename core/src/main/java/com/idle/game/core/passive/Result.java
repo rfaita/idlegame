@@ -3,11 +3,7 @@ package com.idle.game.core.passive;
 import com.idle.game.core.type.AttributeType;
 import java.io.Serializable;
 
-/**
- *
- * @author rafael
- */
-public class Result implements Serializable {
+public class Result {
 
     private AttributeType fromAttribute;
     private AttributeType toAttribute;

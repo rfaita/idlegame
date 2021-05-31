@@ -3,11 +3,7 @@ package com.idle.game.core.passive;
 import com.idle.game.core.action.type.ActionType;
 import java.io.Serializable;
 
-/**
- *
- * @author rafael
- */
-public class Condiction implements Serializable {
+public class Condiction {
 
     private ActionType actionType;
     private Integer percentage;

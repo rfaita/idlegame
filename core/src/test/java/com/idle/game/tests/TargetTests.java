@@ -1,7 +1,6 @@
 package com.idle.game.tests;
 
-import com.idle.game.core.battle.Battle;
-import com.idle.game.core.battle.BattlePositionedHero;
+import com.idle.game.core.battle.BattleUnit;
 
 import static com.idle.game.core.battle.type.BattleTeamType.*;
 
@@ -26,13 +25,13 @@ public class TargetTests {
     @Test
     public void testSelfTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new SelfTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 1 targets", 1, ret.size());
         Assert.assertEquals("must be ATTACK_TEAM", ATTACK_TEAM, ret.get(0).getBattleTeamType());
@@ -43,13 +42,13 @@ public class TargetTests {
     @Test
     public void testBiggerLifeTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new HighLifeTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 1 targets", 1, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
@@ -59,13 +58,13 @@ public class TargetTests {
 
     @Test
     public void testLowerLifeTarget() {
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new LowerLifeTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
         Assert.assertEquals("must be 1 targets", 1, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
         Assert.assertEquals("must be F_1", F_1, ret.get(0).getPosition());
@@ -76,13 +75,13 @@ public class TargetTests {
     @Test
     public void testAllFrontLineTargets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new FrontLineTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
         Assert.assertEquals("must be F_0", F_0, ret.get(0).getPosition());
@@ -96,13 +95,13 @@ public class TargetTests {
     @Test
     public void testAllFrontLineNoFrontLineTargets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(new FormationPosition[]{M_0, M_1, M_2, B_0, B_1, B_2});
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(new FormationPosition[]{M_0, M_1, M_2, B_0, B_1, B_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new FrontLineTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
         Assert.assertEquals("must be M_0", M_0, ret.get(0).getPosition());
@@ -116,13 +115,13 @@ public class TargetTests {
     @Test
     public void testAllFrontLineNoFrontLineAndNoMiddleLineTargets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(new FormationPosition[]{B_0, B_1, B_2});
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(new FormationPosition[]{B_0, B_1, B_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new FrontLineTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
         Assert.assertEquals("must be B_0", B_0, ret.get(0).getPosition());
@@ -135,13 +134,13 @@ public class TargetTests {
 
     @Test
     public void testAllMiddleLineTargets() {
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new MiddleLineTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
         Assert.assertEquals("must be M_0", M_0, ret.get(0).getPosition());
@@ -155,13 +154,13 @@ public class TargetTests {
     @Test
     public void testAllMiddleLineNoMiddleLineTargets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(new FormationPosition[]{F_0, F_1, F_2, B_0, B_1, B_2});
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(new FormationPosition[]{F_0, F_1, F_2, B_0, B_1, B_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new MiddleLineTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
         Assert.assertEquals("must be B_0", B_0, ret.get(0).getPosition());
@@ -175,13 +174,13 @@ public class TargetTests {
     @Test
     public void testAllMiddleLineNoMiddleLineAndNoBackLineTargets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(new FormationPosition[]{F_0, F_1, F_2});
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(new FormationPosition[]{F_0, F_1, F_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new MiddleLineTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
         Assert.assertEquals("must be F_0", F_0, ret.get(0).getPosition());
@@ -195,13 +194,13 @@ public class TargetTests {
     @Test
     public void testAllBackLineTargets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new BackLineTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
         Assert.assertEquals("must be B_0", B_0, ret.get(0).getPosition());
@@ -215,13 +214,13 @@ public class TargetTests {
     @Test
     public void testAllBackLineNoBackLineTargets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(new FormationPosition[]{F_0, F_1, F_2, M_0, M_1, M_2});
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(new FormationPosition[]{F_0, F_1, F_2, M_0, M_1, M_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new BackLineTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
         Assert.assertEquals("must be F_0", F_0, ret.get(0).getPosition());
@@ -235,13 +234,13 @@ public class TargetTests {
     @Test
     public void testAllBackLineNoBackLineAndNoFrontLineTargets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(new FormationPosition[]{M_1, M_0, M_2});
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(new FormationPosition[]{M_1, M_0, M_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new BackLineTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
         Assert.assertEquals("must be M_0", M_0, ret.get(0).getPosition());
@@ -255,13 +254,13 @@ public class TargetTests {
     @Test
     public void testNoFrontLineTargets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new NoFrontLineTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
         Assert.assertEquals("must be 6 targets", 6, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
         Assert.assertEquals("must be B_0", B_0, ret.get(0).getPosition());
@@ -281,13 +280,13 @@ public class TargetTests {
     @Test
     public void testNoFrontLineNoFrontLineTargets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(new FormationPosition[]{F_0, F_1, F_2});
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(new FormationPosition[]{F_0, F_1, F_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new NoFrontLineTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
         Assert.assertEquals("must be F_0", F_0, ret.get(0).getPosition());
@@ -301,13 +300,13 @@ public class TargetTests {
     @Test
     public void testInFrontPillarFront0Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new InFrontPillarTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
         Assert.assertEquals("must be F_0", F_0, ret.get(0).getPosition());
@@ -321,13 +320,13 @@ public class TargetTests {
     @Test
     public void testInFrontPillarFront1Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_1, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new InFrontPillarTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
         Assert.assertEquals("must be F_1", F_1, ret.get(0).getPosition());
@@ -341,13 +340,13 @@ public class TargetTests {
     @Test
     public void testInFrontPillarFront2Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_2, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_2, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new InFrontPillarTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
         Assert.assertEquals("must be F_2", F_2, ret.get(0).getPosition());
@@ -361,13 +360,13 @@ public class TargetTests {
     @Test
     public void testInFrontPillarMiddle0Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(M_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(M_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new InFrontPillarTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
@@ -382,13 +381,13 @@ public class TargetTests {
     @Test
     public void testInFrontPillarMiddle1Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(M_1, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(M_1, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new InFrontPillarTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
@@ -403,13 +402,13 @@ public class TargetTests {
     @Test
     public void testInFrontPillarMiddle2Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(M_2, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(M_2, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new InFrontPillarTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
@@ -424,13 +423,13 @@ public class TargetTests {
     @Test
     public void testInFrontPillarBack0Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(B_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(B_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new InFrontPillarTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
@@ -445,13 +444,13 @@ public class TargetTests {
     @Test
     public void testInFrontPillarBack1Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(B_1, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(B_1, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new InFrontPillarTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
@@ -466,13 +465,13 @@ public class TargetTests {
     @Test
     public void testInFrontPillarBack2Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(B_2, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(B_2, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new InFrontPillarTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
@@ -487,13 +486,13 @@ public class TargetTests {
     @Test
     public void testInFrontPillarNoFrontPillarFront1Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(new FormationPosition[]{B_0, B_2, M_0, M_2, F_0, F_2});
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(new FormationPosition[]{B_0, B_2, M_0, M_2, F_0, F_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_1, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new InFrontPillarTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
@@ -507,13 +506,13 @@ public class TargetTests {
     @Test
     public void testInFrontPillarNoFrontLeftPillarFront1Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(new FormationPosition[]{B_2, M_2, F_2});
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(new FormationPosition[]{B_2, M_2, F_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_1, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new InFrontPillarTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
@@ -527,13 +526,13 @@ public class TargetTests {
     @Test
     public void testInFrontPillarOneInFrontPillarFront1Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(new FormationPosition[]{B_0, B_2, M_0, M_2, F_1, F_0, F_2});
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(new FormationPosition[]{B_0, B_2, M_0, M_2, F_1, F_0, F_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_1, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new InFrontPillarTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 1 targets", 1, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
@@ -543,13 +542,13 @@ public class TargetTests {
     @Test
     public void testInFrontPillarFAndMInFrontPillarFront1Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(new FormationPosition[]{B_0, B_2, M_0, M_1, M_2, F_1, F_0, F_2});
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(new FormationPosition[]{B_0, B_2, M_0, M_1, M_2, F_1, F_0, F_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_1, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new InFrontPillarTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 2 targets", 2, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
@@ -561,13 +560,13 @@ public class TargetTests {
     @Test
     public void testInFrontPillarBAndMInFrontPillarFront1Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(new FormationPosition[]{B_0, B_1, B_2, M_0, M_1, M_2, F_0, F_2});
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(new FormationPosition[]{B_0, B_1, B_2, M_0, M_1, M_2, F_0, F_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_1, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new InFrontPillarTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 2 targets", 2, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
@@ -579,13 +578,13 @@ public class TargetTests {
     @Test
     public void testInFrontTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new InFrontTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 1 targets", 1, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
@@ -596,13 +595,13 @@ public class TargetTests {
     @Test
     public void testInFrontNoFrontTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(new FormationPosition[]{F_1, F_2, M_0, B_2});
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(new FormationPosition[]{F_1, F_2, M_0, B_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new InFrontTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 1 targets", 1, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
@@ -613,13 +612,13 @@ public class TargetTests {
     @Test
     public void testInFrontNoFrontAndMoreOn2Target() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(new FormationPosition[]{F_1, F_2, B_2});
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(new FormationPosition[]{F_1, F_2, B_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new InFrontTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 1 targets", 1, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
@@ -630,13 +629,13 @@ public class TargetTests {
     @Test
     public void testInFrontNoFrontAndEqualsTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(new FormationPosition[]{F_1, B_2});
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(new FormationPosition[]{F_1, B_2});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new InFrontTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 1 targets", 1, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
@@ -647,13 +646,13 @@ public class TargetTests {
     @Test
     public void testFrontLineTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new RandomFrontLineTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         List<FormationPosition> expected = Arrays.asList(F_0, F_1, F_2);
 
@@ -666,13 +665,13 @@ public class TargetTests {
     @Test
     public void testFrontLineNoSelfTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new RandomFrontLineNoSelfTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         List<FormationPosition> expected = Arrays.asList(F_1, F_2);
 
@@ -685,13 +684,13 @@ public class TargetTests {
     @Test
     public void testFrontLineNoFrontLineTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(new FormationPosition[]{B_0, B_2, B_1, M_2, M_1, M_0});
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(new FormationPosition[]{B_0, B_2, B_1, M_2, M_1, M_0});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new RandomFrontLineTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         List<FormationPosition> expected = Arrays.asList(M_0, M_1, M_2);
 
@@ -704,13 +703,13 @@ public class TargetTests {
     @Test
     public void testFrontLineNoFrontLineAndMiddleLineTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(new FormationPosition[]{B_0, B_2, B_1});
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(new FormationPosition[]{B_0, B_2, B_1});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new RandomFrontLineTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         List<FormationPosition> expected = Arrays.asList(B_0, B_1, B_2);
 
@@ -723,13 +722,13 @@ public class TargetTests {
     @Test
     public void testMiddleLineTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new RandomMiddleLineTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         List<FormationPosition> expected = Arrays.asList(M_0, M_1, M_2);
 
@@ -742,13 +741,13 @@ public class TargetTests {
     @Test
     public void testMiddleLineNoSelfTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(M_1, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(M_1, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new RandomMiddleLineNoSelfTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         List<FormationPosition> expected = Arrays.asList(M_0, M_2);
 
@@ -761,13 +760,13 @@ public class TargetTests {
     @Test
     public void testMiddleLineNoMiddleLineTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(new FormationPosition[]{B_0, B_2, B_1, F_2, F_1, F_0});
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(new FormationPosition[]{B_0, B_2, B_1, F_2, F_1, F_0});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new RandomMiddleLineTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         List<FormationPosition> expected = Arrays.asList(B_0, B_1, B_2);
 
@@ -780,13 +779,13 @@ public class TargetTests {
     @Test
     public void testMiddleLineNoMiddleLineAndNoBackLineTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(new FormationPosition[]{F_2, F_1, F_0});
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(new FormationPosition[]{F_2, F_1, F_0});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new RandomMiddleLineTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         List<FormationPosition> expected = Arrays.asList(F_0, F_1, F_2);
 
@@ -799,13 +798,13 @@ public class TargetTests {
     @Test
     public void testBackLineTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new RandomBackLineTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         List<FormationPosition> expected = Arrays.asList(B_0, B_1, B_2);
 
@@ -818,13 +817,13 @@ public class TargetTests {
     @Test
     public void testBackLineNoSelfTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(B_2, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(B_2, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new RandomBackLineNoSelfTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         List<FormationPosition> expected = Arrays.asList(B_0, B_1);
 
@@ -837,13 +836,13 @@ public class TargetTests {
     @Test
     public void testBackLineNoBackLineTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(new FormationPosition[]{M_0, M_2, M_1, F_2, F_1, F_0});
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(new FormationPosition[]{M_0, M_2, M_1, F_2, F_1, F_0});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new RandomBackLineNoSelfTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         List<FormationPosition> expected = Arrays.asList(F_0, F_1, F_2);
 
@@ -856,13 +855,13 @@ public class TargetTests {
     @Test
     public void testBackLineNoBackLineAndNoFrontLineTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(new FormationPosition[]{M_0, M_2, M_1});
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(new FormationPosition[]{M_0, M_2, M_1});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new RandomBackLineTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         List<FormationPosition> expected = Arrays.asList(M_0, M_1, M_2);
 
@@ -875,13 +874,13 @@ public class TargetTests {
     @Test
     public void testRandomTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new RandomTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 1 targets", 1, ret.size());
         Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
@@ -894,16 +893,16 @@ public class TargetTests {
     @Test
     public void testRandomNoSelfTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new RandomNoSelfTarget();
 
         List<FormationPosition> expected = Arrays.asList(F_1, F_2, M_0, M_1, M_2, B_0, B_1, B_2);
 
         for (int i = 0; i < 1000; i++) {
-            List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+            List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
             Assert.assertEquals("must be 1 targets", 1, ret.size());
             Assert.assertEquals("must be DEFENSE_TEAM", DEFENSE_TEAM, ret.get(0).getBattleTeamType());
@@ -915,13 +914,13 @@ public class TargetTests {
     @Test
     public void testTwoRandomTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new TwoRandomTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
 
         Assert.assertEquals("must be 2 targets", 2, ret.size());
@@ -938,13 +937,13 @@ public class TargetTests {
     @Test
     public void testThreeRandomTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new ThreeRandomTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         List<FormationPosition> expected = Arrays.asList(FormationPosition.values());
@@ -964,13 +963,13 @@ public class TargetTests {
     @Test
     public void testFourRandomTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new FourRandomTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 4 targets", 4, ret.size());
         List<FormationPosition> expected = Arrays.asList(FormationPosition.values());
@@ -994,13 +993,13 @@ public class TargetTests {
 
     public void testFourRandomOnlyThreeTarget() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(new FormationPosition[]{F_1, F_2, B_1});
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(new FormationPosition[]{F_1, F_2, B_1});
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new FourRandomTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 3 targets", 3, ret.size());
         List<FormationPosition> expected = Arrays.asList(F_1, F_2, B_1);
@@ -1019,13 +1018,13 @@ public class TargetTests {
 
     public void testAdjacentFront0Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new AdjacentTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 3 targets", 3, ret.size());
 
@@ -1040,13 +1039,13 @@ public class TargetTests {
 
     public void testAdjacentFront1Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_1, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_1, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new AdjacentTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 5 targets", 5, ret.size());
 
@@ -1065,13 +1064,13 @@ public class TargetTests {
 
     public void testAdjacentFront2Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(F_2, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(F_2, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new AdjacentTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
 
         Assert.assertEquals("must be 3 targets", 3, ret.size());
@@ -1087,13 +1086,13 @@ public class TargetTests {
 
     public void testAdjacentMiddle0Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(M_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(M_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new AdjacentTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 5 targets", 5, ret.size());
 
@@ -1112,13 +1111,13 @@ public class TargetTests {
 
     public void testAdjacentMiddle1Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(M_1, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(M_1, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new AdjacentTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 8 targets", 8, ret.size());
 
@@ -1143,13 +1142,13 @@ public class TargetTests {
 
     public void testAdjacentMiddle2Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(M_2, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(M_2, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new AdjacentTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 5 targets", 5, ret.size());
 
@@ -1168,13 +1167,13 @@ public class TargetTests {
 
     public void testAdjacentBack0Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(B_0, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(B_0, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new AdjacentTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 3 targets", 3, ret.size());
 
@@ -1189,13 +1188,13 @@ public class TargetTests {
 
     public void testAdjacentBack1Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(B_1, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(B_1, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new AdjacentTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
 
         Assert.assertEquals("must be 5 targets", 5, ret.size());
@@ -1215,13 +1214,13 @@ public class TargetTests {
 
     public void testAdjacentBack2Targets() {
 
-        List<BattlePositionedHero> battlePositionedHeroes = createBattlePositionedHeroes(FormationPosition.values());
+        List<BattleUnit> battleUnits = createBattlePositionedHeroes(FormationPosition.values());
 
-        BattlePositionedHero bph = createBasicAttackPositionedHero(B_2, createBasicBluntNoCritNoDodge100HpHero());
+        BattleUnit bph = createBasicAttackPositionedHero(B_2, createBasicBluntNoCritNoDodge100HpHero());
 
         Target target = new AdjacentTarget();
 
-        List<BattlePositionedHero> ret = target.get(BattleTeamType.DEFENSE_TEAM, battlePositionedHeroes, bph);
+        List<BattleUnit> ret = target.get(BattleTeamType.DEFENSE_TEAM, battleUnits, bph);
 
         Assert.assertEquals("must be 3 targets", 3, ret.size());
 

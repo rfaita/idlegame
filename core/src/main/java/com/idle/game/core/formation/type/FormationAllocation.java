@@ -1,9 +1,5 @@
 package com.idle.game.core.formation.type;
 
-/**
- *
- * @author rafael
- */
 public enum FormationAllocation {
 
     PVP_DEFENSE(null), PVP(PVP_DEFENSE), PVE_DEFENSE(null), PVE(PVE_DEFENSE), PVE_DUNGEON_DEFENSE(null), PVE_DUNGEON(PVE_DUNGEON_DEFENSE);
@@ -14,7 +10,7 @@ public enum FormationAllocation {
         return counter;
     }
 
-    private FormationAllocation(FormationAllocation counter) {
+    FormationAllocation(FormationAllocation counter) {
         this.counter = counter;
     }
 
